@@ -136,22 +136,12 @@ This is where you can override the hero area block. You can simply modify the co
 {% block mainbody %}
 <!-- featured maps -->
 <div class="row">
-  
    {% for map in featured_maps %}
    <div class="span4">
      <a href="{% url "map_detail" map.id %}"><img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" /></a>
    </div>
    {% endfor %}
-  </div>
 </div>
-
-<h3>{% trans "Recent Maps" %}</h3>
-<section class="article-list latest-maps">
-  {% featured_maps as featured_maps %}
-  {% for map in featured_maps %}
-    {% include "maps/_map_list_item.html" %}
-  {% endfor %}
-</section>
 
 <section class="boxes">
 <div class="row">
