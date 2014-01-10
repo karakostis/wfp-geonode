@@ -38,25 +38,23 @@ This is where you can override the hero area block. You can simply modify the co
       position: absolute;
       top: 0;
       left: 0;
+      min-height: 350px;
       min-width: 100%;
-      height: 350px;
+      overflow: hidden;
     }
 
     .carousel-caption {
-      background: rgba(0,0,0,.4);
+      background: none;
       position: static;
       padding: 0;
       margin-top: 80px;
-      width: 600px;
-      -webkit-border-radius: 10px;
-         -moz-border-radius: 10px;
-              border-radius: 10px;
+      width: 800px;
     }
     .carousel-caption h1 {
       color: #fff;
       font-size: 3em;
       font-weight: 400;
-      line-height: 1em;
+      line-height: 0.2em;
       margin: 0;
       padding: 20px;
       text-shadow: 2px 2px 2px rgba(0,0,0,.4);
@@ -64,7 +62,7 @@ This is where you can override the hero area block. You can simply modify the co
     .carousel-caption .lead {
       color: #fff;
       font-weight: 600;
-      line-height: 1.25em;
+      line-height: 1.125em;
       padding: 20px;
       text-shadow: 2px 2px 2px rgba(0,0,0,.4);
     }
@@ -78,29 +76,29 @@ This is where you can override the hero area block. You can simply modify the co
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="/static/img/layerslider01.jpg" alt="">
+          <img src="{{ STATIC_URL }}img/layerslider01.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1><strong>WFP</strong>GeoNode</h1>
-              <p class="lead">An open source platform for creating and sharing<br />geospatial data and maps.</p>
+              <h1>Welcome to the <strong>WFP</strong>GeoNode</h1>
+              <p class="lead">Our corporate web application for creating and sharing geospatial data and maps designed for non-GIS experts.</p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="/static/img/layerslider02.jpg" alt="">
+          <img src="{{ STATIC_URL }}img/layerslider02.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Create and Share Maps</h1>
-              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <h1>Interactive mapping</h1>
+              <p class="lead">You can combine already existing layers with your own data to create powerful interactive maps accessible from all devices.</p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="/static/img/layerslider03.jpg" alt="">
+          <img src="{{ STATIC_URL }}img/layerslider03.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Contribute</h1>
-              <p class="lead">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <h1>GIS data standardization</h1>
+              <p class="lead">GeoNode facilitates data standardization within our organization  by providing a clear process  for uploading your gis data, compiling metadata and styling. You can then share them publicly or restrict to specific users only.</p>
             </div>
           </div>
         </div>
@@ -118,7 +116,7 @@ This is where you can override the hero area block. You can simply modify the co
                 <div class="span2"><p><a href="/layers/">Layers <span class="count">{{ facets.layers }}</span></a></p></div>
                 <div class="span2"><p><a href="/maps/">Maps <span class="count">{{ facets.maps }}</span></a></p></div>
                 <div class="span2"><p><a href="/documents/">Documents <span class="count">{{ facets.documents }}</span></a></p></div>
-                <div class="span2"><p><a href="/people/">Contributors <span class="count">{{ facets.users }}</span></a></p></div>
+                <div class="span2"><p><a href="/people/">Users <span class="count">{{ facets.users }}</span></a></p></div>
               </div>
             </div>
             <div class="span4">
@@ -136,35 +134,62 @@ This is where you can override the hero area block. You can simply modify the co
 {% endblock %}
 
 {% block mainbody %}
+<!-- featured maps -->
 <div class="row">
-  <div class="span4">
-    <div class="row">
-      <div class="span1">
-        <i class="icon-unchecked icon-rotate-45 icon-4x pull-right"></i>
-      </div>
-      <div class="span3">
-        <h3>Explore Data</h3>
-        <p>Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources.</p>
-      </div>
-    </div>
-  </div>
-  <div class="span4">
-    <div class="row">
-      <div class="span1"><i class="icon-map-marker icon-4x pull-right"></i></div>
-      <div class="span3">
-        <h3>Explore Maps</h3>
-        <p>Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only.</p>
-      </div>
-    </div>
-  </div>
-  <div class="span4">
-    <div class="row">
-      <div class="span1"><i class="icon-cloud-upload icon-4x pull-right"></i></i></div>
-      <div class="span3">
-        <h3>Upload Data</h3>
-        <p>GeoNode allows registered users fo easiley upload geospatial data in several formats including shapefile, GeoTiff and KML.</p>
-      </div>
-    </div>
+  
+   {% for map in featured_maps %}
+   <div class="span4">
+     <a href="{% url "map_detail" map.id %}"><img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" /></a>
+   </div>
+   {% endfor %}
   </div>
 </div>
+
+<h3>{% trans "Recent Maps" %}</h3>
+<section class="article-list latest-maps">
+  {% featured_maps as featured_maps %}
+  {% for map in featured_maps %}
+    {% include "maps/_map_list_item.html" %}
+  {% endfor %}
+</section>
+
+<section class="boxes">
+<div class="row">
+  <div class="span4">
+    <a href="/layers/" class="div-link">
+      <div class="row">
+        <div class="span1">
+          <i class="icon-unchecked icon-rotate-45 icon-4x"></i>
+        </div>
+        <div class="span3">
+          <h3>Explore Data</h3>
+          <p>Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="span4">
+    <a href="/maps/" class="div-link">
+      <div class="row">
+        <div class="span1" style="text-align:center"><i class="icon-map-marker icon-4x"></i></div>
+        <div class="span3">
+          <h3>Explore Maps</h3>
+          <p>Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="span4">
+    <a href="/upload/" class="div-link">
+    <div class="row">
+      <div class="span1"><i class="icon-cloud-upload icon-4x"></i></div>
+        <div class="span3">
+          <h3>Upload Data</h3>
+          <p>GeoNode allows registered users fo easiley upload geospatial data in several formats including shapefile, GeoTiff and KML.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+</section>
 {% endblock %}

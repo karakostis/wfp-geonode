@@ -30,11 +30,11 @@
           <div class="nav-collapse">
             <ul class="nav pull-right">
               {% if user.is_authenticated %}
-              <li class="user-avatar">
+              <!-- <li class="user-avatar">
                 {% avatar user 32 %}
-              </li>
-              <li class="dropdown user">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              </li> -->
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
                   {{ user.username }}
                   <b class="caret"></b>
                 </a>
@@ -84,19 +84,6 @@
             {# csrf_token #}
               <input id="search" type="text" name="q"/>
             </form>
-            {% if csrf_token != "NOTPROVIDED" %}
-            {% get_current_language as LANGUAGE %}
-            <form class="form-inline pull-right" action="/i18n/setlang/" method="post">
-            {% csrf_token %}
-              <select class="input span2 language" dir="rtl" name="language" onchange="javascript:form.submit()">
-                {% for lang in LANGUAGES %}
-                <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>
-                  {{ lang.1 }}
-                </option>
-                {% endfor %}
-              </select>
-            </form>
-            {% endif %}
           </div> <!-- /.nav-collapse -->
         </div> <!-- /.row -->
         <div class="row">
@@ -112,7 +99,7 @@
                 <a href="{% url "documents_browse" %}">{% trans "Documents" %}</a>
               </li>
               <li id="nav_people">
-                <a href="{% url "profile_browse" %}">{% trans "People" %}</a>
+                <a href="{% url "profile_browse" %}">{% trans "Users" %}</a>
               </li>
             </ul>
           </div> <!-- /.nav-collapse -->
@@ -143,7 +130,7 @@
             </div>
             {% endfor %}
           </div>
-         {% endif %}
+          {% endif %}
           {% block body_outer %}
           <div class="span8">
           {% block body %}{% endblock %}
@@ -167,6 +154,19 @@
           <a href="http://cdn.wfp.org/legal/terms/">Terms of Use</a>
         </div>
         <div class="pull-right">
+            {% if csrf_token != "NOTPROVIDED" %}
+            {% get_current_language as LANGUAGE %}
+            <form class="form-inline pull-right" action="/i18n/setlang/" method="post">
+            {% csrf_token %}
+              <select class="input span2 language" dir="rtl" name="language" onchange="javascript:form.submit()">
+                {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>
+                  {{ lang.1 }}
+                </option>
+                {% endfor %}
+              </select>
+            </form>
+            {% endif %}
           <a href="http://www.wfp.org">World Food Programme</a> &copy; 2014
         </div> <!-- /.pull-right -->
       </div> <!-- /.container -->
