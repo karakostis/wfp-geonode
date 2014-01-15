@@ -24,7 +24,7 @@ def search_page(request, template='search/search.html', **kw):
         'users' : Profile.objects.count()
     }
 
-    featured_maps = Map.objects.filter(keywords__name__in=['featured'])
+    featured_maps = Map.objects.filter(keywords__name__in=['featured']).order_by('-last_modified')[:4]
     
     return render_to_response(template, RequestContext(request, {'object_list': results, 
         'facets': facets, 'total': facets['layers'], 'featured_maps': featured_maps }))
