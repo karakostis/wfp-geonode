@@ -12,6 +12,8 @@
   <link href="{{ STATIC_URL }}lib/css/assets.min.css" rel="stylesheet"/>
   {% endif %}
   <link href="{{ STATIC_URL }}css/wfp.css" rel="stylesheet"/>
+  <script type="text/javascript" src="//use.typekit.net/ooy8mlk.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   {% block extra_head %}
   {% endblock %}
 {% endblock %}
@@ -147,16 +149,20 @@
     {% block footer %}
     <footer class="footer">
       <div class="container">
-        <div class="pull-left">
-          {% trans "Powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}</a> 2.0 |
-          <!-- <a href="{% url "developer" %}">{% trans "Developers" %}</a> | -->
-          <a href="{% url "about" %}">{% trans "About" %}</a> | 
-          <a href="http://cdn.wfp.org/legal/terms/">Terms of Use</a>
+        <div class="row">
+        <div class="span6 pull-left">
+          {% trans "Powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}</a> 2.0 | 
+          <a href="#">{% trans "Contacts" %}</a> | 
+          <a href="http://cdn.wfp.org/legal/terms/">{% trans "Terms of Use" %}</a> | 
+          <a href="/help/">{% trans "Get Started" %}</a>
         </div>
-        <div class="pull-right">
-            {% if csrf_token != "NOTPROVIDED" %}
+        <div class="span1 pull-right">
+          <a href="http://www.wfp.org"><img src="{{ STATIC_URL }}img/wfp_logo_58_white.png"></a>          
+        </div> <!-- /.pull-right -->
+        <div class="span2 pull-right">
+          {% if csrf_token != "NOTPROVIDED" %}
             {% get_current_language as LANGUAGE %}
-            <form class="form-inline pull-right" action="/i18n/setlang/" method="post">
+            <form class="form-inline" action="/i18n/setlang/" method="post">
             {% csrf_token %}
               <select class="input span2 language" dir="rtl" name="language" onchange="javascript:form.submit()">
                 {% for lang in LANGUAGES %}
@@ -167,8 +173,8 @@
               </select>
             </form>
             {% endif %}
-          <a href="http://www.wfp.org">World Food Programme</a> &copy; 2014
-        </div> <!-- /.pull-right -->
+          </div>
+          </div>
       </div> <!-- /.container -->
     </footer>
     {% endblock footer %}

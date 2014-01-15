@@ -51,7 +51,8 @@
 @grayLight: #ccc;
 @gray: #999;
 @grayDark: #605e5e;
-@grayDarker: #302c2c;
+/*@grayDarker: #302c2c;*/
+@grayDarker: rgb(56,70,59);
 
 /* Basic
    ----------------------------- */
@@ -113,17 +114,7 @@ select {
 }
 .language {
   background: transparent;
-  border: none;
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
   color: white;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
 }
 .sign-in {
   padding: 10px;
@@ -138,11 +129,12 @@ select {
 }
 .nav-collapse .nav > li > a {
   color: white;
-  font-family: 'bebas_neueregular', sans-serif;
+  font-family: "futura-pt-condensed",'bebas_neueregular',"Arial Narrow",sans-serif;
   font-size: 20px;
   margin-bottom: 0;
   padding: 10px 25px;
   text-shadow: none;
+  text-transform: uppercase;
   -webkit-transition: all 0.3s ease;
      -moz-transition: all 0.3s ease;
        -o-transition: all 0.3s ease;
@@ -182,6 +174,7 @@ select {
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px;
+  text-transform: none;
   &:hover{
     background: transparent;
     color: white;
@@ -196,6 +189,7 @@ font-size: 0.875em;
   margin-bottom: 5px;
   margin-top: 5px;
   padding: 5px;
+  text-transform: none;
   &:hover{
     background: transparent;
     color: white;
@@ -1114,6 +1108,12 @@ footer {
   z-index: 99;
   label {
     margin-right: 10px;
+  }
+  a {
+    color: white;
+    &:hover {
+      color: @brand-primary;
+    };
   }
 }
 
