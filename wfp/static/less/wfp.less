@@ -256,9 +256,21 @@ section.social {
   }
 }
 section.featured-maps {
-  margin: -20px 0 40px;
+  margin: -30px 0 10px;
+  h5 {
+    border: 1px solid @grayLight;
+    border-top: 0;
+    color: @link-color;
+    margin-top: 0;
+    overflow: hidden;
+    padding: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+    }
   .map-thumb {
     border: 1px solid @grayLight;
+    border-bottom: 0;
     font-size: 12px;
     height: 165px;
     overflow: hidden;
@@ -266,9 +278,10 @@ section.featured-maps {
     width: 220px;
     }
   div.map-thumb div {
-    background: #fff;
+    background: @brand-primary;
+    color: white;
     font-size: 12px;
-    height: 145px;
+    height: 185px;
     left: 0;
     padding: 10px;
     position: absolute;
@@ -277,14 +290,11 @@ section.featured-maps {
     img {
       margin: -10px;
       }
-    h5 {
-      margin-top: -5px;
-      }
-    }
+  }
   div.map-thumb div.first {
     z-index: 3;
     }
-  div.map-thumb:hover div.first {
+  div.map-thumb:hover div.first{
     display: none;
   }
 }
@@ -1114,7 +1124,7 @@ footer {
   bottom: 0;
   color: @grayLight;
   left: 0;
-  padding: 10px 0;
+  padding: 10px 0 0;
   position: fixed;
   width: 100%;
   z-index: 99;
