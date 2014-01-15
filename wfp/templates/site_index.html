@@ -123,9 +123,10 @@ This is where you can override the hero area block. You can simply modify the co
               </div>
             </div>
             <div class="span4">
-              <p class="pull-right">
-                <a href="/search/form/"><i class="icon-search"></i> Advanced Search</a>
-              </p>
+              <form class="input-append pull-right" action="{% url "search" %}" method="GET">
+              {# csrf_token #}
+              <input id="search" placeholder="Search..." type="text" name="q"/>
+            </form>
             </div>
           </div>
         </div>
