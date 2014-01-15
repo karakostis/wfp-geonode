@@ -32,8 +32,8 @@
 @btn-info-bg: @brand-secondary;
 
 @body-bg: white;
-@text-color: #302c2c;
-@link-color: @brand-primary;
+@text-color: @grayDarker;
+@link-color: #5facd7;
 @link-hover-color: darken(@link-color, 15%);
 
 
@@ -51,7 +51,6 @@
 @grayLight: #ccc;
 @gray: #999;
 @grayDark: #605e5e;
-/*@grayDarker: #302c2c;*/
 @grayDarker: rgb(56,70,59);
 
 /* Basic
@@ -100,7 +99,7 @@ select {
     font-weight: 400;
     height: 60px;
     line-height: 1.8em;
-    text-indent: 40px;
+    text-indent: 56px;
     text-shadow: none;
     text-transform: none;
   }
@@ -129,7 +128,7 @@ select {
 }
 .nav-collapse .nav > li > a {
   color: white;
-  font-family: "futura-pt-condensed",'bebas_neueregular',"Arial Narrow",sans-serif;
+  font-family: "futura-pt-condensed",'bebas_neueregular',"Arial Narrow", sans-serif;
   font-size: 20px;
   margin-bottom: 0;
   padding: 10px 25px;
@@ -1183,6 +1182,9 @@ footer {
   transform: rotate(45deg);
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
+
+/* Select2 and Search
+   ----------------------------- */
 
 .select2-default {
   color: white!important;
