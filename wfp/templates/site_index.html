@@ -110,23 +110,21 @@ This is where you can override the hero area block. You can simply modify the co
     </div><!-- /.carousel -->
 
     <section class="social">
-      <div class="row">
-        <div class="container">
-          <div class="row">
-            <div class="span8">
-              <div class="row">
-                <div class="span2"><p><a href="/layers/">Layers <span class="count">{{ facets.layers }}</span></a></p></div>
-                <div class="span2"><p><a href="/maps/">Maps <span class="count">{{ facets.maps }}</span></a></p></div>
-                <div class="span2"><p><a href="/documents/">Documents <span class="count">{{ facets.documents }}</span></a></p></div>
-                <div class="span2"><p><a href="/people/">Users <span class="count">{{ facets.users }}</span></a></p></div>
-              </div>
+      <div class="container">
+        <div class="row">
+          <div class="span8">
+            <div class="row">
+              <div class="span2"><p><a href="/layers/">Layers <span class="count">{{ facets.layers }}</span></a></p></div>
+              <div class="span2"><p><a href="/maps/">Maps <span class="count">{{ facets.maps }}</span></a></p></div>
+              <div class="span2"><p><a href="/documents/">Documents <span class="count">{{ facets.documents }}</span></a></p></div>
+              <div class="span2"><p><a href="/people/">Users <span class="count">{{ facets.users }}</span></a></p></div>
             </div>
-            <div class="span4">
-              <form class="input-append pull-right" action="{% url "search" %}" method="GET">
+          </div>
+          <div class="span4">
+            <form class="input-append pull-right" action="{% url "search" %}" method="GET">
               {# csrf_token #}
               <input id="search" placeholder="Search..." type="text" name="q"/>
             </form>
-            </div>
           </div>
         </div>
       </div>
