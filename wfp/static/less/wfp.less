@@ -334,7 +334,9 @@ a.div-link {
   }
 }
 header.jumbotron {
-  background: @grayDark;
+  background: url('/static/img/title_bg.png');
+  border-bottom: 1px solid @grayLighter;
+  margin-bottom: -80px; /* to be remove along content-wrap margin-top:60px;*/
   margin-top: 80px;
   padding: 20px 0;
   position: relative;
@@ -344,9 +346,10 @@ header.jumbotron {
      -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);
           box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);*/
   h1 {
-    color: white;
+    color: @grayDark;
+    font-weight: 200;
     i {
-      margin-right: 20px;
+      margin: 0 20px 0 10px;
     }
   }
 }
