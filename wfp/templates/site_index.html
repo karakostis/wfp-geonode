@@ -148,7 +148,7 @@ This is where you can override the hero area block. You can simply modify the co
           <a href="#" class="map-link"><img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" /></a>
         </div>
         <a href="{% url "map_detail" map.id %}" class="map-link"><div class="second">
-          <p>{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"d M Y" }}</em></p>        
+          <p>{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"M d Y" }}</em></p>        
           <p>{{ map.abstract|truncatewords:"30" }}</p>
         </div><a href="{% url "map_detail" map.id %}" class="map-link">
       </div>

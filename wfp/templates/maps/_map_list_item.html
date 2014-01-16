@@ -14,18 +14,16 @@
     </div>
     <div class="details">
       <div class="meta">
-        <p>Map {% trans "from" %} <a href="{% url "profile_detail" map.owner.username %}" rel="author">{{ map.owner }}</a>, {{ map.last_modified|timesince }} {% trans 'ago' %}</p>
+        <p>Map {% trans "from" %} <a href="{% url "profile_detail" map.owner.username %}" rel="author">{{ map.owner }}</a>, {% trans "shared on" %} {{ map.last_modified|date:"M d Y" }}</p>
         <p class="abstract">{{ map.abstract }}</p>
-        <ul class="nav stats">
+        <ul class="nav stats span3">
           <li><a href="{% url "map_detail" map.id %}"><strong>{{ map.popular_count }}</strong> {% trans "view" %}{{ map.popular_count|pluralize }}</a></li>
           <li><a href="{% url "map_detail" map.id %}#rate"><strong><span class="avg_rating" data-rating="{{ map_rating }}"> <span class="overall_rating"></span></span></strong>{{num_votes}} {% trans "ratings" %}</a></li>
         </ul>
       </div> <!-- /.meta -->
-      <div class="tools">
-        <p>
-          <a href="{% url "map_download" map.id %}" class="btn btn-mini">{% trans "Download" %}</a>
-          <a href="{% url "map_view" map.id %}" class="btn btn-mini">{% trans "View" %}</a>
-        </p>
+      <div class="tools span3 pull-right">
+          <a href="{% url "map_download" map.id %}" class="btn btn-mini pull-right">{% trans "Download" %}</a>
+          <a href="{% url "map_view" map.id %}" class="btn btn-mini pull-right">{% trans "View" %}</a>
       </div> 
     </div> <!-- /.details --> 
   </div> <!-- /.content -->

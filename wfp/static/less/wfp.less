@@ -326,13 +326,17 @@ a.div-link {
   padding: 20px 0;
 }
 .outer {
-  margin: 20px -30px;
+  margin-top: 20px;
   h3 {
     color: black;
     font-weight: normal;
     margin-top: 0;
   }
 }
+.page-title {
+  font-weight: normal;
+}
+
 header.jumbotron {
   background: url('/static/img/title_bg.png');
   border-bottom: 1px solid @grayLighter;
@@ -430,8 +434,11 @@ article h3 [class^="icon-"], [class*=" icon-"] {
 }
 
 .form-actions {
-  background: @grayLighter;
-  border: 0;
+  background-color: transparent;
+  border-top: 1px solid @grayLight;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* List
@@ -446,6 +453,7 @@ article h3 [class^="icon-"], [class*=" icon-"] {
   border-bottom: 1px solid @grayLight;
   clear: both;
   margin-left: 0;
+  margin-bottom: 5px;
   .content {
     margin-left: 0;
   }
@@ -463,7 +471,7 @@ article h3 [class^="icon-"], [class*=" icon-"] {
     display: block;
     float:left;
     height: 75px;
-    margin: 0 10px 0 40px;
+    margin: 0 10px 0 10px;
     overflow: hidden;
     padding: 0;
     width: 100px;
@@ -505,6 +513,14 @@ article h3 [class^="icon-"], [class*=" icon-"] {
   .abstract-placeholder {
     display: none;
   }
+  .tools {
+    a {
+      margin-left: 5px;
+    }
+  }
+  .stats {
+      margin-bottom: 0;
+    }
 }
 
 body.home {
@@ -522,6 +538,7 @@ body.people article .content {
   border: 1px solid @grayLight;
   border-radius: 4px;
   float: left;
+  font-size: .9em;
   margin: 10px 0 10px 5px;
   overflow: hidden;
   padding: 0;
@@ -534,13 +551,17 @@ body.people article .content {
     margin:0;
   }
   h3 {
+    color: @brand-primary;
     font-size: 14px;
-    line-height: 0.5em;
     margin-left: 5px;
+    margin-top: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 190px;
+  }
+  .details {
+    margin-top: -20px;
   }
   p {
     padding-bottom: 10px;
@@ -596,6 +617,9 @@ body.people article .content {
     }
     .tools {
       clear: left;
+    }
+    .tools a {
+      margin:  0 5px 5px;
     }
   }
 }
@@ -686,11 +710,13 @@ ul.nav-pills.filter {
 }
 #clear-search {
   color: @gray;
-  font-size: 0.8em;
+  font-size: 12px;
   font-weight: normal;
+  line-height: 26px;
+  margin-right: 10px;
 }
 .search-count {
-  margin: 10px 40px;
+  margin: -40px 40px 30px;
 }
 /* Slider
    ----------------------------- */
@@ -1176,6 +1202,9 @@ footer {
   &:hover {
     background: darken(@btn-info-bg, 15%);
   }
+}
+.btn-group.open .btn-info.dropdown-toggle {
+  background-color: darken(@btn-info-bg, 15%);
 }
 .icon-rotate-45:before {
   -webkit-transform: rotate(45deg);

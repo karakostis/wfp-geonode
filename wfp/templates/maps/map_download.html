@@ -3,10 +3,10 @@
 
 {% block body %}
 <div class="span12">
-  <h3>{% trans "Download" %} {{map.title}}</h3>
+  <h2 class="page-title">{% trans "Download Map" %}</h2>
   <p>
     {% blocktrans %}
-      Here you can download all the layers of this map that
+      Here you can download all the layers of{% endblocktrans %} {{map.title}} {% blocktrans %}that
       are hosted on this GeoNode.
     {% endblocktrans %}
     <ul>

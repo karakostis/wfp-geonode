@@ -8,16 +8,21 @@
 {% block body_class %}maps{% endblock %}
 
 {% block body %}
-<form action="{% url "map_remove" map.id %}" method="POST">
-  <legend>
+<div class="span12">
+  <h2 class="page-title">Remove a Map</h2>
+  <p>
     {% blocktrans with map.title as map_title %}
-        Are you sure you want to remove {{ map_title }}?
+      Are you sure you want to remove {{ map_title }}?
     {% endblocktrans %}
-  </legend>
+  </p>
+</div>
+<div class="span12">
   {% csrf_token %}
   <div class="form-actions">
-    <input type="submit" class="btn btn-danger" value="{% trans "Yes, I am sure"  %}" />
-    <a href="{{ map.get_absolute_url }}" class="btn">{% trans "No, don't remove it" %}</a>
+    <form action="{% url "map_remove" map.id %}" method="POST">
+      <input type="submit" class="btn btn-danger" value="{% trans "Yes, I am sure"  %}" />
+      <a href="{{ map.get_absolute_url }}" class="btn">{% trans "No, don't remove it" %}</a>
+    </form>
   </div>
-</form>
+</div>
 {% endblock %}
