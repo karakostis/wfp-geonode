@@ -12,17 +12,6 @@
   font-weight: normal;
   font-style: normal;
 }
-@font-face {
-    font-family: 'bebas_neueregular';
-    src: url('../font/bebasneue-webfont.eot');
-    src: url('../font/bebasneue-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../font/bebasneue-webfont.woff') format('woff'),
-         url('../font/bebasneue-webfont.ttf') format('truetype'),
-         url('../font/bebasneue-webfont.svg#bebas_neueregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
 
 /* Variables
    ----------------------------- */
@@ -62,6 +51,7 @@ body {
   background: @body-bg;
   font-family: @font-family-sans-serif;
   line-height: 1.428571429;
+  padding-bottom: 80px;
   -webkit-font-smoothing: antialiased;
 }
 h1,
@@ -128,8 +118,9 @@ select {
 }
 .nav-collapse .nav > li > a {
   color: white;
-  font-family: "futura-pt-condensed",'bebas_neueregular',"Arial Narrow", sans-serif;
+  font-family: "futura-pt-condensed","Arial Narrow", sans-serif;
   font-size: 20px;
+  font-weight: 600;
   margin-bottom: 0;
   padding: 10px 25px;
   text-shadow: none;
@@ -299,7 +290,6 @@ section.featured-maps {
   }
 }
 section.boxes {
-  margin-bottom: 40px;
 }
 a.div-link {
   border-radius: 4px;
