@@ -11,6 +11,17 @@
 
 {% block body_class %}data{% endblock %}
 
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Update Metadata" %}</h1>
+      <a href="{% url "documents_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Documents" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
 {% block body_outer %}  
 <form class="form-horizontal" action="{% url "document_metadata" document.id %}" method="POST">
     <legend>

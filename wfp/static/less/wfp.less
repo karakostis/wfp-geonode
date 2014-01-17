@@ -16,14 +16,17 @@
 /* Variables
    ----------------------------- */
 @brand-primary: rgb(42, 147, 252);
-@brand-secondary: rgb(204, 85, 34);
+/*@brand-secondary: rgb(204, 85, 34);*/
+@brand-secondary: #da4f49;
 @btn-primary-bg: @brand-primary;
 @btn-info-bg: @brand-secondary;
 
 @body-bg: white;
 @text-color: @grayDarker;
-@link-color: #5facd7;
+/*@link-color: #5facd7;*/
+@link-color: #0a75b6;
 @link-hover-color: darken(@link-color, 15%);
+@footer-bg: #3a4d67;
 
 
 @font-family-sans-serif: 'Open Sans', 'Arial', sans-serif;
@@ -65,7 +68,7 @@ h6 {
   font-weight: @headings-font-weight;
 }
 a {
-  color: @brand-primary;
+  color: @link-color;
 }
 select {
   font-family: @font-family-sans-serif;
@@ -200,15 +203,15 @@ font-size: 0.875em;
 /* Home Page
    ----------------------------- */
 .carousel-caption .btn {
-  background: transparent;
+  /*background: transparent;
   border: 1px solid white;
-  color: white;
+  color: white;*/
   font-weight: 600;
   margin-left: 20px;
-  text-shadow: 2px 2px 2px rgba(0,0,0,.4);
+  /*text-shadow: 2px 2px 2px rgba(0,0,0,.4);
   &:hover {
     background: rgba(255, 255, 255, 0.2);
-  }
+  }*/
 }
 
 
@@ -298,6 +301,7 @@ a.div-link {
   font-size: 0.875em;
   padding: 10px 0;
   i {
+    color: @brand-primary;
     margin-left: 10px;
     margin-right: -10px;
   }
@@ -310,8 +314,8 @@ a.div-link {
     color: @text-color;
     margin: -1px;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+       -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     i {
       color: red;
     }
@@ -345,12 +349,12 @@ header.jumbotron {
   padding: 20px 0;
   position: relative;
   text-align: left;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 0, 0, 0.075);
+  /*text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 0, 0, 0.075);*/
   /*-webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);
      -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);
           box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);*/
   h1 {
-    color: @grayDark;
+    color: #0a75b6;
     font-weight: 200;
     i {
       margin: 0 20px 0 10px;
@@ -705,7 +709,7 @@ ul.nav-pills.filter {
     padding-left: 8px;
   }
   a.active {
-    color: @brand-primary;
+    color: @brand-secondary;
   }
 }
 #clear-search {
@@ -757,7 +761,7 @@ ul.nav-pills.filter {
     padding: 0.8em;
   }
   .nav a.active {
-    color: @link-color;
+    color: @brand-secondary; /*@link-color;*/
   }
   a.toggle {
     text-decoration: none;
@@ -950,11 +954,11 @@ section.upload-btn {
   margin-top: 20px;
   .nav-tabs {
     a {
-      color: @gray;
+      color: @brand-secondary;
     }
     a:hover {
         border-bottom: 1px solid @grayLight;
-        color: @brand-primary;
+        /*color: @brand-primary;*/
       }
     .active {
       a {
@@ -1138,7 +1142,7 @@ ul.stats {
 /* Footer
    ----------------------------- */
 footer {
-  background: @grayDarker;
+  background: @footer-bg;
   border-top: 1px solid @grayLight;
   bottom: 0;
   color: @grayLight;
@@ -1222,7 +1226,7 @@ footer {
   margin-top: 4px;
 }
 
-/*.select2-default {
+.select2-default {
   color: white!important;
 }
 .select2-container .select2-choice {
@@ -1305,7 +1309,7 @@ footer {
 }
 .select2-results .select2-highlighted {
   background: rgba(0,0,0,0.25);
-} */
+}
 
 .social form {
   border: 1px solid @grayLight;

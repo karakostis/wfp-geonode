@@ -3,12 +3,19 @@
 {% load i18n %}
 {% block title %} {% trans "About GeoNode" %} — {{ block.super }} {% endblock %}
 
-{% block body %}
-  <header class="jumbotron subhead" id="overview">
-    <h1>{% trans "About GeoNode" %}</h1>
-    <p class="lead">{% trans "About GeoNode." %}</p>
-  </header>
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-globe"></i>{% trans "About GeoNode" %}</h1>
+    </div>
+  </div>
+</header>
+{% endblock %}
 
+{% block body %}
+
+  <p class="lead">{% trans "About GeoNode." %}</p>
   <p>Stub</p>
 
 {% endblock %}

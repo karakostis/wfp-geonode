@@ -11,9 +11,20 @@
 
 {% block body_class %}maps{% endblock %}
 
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-map-marker"></i>{% trans "Update Metadata" %}</h1>
+      <a href="{% url "maps_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Maps" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
 {% block body %}
 <div class="span12">
-  <h2 class="page-title">{% trans "Update Metadata" %}</h2>
+  <!-- <h2 class="page-title">{% trans "Update Metadata" %}</h2> -->
   <p>
     {% blocktrans with map.title as map_title %}
       Updating metadata of {{ map_title }}

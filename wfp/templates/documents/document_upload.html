@@ -11,16 +11,27 @@
     {{ block.super }}
 {% endblock %}
 
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Upload Documents" %}</h1>
+      <a href="{% url "documents_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Documents" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
 {% block body %}
   <div class="block">
     <div class="span8">
-      <h2 class="page-title">{% trans "Upload Documents" %}</h2>
+      <!-- <h2 class="page-title">{% trans "Upload Documents" %}</h2> -->
       {% if errors %}
-        <div id="errors">
+        <ul id="errors">
         {% for error in errors %}
-          <div>{{ error }}</div>
+          <li>{{ error }}</li>
         {% endfor %}
-      </div>
+      </ul>
       {% endif %}
       <div>
         <form id="upload_form" method="post" enctype="multipart/form-data" action="{% url "document_upload" %}">

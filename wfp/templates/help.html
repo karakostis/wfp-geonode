@@ -3,11 +3,18 @@
 {% load i18n %}
 {% block title %} {% trans "User Guide" %} - {{ block.super }} {% endblock %}
 
-{% block body %} 
-  <header class="jumbotron subhead" id="overview">
-    <h1>{% trans "GeoNode Help" %}</h1>
-    <p class="lead">{% trans "This page provides helpful information about how to use the GeoNode. You can use the sidebar links to navigate to what you want to know." %}</p>
-  </header>
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-circle-arrow-right"></i>{% trans "Get Start" %}</h1>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+  <p class="lead">{% trans "This page provides helpful information about how to use the GeoNode. You can use the sidebar links to navigate to what you want to know." %}</p>
 
   {% blocktrans %}
   <p>The GeoNode provides access to data sets and a map editing application allows users to browse existing maps and contribute their own.</p>

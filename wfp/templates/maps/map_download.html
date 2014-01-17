@@ -1,9 +1,19 @@
 {% extends "maps/map_base.html" %}
 {% load i18n %}
 
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-map-marker"></i>{% trans "Download Map" %}</h1>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
 {% block body %}
 <div class="span12">
-  <h2 class="page-title">{% trans "Download Map" %}</h2>
+  <!-- <h2 class="page-title">{% trans "Download Map" %}</h2> -->
   <p>
     {% blocktrans %}
       Here you can download all the layers of{% endblocktrans %} {{map.title}} {% blocktrans %}that
