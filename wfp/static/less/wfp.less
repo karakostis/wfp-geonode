@@ -107,6 +107,8 @@ select {
 .language {
   background: transparent;
   color: white;
+  margin-bottom: -20px;
+  padding: 0;
 }
 .sign-in {
   padding: 10px;
@@ -1163,6 +1165,10 @@ footer {
   position: fixed;
   width: 100%;
   z-index: 99;
+  img {
+    margin-bottom: 5px;
+    margin-top: -5px;
+  }
   label {
     margin-right: 10px;
   }
@@ -1170,7 +1176,10 @@ footer {
     color: white;
     &:hover {
       color: @brand-primary;
-    };
+    }
+  }
+  form {
+    margin: 0;
   }
 }
 
