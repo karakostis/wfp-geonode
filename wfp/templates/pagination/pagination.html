@@ -10,8 +10,7 @@
       <span class="disabled prev"><i class="icon-chevron-left"></i> {% trans "previous" %}</span>
       {% endif %}
     </li>
-    <li>page <b class="current page">{{ page_obj.number }}</b> of <b class="page_total">{{ page_obj.paginator.num_pages }}</b>
-    </li>
+    <li>page <b class="current page">{{ page_obj.number }}</b> of <b class="page_total">{{ page_obj.paginator.num_pages }}</b></li>
     <li>
       {% if page_obj.has_next %}
       <a href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}" class="next more">{% trans "Next" %} <i class="icon-chevron-right"></i></a>
