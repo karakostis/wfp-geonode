@@ -24,7 +24,7 @@
   {% endif %}
 {% endfor %}
 {% else %}
-  <p class="search-count">Total: {{ total }}. {% trans "No data found" %}</p>
+  <p class="search-count">{% trans "No data found" %}</p>
 {% endif %}
 </div>
 {% if object_list|length > 0 %}
