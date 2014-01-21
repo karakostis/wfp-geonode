@@ -82,7 +82,9 @@ select {
 .navbar-inverse .navbar-inner {
   background-color: @brand-primary;
   background-image: none;
+  background-image: -o-linear-gradient(top, #2A93FC, #2A93FC);
   border-bottom: 3px solid rgb(79, 177, 235);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2A93FC', endColorstr='#ff2A93FC', GradientType=0);
   height: 77px;
   .brand {
     background: url(/static/img/wfp_logo_72_white.png) 0 2px no-repeat;
@@ -255,47 +257,85 @@ section.social {
 }
 section.featured-maps {
   margin: -30px 0 10px;
-  h5 {
-    border: 1px solid @grayLight;
-    border-top: 0;
-    color: @link-color;
-    margin-top: 0;
-    overflow: hidden;
-    padding: 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 200px;
-    }
+  .span3 {
+    background: white;
+    padding: 0; 
+    padding-bottom: 5px;
+  }
   .map-thumb {
-    border: 1px solid @grayLight;
-    border-bottom: 0;
-    font-size: 12px;
-    height: 165px;
-    overflow: hidden;
-    position: relative;
-    width: 220px;
-    }
-  div.map-thumb div {
     background: @brand-primary;
     color: white;
     font-size: 12px;
-    height: 185px;
-    left: 0;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    width: 200px;
-    img {
-      margin: -10px;
-      }
+    height: 190px;
+    overflow: hidden;
+    position:relative; 
+    width:220px;
   }
-  div.map-thumb div.first {
-    z-index: 3;
+  .map-thumb img, .map-thumb div {
+    position: absolute; 
+    -webkit-transition: all 0.5s ease; 
+       -moz-transition: all 0.5s ease; 
+         -o-transition: all 0.5s ease; 
+            transition: all 0.5s ease;
+  }
+  .map-thumb {
+    img {z-index: 9; 
+      border: 1px solid @gray;
+      border-bottom: 0;
+      width: 218px;
     }
-  div.map-thumb:hover div.first{
-    display: none;
+    div {z-index: 99; opacity: 0;}
+    a {
+      color: white; 
+      text-decoration: none;
+    }
+    &:hover img {
+      opacity: 0.2; 
+      -webkit-transition: all 0.3s ease; 
+         -moz-transition: all 0.3s ease; 
+           -o-transition: all 0.3s ease; 
+              transition: all 0.3s ease;
+    };
+    &:hover div {
+      opacity: 1; 
+      -webkit-transition: all 0.3s ease; 
+         -moz-transition: all 0.3s ease; 
+           -o-transition: all 0.3s ease; 
+              transition: all 0.3s ease;
+    };
   }
-}
+  .map-abstract {
+    padding: 10px;
+  }
+  div.map-title {
+    bottom: 5px;
+    color: white;
+    font-size: 12px; 
+    margin-left: 10px;
+    opacity: 1;
+    position: absolute;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+  div.views {
+    bottom: 5px;
+    color: white;
+    font-size: 12px;
+    margin-right: 5px;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 50px;
+      i {
+        font-size: 14px;
+        margin-right: 5px;
+      }
+     }
+  }
+
 section.boxes {
 }
 a.div-link {
@@ -358,9 +398,10 @@ header.jumbotron {
      -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);
           box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.2);*/
   h1 {
-    color: #0a75b6;
+    color: @grayDarker;
     font-weight: 200;
     i {
+      color: @grayDarker;
       margin: 0 20px 0 10px;
     }
   }
@@ -527,8 +568,8 @@ article h3 [class^="icon-"], [class*=" icon-"] {
     }
   }
   .stats {
-      margin-bottom: 0;
-    }
+    margin-bottom: 0;
+  }
 }
 
 body.home {
@@ -1080,10 +1121,10 @@ ul.stats {
   .layer {
     content: "\f096";
     -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   }
   .layer:before {

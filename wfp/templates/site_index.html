@@ -142,15 +142,16 @@ This is where you can override the hero area block. You can simply modify the co
     {% for map in featured_maps %}
     <div class="span3">
       <div class="map-thumb">
-        <div class="first">
-          <a href="#" class="map-link"><img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" /></a>
+        <a href="#" class="map-link">
+          <img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" />
+        </a>
+        <div class="map-abstract">
+          <p><a href="{% url "map_detail" map.id %}">{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"M d Y" }}</em></a></p>        
+          <p><a href="{% url "map_detail" map.id %}">{{ map.abstract|truncatewords:"30" }}</a></p>
         </div>
-        <a href="{% url "map_detail" map.id %}" class="map-link"><div class="second">
-          <p>{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"M d Y" }}</em></p>        
-          <p>{{ map.abstract|truncatewords:"30" }}</p>
-        </div><a href="{% url "map_detail" map.id %}" class="map-link">
+        <div class="map-title"><a href="{% url "map_detail" map.id %}" class="map-link">{{ map.title }}</a></div>
+        <div class="views pull-right"><i class="icon-eye-open"></i>{{ map.popular_count }}</div>
       </div>
-      <h5><a href="{% url "map_detail" map.id %}" class="map-link">{{ map.title }}<a href="{% url "map_detail" map.id %}" class="map-link"></h5>
     </div>
     {% endfor %}
   </div>
