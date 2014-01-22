@@ -8,9 +8,8 @@
 {% num_ratings document as num_votes %}
 <article>
   <div class="content">
-    <!-- <div class="abstract-placeholder">{{ document.abstract }}</div> -->
-    <div class="icon-placeholder"><i class="icon-file-text-alt"></i></div>
     <div class="item-header">
+      <a href="{% url "map_detail" document.id %}"><img class="thumb" src="{{ STATIC_URL }}img/doc-placeholder.png" /></a>
       <h3><i class="icon-file-text-alt"></i> <a href="{% url "document_detail" document.id %}">{{ document.title }}</a></h3>
     </div>
     <div class="details">
@@ -22,8 +21,8 @@
           <li><a href="{% url "document_detail" document.id %}#rate"><strong><span class="overall_rating"></span></strong><span class="avg_rating" data-rating="{{ document_rating }}">{{num_votes}} {% trans "ratings" %}</span></a></li>
         </ul>
       </div>
-      <div class="tools">
-        <p><a href="{% if document.doc_file %}{{ document.doc_file.url }}{% endif %}" class="btn btn-mini">{% trans "Download" %}</a></p>
+      <div class="tools pull-right">
+        <a href="{% if document.doc_file %}{{ document.doc_file.url }}{% endif %}" class="btn btn-mini btn-danger pull-right">{% trans "Download" %}</a>
       </div>
     </div>
   </div>
