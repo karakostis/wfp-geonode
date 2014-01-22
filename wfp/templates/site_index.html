@@ -142,7 +142,7 @@ This is where you can override the hero area block. You can simply modify the co
     {% for map in featured_maps %}
     <div class="span3">
       <div class="map-thumb">
-        <a href="#" class="map-link">
+        <a href="{% url "map_detail" map.id %}" class="map-link">
           <img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" />
         </a>
         <div class="map-abstract">
