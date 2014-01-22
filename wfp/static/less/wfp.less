@@ -290,6 +290,10 @@ section.featured-maps {
       text-decoration: none;
     }
     &:hover img {
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";/* IE 8 */
+      filter: alpha(opacity=20);/* IE 5-7 */
+      -moz-opacity: 0.2;/* Netscape */
+      -khtml-opacity: 0.2;/* Safari 1.x */
       opacity: 0.2; 
       -webkit-transition: all 0.3s ease; 
          -moz-transition: all 0.3s ease; 
