@@ -97,7 +97,7 @@
                 <h3><i class="icon-unchecked icon-rotate-45"></i>
                 {% endif %}
                 {% if obj.class_name = 'Document' %}
-                <div class="icon-placeholder"><i class="icon-file-text-alt"></i></div>
+                <img class="thumb" src="{{ STATIC_URL }}img/doc-placeholder.png" />
                 <h3><i class="icon-file-text-alt"></i>
                 {% endif %}
                   <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
