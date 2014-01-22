@@ -21,9 +21,9 @@
           <li><a href="{% url "map_detail" map.id %}#rate"><strong><span class="avg_rating" data-rating="{{ map_rating }}"> <span class="overall_rating"></span></span></strong>{{num_votes}} {% trans "ratings" %}</a></li>
         </ul>
       </div> <!-- /.meta -->
-      <div class="tools span3 pull-right">
-          <a href="{% url "map_download" map.id %}" class="btn btn-mini btn-danger pull-right">{% trans "Download" %}</a>
-          <a href="{% url "map_view" map.id %}" class="btn btn-mini pull-right">{% trans "View" %}</a>
+      <div class="tools pull-right">
+        <a href="{% url "map_download" map.id %}" class="btn btn-mini btn-danger pull-right">{% trans "Download" %}</a>
+        <a href="{% url "map_view" map.id %}" class="btn btn-mini pull-right">{% trans "View" %}</a>
       </div> 
     </div> <!-- /.details --> 
   </div> <!-- /.content -->
