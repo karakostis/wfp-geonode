@@ -15,8 +15,10 @@
 {{ block.super }}
 {% endblock %}
 
-
 {% block body_class %}data{% endblock %}
+
+{% block jumbotron %}
+{% endblock %}
 
 {% block body_outer %}
   <div class="span6">
@@ -46,7 +48,7 @@
       </div>
       {% endif %}
       <!-- download metadata -->
-      <div class="btn-group">
+      <!-- <div class="btn-group">
         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
           {% trans "Download Metadata" %}
           <span class="caret"></span>
@@ -56,7 +58,7 @@
             <li><a href="{{ link.url }}">{{ link.name }} <i class="icon-chevron-right"></i></a></li>
           {% endfor %}
         </ul>
-      </div>
+      </div> -->
       <!-- download layer -->
       <div class="btn-group">
         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">

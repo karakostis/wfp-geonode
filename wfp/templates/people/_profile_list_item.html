@@ -39,7 +39,7 @@
       {% endif %}
 
       {% if_has_tag actor_url %}
-        <a href="{% actor_url profile.o.user %}" class="btn btn-mini pull-right" type="button">{% trans "My Activities" %}</a>
+        <a href="{% actor_url profile.o.user %}" class="btn btn-mini btn-danger pull-right" type="button">{% trans "Activities" %}</a>
       {% endif_has_tag %}
       </div>
     </div> <!-- ./details -->

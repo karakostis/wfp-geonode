@@ -262,6 +262,9 @@ section.featured-maps {
     padding: 0; 
     padding-bottom: 5px;
   }
+  h3 {
+    font-size: 1.125em;
+  }
   .map-thumb {
     background: @brand-primary;
     color: white;
@@ -413,10 +416,19 @@ header.jumbotron {
 
 aside {
   margin-top: 0;
-  section {
+  .well {
+    background: white;
+    border: 1px solid @grayLight;
+    margin-top: 20px;
+    padding: 0;
+  }
+  h4 {
+    border-bottom: 1px solid @grayLight;
+    padding: 0 10px 5px;
   }
   p {
     clear: both;
+    padding: 0 10px;
   }
   section.last {
     border-bottom:0;
@@ -427,8 +439,7 @@ aside {
       margin-bottom: 20px;
     }
     .details {
-      margin-left: -10px;
-      margin-top: 0;
+      
     }
     h3 {
       font-size: 1em;
@@ -436,11 +447,6 @@ aside {
       margin-left: -10px;
       margin-top: 0;
     }
-  }
-
-  h4 {
-    border-bottom: 1px solid @grayLight;
-    padding: 10px 0 3px;
   }
 
   ul.sidenav {
@@ -1024,8 +1030,8 @@ section.upload-btn {
 }
 
 .avatar img {
-  display: block;
   border-radius: 4px;
+  vertical-align: text-top;
 }
 
 ul.stats {
@@ -1269,8 +1275,8 @@ footer {
   color: white!important;
 }
 .select2-container .select2-choice {
+  background: rgb(31,110,189) ;/* IE fallback color  */
   background: rgba(0,0,0,0.25);
-  background-image: none;
      -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
           background-clip: padding-box;

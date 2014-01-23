@@ -23,8 +23,8 @@
         </ul>
       </div> <!-- /.meta -->
       <div class="tools">
-          <a href="#download-{{layer.id}}" data-toggle="modal" class="btn btn-danger btn-mini">{% trans "Download" %}</a>
-          <a href="{% url "new_map" %}?layer={{ layer.typename }}" class="btn btn-danger btn-mini">{% trans "Create a map" %}</a>
+        <a href="#download-{{layer.id}}" data-toggle="modal" class="btn btn-primary btn-mini pull-right">{% trans "Download" %}</a>
+        <a href="{% url "new_map" %}?layer={{ layer.typename }}" class="btn btn-danger btn-mini pull-right">{% trans "Create a map" %}</a>
       </div>
     </div> <!-- /.details -->  
   </div> <!-- /.content -->

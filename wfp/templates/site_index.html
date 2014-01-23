@@ -99,7 +99,7 @@ This is where you can override the hero area block. You can simply modify the co
           <div class="container">
             <div class="carousel-caption">
               <h1>GIS data standardization</h1>
-              <p class="lead">GeoNode facilitates data standardization within our organization  by providing a clear process  for uploading your gis data, compiling metadata and styling. You can then share them publicly or restrict to specific users only.</p>
+              <p class="lead">GeoNode facilitates data standardization within our organization  by providing a clear process  for uploading your gis data, compiling metadata and styling.</p>
               <a class="btn btn-danger" href="/upload/">Upload Layers</a>
             </div>
           </div>
@@ -142,14 +142,14 @@ This is where you can override the hero area block. You can simply modify the co
     {% for map in featured_maps %}
     <div class="span3">
       <div class="map-thumb">
-        <a href="{% url "map_detail" map.id %}" class="map-link">
+        <a href="{% url "map_detail" map.id %}/view" class="map-link">
           <img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" />
         </a>
         <div class="map-abstract">
-          <p><a href="{% url "map_detail" map.id %}">{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"M d Y" }}</em></a></p>        
-          <p><a href="{% url "map_detail" map.id %}">{{ map.abstract|truncatewords:"30" }}</a></p>
+          <p><a href="{% url "map_detail" map.id %}/view">{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"M d Y" }}</em></a></p>        
+          <p><a href="{% url "map_detail" map.id %}/view">{{ map.abstract|truncatewords:"30" }}</a></p>
         </div>
-        <div class="map-title"><a href="{% url "map_detail" map.id %}" class="map-link">{{ map.title }}</a></div>
+        <div class="map-title"><a href="{% url "map_detail" map.id %}/view" class="map-link">{{ map.title }}</a></div>
         <div class="views pull-right"><i class="icon-eye-open"></i>{{ map.popular_count }}</div>
       </div>
     </div>
@@ -189,7 +189,7 @@ This is where you can override the hero area block. You can simply modify the co
       <div class="span1"><i class="icon-cloud-upload icon-4x"></i></div>
         <div class="span3">
           <h3>Upload Data</h3>
-          <p>GeoNode allows registered users fo easiley upload geospatial data in several formats including shapefile, GeoTiff and KML.</p>
+          <p>GeoNode allows registered users fo easily upload geospatial data in several formats including shapefile, GeoTiff and KML.</p>
         </div>
       </div>
     </a>

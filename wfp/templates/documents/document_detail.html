@@ -47,16 +47,16 @@
         </ul>
       </div>
     {% endif %}
-
+    <!-- 
     <div class="btn-group">
-        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{% trans "Download Metadata" %}<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          {% for link in document.link_set.metadata %}
-          <li><a href="{{ link.url }}">{{ link.name }} <i class="icon-chevron-right"></i></a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{% trans "Download Metadata" %}<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        {% for link in document.link_set.metadata %}
+        <li><a href="{{ link.url }}">{{ link.name }} <i class="icon-chevron-right"></i></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    -->
     </div>
   </div>
 
@@ -114,39 +114,45 @@
   </div>
 
   <aside class="span4">
-    <h4>{% trans "Resource using this document" %}</h4>
-    {% if layer.maps %}
-    <p>{% trans "List of resources using this document:" %}</p>
-    {% endif %}
-    <ul class="unstyled space">
-      {% if related.title %}
-      <p>{% trans "This document is related to a " %} {{ document.content_type.name }}</p>
-      <a href='{{ related.get_absolute_url }}'>{{ related.title }}</a>
-      {% else %}
-      <p>{% trans "This document is not related to any maps or layers" %}</p>
+    <div class="well">
+      <h4>{% trans "Resource using this document" %}</h4>
+      {% if layer.maps %}
+      <p>{% trans "List of resources using this document:" %}</p>
       {% endif %}
-    </ul>
+      <ul class="unstyled space">
+        {% if related.title %}
+        <p>{% trans "This document is related to a " %} {{ document.content_type.name }}</p>
+        <a href='{{ related.get_absolute_url }}'>{{ related.title }}</a>
+        {% else %}
+        <p>{% trans "This document is not related to any maps or layers" %}</p>
+        {% endif %}
+      </ul>
+    </div>
 
     {% has_obj_perm user document "documents.change_document_permissions" as can_change_permissions %}
     {% if can_change_permissions %}
-    <h4>{% trans "Permissions" %}</h4>
-    <p>{% trans "Specify which users can view or modify this map" %}</p>
-    <p><a href="#modal_perms" data-toggle="modal" class="btn btn-default btn-block">{% trans "Change Document Permissions" %}</a></p>
+    <div class="well">
+      <h4>{% trans "Permissions" %}</h4>
+      <p>{% trans "Specify which users can view or modify this map" %}</p>
+      <p><a href="#modal_perms" data-toggle="modal" class="btn btn-default btn-block">{% trans "Change Document Permissions" %}</a></p>
+    </div>
     {% endif %}
 
-    <h4>{% trans "About" %}</h4>
-    <p>{% trans "Document Owner" %}</p>
-    {% with document.owner.profile as profile %}
-      {% include "people/_profile_about_item.html" %}
-    {% endwith %}
-    <p>{% trans "Point of Contact" %}</p>
-    {% with document.poc as profile %}
-      {% include "people/_profile_about_item.html" %}
-    {% endwith %}
-    <p>{% trans "Metadata Author" %}</p>
-    {% with document.metadata_author as profile %}
-      {% include "people/_profile_about_item.html" %}
-    {% endwith %}
+    <div class="well">
+      <h4>{% trans "About" %}</h4>
+      <p>{% trans "Document Owner" %}</p>
+      {% with document.owner.profile as profile %}
+        {% include "people/_profile_about_item.html" %}
+      {% endwith %}
+      <p>{% trans "Point of Contact" %}</p>
+      {% with document.poc as profile %}
+        {% include "people/_profile_about_item.html" %}
+      {% endwith %}
+      <p>{% trans "Metadata Author" %}</p>
+      {% with document.metadata_author as profile %}
+        {% include "people/_profile_about_item.html" %}
+      {% endwith %}
+    </div>
 
   </aside>
   {% include "_permissions_form.html" %}

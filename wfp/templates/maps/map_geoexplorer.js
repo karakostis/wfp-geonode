@@ -1,22 +1,5 @@
 {% include 'geonode/ext_header.html' %}
 {% include 'geonode/geo_header.html' %}
-<style type="text/css">
-#aboutbutton {
-    display: none;
-}
-#paneltbar {
-    margin-top: 80px;
-}
-button.logout {
-    display: none;
-}
-button.login {
-    display:none;
-}
-.map-title-header {
-    margin-right: 10px;
-}
-</style>
 <script type="text/javascript" src="{{ STATIC_URL}}geonode/js/thumbnail/map_thumbnail.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL}}geonode/js/extjs/GeoNode-mixin.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL}}geonode/js/extjs/GeoNode-GeoExplorer.js"></script>
@@ -58,3 +41,23 @@ Ext.onReady(function() {
 {% endautoescape %}
 });
 </script>
+<style type="text/css">
+#aboutbutton {
+    display: none;
+}
+#paneltbar {
+    margin-top: 80px;
+}
+button.logout {
+    display: none;
+}
+button.login {
+    display:none;
+}
+.map-title-header {
+    margin-right: 10px;
+}
+.brand strong {
+  font-weight: 700
+}
+</style>
