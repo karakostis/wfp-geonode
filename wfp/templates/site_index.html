@@ -50,20 +50,28 @@ This is where you can override the hero area block. You can simply modify the co
       margin-top: 80px;
       width: 800px;
     }
-    .carousel-caption h1 {
+    .carousel-caption h1 i {
+      background: rgb(42, 147, 252);
+      border-radius: 4px;
       color: #fff;
-      font-size: 3em;
+      font-size: 1.125em;
+      font-style: normal;
       font-weight: 400;
+      line-height: 1.75em;
       margin: 0;
-      padding: 20px;
-      text-shadow: 2px 2px 2px rgba(0,0,0,.4);
+      padding: 0 10px;
     }
-    .carousel-caption .lead {
+    .carousel-caption .lead i {
+      background: rgb(42, 147, 252);
+      border-radius: 4px;
       color: #fff;
+      font-style: normal;
       font-weight: 600;
-      line-height: 1.125em;
-      padding: 20px;
-      text-shadow: 2px 2px 2px rgba(0,0,0,.4);
+      line-height: 1.5em;
+      padding: 0 10px;
+    }
+    .carousel-caption .btn {
+      margin-left: 0;
     }
 
     </style>
@@ -78,8 +86,9 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider01.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Welcome to the <strong>WFP</strong>GeoNode</h1>
-              <p class="lead">Our corporate web application for creating and sharing geospatial data and maps designed for non-GIS experts.</p>
+              <h1><i>Welcome to the <strong>WFP</strong>GeoNode</i></h1>
+              <p class="lead"><i>Our corporate web application for creating and sharing geospatial</i></p>
+              <p class="lead"><i>data and maps designed for non-GIS experts.</i></p>
               <a class="btn btn-danger" href="/help/">Get Started</a>
             </div>
           </div>
@@ -88,8 +97,9 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider02.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Interactive mapping</h1>
-              <p class="lead">You can combine already existing layers with your own data to create powerful interactive maps accessible from all devices.</p>
+              <h1><i>Interactive mapping</i></h1>
+              <p class="lead"><i>You can combine already existing layers with your own data to create</i></p>
+              <p class="lead"><i>powerful interactive maps accessible from all devices.</i></p>
               <a class="btn btn-danger" href="/maps/">Explore Maps</a>
             </div>
           </div>
@@ -98,8 +108,9 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider03.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>GIS data standardization</h1>
-              <p class="lead">GeoNode facilitates data standardization within our organization  by providing a clear process  for uploading your gis data, compiling metadata and styling.</p>
+              <h1><i>GIS data standardization</i></h1>
+              <p class="lead"><i>GeoNode facilitates data standardization within our organization by providing</i></p>
+              <p class="lead"><i>a clear process for uploading your gis data, compiling metadata and styling.</i></p>
               <a class="btn btn-danger" href="/upload/">Upload Layers</a>
             </div>
           </div>
