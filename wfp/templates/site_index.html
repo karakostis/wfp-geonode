@@ -79,10 +79,10 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider01.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Welcome to the <strong>WFP</strong>GeoNode</h1>
-              <p class="lead">Our corporate web application for creating and sharing geospatial<br />
-              data and maps designed for non-GIS experts.</p>
-              <a class="btn btn-danger" href="/help/">Get Started</a>
+              <h1>{% trans "Welcome to the " %}<strong>WFP</strong>GeoNode</h1>
+              <p class="lead">{% trans "Our corporate web application for creating and sharing geospatial " %}<br />
+              {% trans "data and maps designed for non-GIS experts." %}</p>
+              <a class="btn btn-danger" href="/help/">{% trans "Get Started" %}</a>
             </div>
           </div>
         </div>
@@ -90,10 +90,10 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider02.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Interactive mapping</h1>
-              <p class="lead">You can combine already existing layers with your own data to create<br />
-              powerful interactive maps accessible from all devices.</p>
-              <a class="btn btn-danger" href="/maps/">Explore Maps</a>
+              <h1>{% trans "Interactive mapping" %}</h1>
+              <p class="lead">{% trans "You can combine already existing layers with your own data to create" %}<br />
+              {% trans "powerful interactive maps accessible from all devices." %}</p>
+              <a class="btn btn-danger" href="/maps/">{% trans "Explore Maps" %}</a>
             </div>
           </div>
         </div>
@@ -101,9 +101,10 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider03.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>GIS data standardization</h1>
-              <p class="lead">GeoNode facilitates data standardization within our organization by providing<br />a clear process for uploading your gis data, compiling metadata and styling.</p>
-              <a class="btn btn-danger" href="/upload/">Upload Layers</a>
+              <h1>{% trans "GIS data standardization" %}</h1>
+              <p class="lead">{% trans "GeoNode facilitates data standardization within our organization by providing" %}<br />
+              {% trans "a clear process for uploading your gis data, compiling metadata and styling." %}</p>
+              <a class="btn btn-danger" href="/upload/">{% trans "Upload Layers" %}</a>
             </div>
           </div>
         </div>
@@ -117,16 +118,16 @@ This is where you can override the hero area block. You can simply modify the co
         <div class="row">
           <div class="span8">
             <div class="row">
-              <div class="span2"><p><a href="/layers/">Layers <span class="count">{{ facets.layers }}</span></a></p></div>
-              <div class="span2"><p><a href="/maps/">Maps <span class="count">{{ facets.maps }}</span></a></p></div>
-              <div class="span2"><p><a href="/documents/">Documents <span class="count">{{ facets.documents }}</span></a></p></div>
-              <div class="span2"><p><a href="/people/">Users <span class="count">{{ facets.users }}</span></a></p></div>
+              <div class="span2"><p><a href="/layers/">{% trans "Layers" %} <span class="count">{{ facets.layers }}</span></a></p></div>
+              <div class="span2"><p><a href="/maps/">{% trans "Maps" %} <span class="count">{{ facets.maps }}</span></a></p></div>
+              <div class="span2"><p><a href="/documents/">{% trans "Documents" %} <span class="count">{{ facets.documents }}</span></a></p></div>
+              <div class="span2"><p><a href="/people/">{% trans "Users" %} <span class="count">{{ facets.users }}</span></a></p></div>
             </div>
           </div>
           <div class="span4">
             <form class="input-append pull-right" action="{% url "search" %}" method="GET">
               {# csrf_token #}
-              <input id="search" placeholder="Search..." type="text" name="q"/>
+              <input id="search" placeholder="{% trans 'Search...' %}" type="text" name="q"/>
             </form>
           </div>
         </div>
@@ -169,8 +170,8 @@ This is where you can override the hero area block. You can simply modify the co
           <i class="icon-unchecked icon-rotate-45 icon-4x"></i>
         </div>
         <div class="span3">
-          <h3>Explore Data</h3>
-          <p>Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources.</p>
+          <h3>{% trans "Explore Data" %}</h3>
+          <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
         </div>
       </div>
     </a>
@@ -180,8 +181,8 @@ This is where you can override the hero area block. You can simply modify the co
       <div class="row">
         <div class="span1" style="text-align:center"><i class="icon-map-marker icon-4x"></i></div>
         <div class="span3">
-          <h3>Explore Maps</h3>
-          <p>Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only.</p>
+          <h3>{% trans "Explore Maps" %}</h3>
+          <p>{% trans "Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only." %}</p>
         </div>
       </div>
     </a>
@@ -191,8 +192,8 @@ This is where you can override the hero area block. You can simply modify the co
     <div class="row">
       <div class="span1"><i class="icon-cloud-upload icon-4x"></i></div>
         <div class="span3">
-          <h3>Upload Data</h3>
-          <p>GeoNode allows registered users fo easily upload geospatial data in several formats including shapefile, GeoTiff and KML.</p>
+          <h3>{% trans "Upload Data" %}</h3>
+          <p>{% trans "GeoNode allows registered users fo easily upload geospatial data in several formats including shapefile, GeoTiff and KML" %}.</p>
         </div>
       </div>
     </a>
