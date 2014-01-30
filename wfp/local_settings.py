@@ -6,6 +6,7 @@ GEONODE_USER = os.environ["geonode_user"]
 GEONODE_PWD = os.environ["geonode_pwd"]
 GEOSERVER_USER = os.environ["geoserver_user"]
 GEOSERVER_PWD = os.environ["geoserver_pwd"]
+GEOSERVER_URL = os.environ["geoserver_url"]
 
 DEBUG = TEMPLATE_DEBUG = True
 DEBUG_STATIC = False
@@ -41,11 +42,11 @@ DATABASES = {
 OGC_SERVER = {
     'default' : {
         'BACKEND' : 'geonode.geoserver',
-        'LOCATION' : 'http://localhost:8080/geoserver/',
+        'LOCATION' : GEOSERVER_URL,
         # PUBLIC_LOCATION needs to be kept like this because in dev mode
         # the proxy won't work and the integration tests will fail
         # the entire block has to be overridden in the local_settings
-        'PUBLIC_LOCATION' : 'http://localhost:8080/geoserver/',
+        'PUBLIC_LOCATION' : GEOSERVER_URL,
         'USER' : GEOSERVER_USER,
         'PASSWORD' : GEOSERVER_PWD,
         'MAPFISH_PRINT_ENABLED' : True,
