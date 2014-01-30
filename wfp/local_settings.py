@@ -84,42 +84,48 @@ MAP_BASELAYERS = [{
     "visibility": False,
     "fixed": True,
     "group":"background"
-  }, {
-    "source": {"ptype": "gxp_olsource"},
-    "type":"OpenLayers.Layer.OSM",
-    "args":["OpenStreetMap"],
-    "visibility": False,
+  }, 
+  {
+    "source": {"ptype": "gxp_mapboxsource"},
+    "name": "geography-class",
+    "title": "Political MapBox",
     "fixed": True,
+    "visibility": False,
     "group":"background"
-  }, {
-    "source": {"ptype": "gxp_mapquestsource"},
-    "name":"osm",
-    "group":"background",
-    "visibility": True
-  }, {
+  },
+  {
     "source": {"ptype": "gxp_mapquestsource"},
     "name":"naip",
+    "title":"Satellite Imagery",
     "group":"background",
     "visibility": False
   }, {
     "source": {"ptype": "gxp_bingsource"},
     "name": "AerialWithLabels",
+    "title":"Satellite Imagery with labels",
     "fixed": True,
     "visibility": False,
     "group":"background"
-  },{
+  }, {
+    "source": {"ptype": "gxp_mapquestsource"},
+    "name":"osm",
+    "title":"Terrain MapQuest",
+    "group":"background",
+    "visibility": False
+  },
+  {
     "source": {"ptype": "gxp_mapboxsource"},
     "name": "world-light",
+    "title": "Light base layer",
     "fixed": True,
     "visibility": False,
     "group":"background"
   },
-  
   {
     "source": {"ptype": "gxp_osmsource"},
     "name": "mapnik",
     "fixed": True,
-    "visibility": False,
+    "visibility": True,
     "group":"background"
   },
 ]
