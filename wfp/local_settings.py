@@ -8,9 +8,6 @@ GEONODE_PWD = os.environ['geonode_pwd']
 GEOSERVER_USER = os.environ['geoserver_user']
 GEOSERVER_PWD = os.environ['geoserver_pwd']
 GEOSERVER_URL = os.environ['geoserver_url']
-EMAIL_HOST = os.environ['email_host']
-EMAIL_HOST_USER = os.environ['email_host_user']
-EMAIL_HOST_PASSWORD = os.environ['email_host_password']
 
 DEBUG = TEMPLATE_DEBUG = True
 DEBUG_STATIC = False
@@ -199,10 +196,13 @@ INSTALLED_APPS = INSTALLED_APPS + (
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'wfp.geonode@gmail.com'
-EMAIL_HOST_PASSWORD = 'pr3par3dn3ss'
+EMAIL_HOST = os.environ['email_host']
+EMAIL_HOST_USER = os.environ['email_host_user']
+EMAIL_HOST_PASSWORD = os.environ['email_host_password']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+THEME_ACCOUNT_CONTACT_EMAIL = 'wfp.geonode@gmail.com'
+
 
 
