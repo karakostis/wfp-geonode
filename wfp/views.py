@@ -30,3 +30,6 @@ def search_page(request, template='search/search.html', **kw):
     
     return render_to_response(template, RequestContext(request, {'object_list': results, 
         'facets': facets, 'total': facets['layers'], 'featured_maps': featured_maps }))
+
+def ContactsView(TemplateView):
+    template_name = 'contacts.html'
