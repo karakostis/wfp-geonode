@@ -25,7 +25,7 @@ DATABASES = {
         'PORT': '5432',
     },
     # vector datastore for uploads
-    'datastore' : {
+    'uploaded' : {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gn_uploads',
         'USER' : GEONODE_USER,
@@ -55,7 +55,7 @@ OGC_SERVER = {
         'BACKEND_WRITE_ENABLED': True,
         'WPS_ENABLED' : True,
         # Set to name of database in DATABASES dictionary to enable
-        'DATASTORE': 'datastore', #'datastore',
+        'DATASTORE': 'uploaded', #'datastore',
         'TIMEOUT': 10  # number of seconds to allow for HTTP requests
     }
 }
