@@ -55,7 +55,7 @@ OGC_SERVER = {
         'BACKEND_WRITE_ENABLED': True,
         'WPS_ENABLED' : True,
         # Set to name of database in DATABASES dictionary to enable
-        'DATASTORE': 'uploaded', #'datastore',
+        'DATASTORE': 'datastore', #'datastore',
         'TIMEOUT': 10  # number of seconds to allow for HTTP requests
     }
 }
