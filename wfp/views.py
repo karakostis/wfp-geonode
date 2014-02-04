@@ -8,12 +8,11 @@ from geonode.people.models import Profile
 from geonode.search.views import search_api
 from geonode.search.search import _filter_security
 
-def index(request, template='index.html'):
+def index(request):
     post = request.POST.copy()
     post.update({'type': 'layer'})
     request.POST = post
-    return search_page(request, template=template)
-
+    return search_page(request, template='site_index.html')
 
 def search_page(request, template='search/search.html', **kw): 
     results, facets, query = search_api(request, format='html', **kw)
@@ -30,6 +29,11 @@ def search_page(request, template='search/search.html', **kw):
     
     return render_to_response(template, RequestContext(request, {'object_list': results, 
         'facets': facets, 'total': facets['layers'], 'featured_maps': featured_maps }))
-
-def ContactsView(TemplateView):
-    template_name = 'contacts.html'
+    
+def contacts(request):
+    profiles = Profile.objects.filter(user__groups__name='OMEP GIS Team').order_by('name')
+    return render_to_response('contacts.html', 
+        {   
+            'profiles': profiles,
+        },
+        context_instance=RequestContext(request))

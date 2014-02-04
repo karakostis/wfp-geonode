@@ -1,6 +1,10 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load friendly_loader %}
+{% friendly_load avatar_tags %}
+{% friendly_load relationship_tags %}
+
 {% block title %} {% trans "GeoNode Contacts" %} — {{ block.super }} {% endblock %}
 
 {% block jumbotron %}
@@ -20,5 +24,28 @@
   <p>If you want to learn more about the WFPGeoNode or experience any problem while using it please contact <a href="mailto:omep.gis@wfp.org">omep.gis@wfp.org</a> and an expert will get back to you soon.</p>
   <p></p>
   <p><strong>OMEP GIS Team</strong></p>
+  
+  {% for profile in profiles %}
+  <article>
+  <div class="content">
+    <div class="item-header">
+      <div class="avatar"><a href="{% url "profile_detail" profile.user.username %}" >{% avatar profile.user 200 %}</a></div>
+      <h3><i class="icon-user"></i> <a href="{% url "profile_detail" profile.user.username %}">{{ profile.name }}</a>
+      {% if user.is_authenticated %}
+        {% if  profile.email %}<a href="mailto:{{ profile.user.email }}"><i class="icon-envelope-alt icon-large"></i></a>{% endif %}
+      {% endif %}
+      </h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p class="abstract">
+          {% if profile.profile %}{{ profile.profile }}{% endif %}
+        </p>
+      </div> <!-- ./meta -->
+    </div> <!-- ./details -->
+  </div> <!-- ./content -->
+  </article>
+  {% endfor %}
+  
 
 {% endblock %}
