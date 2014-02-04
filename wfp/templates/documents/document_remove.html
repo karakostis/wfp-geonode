@@ -22,9 +22,9 @@
       Are you sure you want to remove {{ document_title }}?
     {% endblocktrans %}
   </p>
-  {% csrf_token %}
   <div class="form-actions">
     <form action="{% url "document_remove" document.id %}" method="POST">
+      {% csrf_token %}
       <input type="hidden" value="{{ document.typename }}" />
       <input type="submit" value="{% trans "Yes, I am sure" %}" class="btn btn-danger" />
       <a href="{{ document.get_absolute_url }}" class="btn">{% trans "No, don't remove it" %}</a>
