@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-28 10:00-0600\n"
+"POT-Creation-Date: 2014-02-05 08:22-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,7 +227,7 @@ msgstr ""
 #: templates/_comments.html:54 templates/_permissions_form.html:11
 #: templates/announcements/announcement_form.html:33
 #: templates/layers/layer_replace.html:39 templates/maps/map_download.html:68
-#: templates/upload/layer_upload.html:38
+#: templates/upload/layer_upload.html:41
 msgid "Cancel"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 #: templates/documents/document_upload.html:54
 #: templates/layers/layer_detail.html:192
 #: templates/layers/layer_replace.html:82 templates/maps/map_detail.html:153
-#: templates/upload/layer_upload.html:95
+#: templates/upload/layer_upload.html:98
 msgid "Permissions"
 msgstr ""
 
@@ -299,6 +299,11 @@ msgstr ""
 #: templates/about.html:18
 msgid "About GeoNode."
 msgstr ""
+
+#: templates/contacts.html:8 templates/contacts.html.py:14
+#, fuzzy
+msgid "GeoNode Contacts"
+msgstr "Contatti"
 
 #: templates/developer.html:4 templates/developer.html.py:8
 msgid "Information for Developers"
@@ -586,11 +591,11 @@ msgstr "Benvenuti su "
 #: templates/site_index.html:83
 msgid "Our corporate web application for creating and sharing geospatial "
 msgstr ""
-"La nostra web application aziendale per la creazione e la condivisione di "
+"La nostra corporate web application per la creazione e la condivisione di "
 
 #: templates/site_index.html:84
 msgid "data and maps designed for non-GIS experts."
-msgstr "dati geospaziali e mappe progettati per non esperti GIS."
+msgstr "dati spaziali e mappe progettata per utenti GIS non esperti."
 
 #: templates/site_index.html:93
 msgid "Interactive mapping"
@@ -621,14 +626,14 @@ msgid ""
 "GeoNode facilitates data standardization within our organization by providing"
 msgstr ""
 "GeoNode semplifica la standardizzazione dei dati GIS all'interno della "
-"nostra Organizzazione fornendo"
+"nostra organizzazione fornendo"
 
 #: templates/site_index.html:106
 msgid ""
 "a clear process for uploading your gis data, compiling metadata and styling."
 msgstr ""
-"un processo semplificato di upload di dati GIS, compilazione metadati e "
-"stili."
+"un processo chiaro per il caricamento di dati GIS, compilazione metadati e "
+"creazione di una simbologia."
 
 #: templates/site_index.html:107 templates/site_index_mod.html:103
 #: templates/site_index_orig.html:103 templates/layers/layer_base.html:14
@@ -662,8 +667,8 @@ msgid ""
 "Click to search for geospatial data from our corporate SDI or published by "
 "other users, organizations and public sources."
 msgstr ""
-"Ricerca dati geospaziali nella nostra SDI aziendale o pubblicati da "
-"altri utenti, organizzazioni e altre fonti pubbliche."
+"Ricerca dati geografici nel nostro corporate SDI  o pubblicati da altri "
+"utenti, organizzazioni e altre fonti pubbliche."
 
 #: templates/site_index.html:185
 msgid ""
@@ -682,7 +687,7 @@ msgid ""
 "GeoNode allows registered users fo easily upload geospatial data in several "
 "formats including shapefile, GeoTiff and KML"
 msgstr ""
-"GeoNode consente agli utenti registrati di caricare dati geospaziali in vari "
+"GeoNode consente agli utenti registrati di caricare dati geografici in vari "
 "formati, come shapefile, GeoTiff e KML"
 
 #: templates/site_index_mod.html:90 templates/site_index_orig.html:90
@@ -711,7 +716,7 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/account/login.html:7 templates/account/login.html.py:34
+#: templates/account/login.html:7 templates/account/login.html.py:39
 msgid "Log in"
 msgstr ""
 
@@ -719,15 +724,15 @@ msgstr ""
 msgid "Log In"
 msgstr ""
 
-#: templates/account/login.html:22
+#: templates/account/login.html:27
 msgid "Log in to an existing account"
 msgstr ""
 
-#: templates/account/login.html:32
+#: templates/account/login.html:37
 msgid "Forgot your username?"
 msgstr ""
 
-#: templates/account/login.html:33
+#: templates/account/login.html:38
 msgid "Forgot your password?"
 msgstr ""
 
@@ -792,7 +797,7 @@ msgstr ""
 #: templates/announcements/announcement_form.html:35
 #: templates/layers/layer_replace.html:30
 #: templates/layers/layer_replace.html:38
-#: templates/upload/layer_upload.html:29 templates/upload/layer_upload.html:37
+#: templates/upload/layer_upload.html:32 templates/upload/layer_upload.html:40
 #: templates/user_messages/inbox.html:44
 msgid "Delete"
 msgstr ""
@@ -1296,47 +1301,47 @@ msgid "Replace Layer: "
 msgstr ""
 
 #: templates/layers/layer_replace.html:23
-#: templates/upload/layer_upload.html:22
+#: templates/upload/layer_upload.html:25
 msgid "Incomplete Uploads"
 msgstr ""
 
 #: templates/layers/layer_replace.html:24
-#: templates/upload/layer_upload.html:23
+#: templates/upload/layer_upload.html:26
 msgid "You have the following incomplete uploads"
 msgstr ""
 
 #: templates/layers/layer_replace.html:27
-#: templates/upload/layer_upload.html:26
+#: templates/upload/layer_upload.html:29
 msgid "last updated on"
 msgstr ""
 
 #: templates/layers/layer_replace.html:29
-#: templates/upload/layer_upload.html:28
+#: templates/upload/layer_upload.html:31
 msgid "Resume"
 msgstr ""
 
 #: templates/layers/layer_replace.html:36
-#: templates/upload/layer_upload.html:35
+#: templates/upload/layer_upload.html:38
 msgid "Are you sure you want to delete this upload?"
 msgstr ""
 
 #: templates/layers/layer_replace.html:41
-#: templates/upload/layer_upload.html:40
+#: templates/upload/layer_upload.html:43
 msgid "Delete, and don't ask me again."
 msgstr ""
 
 #: templates/layers/layer_replace.html:56
-#: templates/upload/layer_upload.html:55
+#: templates/upload/layer_upload.html:58
 msgid "Drop files here"
 msgstr ""
 
 #: templates/layers/layer_replace.html:59
-#: templates/upload/layer_upload.html:58
+#: templates/upload/layer_upload.html:61
 msgid " or select them one by one:"
 msgstr ""
 
 #: templates/layers/layer_replace.html:67
-#: templates/upload/layer_upload.html:66
+#: templates/upload/layer_upload.html:69
 msgid "Files to be uploaded"
 msgstr ""
 
@@ -1345,7 +1350,7 @@ msgid "Upload Files"
 msgstr ""
 
 #: templates/layers/layer_replace.html:73
-#: templates/upload/layer_upload.html:85
+#: templates/upload/layer_upload.html:88
 msgid "Clear"
 msgstr ""
 
@@ -1961,11 +1966,19 @@ msgstr ""
 msgid "Upload Layer"
 msgstr ""
 
-#: templates/upload/layer_upload.html:71
+#: templates/upload/layer_upload.html:19
+msgid "Supported formats: shapefile, GeoTIFF."
+msgstr "Formati supportati: shapefile, GeoTIFF."
+
+#: templates/upload/layer_upload.html:20
+msgid "In case your files size is more than 50 Mb please contact"
+msgstr "Se avete file maggiori di 50 Mb per cortesia contattate"
+
+#: templates/upload/layer_upload.html:74
 msgid "Select the charset or leave default"
 msgstr ""
 
-#: templates/upload/layer_upload.html:84
+#: templates/upload/layer_upload.html:87
 msgid "Upload files"
 msgstr ""
 
