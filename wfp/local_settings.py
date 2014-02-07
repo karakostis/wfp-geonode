@@ -13,6 +13,7 @@ DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
 SITENAME = 'GeoNode'
+TIME_ZONE = 'Europe/Rome'
 
 # OGC (WMS/WFS/WCS) Server Settings
 DATABASES = {
