@@ -9,7 +9,7 @@ GEOSERVER_USER = os.environ['geoserver_user']
 GEOSERVER_PWD = os.environ['geoserver_pwd']
 GEOSERVER_URL = os.environ['geoserver_url']
 
-DEBUG = TEMPLATE_DEBUG = True
+DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
 SITENAME = 'GeoNode'
@@ -204,5 +204,9 @@ EMAIL_USE_TLS = True
 
 THEME_ACCOUNT_CONTACT_EMAIL = 'wfp.geonode@gmail.com'
 
-
+# Load more settings from a file called dev_settings.py if it exists
+try:
+    from dev_settings import *
+except ImportError:
+    pass
 
