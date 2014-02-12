@@ -12,6 +12,8 @@ GEOSERVER_URL = os.environ['geoserver_url']
 DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
+ALLOWED_HOSTS = ['localhost', '.wfp.org',]
+
 SITENAME = 'GeoNode'
 TIME_ZONE = 'Europe/Rome'
 
