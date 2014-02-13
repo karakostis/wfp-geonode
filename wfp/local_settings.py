@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from settings import *
 
 # read security stuff
 import os
@@ -141,59 +142,6 @@ LANGUAGES = (
 
 MAX_DOCUMENT_SIZE = 20 # MB
 
-INSTALLED_APPS = (
-
-    # Apps bundled with Django
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.sitemaps',
-    'django.contrib.staticfiles',
-    'django.contrib.messages',
-    'django.contrib.humanize',
-
-    # Third party apps
-
-    # Utility
-    'pagination',
-    'taggit',
-    'taggit_templatetags',
-    'south',
-    'friendlytagloader',
-    'geoexplorer',
-    'django_extensions',
-
-    # Theme
-    "pinax_theme_bootstrap_account",
-    "pinax_theme_bootstrap",
-    'django_forms_bootstrap',
-
-    # Social
-    'account',
-    'avatar',
-    'dialogos',
-    'agon_ratings',
-    'notification',
-    'announcements',
-    'actstream',
-    'user_messages',
-
-    # GeoNode internal apps
-    'geonode.people',
-    'geonode.base',
-    'geonode.layers',
-    'geonode.upload',
-    'geonode.maps',
-    'geonode.proxy',
-    'geonode.security',
-    'geonode.search',
-    'geonode.social',
-    'geonode.catalogue',
-    'geonode.documents',
-)
-
 INSTALLED_APPS = INSTALLED_APPS + (
     'wfp',
 )
@@ -206,6 +154,14 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 THEME_ACCOUNT_CONTACT_EMAIL = 'wfp.geonode@gmail.com'
+
+# Available download formats
+DOWNLOAD_FORMATS_VECTOR = [
+    'Zipped Shapefile', 'CSV', 'Excel', 'GeoJSON', 'KML',
+]
+DOWNLOAD_FORMATS_RASTER = [
+    'GeoTIFF', 'JPEG', 'PNG', 'ArcGrid', 'KML',
+]
 
 # Load more settings from a file called dev_settings.py if it exists
 try:
