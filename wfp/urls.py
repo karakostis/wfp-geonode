@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Static pages
     url(r'^$', views.index, name='home'),
     url(r'^contacts/$', views.contacts, name='contacts'),
-
+    # WFP documents views
+    (r'^wfpdocs/', include('wfp.wfpdocs.urls')),
  ) + \
 urlpatterns
