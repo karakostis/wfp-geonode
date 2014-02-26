@@ -1,6 +1,17 @@
+import json, os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
+from django.conf import settings
+from geonode.documents.models import Document
+from django.contrib.contenttypes.models import ContentType
+from geonode.documents.views import document_set_permissions
+from django.core.urlresolvers import reverse
+from models import WFPDocument, Category
+from forms import DocumentForm
+
+ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 
 def browse(request, template='documents/document_list.html'):
     from geonode.search.views import search_page
@@ -12,9 +23,19 @@ def browse(request, template='documents/document_list.html'):
 @login_required
 def upload(request):
     if request.method == 'GET':
-        return render_to_response('wfpdocs/upload.html',
-                                  RequestContext(request),
-                                  context_instance=RequestContext(request)
+        orientation_choices = WFPDocument.ORIENTATION_CHOICES
+        format_choices = WFPDocument.FORMAT_CHOICES
+        categories = Category.objects.all()
+        
+        form = DocumentForm()
+        
+        return render_to_response(
+            'wfpdocs/upload.html',
+            { 'form': form,
+              'orientation_choices': orientation_choices,
+              'format_choices': format_choices, 
+              'categories': categories },
+            RequestContext(request)
         )
 
     elif request.method == 'POST':
@@ -36,12 +57,25 @@ def upload(request):
         if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
             return HttpResponse(_('This file is too big.'))
 
-        
         document = Document(content_type=content_type, object_id=object_id, title=title, doc_file=doc_file)
         document.owner = request.user
         document.save()
         permissionsStr = request.POST['permissions']
         permissions = json.loads(permissionsStr)
         document_set_permissions(document, permissions)
-
+        # map document
+        form = DocumentForm(request.POST)
+        #source = request.POST['source']
+        #orientation = request.POST['orientation']
+        #format = request.POST['format']
+        #categories = request.POST['categories']
+        if form.is_valid():
+            source = form.cleaned_data.get('source')
+            orientation = form.cleaned_data.get('orientation')
+            format = form.cleaned_data.get('format')
+            categories = form.cleaned_data.get('categories')
+        wfpdoc = WFPDocument(source = source, orientation=orientation,
+            format=format, document=document)
+        wfpdoc.save()
+        wfpdoc.categories = categories
         return HttpResponseRedirect(reverse('document_metadata', args=(document.id,)))
