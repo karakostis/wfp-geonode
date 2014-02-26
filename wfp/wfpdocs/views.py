@@ -13,7 +13,7 @@ from forms import DocumentForm
 
 ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 
-def browse(request, template='documents/document_list.html'):
+def browse(request, template='wfpdocs/list.html'):
     from geonode.search.views import search_page
     post = request.POST.copy()
     post.update({'type': 'document'})
@@ -57,23 +57,25 @@ def upload(request):
         if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
             return HttpResponse(_('This file is too big.'))
 
-        document = Document(content_type=content_type, object_id=object_id, title=title, doc_file=doc_file)
-        document.owner = request.user
-        document.save()
-        permissionsStr = request.POST['permissions']
-        permissions = json.loads(permissionsStr)
-        document_set_permissions(document, permissions)
         # map document
         form = DocumentForm(request.POST)
-        #source = request.POST['source']
-        #orientation = request.POST['orientation']
-        #format = request.POST['format']
-        #categories = request.POST['categories']
         if form.is_valid():
             source = form.cleaned_data.get('source')
+            publication_date = form.cleaned_data.get('publication_date')
             orientation = form.cleaned_data.get('orientation')
             format = form.cleaned_data.get('format')
             categories = form.cleaned_data.get('categories')
+            regions = form.cleaned_data.get('regions')
+            
+        document = Document(content_type=content_type, object_id=object_id, 
+            title=title, doc_file=doc_file, date=publication_date)
+        document.owner = request.user
+        document.save()
+        document.regions = regions
+        permissionsStr = request.POST['permissions']
+        permissions = json.loads(permissionsStr)
+        document_set_permissions(document, permissions)
+        
         wfpdoc = WFPDocument(source = source, orientation=orientation,
             format=format, document=document)
         wfpdoc.save()

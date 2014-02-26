@@ -16,7 +16,7 @@
   <div class="container">
     <div class="row">
       <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Upload Map Documents" %}</h1>
-      <a href="{% url "documents_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Map Documents" %}</a>
+      <a href="{% url "wfpdocs-browse" %}" class="btn btn-primary pull-right">{% trans "Explore Map Documents" %}</a>
     </div>
   </div>
 </header>
@@ -34,35 +34,13 @@
       </ul>
       {% endif %}
       <div>
-        <form id="upload_form" method="post" enctype="multipart/form-data" action="{% url "upload" %}">
+        <form id="upload_form" method="post" enctype="multipart/form-data" action="{% url "wfpdocs-upload" %}">
           <label for="title">{% trans "Type a title" %}</label><input id="title" name="title" type="text" placeholder="Title" />
-          <label for="resource">{% trans "Link to" %}</label><input id="resource" name="q" type="text" />
           <label for="doc_file">{% trans "Choose a file" %}</label><input id="doc_file" name="file" type="file" />
           
-          <!--
-          <label for="orientation">{% trans "Orientation" %}</label>
-          <select id="orientation" name="orientation">
-            {% for x,y in orientation_choices %}
-                <option value="{{ x }}">{{ y }}</option>
-            {% endfor %}
-          </select>
-
-          <label for="format">{% trans "Format" %}</label>
-          <select id="format" name="format">
-            {% for x,y in format_choices %}
-                <option value="{{ x }}">{{ y }}</option>
-            {% endfor %}
-          </select>
-          
-          <label for="categories">{% trans "Categories" %}</label>
-          <select id="categories" name="categories" size="5" multiple>
-            {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-            {% endfor %}
-          </select>
-          -->
-          
           {{ form.as_p }}
+          
+          <label for="resource">{% trans "Link to" %}</label><input id="resource" name="q" type="text" />
           
           <input type="hidden" name="permissions" id="permissions" value=""/>
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
