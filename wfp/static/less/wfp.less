@@ -812,6 +812,7 @@ ul.nav-pills.filter {
   a.toggle-nav {
     color: @grayLighter;
     display: block;
+    text-transform: uppercase;
     i {
       padding-right: 8px;
     }
@@ -1165,6 +1166,51 @@ ul.stats {
 }
 .activity-timestamp {
   margin-top: -10px;
+}
+
+/* Contacts
+   ----------------------------- */
+
+body.contacts {
+  .avatar {
+    height: 218px;
+    overflow: hidden;
+  }
+}
+body.contacts {
+  ol.people {
+    margin: 0;
+    position: relative;
+  }
+  ol.people li.group {
+    border: 1px solid @grayLight;
+    border-radius: 4px;
+    float: left;
+    list-style-type: none;
+    margin: 0 20px 20px 0;
+    overflow: hidden;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    h3 {
+      font-size: 14px;
+      i {
+        color: @link-color;
+        margin-left: 10px;
+      }
+      [class^="icon-envelope-alt"], [class*=" icon-envelope-alt"] {
+        color: @grayLight;
+        margin-left: 0;
+        &:hover {
+        color: @link-color;
+        text-decoration: none;
+        }
+      }
+    }
+  }
+  ol.people li.group:nth-child(4n) {
+    margin-right: 0;
+  }
 }
 
 /* Pagination
