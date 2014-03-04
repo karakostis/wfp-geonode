@@ -1,5 +1,7 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+import json
+from django.http import HttpResponse
 
 from geonode.layers.models import Layer
 from geonode.maps.models import Map
@@ -37,3 +39,39 @@ def contacts(request):
             'profiles': profiles,
         },
         context_instance=RequestContext(request))
+        
+def owslogin(request):
+    
+    # it will work only for requests from localhost!
+    #ip = request.META.get('REMOTE_ADDR')
+    #if ip != ('127.0.0.1'):
+    #        return HttpResponse(
+    #                "Operation not allowed.",
+    #                status=403,
+    #                content_type="text/plain"
+    #                )
+    
+    # authentication
+    username = ''
+    password = ''
+    if 'username' in request.GET:
+        username = request.GET.get('username', '')
+    if 'password' in request.GET:
+        password = request.GET.get('password', '')
+    from django.contrib.auth import authenticate, login
+    user = authenticate(username = username, password = password)
+    if user is not None:
+        login(request, user)
+    else:
+        return HttpResponse(
+            "Operation not allowed.",
+            status=403,
+            content_type="text/plain"
+        )
+
+    response_data = {}
+    response_data['result'] = 'ok'
+    response_data['message'] = 'Authenticated with GeoNode for OWS requests.'
+    return HttpResponse(json.dumps(response_data), 
+        content_type="application/json")
+
