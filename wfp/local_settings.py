@@ -142,10 +142,6 @@ LANGUAGES = (
 
 MAX_DOCUMENT_SIZE = 20 # MB
 
-INSTALLED_APPS = INSTALLED_APPS + (
-    'wfp.wfpdocs',
-)
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ['email_host']
 EMAIL_HOST_USER = os.environ['email_host_user']
