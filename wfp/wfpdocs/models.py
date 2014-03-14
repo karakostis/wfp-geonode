@@ -35,7 +35,7 @@ class WFPDocument(models.Model):
 
     source = models.CharField(max_length=255)
     orientation = models.IntegerField('Orientation', choices=ORIENTATION_CHOICES)
-    format = models.IntegerField('Format', choices=FORMAT_CHOICES)
+    page_format = models.IntegerField('Format', choices=FORMAT_CHOICES)
     document = models.OneToOneField(Document)
     categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
 

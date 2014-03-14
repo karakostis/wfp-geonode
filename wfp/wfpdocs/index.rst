@@ -1,46 +1,42 @@
->>> In pratica va permesso all'utente di decidere se il documento da caricare e' una mappa aggiungendo un campo booleano "map"
->>> Se questo e' flagata l'utente deve avere la possibilita di riempire I seguenti campi:
+How to use the API
+==================
 
-ok
+Request the full list::
 
->>> Titolo della mappa  (Obbligatorio)
+    http://localhost:8000/wfpdocs/api/v1/?format=json
 
-e questo gia' c'e'
+Request the full documents list::
 
->>> Source (Obbligatorio)
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/?format=json
 
-ok, a mio avviso questo andrebbe messo anche per mappe e layers, quindi mi consulterei a tal fine con gli altri geonoders
+Request just one document (id=1)::
 
->>> Date (Obbligatorio)
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/1/?format=json
+    
+Request document schema::
 
-c'e' nei metadati
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/schema/?format=json
+    
+Request the a set of documents (id=1 and id=3)::
 
->>> Region/Country   (lookup sulla lista di paesi come c'e' nei metadata)  (Obbligatorio)
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/set/1;3/?format=json
+    
+Request documents for a given title::
 
-appunto, c'e' nei metadati
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/?format=json&document__title=Test
+    
+Request documents newer than a certain date::
 
->>> Privacy: (Obbligatorio)
->>> Public
->>> Private
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/?format=json&document__date__gte=2013-12-12
+    
+Request documents for a certain category::
 
-non possiamo usare i permessi standard di GN a tal fine?
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/?format=json&categories__name=Emergency
+    
+Request documents for certain categories and newer than a certain date::
 
->>> Orientation: Landscape     (Obbligatorio)
->>> Portrait
->>> Format:  A0, A1, A2, A3, A4     (Obbligatorio)
+    http://localhost:8000/wfpdocs/api/v1/wfp-document/?format=json&categories__name__in=Emergency,Earthquake&document__date__gte=2013-12-12
+    
+Full reference for query syntax::
 
-questo in effetti e' da aggiungere
-
->>> Category:
->>> Lista ancora da decidere (Floods, drought, conflict, etc)
-
-Lascerei i topic category, cosi come per i dati GIS, magari riorganizzandoli e togliendone alcuni
-
->>> Last version:
->>> Yes/not
-
-si potrebbe usare il campo edition e mettere final/past a seconda dei casi
-
->>> Possibilita facoltativa di linkare la mappa statica ad una interattiva oppure ad un layer
-
-gia' e' cosi, in fase di upload. Va visualizzato il layer/mappa in fase di visualizzazione
+    https://docs.djangoproject.com/en/dev/topics/db/queries/
