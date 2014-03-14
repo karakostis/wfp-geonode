@@ -89,7 +89,7 @@ def document_upload(request):
             source = form.cleaned_data.get('source')
             publication_date = form.cleaned_data.get('publication_date')
             orientation = form.cleaned_data.get('orientation')
-            format = form.cleaned_data.get('format')
+            page_format = form.cleaned_data.get('page_format')
             categories = form.cleaned_data.get('categories')
             regions = form.cleaned_data.get('regions')
             
@@ -103,7 +103,7 @@ def document_upload(request):
         document_set_permissions(document, permissions)
         
         wfpdoc = WFPDocument(source = source, orientation=orientation,
-            format=format, document=document)
+            page_format=page_format, document=document)
         wfpdoc.save()
         wfpdoc.categories = categories
         return HttpResponseRedirect(reverse('document_metadata', args=(document.id,)))
