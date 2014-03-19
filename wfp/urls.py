@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^gis/employees.geojson$', 
         EmployeeLayer.as_view(model=Employee,
             properties=(
-                ['gis_level', 'place', 'country', 'wfpregion', 'facility',
+                ['place', 'country', 'wfpregion', 'facility',
                  'name', 'position']
             )),
             name='employees-geojson'),

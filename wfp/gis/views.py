@@ -12,7 +12,7 @@ class EmployeeLayer(GeoJSONLayerView):
 
 def ___employees_geojson(request):
     object_list = Employee.objects.all()
-    properties=['gis_level', 'place', 'country', 'wfpregion', 'facility',
+    properties=['place', 'country', 'wfpregion', 'facility',
                  'name', 'position']
     return render_to_response(
         'gis/employees.geojson',
