@@ -146,7 +146,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'django.contrib.gis',
     'djgeojson',
     'tastypie',
-    'wfp.wfpdocs',
+    #'wfp.wfpdocs',
     'wfp.gis',
 )
 
