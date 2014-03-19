@@ -20,6 +20,6 @@ class WFPDocumentAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', )
         
-#admin.site.register(WFPDocument, WFPDocumentAdmin)
-#admin.site.register(Category, CategoryAdmin)
+admin.site.register(WFPDocument, WFPDocumentAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(EmailAddress, EmailAddressAdmin)

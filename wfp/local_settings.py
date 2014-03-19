@@ -21,7 +21,7 @@ TIME_ZONE = 'Europe/Rome'
 # OGC (WMS/WFS/WCS) Server Settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gn_django',
         'USER': GEONODE_USER,
         'PASSWORD': GEONODE_PWD,
@@ -143,8 +143,11 @@ LANGUAGES = (
 MAX_DOCUMENT_SIZE = 20 # MB
 
 INSTALLED_APPS = INSTALLED_APPS + (
+    'django.contrib.gis',
+    'djgeojson',
     'tastypie',
     'wfp.wfpdocs',
+    'wfp.gis',
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
