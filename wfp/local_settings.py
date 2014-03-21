@@ -6,6 +6,8 @@ import os
 SITEURL = os.environ['site_url']
 GEONODE_USER = os.environ['geonode_user']
 GEONODE_PWD = os.environ['geonode_pwd']
+GEONODE_DJANGO_DB = os.environ['geonode_django_db']
+GEONODE_POSTGIS_DB = os.environ['geonode_postgis_db']
 GEOSERVER_USER = os.environ['geoserver_user']
 GEOSERVER_PWD = os.environ['geoserver_pwd']
 GEOSERVER_URL = os.environ['geoserver_url']
