@@ -24,7 +24,7 @@ TIME_ZONE = 'Europe/Rome'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'gn_django',
+        'NAME': GEONODE_DJANGO_DB,
         'USER': GEONODE_USER,
         'PASSWORD': GEONODE_PWD,
         'HOST': 'localhost',
@@ -33,7 +33,7 @@ DATABASES = {
     # vector datastore for uploads
     'uploaded' : {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'gn_uploads',
+        'NAME': GEONODE_POSTGIS_DB,
         'USER' : GEONODE_USER,
         'PASSWORD' : GEONODE_PWD,
         'HOST' : 'localhost',
