@@ -159,6 +159,12 @@
   </div>
 
   <aside class="span4">
+  
+    <h4>{%trans "Legend" %}</h4>
+	<p>{{ style.sld_title }}</p>
+	<p><img src="{{ GEOSERVER_BASE_URL }}/wms?request=GetLegendGraphic&format=image/png&WIDTH=20&HEIGHT=20&LAYER=
+{{ WORKSPACE }}:{{ layer.name }}&legend_options=fontAntiAliasing:true;fontSize:12;forceLabels:on"></p>
+    
     <h4>{% trans "Maps using this layer" %}</h4>
     {% if layer.maps %}
     <p>{% trans "List of maps using this layer:" %}</p>
