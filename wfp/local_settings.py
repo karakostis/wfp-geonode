@@ -12,10 +12,10 @@ GEOSERVER_USER = os.environ['geoserver_user']
 GEOSERVER_PWD = os.environ['geoserver_pwd']
 GEOSERVER_URL = os.environ['geoserver_url']
 
-DEBUG = TEMPLATE_DEBUG = False
+DEBUG = TEMPLATE_DEBUG = True
 DEBUG_STATIC = False
 
-ALLOWED_HOSTS = ['localhost', '.wfp.org',]
+PROXY_ALLOWED_HOSTS = ('localhost', '.wfp.org', '.anl.gov', )
 
 SITENAME = 'GeoNode'
 TIME_ZONE = 'Europe/Rome'
@@ -148,7 +148,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'django.contrib.gis',
     'djgeojson',
     'tastypie',
-    #'wfp.wfpdocs',
+    'wfp.wfpdocs',
     'wfp.gis',
 )
 
