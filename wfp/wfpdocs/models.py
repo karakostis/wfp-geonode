@@ -38,6 +38,7 @@ class WFPDocument(models.Model):
     page_format = models.IntegerField('Format', choices=FORMAT_CHOICES)
     document = models.OneToOneField(Document)
     categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
+    last_version = models.BooleanField(default=False)
 
     def __str__(self):  
           return "%s" % self.source

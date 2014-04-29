@@ -6,10 +6,11 @@ from django.template import RequestContext
 from django.conf import settings
 from geonode.documents.models import Document
 from django.contrib.contenttypes.models import ContentType
-from geonode.documents.views import document_set_permissions
 from django.core.urlresolvers import reverse
 from models import WFPDocument, Category
-from forms import DocumentForm
+from forms import WFPDocumentForm
+from geonode.documents.forms import DocumentForm
+from geonode.people.forms import ProfileForm
 from geonode.maps.views import _perms_info
 from geonode.documents.views import DOCUMENT_LEV_NAMES, IMGTYPES
 
@@ -47,44 +48,32 @@ def document_detail(request, docid):
     }))
     
 @login_required
-def document_upload(request):
-    if request.method == 'GET':
-        orientation_choices = WFPDocument.ORIENTATION_CHOICES
-        format_choices = WFPDocument.FORMAT_CHOICES
-        categories = Category.objects.all()
-        
-        form = DocumentForm()
-        
-        return render_to_response(
-            'wfpdocs/document_upload.html',
-            { 'form': form,
-              'orientation_choices': orientation_choices,
-              'format_choices': format_choices, 
-              'categories': categories },
-            RequestContext(request)
-        )
+def document_update(request, id=None, template_name='wfpdocs/document_form.html'):
+    
+    wfpdoc = None
+    if id:
+        wfpdoc = get_object_or_404(WFPDocument, pk=id)
 
-    elif request.method == 'POST':
-        
+    if request.method == 'POST':
         try:
             content_type = ContentType.objects.get(name=request.POST['type'])
             object_id = request.POST['q']
         except:
             content_type = None
             object_id = None
-        
         title = request.POST['title']
-        doc_file = request.FILES['file']
+        doc_file = None
+        if 'file' in request.FILES:
+            doc_file = request.FILES['file']
         
-        if len(request.POST['title'])==0:
-            return HttpResponse(_('You need to provide a document title.'))
-        if not os.path.splitext(doc_file.name)[1].lower()[1:] in ALLOWED_DOC_TYPES:
-            return HttpResponse(_('This file type is not allowed.'))
-        if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
-            return HttpResponse(_('This file is too big.'))
-
+            if len(request.POST['title'])==0:
+                return HttpResponse(_('You need to provide a document title.'))
+            if not os.path.splitext(doc_file.name)[1].lower()[1:] in ALLOWED_DOC_TYPES:
+                return HttpResponse(_('This file type is not allowed.'))
+            if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
+                return HttpResponse(_('This file is too big.'))
         # map document
-        form = DocumentForm(request.POST)
+        form = WFPDocumentForm(request.POST)
         if form.is_valid():
             source = form.cleaned_data.get('source')
             publication_date = form.cleaned_data.get('publication_date')
@@ -92,82 +81,48 @@ def document_upload(request):
             page_format = form.cleaned_data.get('page_format')
             categories = form.cleaned_data.get('categories')
             regions = form.cleaned_data.get('regions')
-            
-        document = Document(content_type=content_type, object_id=object_id, 
-            title=title, doc_file=doc_file, date=publication_date)
+            last_version = form.cleaned_data.get('last_version')
+        if wfpdoc is None:
+            wfpdoc = WFPDocument()
+        wfpdoc.source = source
+        wfpdoc.orientation = orientation
+        wfpdoc.page_format = page_format
+        wfpdoc.last_version = last_version
+        # if we are creating the static map, we need to create the document as well
+        if not id:
+            document = Document(content_type=content_type, object_id=object_id, 
+                title=title, doc_file=doc_file)
+            document.owner = request.user
+            document.save()
+            wfpdoc.document = document
+        else:
+            document = wfpdoc.document
+        # title=title, doc_file=doc_file, date=publication_date, regions=regions
         document.owner = request.user
-        document.save()
+        document.title = title
+        if doc_file:
+            document.doc_file = doc_file
+        document.date = publication_date
         document.regions = regions
-        permissionsStr = request.POST['permissions']
-        permissions = json.loads(permissionsStr)
-        document_set_permissions(document, permissions)
-        
-        wfpdoc = WFPDocument(source = source, orientation=orientation,
-            page_format=page_format, document=document)
+        document.save()
+        document.update_thumbnail()
+        #wfpdoc = WFPDocument(source = source, orientation=orientation,
+        #    page_format=page_format, document=document)
         wfpdoc.save()
         wfpdoc.categories = categories
-        return HttpResponseRedirect(reverse('document_metadata', args=(document.id,)))
+        return HttpResponseRedirect(reverse('wfpdocs-browse'))
+    else:
+        if wfpdoc:
+            form = WFPDocumentForm(instance=wfpdoc, 
+                initial={'regions': wfpdoc.document.regions.all()})
+        else:
+            form = WFPDocumentForm()
+        # some field in the form must be manually populated
+        return render_to_response(
+            'wfpdocs/document_form.html',
+            { 'form': form,
+            },
+            RequestContext(request)
+        )
         
-@login_required
-def document_metadata(request, docid, template='documents/document_metadata.html'):
-    document = Document.objects.get(id=docid)
 
-    poc = document.poc
-    metadata_author = document.metadata_author
-
-    import ipdb;ipdb.set_trace()
-    if request.method == "POST":
-        document_form = DocumentForm(request.POST, instance=document, prefix="resource")
-    else:
-        document_form = DocumentForm(instance=document, prefix="resource")
-
-    if request.method == "POST" and document_form.is_valid():
-        new_poc = document_form.cleaned_data['poc']
-        new_author = document_form.cleaned_data['metadata_author']
-        new_keywords = document_form.cleaned_data['keywords']
-
-        if new_poc is None:
-            if poc.user is None:
-                poc_form = ProfileForm(request.POST, prefix="poc", instance=poc)
-            else:
-                poc_form = ProfileForm(request.POST, prefix="poc")
-            if poc_form.has_changed and poc_form.is_valid():
-                new_poc = poc_form.save()
-
-        if new_author is None:
-            if metadata_author.user is None:
-                author_form = ProfileForm(request.POST, prefix="author", 
-                    instance=metadata_author)
-            else:
-                author_form = ProfileForm(request.POST, prefix="author")
-            if author_form.has_changed and author_form.is_valid():
-                new_author = author_form.save()
-
-        if new_poc is not None and new_author is not None:
-            the_document = document_form.save()
-            the_document.poc = new_poc
-            the_document.metadata_author = new_author
-            the_document.keywords.add(*new_keywords)
-            the_document.save()
-            return HttpResponseRedirect(reverse('document_detail', args=(document.id,)))
-
-    if poc.user is None:
-        poc_form = ProfileForm(instance=poc, prefix="poc")
-    else:
-        document_form.fields['poc'].initial = poc.id
-        poc_form = ProfileForm(prefix="poc")
-        poc_form.hidden=True
-
-    if metadata_author.user is None:
-        author_form = ProfileForm(instance=metadata_author, prefix="author")
-    else:
-        document_form.fields['metadata_author'].initial = metadata_author.id
-        author_form = ProfileForm(prefix="author")
-        author_form.hidden=True
-
-    return render_to_response(template, RequestContext(request, {
-        "document": document,
-        "document_form": document_form,
-        "poc_form": poc_form,
-        "author_form": author_form,
-    }))

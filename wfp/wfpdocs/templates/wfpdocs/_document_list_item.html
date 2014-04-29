@@ -9,14 +9,15 @@
 <article>
   <div class="content">
     <div class="item-header">
-      <a href="{% url "map_detail" document.id %}"><img class="thumb" src="{{ STATIC_URL }}img/doc-placeholder.png" /></a>
+      <a href="{% url "map_detail" document.id %}"><img class="thumb" src="{{ document.get_thumbnail_url }}" /></a>
       <h3><i class="icon-file-text-alt"></i> <a href="{% url "wfpdocs-detail" document.id %}">{{ document.title }}</a></h3>
     </div>
     <div class="details">
       <div class="meta">
         <p>Doc {% trans 'from' %}: <a href="{% url "profile_detail" document.owner.username %}">{{ document.owner }}</a>, {{ document.date|timesince }} {% trans 'ago' %}</p>
         <p>{% trans 'Published' %}: {{ document.date }}</p>
-        <p>{% trans 'Print Format' %}: {{ document.wfpdocument.get_format_display }}</p>
+        <p>{% trans 'Print Format' %}: {{ document.wfpdocument.get_page_format_display }}</p>
+        <p>{% trans 'Orientation' %}: {{ document.wfpdocument.get_orientation_display }}</p>
         <p>{% trans 'Source' %}: {{ document.wfpdocument.source }}</p>
         <p>{% trans 'Regions' %}: {{ document.wfpdocument.get_regions }}</p>
         <p>{% trans 'Categories' %}: {{ document.wfpdocument.get_categories }}</p>
