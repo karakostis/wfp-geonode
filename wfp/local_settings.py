@@ -3,6 +3,8 @@ from settings import *
 
 # read security stuff
 import os
+
+SECRET_KEY = os.environ['secret_key']
 SITEURL = os.environ['site_url']
 GEONODE_USER = os.environ['geonode_user']
 GEONODE_PWD = os.environ['geonode_pwd']
