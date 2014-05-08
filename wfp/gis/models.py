@@ -27,7 +27,7 @@ class Office(gismodels.Model):
     objectidol = gismodels.FloatField(null=True, blank=True)
     precisiono = gismodels.CharField(max_length=254, null=True, blank=True)
     verifiedol = gismodels.CharField(max_length=254, null=True, blank=True)
-    geom = gismodels.PointField()
+    geometry = gismodels.PointField()
     objects = gismodels.GeoManager()
     
     def __unicode__(self):
@@ -58,8 +58,8 @@ class Employee(models.Model):
     office = models.ForeignKey(Office, null=True, blank=True)
         
     @property
-    def geom(self):
-        return self.office.geom
+    def geometry(self):
+        return self.office.geometry
         
     @property
     def place(self):

@@ -148,7 +148,6 @@ MAX_DOCUMENT_SIZE = 20 # MB
 
 INSTALLED_APPS = INSTALLED_APPS + (
     'django.contrib.gis',
-    'djgeojson',
     'tastypie',
     'wfp.wfpdocs',
     'wfp.gis',
