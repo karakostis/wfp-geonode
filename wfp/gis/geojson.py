@@ -21,7 +21,6 @@ class GeoJSONSerializer(Serializer):
             }
 
             def recurse(key, value):
-                print key, value
                 if key in ['id', 'geometry']:
                     f[key] = value
                     return
@@ -31,7 +30,7 @@ class GeoJSONSerializer(Serializer):
                     for k in value:
                         recurse(k, value[k])
                 else:
-                    f['properties'][key] = value
+                    f['properties'][key] = unicode(value)
 
             for key, value in obj.iteritems():
                 recurse(key, value)
