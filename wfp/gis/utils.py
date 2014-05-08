@@ -26,7 +26,7 @@ def import_offices():
         createdate = feat.get('createdate')
         updatedate = feat.get('updatedate')
         source = feat.get('source')
-        office = Office(geom=pnt, wfpid=wfpid, place=place, facility=facility,
+        office = Office(geometry=pnt, wfpid=wfpid, place=place, facility=facility,
             wfpregion=wfpregion, lastcheckd=lastcheckd, source=source,
             status=status, country=country, createdate=createdate,
             updatedate=updatedate)

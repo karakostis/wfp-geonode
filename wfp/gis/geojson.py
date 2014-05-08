@@ -1,5 +1,5 @@
 from tastypie.serializers import Serializer
-from django.utils import simplejson
+import json
 from django.core.serializers.json import DjangoJSONEncoder
 
 class GeoJSONSerializer(Serializer):
@@ -55,7 +55,7 @@ class GeoJSONSerializer(Serializer):
             data = _build_feature_collection(data['objects'], meta)
         else:
             data = _build_feature(data)
-        return simplejson.dumps(data, cls=DjangoJSONEncoder, sort_keys=True, ensure_ascii=False)
+        return json.dumps(data, cls=DjangoJSONEncoder, sort_keys=True, ensure_ascii=False)
 
     def to_json(self, data, options=None):
         """
