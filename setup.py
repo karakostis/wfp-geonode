@@ -21,5 +21,8 @@ setup(
     url='https://github.com/wfp/wfp',
     packages=['wfp',],
     include_package_data=True,
+    install_requires=[
+        "django-tastypie==0.11.0",
+    ],
     zip_safe=False,
 )
