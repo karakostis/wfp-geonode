@@ -9,60 +9,56 @@ from geonode.base.models import Region
 
 from models import WFPDocument, Category
 
-class CategoryResource(ModelResource):
+class WFPDocumentModelResource(ModelResource):
+    """Base resource for gis application."""
+    include_resource_uri = True
+    allowed_methods = ['get']
+    authentication = BasicAuthentication()
+    #cache = SimpleCache(timeout=10)
+    
+class CategoryResource(WFPDocumentModelResource):
+    """Resource  for Category model."""
     
     class Meta:
         queryset = Category.objects.all()
         resource_name = 'category'
         excludes = ['id',]
-        include_resource_uri = False
-        allowed_methods = ['get']
-        authentication = BasicAuthentication()
         filtering = {
             'name': ALL_WITH_RELATIONS,
         }
         
-class RegionResource(ModelResource):
+class RegionResource(WFPDocumentModelResource):
+    """Resource  for Region model."""
     
     class Meta:
         queryset = Region.objects.all()
         resource_name = 'region'
         excludes = ['id',]
-        include_resource_uri = False
-        allowed_methods = ['get']
-        authentication = BasicAuthentication()
-        cache = SimpleCache(timeout=10)
         
-class DocumentResource(ModelResource):
-
+class DocumentResource(WFPDocumentModelResource):
+    """Resource  for Document model."""
     regions = fields.ToManyField(RegionResource, 'regions', full=True)
     geonode_page = fields.CharField(attribute='get_absolute_url', readonly=True)
     geonode_file = fields.FileField(attribute='doc_file')
+    thumbnail = fields.CharField(attribute='get_thumbnail_url', readonly=True)
     
     class Meta:
         queryset = Document.objects.all()
         resource_name = 'document'
-        fields = ['title', 'date',]
-        include_resource_uri = False
-        allowed_methods = ['get']
-        authentication = BasicAuthentication()
-        cache = SimpleCache(timeout=10)
+        fields = ['title', 'date', 'thumbnail',]
         filtering = {
             'title': ALL,
             'date': ALL_WITH_RELATIONS,
         }
         
-class WFPDocumentResource(ModelResource):
-
+class WFPDocumentResource(WFPDocumentModelResource):
+    """Resource  for WFPDocument model."""
     document = fields.ToOneField(DocumentResource, 'document', full=True)
     categories = fields.ToManyField(CategoryResource, 'categories', full=True)
     
     class Meta:
         queryset = WFPDocument.objects.all()
         resource_name = 'wfp-document'
-        allowed_methods = ['get']
-        authentication = BasicAuthentication()
-        cache = SimpleCache(timeout=10)
         filtering = {
             'document': ALL_WITH_RELATIONS,
             'categories': ALL_WITH_RELATIONS,

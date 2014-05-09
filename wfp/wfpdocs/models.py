@@ -39,6 +39,7 @@ class WFPDocument(models.Model):
     document = models.OneToOneField(Document)
     categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
     last_version = models.BooleanField(default=False)
+    date_updated = models.DateTimeField(auto_now=True, blank=False, null=False)
 
     def __str__(self):  
           return "%s" % self.source
@@ -64,3 +65,4 @@ class WFPDocument(models.Model):
     def get_date_type(self):
         return self.document.date_type
     get_date_type.short_description = 'Date Type'
+    
