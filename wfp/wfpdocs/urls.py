@@ -4,8 +4,6 @@ from tastypie.api import Api
 
 from api import WFPDocumentResource, DocumentResource, CategoryResource
 
-#doc_resource = WFPDocumentResource()
-
 v1_api = Api(api_name='v1')
 v1_api.register(WFPDocumentResource())
 v1_api.register(DocumentResource())
