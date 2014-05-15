@@ -43,7 +43,14 @@ class WFPDocument(models.Model):
 
     def __str__(self):  
           return "%s" % self.source
-          
+    
+    def get_file_size(self):
+        num = self.document.doc_file.size
+        for x in ['bytes','KB','MB','GB','TB']:
+            if num < 1024.0:
+                return "%3.1f %s" % (num, x)
+            num /= 1024.0
+            
     def get_regions(self):
         regions = []
         for region in self.document.regions.all():
