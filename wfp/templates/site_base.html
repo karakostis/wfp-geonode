@@ -12,6 +12,7 @@
   <link href="{{ STATIC_URL }}lib/css/assets.min.css" rel="stylesheet"/>
   {% endif %}
   <link href="{{ STATIC_URL }}css/wfp.css" rel="stylesheet"/>
+  <link href="{{ STATIC_URL }}css/site_base.css" rel="stylesheet"/>
   <script type="text/javascript" src="//use.typekit.net/ooy8mlk.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   
@@ -108,22 +109,26 @@
         <div class="row">
           <div class="nav-collapse">
             <ul class="nav pull-right">
+              <!-- layers -->
               <li id="nav_data">
                 <a href="{% url "layer_browse" %}">{% trans "Layers" %}</a>
               </li>
-              <li id="nav_maps">
-                <a href="{% url "maps_browse" %}">{% trans "Maps" %}</a>
-              </li>
-              <li id="nav_documents" class="dropdown">
+              <!-- maps -->
+              <li id="nav_maps" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    {% trans "Documents" %}
+                    {% trans "Maps" %}
                     <i class="caret"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{% url "documents_browse" %}">{% trans "Documents" %}</a></li>
+                    <li><a href="{% url "maps_browse" %}">{% trans "Maps" %}</a></li>
                     <li><a href="{% url "wfpdocs-browse" %}">{% trans "Static Maps" %}</a></li>
                 </ul>
             </li>
+              <!-- documents -->
+              <li id="nav_documents">
+                <a href="{% url "documents_browse" %}">{% trans "Documents" %}</a>
+              </li>
+              <!-- people -->
               <li id="nav_people">
                 <a href="{% url "profile_browse" %}">{% trans "Users" %}</a>
               </li>
