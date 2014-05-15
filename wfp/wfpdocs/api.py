@@ -55,6 +55,7 @@ class WFPDocumentResource(WFPDocumentModelResource):
     """Resource  for WFPDocument model."""
     document = fields.ToOneField(DocumentResource, 'document', full=True)
     categories = fields.ToManyField(CategoryResource, 'categories', full=True)
+    file_size = fields.CharField(attribute='get_file_size', readonly=True)
     
     class Meta:
         queryset = WFPDocument.objects.all()
