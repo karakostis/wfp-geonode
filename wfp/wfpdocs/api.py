@@ -62,6 +62,7 @@ class WFPDocumentResource(WFPDocumentModelResource):
         filtering = {
             'document': ALL_WITH_RELATIONS,
             'categories': ALL_WITH_RELATIONS,
+            'date_updated': ALL,
         }
         
     def dehydrate_page_format(self, bundle):
