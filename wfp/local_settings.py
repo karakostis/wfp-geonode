@@ -147,6 +147,7 @@ LANGUAGES = (
 MAX_DOCUMENT_SIZE = 20 # MB
 
 INSTALLED_APPS = INSTALLED_APPS + (
+    'south',
     'django.contrib.gis',
     'tastypie',
     'wfp.wfpdocs',
