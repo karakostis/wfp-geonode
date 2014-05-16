@@ -11,10 +11,11 @@ from models import WFPDocument, Category
 
 class WFPDocumentModelResource(ModelResource):
     """Base resource for gis application."""
-    include_resource_uri = True
-    allowed_methods = ['get']
-    authentication = BasicAuthentication()
-    #cache = SimpleCache(timeout=10)
+    
+    class Meta:
+        include_resource_uri = True
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
     
 class CategoryResource(WFPDocumentModelResource):
     """Resource  for Category model."""
@@ -26,6 +27,9 @@ class CategoryResource(WFPDocumentModelResource):
         filtering = {
             'name': ALL_WITH_RELATIONS,
         }
+        include_resource_uri = True
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
         
 class RegionResource(WFPDocumentModelResource):
     """Resource  for Region model."""
@@ -34,6 +38,9 @@ class RegionResource(WFPDocumentModelResource):
         queryset = Region.objects.all()
         resource_name = 'region'
         excludes = ['id',]
+        include_resource_uri = True
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
         
 class DocumentResource(WFPDocumentModelResource):
     """Resource  for Document model."""
@@ -50,6 +57,9 @@ class DocumentResource(WFPDocumentModelResource):
             'title': ALL,
             'date': ALL_WITH_RELATIONS,
         }
+        include_resource_uri = True
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
         
 class WFPDocumentResource(WFPDocumentModelResource):
     """Resource  for WFPDocument model."""
@@ -65,6 +75,9 @@ class WFPDocumentResource(WFPDocumentModelResource):
             'categories': ALL_WITH_RELATIONS,
             'date_updated': ALL,
         }
+        include_resource_uri = True
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
         
     def dehydrate_page_format(self, bundle):
         return WFPDocument.FORMAT_CHOICES[bundle.data['page_format']][1]

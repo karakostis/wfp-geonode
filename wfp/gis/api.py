@@ -11,9 +11,6 @@ from models import Office, Employee
 from geojson import GeoJSONSerializer
 
 class GisModelResource(ModelResource):
-    include_resource_uri = False
-    allowed_methods = ['get']
-    authentication = BasicAuthentication()
     
     def serialize(self, request, data, format, options=None):
         """
@@ -36,6 +33,9 @@ class OfficeResource(GisModelResource):
             'wfpregion': ALL,
         }
         serializer = GeoJSONSerializer()
+        include_resource_uri = False
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
                  
 class ProfileResource(GisModelResource):
     
@@ -43,6 +43,9 @@ class ProfileResource(GisModelResource):
         queryset = Profile.objects.all()
         resource_name = 'profile'
         fields = ['name', 'position',]
+        include_resource_uri = False
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
         
 class EmployeeResource(GisModelResource):
     
@@ -52,11 +55,12 @@ class EmployeeResource(GisModelResource):
     class Meta:
         queryset = Employee.objects.all()
         resource_name = 'employee'
-        include_resource_uri = False
-        allowed_methods = ['get']
-        authentication = BasicAuthentication()
         filtering = {
             'profile': ALL_WITH_RELATIONS,
         }
         serializer = GeoJSONSerializer()
+        include_resource_uri = False
+        allowed_methods = ['get']
+        authentication = BasicAuthentication()
+    
         
