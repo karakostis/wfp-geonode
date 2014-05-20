@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from settings import *
 
 # read security stuff
 import os
@@ -146,6 +145,7 @@ LANGUAGES = (
 
 MAX_DOCUMENT_SIZE = 20 # MB
 
+from settings import INSTALLED_APPS
 INSTALLED_APPS = INSTALLED_APPS + (
     'south',
     'django.contrib.gis',
