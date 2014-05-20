@@ -164,7 +164,7 @@ EMAIL_USE_TLS = True
 THEME_ACCOUNT_CONTACT_EMAIL = 'wfp.geonode@gmail.com'
 
 # Account
-REGISTRATION_OPEN = True
+REGISTRATION_OPEN = False
 # set to False this if you want only invited users to be able to register
 ACCOUNT_OPEN_SIGNUP = False
 ACCOUNT_SIGNUP_REDIRECT_URL = 'profile_edit'
