@@ -18,12 +18,18 @@
 #
 #########################################################################
 
-# Django settings for the GeoNode project.
+
+##################################
+#   here the main geonode conf   #
+##################################
+
+# TODO see if it is better to copy here the main conf, instead than importing it
 import os
 from geonode.settings import *
-#
-# General Django development settings
-#
+
+###################################
+#   here the site configuration   #
+###################################
 
 SITENAME = 'wfp'
 
