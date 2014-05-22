@@ -6,6 +6,7 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
 from geonode.documents.models import Document
 from geonode.base.models import Region
+from geonode.security.models import GenericObjectRoleMapping
 
 from models import WFPDocument, Category
 
@@ -48,9 +49,11 @@ class DocumentResource(WFPDocumentModelResource):
     geonode_page = fields.CharField(attribute='get_absolute_url', readonly=True)
     geonode_file = fields.FileField(attribute='doc_file')
     thumbnail = fields.CharField(attribute='get_thumbnail_url', readonly=True)
+    is_public = fields.BooleanField(default=True)
     
     class Meta:
         queryset = Document.objects.all()
+
         resource_name = 'document'
         fields = ['title', 'date', 'thumbnail',]
         filtering = {
@@ -60,6 +63,12 @@ class DocumentResource(WFPDocumentModelResource):
         include_resource_uri = True
         allowed_methods = ['get']
         authentication = BasicAuthentication()
+        
+    def dehydrate_is_public(self, bundle):
+        # TODO find a better way to avoid this additional query for every resource
+        private_docs = GenericObjectRoleMapping.objects.filter(subject=u'anonymous', object_ct__name='document').values_list('object_id', flat=True)
+        public = self.instance.id in private_docs
+        return public
         
 class WFPDocumentResource(WFPDocumentModelResource):
     """Resource  for WFPDocument model."""
