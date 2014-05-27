@@ -159,11 +159,16 @@
   </div>
 
   <aside class="span4">
-  
-    <h4>{%trans "Legend" %}</h4>
-	<p>{{ style.sld_title }}</p>
-	<p><img src="{{ GEOSERVER_BASE_URL }}/wms?request=GetLegendGraphic&format=image/png&WIDTH=20&HEIGHT=20&LAYER=
-{{ WORKSPACE }}:{{ layer.name }}&legend_options=fontAntiAliasing:true;fontSize:12;forceLabels:on"></p>
+    
+    {% if layer.get_legend %}
+      <h4 class="list-group-item-heading">{%trans "Legend" %}</h4>
+      <p>{{ style.sld_title }}</p>
+      {% if layer.get_legend.link_type == 'image' %}
+        <p><img src="{{ layer.get_legend.url }}"></p>
+      {% else %}
+        <div id='legend_placeholder'></div>
+      {% endif %}
+    {% endif %}
     
     <h4>{% trans "Maps using this layer" %}</h4>
     {% if layer.maps %}
@@ -291,7 +296,24 @@
               }
             });
             return false;
-          });        
+          });
+          
+    {% if layer.get_legend.link_type == 'json' %}
+    $.getJSON('{{layer.get_legend_url}}', function (data) {
+        var legend = data.layers[0].legend;
+        var items = [];
+        $.each(legend, function (key, dvalue) {
+            items.push('<li><img src="data:image/png;base64,' + dvalue.imageData + '">'+dvalue.label+'</li>');
+        });
+
+        $('<ul/>', {
+            'class': 'arcgis-legend',
+            html: items.join('')
+
+        }).appendTo('#legend_placeholder');
+
+    });
+    {% endif %}        
     </script>
     {% if GS_SECURITY_ENABLED %}
     {% include "_permissions_form_js.html" %}

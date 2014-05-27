@@ -150,6 +150,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'south',
     'django.contrib.gis',
     'tastypie',
+    'wfp.contrib.services',
     'wfp.wfpdocs',
     'wfp.gis',
 )
@@ -176,6 +177,19 @@ DOWNLOAD_FORMATS_VECTOR = [
 DOWNLOAD_FORMATS_RASTER = [
     'GeoTIFF', 'JPEG', 'PNG', 'ArcGrid', 'KML',
 ]
+
+# Migrations
+SOUTH_MIGRATION_MODULES = {
+    'base': 'geonode.base.migrations',
+    'documents': 'geonode.documents.migrations',
+    'layers': 'geonode.layers.migrations',
+}
+
+# Remote services
+USE_QUEUE = False
+DEFAULT_WORKSPACE = 'geonode'
+CASCADE_WORKSPACE = 'geonode_cascaded'
+OGP_URL = "http://geodata.tufts.edu/solr/select"
 
 # Load more settings from a file called dev_settings.py if it exists
 try:
