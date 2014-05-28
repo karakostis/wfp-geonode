@@ -180,9 +180,9 @@ DOWNLOAD_FORMATS_RASTER = [
 
 # Migrations
 SOUTH_MIGRATION_MODULES = {
-    'base': 'geonode.base.migrations',
-    'documents': 'geonode.documents.migrations',
-    'layers': 'geonode.layers.migrations',
+    'base': 'wfp.migrations.base.migrations',
+    'documents': 'wfp.migrations.documents.migrations',
+    'layers': 'wfp.migrations.layers.migrations',
 }
 
 # Remote services
