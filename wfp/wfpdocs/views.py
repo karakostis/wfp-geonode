@@ -20,7 +20,7 @@ ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 def document_browse(request, template='wfpdocs/document_list.html'):
     from geonode.search.views import search_page
     post = request.POST.copy()
-    post.update({'type': 'document'})
+    post.update({'type': 'wfpdocument'})
     request.POST = post
     return search_page(request, template=template)
 
