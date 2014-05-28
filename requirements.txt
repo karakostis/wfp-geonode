@@ -1,2 +1,2 @@
--e https://github.com/capooti/geonode.git#egg=geonode
+-e git+https://github.com/capooti/geonode.git#egg=geonode
 -e .
