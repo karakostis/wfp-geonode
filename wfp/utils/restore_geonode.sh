@@ -1,14 +1,20 @@
 #!/bin/bash
-set -o verbose
+#set -o verbose
 
 # TODO here donwload backup archives
 
 # read configuration
 # we need to have a gnadmin postgres user in place, with same password as in production
 CWD=$(pwd)
-DATE="20140520"
-BACKUP_DIR="/home/capooti/git/github/capooti/geonode/backup/backup_tar_gz"
+DATE="20140525"
+BACKUP_DIR="/home/capooti/backup/geonode/backup_tar_gz"
 VEDIR="/home/capooti/.venvs/geonode"
+
+# remove old backup files and scp new ones
+rm $BACKUP_DIR/postgres/*
+rm $BACKUP_DIR/geoserver/*
+scp backup@production:/home/backup/geoserver/backup/$DATE.tar.gz $BACKUP_DIR/geoserver
+scp backup@production:/home/backup/postgres/backup/$DATE.tar.gz $BACKUP_DIR/postgres
 
 # restore gn_django
 DB=gn_django
@@ -43,4 +49,13 @@ rm -rf $DATE
 # set site name
 . $VEDIR/bin/activate
 ./manage.py shell < wfp/utils/set_sitedomain.py
+
+# migrations
+./manage.py migrate base --fake 0002
+./manage.py migrate documents --fake 0001
+./manage.py migrate documents
+./manage.py migrate layers --fake 0001
+
+
+
 
