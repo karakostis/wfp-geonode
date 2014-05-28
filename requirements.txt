@@ -1,1 +1,2 @@
 -e https://github.com/capooti/geonode.git#egg=geonode
+-e .
