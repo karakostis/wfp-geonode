@@ -46,6 +46,11 @@
           <li><a href="{% url "document_remove" document.id %}">{% trans "Remove this Document" %} <i class="icon-chevron-right"></i></a></li>
         </ul>
       </div>
+      
+      <div class="btn-group">
+          <a href="{% if document.doc_file %}{{ document.doc_file.url }}{% endif %}" class="btn" >{% trans "Download Document" %} </a>
+      </div>
+      
     {% endif %}
     <!-- 
     <div class="btn-group">
