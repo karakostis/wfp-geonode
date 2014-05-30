@@ -1,4 +1,4 @@
-import json, os
+import json, os, re
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -50,18 +50,19 @@ def document_detail(request, docid):
     
 @login_required
 def document_update(request, id=None, template_name='wfpdocs/document_form.html'):
-    
     wfpdoc = None
+    content_type = None
+    object_id = None
     if id:
         wfpdoc = get_object_or_404(WFPDocument, pk=id)
-
     if request.method == 'POST':
-        try:
-            content_type = ContentType.objects.get(name=request.POST['type'])
-            object_id = request.POST['q']
-        except:
-            content_type = None
-            object_id = None
+        if 'resource' in request.POST:
+            resource = request.POST['resource']
+            if resource != 'no_link':
+                matches = re.match("type:(\d+)-id:(\d+)", resource).groups()
+                contenttype_id = matches[0]
+                object_id = matches[1]
+                content_type = ContentType.objects.get(id=contenttype_id)
         title = request.POST['title']
         doc_file = None
         if 'file' in request.FILES:
@@ -105,6 +106,8 @@ def document_update(request, id=None, template_name='wfpdocs/document_form.html'
             document.doc_file = doc_file
         document.date = publication_date
         document.regions = regions
+        document.content_type=content_type
+        document.object_id=object_id
         document.save()
         document.update_thumbnail()
         #wfpdoc = WFPDocument(source = source, orientation=orientation,
