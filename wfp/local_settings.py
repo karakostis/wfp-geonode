@@ -183,6 +183,7 @@ SOUTH_MIGRATION_MODULES = {
     'base': 'wfp.migrations.base.migrations',
     'documents': 'wfp.migrations.documents.migrations',
     'layers': 'wfp.migrations.layers.migrations',
+    'gis': 'wfp.gis.migrations',
 }
 
 # Remote services
