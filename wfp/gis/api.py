@@ -35,7 +35,6 @@ class OfficeResource(GisModelResource):
         serializer = GeoJSONSerializer()
         include_resource_uri = False
         allowed_methods = ['get']
-        authentication = BasicAuthentication()
                  
 class ProfileResource(GisModelResource):
     
@@ -45,7 +44,6 @@ class ProfileResource(GisModelResource):
         fields = ['name', 'position',]
         include_resource_uri = False
         allowed_methods = ['get']
-        authentication = BasicAuthentication()
         
 class EmployeeResource(GisModelResource):
     
@@ -61,6 +59,5 @@ class EmployeeResource(GisModelResource):
         serializer = GeoJSONSerializer()
         include_resource_uri = False
         allowed_methods = ['get']
-        authentication = BasicAuthentication()
     
         
