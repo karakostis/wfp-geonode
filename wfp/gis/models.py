@@ -27,7 +27,7 @@ class Office(gismodels.Model):
     objectidol = gismodels.FloatField(null=True, blank=True)
     precisiono = gismodels.CharField(max_length=254, null=True, blank=True)
     verifiedol = gismodels.CharField(max_length=254, null=True, blank=True)
-    geometry = gismodels.PointField()
+    geom = gismodels.PointField()
     objects = gismodels.GeoManager()
     
     def __unicode__(self):
