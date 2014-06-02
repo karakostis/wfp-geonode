@@ -8,55 +8,16 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'Document.popular_count'
-        db.delete_column(u'documents_document', 'popular_count')
-
-        # Deleting field 'Document.share_count'
-        db.delete_column(u'documents_document', 'share_count')
-
-        # Adding field 'Document.doc_url'
-        db.add_column(u'documents_document', 'doc_url',
-                      self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True),
-                      keep_default=False)
-
 
         # Changing field 'Document.doc_file'
-        db.alter_column(u'documents_document', 'doc_file', self.gf('django.db.models.fields.files.FileField')(max_length=255, null=True))
+        db.alter_column(u'documents_document', 'doc_file', self.gf('django.db.models.fields.files.FileField')(max_length=255))
 
     def backwards(self, orm):
-        # Adding field 'Document.popular_count'
-        db.add_column(u'documents_document', 'popular_count',
-                      self.gf('django.db.models.fields.IntegerField')(default=0),
-                      keep_default=False)
-
-        # Adding field 'Document.share_count'
-        db.add_column(u'documents_document', 'share_count',
-                      self.gf('django.db.models.fields.IntegerField')(default=0),
-                      keep_default=False)
-
-        # Deleting field 'Document.doc_url'
-        db.delete_column(u'documents_document', 'doc_url')
-
 
         # Changing field 'Document.doc_file'
-        db.alter_column(u'documents_document', 'doc_file', self.gf('django.db.models.fields.files.FileField')(default=2, max_length=100))
+        db.alter_column(u'documents_document', 'doc_file', self.gf('django.db.models.fields.files.FileField')(max_length=100))
 
     models = {
-        u'actstream.action': {
-            'Meta': {'ordering': "('-timestamp',)", 'object_name': 'Action'},
-            'action_object_content_type': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'action_object'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
-            'action_object_object_id': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'actor_content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'actor'", 'to': u"orm['contenttypes.ContentType']"}),
-            'actor_object_id': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'data': ('jsonfield.fields.JSONField', [], {'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'target_content_type': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'target'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
-            'target_object_id': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'verb': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
         u'auth.group': {
             'Meta': {'object_name': 'Group'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -94,11 +55,9 @@ class Migration(SchemaMigration):
             'role': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['people.Role']"})
         },
         u'base.license': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'License'},
-            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
+            'Meta': {'object_name': 'License'},
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'identifier': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'license_text': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'})
@@ -132,7 +91,6 @@ class Migration(SchemaMigration):
             'distribution_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'distribution_url': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'edition': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'language': ('django.db.models.fields.CharField', [], {'default': "'eng'", 'max_length': '3'}),
             'license': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.License']", 'null': 'True', 'blank': 'True'}),
@@ -140,12 +98,9 @@ class Migration(SchemaMigration):
             'metadata_uploaded': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'metadata_xml': ('django.db.models.fields.TextField', [], {'default': '\'<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"/>\'', 'null': 'True', 'blank': 'True'}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'polymorphic_ctype': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'polymorphic_base.resourcebase_set'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
-            'popular_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'purpose': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'regions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['base.Region']", 'symmetrical': 'False', 'blank': 'True'}),
             'restriction_code_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.RestrictionCodeType']", 'null': 'True', 'blank': 'True'}),
-            'share_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'spatial_representation_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.SpatialRepresentationType']", 'null': 'True', 'blank': 'True'}),
             'srid': ('django.db.models.fields.CharField', [], {'default': "'EPSG:4326'", 'max_length': '255'}),
             'supplemental_information': ('django.db.models.fields.TextField', [], {'default': "u'No information provided'"}),
@@ -196,11 +151,12 @@ class Migration(SchemaMigration):
         u'documents.document': {
             'Meta': {'object_name': 'Document', '_ormbases': [u'base.ResourceBase']},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']", 'null': 'True', 'blank': 'True'}),
-            'doc_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'doc_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'doc_file': ('django.db.models.fields.files.FileField', [], {'max_length': '255'}),
             'extension': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
-            u'resourcebase_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['base.ResourceBase']", 'unique': 'True', 'primary_key': 'True'})
+            'popular_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            u'resourcebase_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['base.ResourceBase']", 'unique': 'True', 'primary_key': 'True'}),
+            'share_count': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
         u'people.profile': {
             'Meta': {'ordering': "['name']", 'object_name': 'Profile'},
