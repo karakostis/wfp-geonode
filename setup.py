@@ -23,6 +23,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "django-tastypie==0.11.0",
+        "psycopg2==2.5.3",
     ],
     zip_safe=False,
 )
