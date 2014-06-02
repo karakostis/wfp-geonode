@@ -55,9 +55,26 @@ class EmployeeResource(GisModelResource):
         resource_name = 'employee'
         filtering = {
             'profile': ALL_WITH_RELATIONS,
+            'duties_type': ALL,
         }
         serializer = GeoJSONSerializer()
         include_resource_uri = False
         allowed_methods = ['get']
+        
+    def dehydrate_duties_type(self, bundle):
+        duties_value = bundle.data['duties_type']
+        if duties_value is not None:
+            return Employee.DUTIES_CHOICES[bundle.data['duties_type']][1]
+        else:
+            return None
+        
+    def build_schema(self):
+        base_schema = super(EmployeeResource, self).build_schema()
+        for f in self._meta.object_class._meta.fields:
+            if f.name in base_schema['fields'] and f.choices:
+                base_schema['fields'][f.name].update({
+                    'choices': f.choices,
+                })
+        return base_schema
     
         
