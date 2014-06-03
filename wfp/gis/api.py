@@ -55,6 +55,7 @@ class EmployeeResource(GisModelResource):
         resource_name = 'employee'
         filtering = {
             'profile': ALL_WITH_RELATIONS,
+            'office': ALL_WITH_RELATIONS,
             'duties_type': ALL,
         }
         serializer = GeoJSONSerializer()
