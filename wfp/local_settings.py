@@ -145,6 +145,10 @@ LANGUAGES = (
 )
 
 MAX_DOCUMENT_SIZE = 20 # MB
+ALLOWED_DOCUMENT_TYPES = [
+    'doc', 'docx','gif', 'jpg', 'jpeg', 'ods', 'odt', 'pdf', 'png', 'ppt', 
+    'rar', 'tif', 'tiff', 'txt', 'xls', 'xlsx', 'xml', 'zip', 'avi', 'mp4',
+]
 
 from settings import INSTALLED_APPS
 INSTALLED_APPS = INSTALLED_APPS + (
