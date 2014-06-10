@@ -183,6 +183,9 @@ DOWNLOAD_FORMATS_RASTER = [
     'GeoTIFF', 'JPEG', 'PNG', 'ArcGrid', 'KML',
 ]
 
+# Other settings
+SOCIAL_BUTTONS = False
+
 # Migrations
 SOUTH_MIGRATION_MODULES = {
     'base': 'wfp.migrations.base.migrations',
