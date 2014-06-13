@@ -120,10 +120,10 @@ This is where you can override the hero area block. You can simply modify the co
         <div class="row">
           <div class="span8">
             <div class="row">
-              <div class="span2"><p><a href="/layers/">{% trans "Layers" %} <span class="count">{{ facets.layers }}</span></a></p></div>
-              <div class="span2"><p><a href="/maps/">{% trans "Maps" %} <span class="count">{{ facets.maps }}</span></a></p></div>
-              <div class="span2"><p><a href="/documents/">{% trans "Documents" %} <span class="count">{{ facets.documents }}</span></a></p></div>
-              <div class="span2"><p><a href="/people/">{% trans "Users" %} <span class="count">{{ facets.users }}</span></a></p></div>
+              <div class="span2"><p><a href="{% url 'layer_browse' %}">{% trans "Layers" %} <span class="count">{{ facets.layers }}</span></a></p></div>
+              <div class="span2"><p><a href="{% url 'maps_browse' %}">{% trans "Maps" %} <span class="count">{{ facets.maps }}</span></a></p></div>
+              <div class="span2"><p><a href="{% url 'wfpdocs-browse' %}">{% trans "Documents" %} <span class="count">{{ facets.wfpdocuments }}</span></a></p></div>
+              <div class="span2"><p><a href="{% url 'profile_browse' %}">{% trans "Users" %} <span class="count">{{ facets.users }}</span></a></p></div>
             </div>
           </div>
           <div class="span4">

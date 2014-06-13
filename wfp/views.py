@@ -10,6 +10,8 @@ from geonode.people.models import Profile
 from geonode.search.views import search_api
 from geonode.search.search import _filter_security
 
+from wfp.wfpdocs.models import WFPDocument
+
 def index(request):
     post = request.POST.copy()
     post.update({'type': 'layer'})
@@ -22,7 +24,7 @@ def search_page(request, template='search/search.html', **kw):
     facets = {      
         'maps' : Map.objects.count(),
         'layers' : Layer.objects.count(),
-        'documents': Document.objects.count(),
+        'wfpdocuments': WFPDocument.objects.count(),
         'users' : Profile.objects.count()
     }
     
