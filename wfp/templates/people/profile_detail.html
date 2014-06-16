@@ -103,7 +103,11 @@
                   <h3><i class="icon-unchecked icon-rotate-45"></i>
                 {% endif %}
                 {% if obj.class_name = 'Document' %}
-                  <img class="thumb" src="{{ STATIC_URL }}img/doc-placeholder.png" />
+                  <img class="thumb" src="/uploaded/{{ obj.thumbnail.thumb_file }}" />
+                  <h3><i class="icon-file-text-alt"></i>
+                {% endif %}
+                {% if obj.class_name = 'WFPDocument' %}
+                  <img class="thumb" src="/uploaded/{{ obj.thumbnail.thumb_file }}" />
                   <h3><i class="icon-file-text-alt"></i>
                 {% endif %}
                     <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
