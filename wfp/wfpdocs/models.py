@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.urlresolvers import reverse
+
 from geonode.documents.models import Document
 
 class Category(models.Model):
@@ -44,6 +46,9 @@ class WFPDocument(models.Model):
     def __str__(self):  
           return "%s" % self.source
     
+    def get_absolute_url(self):
+        return reverse('wfpdocs-detail', args=(self.document.id,))
+        
     def get_file_size(self):
         num = self.document.doc_file.size
         for x in ['bytes','KB','MB','GB','TB']:
@@ -72,4 +77,8 @@ class WFPDocument(models.Model):
     def get_date_type(self):
         return self.document.date_type
     get_date_type.short_description = 'Date Type'
+    
+    @property
+    def class_name(self):
+        return self.__class__.__name__
     
