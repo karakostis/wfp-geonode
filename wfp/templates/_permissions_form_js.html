@@ -29,6 +29,13 @@
           'readonly': 'document_readonly',
           'none': '_none'
       };
+    } else if (type == "wfpdocuments"){
+      levels = {
+          'admin': 'document_admin',
+          'readwrite': 'document_readwrite',
+          'readonly': 'document_readonly',
+          'none': '_none'
+      };
     }
 
     if (data["viewmode"] === "ANYONE") {

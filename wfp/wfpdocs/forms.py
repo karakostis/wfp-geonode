@@ -12,7 +12,7 @@ class WFPDocumentForm(forms.ModelForm):
     source = forms.CharField()
     orientation = forms.ChoiceField(WFPDocument.ORIENTATION_CHOICES)
     page_format = forms.ChoiceField(WFPDocument.FORMAT_CHOICES)
-    categories = forms.ModelMultipleChoiceField(Category.objects.all())
+    categories = forms.ModelMultipleChoiceField(Category.objects.all(), required=False)
     regions = forms.ModelMultipleChoiceField(Region.objects.all(), required=False)
     last_version = forms.BooleanField(initial=True, required=False)
     resource = forms.ChoiceField(label='Link to')
