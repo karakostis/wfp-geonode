@@ -114,8 +114,14 @@ def document_update(request, id=None, template_name='wfpdocs/document_form.html'
         #    page_format=page_format, document=document)
         wfpdoc.save()
         wfpdoc.categories = categories
+        # permissions
+        if id is None:
+            from geonode.documents.views import document_set_permissions
+            permissionsStr = request.POST['permissions']
+            permissions = json.loads(permissionsStr)
+            document_set_permissions(document, permissions)
         return HttpResponseRedirect(reverse('wfpdocs-browse'))
-    else:
+    else: # GET
         if wfpdoc:
             form = WFPDocumentForm(instance=wfpdoc, 
                 initial={'regions': wfpdoc.document.regions.all()})
