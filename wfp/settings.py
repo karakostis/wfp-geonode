@@ -40,9 +40,9 @@ LOCAL_ROOT = os.path.abspath(os.path.dirname(__file__))
 WSGI_APPLICATION = "wfp.wsgi.application"
 
 # Additional directories which hold static files
-STATICFILES_DIRS.append(
+STATICFILES_DIRS = [
     os.path.join(LOCAL_ROOT, "static"),
-)
+] + STATICFILES_DIRS
 
 # Note that Django automatically includes the "templates" dir in all the
 # INSTALLED_APPS, se there is no need to add maps/templates or admin/templates

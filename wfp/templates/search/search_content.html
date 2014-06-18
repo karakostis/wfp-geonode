@@ -15,7 +15,11 @@
     {% endwith %}
   {% elif object.o.class_name == 'Document' %}
     {% with object.o as document %}
-      {% include "documents/_document_list_item.html" %}
+      {% if document.wfpdocument %}
+        {% include "wfpdocs/_document_list_item.html" %}
+      {% else %}
+        {% include "documents/_document_list_item.html" %}
+      {% endif %}
     {% endwith %}
   {% elif object.o.class_name == 'Profile' %}
     {% with object as profile %}
