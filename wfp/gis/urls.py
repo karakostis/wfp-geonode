@@ -12,5 +12,4 @@ v1_api.register(EmployeeResource())
 urlpatterns = patterns(
     'wfp.gis.views',
     url(r'^api/', include(v1_api.urls)),
-    url(r'^employees-map/$', TemplateView.as_view(template_name='gis/employees-map.html')),
 )

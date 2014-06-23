@@ -1,9 +1,0 @@
-#logo {z-index: 20; position: fixed; bottom: 20px; left: 20px; background-image: url(../images/WFP_Logo.png); height: 68px; width: 180px; padding: 10px; color: white;}
-#header {z-index: 20; position: absolute; top:60px;left:0;font-family: Impact; font-size: 3em;color:white;font-style: italic;padding: 15px;opacity: .85;text-shadow: 0 0 4px #000;
-	background: -moz-linear-gradient(left,  rgba(0,129,195,1) 0%, rgba(78,164,218,1) 62%, rgba(85,167,220,0.7) 68%, rgba(125,185,232,0) 100%);
-	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,129,195,1)), color-stop(62%,rgba(78,164,218,1)), color-stop(68%,rgba(85,167,220,0.7)), color-stop(100%,rgba(125,185,232,0)));
-	background: -webkit-linear-gradient(left,  rgba(0,129,195,1) 0%,rgba(78,164,218,1) 62%,rgba(85,167,220,0.7) 68%,rgba(125,185,232,0) 100%);
-	background: -o-linear-gradient(left,  rgba(0,129,195,1) 0%,rgba(78,164,218,1) 62%,rgba(85,167,220,0.7) 68%,rgba(125,185,232,0) 100%);
-	background: -ms-linear-gradient(left,  rgba(0,129,195,1) 0%,rgba(78,164,218,1) 62%,rgba(85,167,220,0.7) 68%,rgba(125,185,232,0) 100%);
-	background: linear-gradient(to right,  rgba(0,129,195,1) 0%,rgba(78,164,218,1) 62%,rgba(85,167,220,0.7) 68%,rgba(125,185,232,0) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0081c3', endColorstr='#007db9e8',GradientType=1 );
