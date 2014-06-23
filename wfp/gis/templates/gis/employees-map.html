@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset=utf-8 />
-<title>WMS</title>
+<title>GIS Presence Map</title>
 
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
@@ -185,7 +185,7 @@ var legendGISPresence = L.control({position: 'bottomright'});
 legendGISPresence.onAdd = function (map) {
   var div = L.DomUtil.create('div', 'legend-gis');
       div.innerHTML +=
-      '<img src="include/images/Legend_GIS_Presence.png" alt="legend" width="380" height="260">';
+      '<img src="{{ STATIC_URL }}images/Legend_GIS_Presence.png" alt="legend" width="380" height="260">';
   return div;
   };
 legendGISPresence.addTo(map);
@@ -194,7 +194,7 @@ var legendWFPPresence = L.control({position: 'bottomleft'});
 legendWFPPresence.onAdd = function (map) {
   var div = L.DomUtil.create('div', 'legend-wfp');
       div.innerHTML +=
-      '<img src="include/images/Legend_RB.png" alt="legend" width="380" height="260">';
+      '<img src="{{ STATIC_URL }}images/Legend_RB.png" alt="legend" width="380" height="260">';
   return div;
   };
 
