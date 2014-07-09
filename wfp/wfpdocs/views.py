@@ -8,6 +8,7 @@ from django.conf import settings
 from geonode.documents.models import Document
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.views.decorators.cache import cache_page
 from models import WFPDocument, Category
 from forms import WFPDocumentForm
 from geonode.documents.forms import DocumentForm
@@ -17,6 +18,7 @@ from geonode.documents.views import DOCUMENT_LEV_NAMES, IMGTYPES
 
 ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 
+@cache_page(60)
 def document_browse(request, template='wfpdocs/document_list.html'):
     from geonode.search.views import search_page
     post = request.POST.copy()
