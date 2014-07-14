@@ -28,11 +28,11 @@ class WFPDocument(models.Model):
     )
     
     FORMAT_CHOICES = (
+        (4, 'A4'),
         (0, 'A0'),
         (1, 'A1'),
         (2, 'A2'),
         (3, 'A3'),
-        (4, 'A4'),
     )
 
     source = models.CharField(max_length=255)
