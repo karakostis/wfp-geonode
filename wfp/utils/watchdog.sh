@@ -36,30 +36,30 @@ url_test()
 times=0;
 
 if [ ! -e "$LOGFILE" ]; then
-	LOGFILE="/dev/stdout"
-	echo "`date` WatchDog output file: DOES NOT EXIST: using ${LOGFILE}" >> "${LOGFILE}"
+    LOGFILE="/dev/stdout"
+    echo "`date` WatchDog output file: DOES NOT EXIST: using ${LOGFILE}" >> "${LOGFILE}"
 else
-	echo "`date` WatchDog setting output to: ${LOGFILE}" >> "${LOGFILE}"
+    echo "`date` WatchDog setting output to: ${LOGFILE}" >> "${LOGFILE}"
 fi
 
 #loop
 while [ "$times" -lt "$RETRY" ]
 do
-  	url_test
+      url_test
 
         #testing on url_test exit code
-	if [ "$?" -eq 0 ] ; then
-		echo "`date` WatchDog Status: OK -> $SERVICE is responding at URL $WFSURL" >> $LOGFILE
-		#exit 0;
-	else
-		echo "`date` WatchDog Status: FAIL -> $SERVICE is NOT responding properly at URL $WFSURL" >> $LOGFILE
-		echo "`date` WatchDog Action: Stopping service $SERVICE" >> $LOGFILE
-		killall -9 java
-        sh /opt/tomcat/bin/startup.sh
-        sh /opt/tomcat7/prod/tomcat/apache-tomcat-7.0.37/bin/startup.sh
-        sh /opt/tomcat7/stage/tomcat/apache-tomcat-7.0.37/bin/startup.sh
+    if [ "$?" -eq 0 ] ; then
+        echo "`date` WatchDog Status: OK -> $SERVICE is responding at URL $WFSURL" >> $LOGFILE
+        #exit 0;
+    else
+        echo "`date` WatchDog Status: FAIL -> $SERVICE is NOT responding properly at URL $WFSURL" >> $LOGFILE
+        echo "`date` WatchDog Action: Stopping service $SERVICE" >> $LOGFILE
+        sudo killall -9 java
+        sudo sh /opt/tomcat/bin/startup.sh
+        sudo sh /opt/tomcat7/prod/tomcat/apache-tomcat-7.0.37/bin/startup.sh
+        sudo sh /opt/tomcat7/stage/tomcat/apache-tomcat-7.0.37/bin/startup.sh
         sleep 60
-	fi
+    fi
 done
 
 return 100
