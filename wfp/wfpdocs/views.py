@@ -15,6 +15,8 @@ from geonode.documents.forms import DocumentForm
 from geonode.people.forms import ProfileForm
 from geonode.maps.views import _perms_info
 from geonode.documents.views import DOCUMENT_LEV_NAMES, IMGTYPES
+from geonode.documents.views import _resolve_document
+from geonode.documents.views import _PERMISSION_MSG_DELETE
 
 ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 
@@ -137,4 +139,17 @@ def document_update(request, id=None, template_name='wfpdocs/document_form.html'
             RequestContext(request)
         )
         
+@login_required
+def document_remove(request, docid, template='wfpdocs/document_remove.html'):
+    document = _resolve_document(request, docid, 'documents.delete_document',
+                           _PERMISSION_MSG_DELETE)
 
+    if request.method == 'GET':
+        return render_to_response(template,RequestContext(request, {
+            "document": document
+        }))
+    if request.method == 'POST':
+        document.delete()
+        return HttpResponseRedirect(reverse("wfpdocs-browse"))
+    else:
+        return HttpResponse("Not allowed",status=403)
