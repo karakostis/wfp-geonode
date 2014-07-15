@@ -15,5 +15,7 @@ urlpatterns = patterns(
     url(r'^(?P<docid>\d+)/?$', 'document_detail', name='wfpdocs-detail'),
     url(r'^upload/?$', 'document_update', name='wfpdocs-upload'),
     url(r'^(?P<id>\d+)/update$', 'document_update', name='wfpdocs-update'),
+    url(r'^(?P<docid>\d+)/remove$', 'document_remove',
+        name="wfpdocs-remove"),
     url(r'^api/', include(v1_api.urls)),
 )
