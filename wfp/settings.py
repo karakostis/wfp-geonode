@@ -73,6 +73,10 @@ MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 60
+CACHE_MIDDLEWARE_KEY_PREFIX = os.environ['site_url']
+
 # Load more settings from a file called local_settings.py if it exists
 try:
     from local_settings import *
