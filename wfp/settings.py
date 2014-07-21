@@ -58,6 +58,21 @@ LOCALE_PATHS = (
     os.path.join(LOCAL_ROOT, 'locale'),
     ) + LOCALE_PATHS
 
+# django cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 60,
+    }
+}
+
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+)
+
 # Load more settings from a file called local_settings.py if it exists
 try:
     from local_settings import *
