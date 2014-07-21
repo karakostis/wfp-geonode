@@ -58,9 +58,10 @@ def restore_django():
     """
     Restore django configuration.
     """
-    sql = "UPDATE django_site SET domain = 'localhost:8000'"
+    sql = "UPDATE django_site SET domain = 'localhost:8000', name = 'localhost:8000';"
     os.environ['PGPASSWORD'] = os.environ['geonode_pwd']
     sh('psql -U gnadmin -c "%s" %s' % (sql, DJANGO_DB_NAME))
+    # TODO change db name form gn_uploads to sdi_uploads 
 
 
 
