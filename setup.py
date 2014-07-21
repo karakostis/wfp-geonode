@@ -22,8 +22,9 @@ setup(
     packages=['wfp',],
     include_package_data=True,
     install_requires=[
-        "django-tastypie==0.11.0",
-        "psycopg2==2.5.3",
+        'django-tastypie==0.11.0',
+        'psycopg2==2.5.3',
+        'python-memcached==1.53',
     ],
     zip_safe=False,
 )

@@ -20,7 +20,6 @@ from geonode.documents.views import _PERMISSION_MSG_DELETE
 
 ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 
-@cache_page(60)
 def document_browse(request, template='wfpdocs/document_list.html'):
     from geonode.search.views import search_page
     post = request.POST.copy()
