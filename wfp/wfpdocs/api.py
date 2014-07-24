@@ -77,7 +77,7 @@ class WFPDocumentResource(WFPDocumentModelResource):
     file_size = fields.CharField(attribute='get_file_size', readonly=True)
     
     class Meta:
-        queryset = WFPDocument.objects.all()
+        queryset = WFPDocument.objects.all().order_by('-document__date')
         resource_name = 'wfp-document'
         filtering = {
             'document': ALL_WITH_RELATIONS,

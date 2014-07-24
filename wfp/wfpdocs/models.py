@@ -50,11 +50,14 @@ class WFPDocument(models.Model):
         return reverse('wfpdocs-detail', args=(self.document.id,))
         
     def get_file_size(self):
-        num = self.document.doc_file.size
-        for x in ['bytes','KB','MB','GB','TB']:
-            if num < 1024.0:
-                return "%3.1f %s" % (num, x)
-            num /= 1024.0
+        try:
+            num = self.document.doc_file.size
+            for x in ['bytes','KB','MB','GB','TB']:
+                if num < 1024.0:
+                    return "%3.1f %s" % (num, x)
+                num /= 1024.0
+        except:
+            return 0
             
     def get_regions(self):
         regions = []
