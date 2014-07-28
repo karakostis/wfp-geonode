@@ -19,7 +19,8 @@ class Command(NoArgsCommand):
         media = []
         for root, dirs, files in os.walk(settings.MEDIA_ROOT):
             for f in files:
-                media.append(os.path.abspath(os.path.join(root, f)))
+		if ('geoserver_icons' not in root) and ('resized' not in root):
+                    media.append(os.path.abspath(os.path.join(root, f)))
 
         # Get list of all fields (value) for each model (key)
         # that is a FileField or subclass of a FileField
@@ -42,6 +43,11 @@ class Command(NoArgsCommand):
                         referenced.append(os.path.abspath(target_file.path))
 
         # Print each file in MEDIA_ROOT that is not referenced in the database
-        for m in media:
+	c = 0
+	for m in media:
             if m not in referenced:
-                print(m)
+                print 'Removing image %s' % m
+		os.remove(m)
+		c = c + 1
+
+	print 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))
