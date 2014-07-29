@@ -3,6 +3,7 @@ from django.conf.urls.defaults import patterns, url, include
 from tastypie.api import Api
 
 from api import WFPDocumentResource, DocumentResource, CategoryResource
+from feeds import WFPDocumentsFeed
 
 v1_api = Api(api_name='v1')
 v1_api.register(WFPDocumentResource())
@@ -17,5 +18,6 @@ urlpatterns = patterns(
     url(r'^(?P<id>\d+)/update$', 'document_update', name='wfpdocs-update'),
     url(r'^(?P<docid>\d+)/remove$', 'document_remove',
         name="wfpdocs-remove"),
+    url(r'^rss/', WFPDocumentsFeed()),
     url(r'^api/', include(v1_api.urls)),
 )
