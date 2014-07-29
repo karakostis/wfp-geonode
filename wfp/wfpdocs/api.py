@@ -66,8 +66,8 @@ class DocumentResource(WFPDocumentModelResource):
         
     def dehydrate_is_public(self, bundle):
         # TODO find a better way to avoid this additional query for every resource
-        private_docs = GenericObjectRoleMapping.objects.filter(subject=u'anonymous', object_ct__name='document').values_list('object_id', flat=True)
-        public = self.instance.id in private_docs
+        public_docs = GenericObjectRoleMapping.objects.filter(subject=u'anonymous', object_ct__name='document').values_list('object_id', flat=True)
+        public = self.instance.id in public_docs
         return public
         
 class WFPDocumentResource(WFPDocumentModelResource):
