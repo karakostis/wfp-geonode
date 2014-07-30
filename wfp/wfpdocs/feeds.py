@@ -31,7 +31,7 @@ class WFPDocumentsFeed(Feed):
     """
     feed_type = CustomFeedGenerator
     title = "WFP/OMEP Maps Repository RSS"
-    link = "http://geonode.wfp.org/"
+    link = settings.SITEURL
     description = "Latest maps from WFP/GeoNode Maps Repository."
 
     def items(self):
