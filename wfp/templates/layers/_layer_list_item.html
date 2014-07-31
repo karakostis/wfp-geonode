@@ -16,7 +16,7 @@
     <div class="details">
       <div class="meta">
         <p>Layer {% trans 'from' %} <a href="{% url "profile_detail" layer.owner.username %}">{{ layer.owner }}</a>, {{ layer.date|timesince }} {% trans 'ago' %}</p>
-        <p class="abstract">{{ layer.abstract|truncatewords:50 }}</p>
+        <p class="abstract">{{ layer.abstract|linebreaks }}</p>
         <ul class="nav stats">
           <li><a href="{% url "layer_detail" layer.typename %}"><strong>{{ layer.popular_count }}</strong> {% trans "view" %}{{ layer.popular_count|pluralize }}</a></li>
           <li><a href="{% url "layer_detail" layer.typename %}#rate"><strong><span class="avg_rating" data-rating="{{ layer_rating }}"> <span class="overall_rating"></span></span></strong>{{num_votes}} {% trans "ratings" %}</a></li>
