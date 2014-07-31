@@ -63,10 +63,9 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
+        'KEY_PREFIX' : os.environ['site_url'],
     }
 }
-
-KEY_PREFIX = os.environ['site_url']
 
 # Load more settings from a file called local_settings.py if it exists
 try:
