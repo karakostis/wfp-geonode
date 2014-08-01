@@ -155,6 +155,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'south',
     'django.contrib.gis',
     'tastypie',
+    'raven.contrib.django.raven_compat',
     'wfp.contrib.services',
     'wfp.wfpdocs',
     'wfp.gis',
@@ -199,6 +200,11 @@ USE_QUEUE = False
 DEFAULT_WORKSPACE = 'geonode'
 CASCADE_WORKSPACE = 'geonode_cascaded'
 OGP_URL = "http://geodata.tufts.edu/solr/select"
+
+# sentry settings
+RAVEN_CONFIG = {
+    'dsn': 'https://6b076aa9d9a74fb89ce91095e323e349:b6ee71a3b5a347928108e4ad584aebfd@app.getsentry.com/28339',
+}
 
 # Load more settings from a file called dev_settings.py if it exists
 try:
