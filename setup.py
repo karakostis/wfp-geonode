@@ -25,6 +25,7 @@ setup(
         'django-tastypie==0.11.0',
         'psycopg2==2.5.3',
         'python-memcached==1.53',
+        'raven',
     ],
     zip_safe=False,
 )
