@@ -153,9 +153,10 @@ ALLOWED_DOCUMENT_TYPES = [
 from settings import INSTALLED_APPS
 INSTALLED_APPS = INSTALLED_APPS + (
     'south',
+    'djcelery',
+    'raven.contrib.django.raven_compat',
     'django.contrib.gis',
     'tastypie',
-    'raven.contrib.django.raven_compat',
     'wfp.contrib.services',
     'wfp.wfpdocs',
     'wfp.gis',

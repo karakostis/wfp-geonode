@@ -7,7 +7,7 @@ from django.db.models.loading import cache
 
 
 class Command(NoArgsCommand):
-    help = "Prints a list of all files in MEDIA_ROOT that are not referenced in the database."
+    help = "Prints and remove a list of all files in MEDIA_ROOT that are not referenced in the database."
 
     def handle_noargs(self, **options):
 
@@ -19,7 +19,7 @@ class Command(NoArgsCommand):
         media = []
         for root, dirs, files in os.walk(settings.MEDIA_ROOT):
             for f in files:
-		if ('geoserver_icons' not in root) and ('resized' not in root):
+                if ('geoserver_icons' not in root) and ('resized' not in root):
                     media.append(os.path.abspath(os.path.join(root, f)))
 
         # Get list of all fields (value) for each model (key)

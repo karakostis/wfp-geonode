@@ -26,6 +26,7 @@ setup(
         'psycopg2==2.5.3',
         'python-memcached==1.53',
         'raven',
+        'django-celery==3.1.10',
     ],
     zip_safe=False,
 )
