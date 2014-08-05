@@ -68,6 +68,11 @@ CACHES = {
     }
 }
 
+# celery
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+SERVICE_UPDATE_INTERVAL = 10
+
 # Load more settings from a file called local_settings.py if it exists
 try:
     from local_settings import *
