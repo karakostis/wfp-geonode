@@ -69,10 +69,11 @@ CACHES = {
 }
 
 # celery
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 SERVICE_UPDATE_INTERVAL = 10
-
+CELERY_TIMEZONE = 'Europe/Rome'
 # Load more settings from a file called local_settings.py if it exists
 try:
     from local_settings import *
