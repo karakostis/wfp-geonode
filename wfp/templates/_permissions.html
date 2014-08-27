@@ -21,11 +21,11 @@
     <label class="control-label"><strong>{% trans "Who can edit this data?" %}</strong></label>
     <div class="controls">
       <label class="radio">
-        <input type="radio" name="editmode" id="perms_edit_registered" value="REGISTERED" checked="checked">
+        <input type="radio" name="editmode" id="perms_edit_registered" value="REGISTERED">
         {% trans "Any registered user" %}
       </label>
       <label class="radio">
-        <input type="radio" name="editmode" id="perms_edit_list" value="LIST">
+        <input type="radio" name="editmode" id="perms_edit_list" value="LIST" checked="checked">
         {% trans "Only the following users:" %}
       </label>
       <input type="text" name="editusers" class="user-select" id="perms_edit_editusers">
