@@ -1,12 +1,13 @@
-Wfp
-========================
+# WFP GeoNode
+=============
 
-You should write some docs, it's good for the soul.
+This is the WFP GeoNode customization, obtained from a GeoNode custom project.
 
-Installation
-------------
+## Installation
 
-Install geonode with::
+TODO fix this accordingly.
+
+Install geonode with:
 
     $ sudo add-apt-repository ppa:geonode/testing
 
@@ -14,15 +15,12 @@ Install geonode with::
 
     $ sudo apt-get install geonode
 
-Create a new template based on the geonode example project.::
+Create a new template based on the geonode example project:
     
     $ django-admin startproject my_geonode --template=https://github.com/GeoNode/geonode-project/archive/master.zip -epy,rst 
     $ sudo pip install -e my_geonode
 
-.. note:: You should NOT use the name geonode for your project as it will conflict with the default geonode package name.
-
-Usage
------
+## Usage
 
 Rename the local_settings.py.sample to local_settings.py and edit it's content by setting the SITEURL and SITENAME.
 
@@ -40,7 +38,7 @@ Restart apache::
 
 Edit the templates in my_geonode/templates, the css and images to match your needs.
 
-In the my_geonode folder run::
+In the my_geonode folder run:
 
     $ python manage.py collectstatic
 
