@@ -10,7 +10,7 @@ setup(
     author="",
     author_email="",
     description="wfp, based on GeoNode",
-    long_description=(read('README.rst')),
+    long_description=(read('README.md')),
     # Full list of classifiers can be found at:
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
@@ -18,7 +18,7 @@ setup(
     ],
     license="BSD",
     keywords="wfp geonode django",
-    url='https://github.com/wfp/wfp',
+    url='http://geonode.wfp.org',
     packages=['wfp',],
     include_package_data=True,
     install_requires=[

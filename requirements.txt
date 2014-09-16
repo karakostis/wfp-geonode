@@ -1,1 +1,1 @@
--e git+https://github.com/capooti/geonode.git#egg=geonode
+-e git+http://paolo.corti@codeassist.wfp.org/stash/scm/omep/wfp-geonode.git#egg=geonode
