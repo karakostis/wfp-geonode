@@ -5,13 +5,12 @@ from paver.easy import path, sh, info, call_task
 
 # TODO read from configuration
 # we need to have a gnadmin postgres user in place, with same password as in production
-DATE="20140713"
+DATE="20140727"
 BACKUP_DIR = "/home/capooti/backup/geonode/backup_tar_gz"
 GEOSERVER_DATA_DIRECTORY = '/home/capooti/git/codeassist/geonode/geoserver'
 VE_DIR = "/home/capooti/.venvs/geonode"
-DJANGO_DB_NAME = 'sdi_django'
-UPLOADS_DB_NAME = 'sdi_upload'
-
+DJANGO_DB_NAME = 'training_django'
+UPLOADS_DB_NAME = 'training_upload'
 
 # TODO move to paver this
 # remove old backup files and scp new ones
