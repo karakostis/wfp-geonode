@@ -29,6 +29,7 @@ setup(
         'django-celery==3.1.10',
         'django-supervisor==0.3.2',
         'supervisor==3.1.0',
+        'Wand==0.3.8',
     ],
     zip_safe=False,
 )
