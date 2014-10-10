@@ -28,6 +28,7 @@ setup(
         'raven==5.0.0',
         'django-celery==3.1.10',
         'django-supervisor==0.3.2',
+        'Pillow==2.3.0',
         'supervisor==3.1.0',
         'Wand==0.3.8',
     ],
