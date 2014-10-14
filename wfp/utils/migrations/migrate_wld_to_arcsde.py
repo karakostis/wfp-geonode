@@ -2,17 +2,17 @@ from geoserver.catalog import Catalog
 from django.conf import settings
     
 layers_to_process = (
-#'wld_poi_facilities_wfp',
-#'wld_poi_warehouses_wfp',
-#'wld_trs_supplyroutes_wfp',
-#'wld_trs_unhasroutes_wfp',
-#'wld_trs_airports_wfp',
-#'wld_trs_ports_wfp',
-#'wld_poi_bcp_wfp',
-#'wld_trs_obstacles_wfp',
-#'wld_trs_bridges_wfp',
 'wld_trs_stations_wfp',
-#'wld_trs_railways_wfp',
+'wld_poi_facilities_wfp',
+'wld_poi_warehouses_wfp',
+'wld_trs_supplyroutes_wfp',
+'wld_trs_unhasroutes_wfp',
+'wld_trs_airports_wfp',
+'wld_trs_ports_wfp',
+'wld_poi_bcp_wfp',
+'wld_trs_obstacles_wfp',
+'wld_trs_bridges_wfp',
+'wld_trs_railways_wfp',
 )
 
 def rename_layers_old_postfix():
@@ -31,11 +31,16 @@ def rename_layers_old_postfix():
 def styles2sde_using_gsconfig():
     """ Migrate the layers styles from postgis to sde using gsconfig.
     """
-    cat = Catalog("%srest" % settings.GEOSERVER_URL)
+    #geoserver_url = settings.GEOSERVER_URL # http://localhost:8080/geoserver/
+    geoserver_url = 'http://geonode.wfp.org/geoserver/'
+    user = settings.OGC_SERVER['default']['USER']
+    pwd = settings.OGC_SERVER['default']['PASSWORD']
+    cat = Catalog("%srest" % geoserver_url, "admin", "zeeD4ies")
     for l in layers_to_process:
         print 'Processing layer %s' % l
         layer_old = cat.get_layer('%s_old' % l)
         layer = cat.get_layer(l)
+        #import ipdb;ipdb.set_trace()
         print 'Copying stuff from %s to %s...' % (layer_old.name, layer.name)
         print 'Default style: %s' % layer_old.default_style
         # change default style
@@ -44,6 +49,7 @@ def styles2sde_using_gsconfig():
         layer.styles = layer_old.styles
         cat.save(layer)
         cat.reload()
+        print 'You need to run updatelayers now!'
 
 def styles2sde_using_django():
     """ Migrate the layers styles from postgis to sde using django.
