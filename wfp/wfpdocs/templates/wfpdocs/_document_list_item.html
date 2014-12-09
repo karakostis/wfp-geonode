@@ -8,13 +8,13 @@
 {% num_ratings document as num_votes %}
 <article>
   <div class="content">
-    <div class="item-header">
-      <a href="{% url "wfpdocs-detail" document.id %}"><img class="thumb" src="{{ document.get_thumbnail_url }}" /></a>
+    <div class="item-header" title="{{ document.title }}">
+      <a href="{% url "wfpdocs-detail" document.id %}"><img class="thumb" src="{{ document.get_thumbnail_url }}" alt="{{ document.title }}" /></a>
       <h3><i class="icon-file-text-alt"></i> <a href="{% url "wfpdocs-detail" document.id %}">{{ document.title }}</a></h3>
     </div>
     <div class="details">
       <div class="meta">
-        <p>Doc {% trans 'from' %}: <a href="{% url "profile_detail" document.owner.username %}">{{ document.owner }}</a>, {{ document.date|timesince }} {% trans 'ago' %}</p>
+        <p>Uploaded {% trans 'by' %}: <a href="{% url "profile_detail" document.owner.username %}">{{ document.owner }}</a>, {{ document.date|timesince }} {% trans 'ago' %}</p>
         <p>{% trans 'Published' %}: {{ document.date }}</p>
         <p>{% trans 'Print Format' %}: {{ document.wfpdocument.get_page_format_display }}</p>
         <p>{% trans 'Orientation' %}: {{ document.wfpdocument.get_orientation_display }}</p>
