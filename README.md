@@ -12,11 +12,14 @@ First, clone the repository:
 Create a virtualenv:
 
     virtualenv --no-site-packages env
-    
-Setup the needed environment variables, for example add an envars file with the
-following content:
 
-    export secret_key='c)secr*y#2&y=sl)g*****ys==ww13)nrvx%35(9b$8*=secro'
+Create the geonode django and uploads databases using postgres and postgis 
+(you can restore them from dumps or populate them with syncdb).
+
+Setup the needed environment variables, for example add an envars file with the
+following content, changing it accordingly to your environemnt:
+
+    export secret_key='***'
     export site_url=http://localhost:8000/
     export geonode_user=gnadmin
     export geonode_pwd=***
@@ -37,11 +40,12 @@ virtualenv:
 Install WFP GeoNode with:
 
     cd wfp-geonode
-    pip install -r requirements.txt
-    pip install -e .
+    $ pip install -e .
     
 In case you want to test WFP GeoNode with the Django development server, edit 
 the local_settings.py file, and set DEBUG_STATIC = True.
+
+Now run the Django development server and enjoy GeoNode!
 
 
 
