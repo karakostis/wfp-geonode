@@ -8,7 +8,10 @@ import datetime
 from django.contrib.contenttypes.models import ContentType
 
 class WFPDocumentForm(forms.ModelForm):
-    publication_date = forms.DateField(initial=datetime.date.today)
+    publication_date = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
+    publication_date.widget.widgets[0].attrs = {'class':'datepicker', 'data-date-format': 'yyyy-mm-dd', 'value': str(datetime.date.today())}
+    publication_date.widget.widgets[1].attrs = {"class":"time", 'value':'00:00:00'}
+
     source = forms.CharField()
     orientation = forms.ChoiceField(WFPDocument.ORIENTATION_CHOICES)
     page_format = forms.ChoiceField(WFPDocument.FORMAT_CHOICES)

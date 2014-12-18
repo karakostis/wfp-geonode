@@ -80,6 +80,12 @@
     {% with "none" as document %}
         {% include "_permissions_form_js.html" %}
     {% endwith %}
+    
+    <script type="text/javascript">
+    $(function() {
+      $(".datepicker").datepicker();
+    });
+    </script>
 
 {% if not form.instance.pk %}
     <script type="text/javascript">

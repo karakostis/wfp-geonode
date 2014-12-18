@@ -31,6 +31,7 @@ setup(
         'Pillow==2.3.0',
         'supervisor==3.1.0',
         'Wand==0.3.8',
+        'GeoNode==2.0.1',
     ],
     zip_safe=False,
 )

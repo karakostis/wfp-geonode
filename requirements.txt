@@ -1,2 +1,0 @@
--e git+http://paolo.corti@codeassist.wfp.org/stash/scm/geonode/geonode.git#egg=geonode
-
