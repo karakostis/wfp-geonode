@@ -16,11 +16,13 @@ import sys
 here = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 up = lambda base, level: os.path.abspath(os.path.join(base, *([os.pardir] * level)))
 sys.path.insert(0, up(here, 1))
+
 import wfp as app
+from django.conf import settings
 
-
-# settings.configure()
-# settings.SITE_ID = 1
+os.environ['DJANGO_SETTINGS_MODULE'] = 'wfp.local_settings'
+settings.configure()
+settings.SITE_ID = 1
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
