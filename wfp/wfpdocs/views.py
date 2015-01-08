@@ -70,13 +70,14 @@ def document_update(request, id=None, template_name='wfpdocs/document_form.html'
         doc_file = None
         if 'file' in request.FILES:
             doc_file = request.FILES['file']
-        
             if len(request.POST['title'])==0:
                 return HttpResponse(_('You need to provide a document title.'))
             if not os.path.splitext(doc_file.name)[1].lower()[1:] in ALLOWED_DOC_TYPES:
                 return HttpResponse(_('This file type is not allowed.'))
             if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
                 return HttpResponse(_('This file is too big.'))
+        else:
+            return HttpResponse(_('You must provide a file.'))
         # map document
         form = WFPDocumentForm(request.POST)
         if form.is_valid():
