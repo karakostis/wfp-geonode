@@ -27,7 +27,7 @@ class CustomFeedGenerator(Rss201rev2Feed):
         handler.startElement(u'epweb:countries', {})
         for region in item['epweb:countries']:
             handler.addQuickElement(u'epweb:country', region.name, {
-                'uncode': region.code,
+                'iso3': region.code,
             })
         handler.endElement(u'epweb:countries')
 
