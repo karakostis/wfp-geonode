@@ -77,7 +77,8 @@ def document_update(request, id=None, template_name='wfpdocs/document_form.html'
             if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
                 return HttpResponse(_('This file is too big.'))
         else:
-            return HttpResponse(_('You must provide a file.'))
+            if wfpdoc is None:
+                return HttpResponse(_('You must provide a file.'))
         # map document
         form = WFPDocumentForm(request.POST)
         if form.is_valid():
