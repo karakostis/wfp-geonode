@@ -68,14 +68,14 @@ def apps_proxy(request):
                 )
                 
     if not settings.DEBUG:
-        if True:
-            if not validate_host(url.hostname, PROXY_ALLOWED_HOSTS):
-                return HttpResponse(
-                        "DEBUG is set to False but the host of the path provided to the proxy service is not in the"
-                        " PROXY_ALLOWED_HOSTS setting.",
-                        status=403,
-                        content_type="text/plain"
-                        )
+        print url.hostname
+        if not validate_host(url.hostname, PROXY_ALLOWED_HOSTS):
+            return HttpResponse(
+                    "DEBUG is set to False but the host of the path provided to the proxy service (%s) is not in the"
+                    " PROXY_ALLOWED_HOSTS setting." % url.hostname,
+                    status=403,
+                    content_type="text/plain"
+                    )
 
     print 'proxying to %s' % raw_url
     proxy_request = urllib2.Request(raw_url)
