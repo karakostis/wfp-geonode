@@ -205,6 +205,10 @@ RAVEN_CONFIG = {
     'dsn': 'https://6b076aa9d9a74fb89ce91095e323e349:b6ee71a3b5a347928108e4ad584aebfd@app.getsentry.com/28339',
 }
 
+# application user (i.e. user to authenticate for OPWeb)
+EXT_APP_USER = os.environ['ext_app_user']
+EXT_APP_USER_PWD = os.environ['ext_app_user_pwd']
+
 # Load more settings from a file called dev_settings.py if it exists
 try:
     from dev_settings import *
