@@ -59,7 +59,7 @@ L.mapbox.accessToken = '<your access token here>';
 var map = L.mapbox.map('map', 'examples.map-2k9d7u0c').setView([0, 0], 4);
 
 //var url = 'http://localhost:8080/geoserver/ows?'
-var url = 'http://localhost:8000/apps_proxy/?'
+var url = '/apps_proxy/?'
 
 var precipitation = L.tileLayer.wms(url, {
     format: 'image/png',
