@@ -1,12 +1,13 @@
 from urlparse import urlsplit
 from httplib import HTTPConnection,HTTPSConnection
 import urllib2, base64
+import json
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-import json
 from django.http import HttpResponse
 from django.conf import settings
+from django.http.request import validate_host
 
 from geonode.layers.models import Layer
 from geonode.maps.models import Map
@@ -52,20 +53,35 @@ def contacts(request):
 def apps_proxy(request):
     PROXY_ALLOWED_HOSTS = (ogc_server_settings.hostname,) + getattr(settings, 'PROXY_ALLOWED_HOSTS', ())
 
+    if 'url' in request.GET:
+        raw_url = request.GET['url']
+    else:
+        querystring = urllib2.unquote(request.META['QUERY_STRING'])
+        raw_url = '%sows?%s' % (settings.OGC_SERVER['default']['LOCATION'], querystring)
+    
+    url = urlsplit(raw_url)
+    if url is None:
+        return HttpResponse(
+                "The proxy service requires a URL-encoded URL as a parameter.",
+                status=400,
+                content_type="text/plain"
+                )
+                
     if not settings.DEBUG:
-        if not validate_host(url.hostname, PROXY_ALLOWED_HOSTS):
-            return HttpResponse(
-                    "DEBUG is set to False but the host of the path provided to the proxy service is not in the"
-                    " PROXY_ALLOWED_HOSTS setting.",
-                    status=403,
-                    content_type="text/plain"
-                    )
+        if True:
+            if not validate_host(url.hostname, PROXY_ALLOWED_HOSTS):
+                return HttpResponse(
+                        "DEBUG is set to False but the host of the path provided to the proxy service is not in the"
+                        " PROXY_ALLOWED_HOSTS setting.",
+                        status=403,
+                        content_type="text/plain"
+                        )
 
-    raw_url = '%sows?%s' % (settings.OGC_SERVER['default']['LOCATION'], request.META['QUERY_STRING'])
-    request = urllib2.Request(raw_url)
+    print 'proxying to %s' % raw_url
+    proxy_request = urllib2.Request(raw_url)
     base64string = base64.encodestring('%s:%s' % (settings.EXT_APP_USER, settings.EXT_APP_USER_PWD)).replace('\n', '')
-    request.add_header("Authorization", "Basic %s" % base64string)
-    result = urllib2.urlopen(request)
+    proxy_request.add_header("Authorization", "Basic %s" % base64string)
+    result = urllib2.urlopen(proxy_request)
 
     response = HttpResponse(
             result,
