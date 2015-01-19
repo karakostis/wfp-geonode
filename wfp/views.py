@@ -47,7 +47,8 @@ def contacts(request):
             'profiles': profiles,
         },
         context_instance=RequestContext(request))
-        
+
+
 def apps_proxy(request):
     PROXY_ALLOWED_HOSTS = (ogc_server_settings.hostname,) + getattr(settings, 'PROXY_ALLOWED_HOSTS', ())
 
@@ -79,47 +80,3 @@ def test_proxy(request):
     # todo remove this
     from django.shortcuts import render_to_response
     return render_to_response('test_proxy.html')
-   
-def apps_proxy_old(request):
-    PROXY_ALLOWED_HOSTS = (ogc_server_settings.hostname,) + getattr(settings, 'PROXY_ALLOWED_HOSTS', ())
-    
-    if 'url' not in request.GET:
-        return HttpResponse(
-                "The proxy service requires a URL-encoded URL as a parameter.",
-                status=400,
-                content_type="text/plain"
-                )
-
-    raw_url = request.GET['url']
-    url = urlsplit(raw_url)
-
-    locator = url.path
-    if url.query != "":
-        locator += '?' + url.query
-    if url.fragment != "":
-        locator += '#' + url.fragment
-
-    if not settings.DEBUG:
-        if not validate_host(url.hostname, PROXY_ALLOWED_HOSTS):
-            return HttpResponse(
-                    "DEBUG is set to False but the host of the path provided to the proxy service is not in the"
-                    " PROXY_ALLOWED_HOSTS setting.",
-                    status=403,
-                    content_type="text/plain"
-                    )
-
-    print 'Proxying %s' % raw_url
-    import ipdb;ipdb.set_trace()
-    request = urllib2.Request(raw_url)
-    base64string = base64.encodestring('%s:%s' % (settings.EXT_APP_USER, settings.EXT_APP_USER)).replace('\n', '')
-    request.add_header("Authorization", "Basic %s" % base64string)
-    result = urllib2.urlopen(request)
-
-    response = HttpResponse(
-            result,
-            status=result.code,
-            content_type=result.headers["Content-Type"]
-            )
-
-    return response
-
