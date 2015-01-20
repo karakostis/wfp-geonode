@@ -16,7 +16,10 @@ GEOSERVER_URL = os.environ['geoserver_url']
 DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
-PROXY_ALLOWED_HOSTS = ('localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', )
+PROXY_ALLOWED_HOSTS = (
+    'localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', 
+    '10.11.40.4', '10.11.40.90',
+    )
 ALLOWED_HOSTS = PROXY_ALLOWED_HOSTS
 
 SITENAME = 'GeoNode'
