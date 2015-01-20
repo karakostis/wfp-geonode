@@ -61,10 +61,11 @@ var map = L.mapbox.map('map', 'examples.map-2k9d7u0c').setView([0, 0], 4);
 //var url = 'http://localhost:8080/geoserver/ows?'
 var url = '/apps_proxy/?'
 
-var precipitation = L.tileLayer.wms(url, {
+var layer_name = 'geonode:wld_bnd_securitylevel_wfp'
+var layer = L.tileLayer.wms(url, {
     format: 'image/png',
     transparent: true,
-    layers: 'geonode:wld_bnd_securitylevel_wfp'
+    layers: layer_name
 }).addTo(map);
 
 // getfeatureinfo event
@@ -78,7 +79,7 @@ function Identify(e) {
     var X = map.layerPointToContainerPoint(e.layerPoint).x;
     var Y = map.layerPointToContainerPoint(e.layerPoint).y;
     // compose the URL for the request
-    var URL = url + 'SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=geonode:wld_bnd_securitylevel_wfp_1&QUERY_LAYERS=geonode:wld_bnd_securitylevel_wfp_1&BBOX='+BBOX+'&FEATURE_COUNT=1&HEIGHT='+HEIGHT+'&WIDTH='+WIDTH+'&INFO_FORMAT=text%2Fhtml&SRS=EPSG%3A4326&X='+X+'&Y='+Y;
+    var URL = url + 'SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=' + layer_name + '&QUERY_LAYERS=' + layer_name + '&BBOX='+BBOX+'&FEATURE_COUNT=1&HEIGHT='+HEIGHT+'&WIDTH='+WIDTH+'&INFO_FORMAT=text%2Fhtml&SRS=EPSG%3A4326&X='+X+'&Y='+Y;
     //send the asynchronous HTTP request using jQuery $.ajax
     $.ajax({
         url: URL,
