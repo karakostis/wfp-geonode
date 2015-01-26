@@ -49,10 +49,36 @@ def contacts(request):
         },
         context_instance=RequestContext(request))
 
+def generate_token():
+    return 'awXYzF45df'
+    
+def get_token(request):
+    response_data = {}
+    response_data['token'] = generate_token()
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def apps_proxy(request):
     PROXY_ALLOWED_HOSTS = (ogc_server_settings.hostname,) + getattr(settings, 'PROXY_ALLOWED_HOSTS', ())
 
+    token = None
+    if 'token' in request.GET:
+        token = request.GET['token']
+    if token is None:
+        print "The proxy service requires a token."
+        return HttpResponse(
+                "The proxy service requires a token.",
+                status=400,
+                content_type="text/plain"
+                )
+    if token != generate_token():
+        print "The provided token is invalid."
+        return HttpResponse(
+                "The provided token is invalid.",
+                status=400,
+                content_type="text/plain"
+                )
+
+    print request.GET
     if 'url' in request.GET:
         raw_url = request.GET['url']
     else:
@@ -95,4 +121,5 @@ def apps_proxy(request):
 def test_proxy(request):
     # todo remove this
     from django.shortcuts import render_to_response
-    return render_to_response('test_proxy.html')
+    return render_to_response('test_proxy.html', RequestContext(request, {
+        'token': generate_token(),  }))
