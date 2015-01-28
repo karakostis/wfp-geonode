@@ -46,7 +46,6 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.autosummary',
               'sphinx.ext.coverage',
               'sphinx.ext.viewcode',
-              'wfp'
          ]
 
 next_version = '0.1'

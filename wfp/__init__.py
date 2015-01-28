@@ -9,7 +9,7 @@ import os
 #from .celery import app as celery_app
 
 NAME = 'wfp-geonode'
-VERSION = __version__ = (0, 2, 1, 'final', 0)
+VERSION = __version__ = (0, 2, 4, 'alpha', 0)
 __author__ = 'WFP development team'
 
 
