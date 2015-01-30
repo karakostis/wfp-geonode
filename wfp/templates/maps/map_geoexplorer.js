@@ -40,7 +40,7 @@ Ext.onReady(function() {
     app = new GeoNode.Composer(config);
     app.mapPanel.map.addControl(
         new OpenLayers.Control.MousePosition(
-            { numDigits: 2,
+            { numDigits: 4,
               displayProjection: new OpenLayers.Projection("EPSG:4326")}
         )
     );

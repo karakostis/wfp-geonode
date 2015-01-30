@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Displaying WMS layers</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<style>
+.menu-ui {
+  background:#fff;
+  position:absolute;
+  top:10px;right:10px;
+  z-index:1;
+  border-radius:3px;
+  width:120px;
+  border:1px solid rgba(0,0,0,0.4);
+  }
+  .menu-ui a {
+    font-size:13px;
+    color:#404040;
+    display:block;
+    margin:0;padding:0;
+    padding:10px;
+    text-decoration:none;
+    border-bottom:1px solid rgba(0,0,0,0.25);
+    text-align:center;
+    }
+    .menu-ui a:first-child {
+      border-radius:3px 3px 0 0;
+      }
+    .menu-ui a:last-child {
+      border:none;
+      border-radius:0 0 3px 3px;
+      }
+    .menu-ui a:hover {
+      background:#f8f8f8;
+      color:#404040;
+      }
+    .menu-ui a.active {
+      background:#3887BE;
+      color:#FFF;
+      }
+      .menu-ui a.active:hover {
+        background:#3074a4;
+        }
+</style>
+<div id='map'>
+</div>
+<script>
+L.mapbox.accessToken = '<your access token here>';
+var map = L.mapbox.map('map', 'examples.map-2k9d7u0c').setView([0, 0], 4);
+
+//var url = 'http://localhost:8080/geoserver/ows?'
+var url = '/apps_proxy/?token={{ token }}'
+
+var layer_name = 'geonode:wld_bnd_securitylevel_wfp'
+var layer = L.tileLayer.wms(url, {
+    format: 'image/png',
+    transparent: true,
+    layers: layer_name
+}).addTo(map);
+
+// getfeatureinfo event
+map.addEventListener('click', Identify);
+
+function Identify(e) {
+    // set parameters needed for GetFeatureInfo WMS request
+    var BBOX = map.getBounds().toBBoxString();
+    var WIDTH = map.getSize().x;
+    var HEIGHT = map.getSize().y;
+    var X = map.layerPointToContainerPoint(e.layerPoint).x;
+    var Y = map.layerPointToContainerPoint(e.layerPoint).y;
+    // compose the URL for the request
+    var URL = url + 'SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=' + layer_name + '&QUERY_LAYERS=' + layer_name + '&BBOX='+BBOX+'&FEATURE_COUNT=1&HEIGHT='+HEIGHT+'&WIDTH='+WIDTH+'&INFO_FORMAT=text%2Fhtml&SRS=EPSG%3A4326&X='+X+'&Y='+Y;
+    //send the asynchronous HTTP request using jQuery $.ajax
+    $.ajax({
+        url: URL,
+        dataType: "html",
+        type: "GET",
+        success: function(data) {
+            var popup = new L.Popup({
+            maxWidth: 300
+            });
+            popup.setContent(data);
+            popup.setLatLng(e.latlng);
+            map.openPopup(popup);
+        }
+    });
+}
+
+
+</script>
+</body>
+</html>

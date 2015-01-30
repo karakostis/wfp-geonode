@@ -9,10 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 
 class WFPDocumentForm(forms.ModelForm):
     publication_date = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
-    publication_date.widget.widgets[0].attrs = {'class':'datepicker', 'data-date-format': 'yyyy-mm-dd', 'value': str(datetime.date.today())}
-    publication_date.widget.widgets[1].attrs = {"class":"time", 'value':'00:00:00'}
-
-    source = forms.CharField()
+    source = forms.CharField(required=False)
     orientation = forms.ChoiceField(WFPDocument.ORIENTATION_CHOICES)
     page_format = forms.ChoiceField(WFPDocument.FORMAT_CHOICES)
     categories = forms.ModelMultipleChoiceField(Category.objects.all(), required=False)
@@ -23,10 +20,12 @@ class WFPDocumentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WFPDocumentForm, self).__init__(*args, **kwargs)
         # publication date
-        if hasattr(self, 'instance'):
-            if hasattr(self.instance, 'document'):
-                self.fields['publication_date'].initial = self.instance.document.date
-                
+        if hasattr(self.instance, 'document'):
+            self.fields['publication_date'].initial = self.instance.document.date
+        else:
+            self.fields['publication_date'].widget.widgets[0].attrs = {'class':'datepicker', 'data-date-format': 'yyyy-mm-dd', 'value': str(datetime.date.today())}
+            self.fields['publication_date'].widget.widgets[1].attrs = {"class":"time",
+        'value': datetime.datetime.now().strftime('%H:%M:%S')}
         # resource
         rbases = list(Layer.objects.all())
         rbases += list(Map.objects.all())

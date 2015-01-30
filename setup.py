@@ -1,37 +1,38 @@
+#!/usr/bin/env python
 import os
-from distutils.core import setup
+import codecs
+from distutils.config import PyPIRCCommand
+from setuptools import setup, find_packages
 
-def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+dirname = 'wfp'
+app = __import__(dirname)
+
+def read(*parts):
+    here = os.path.abspath(os.path.dirname(__file__))
+    return codecs.open(os.path.join(here, *parts), 'r').read()
+
+PyPIRCCommand.DEFAULT_REPOSITORY = 'http://pypi.wfp.org/pypi/'
 
 setup(
-    name="wfp",
-    version="0.2",
-    author="",
-    author_email="",
-    description="wfp, based on GeoNode",
-    long_description=(read('README.md')),
-    # Full list of classifiers can be found at:
-    # http://pypi.python.org/pypi?%3Aaction=list_classifiers
-    classifiers=[
-        'Development Status :: 1 - Planning',
-    ],
-    license="BSD",
-    keywords="wfp geonode django",
-    url='http://geonode.wfp.org',
-    packages=['wfp',],
+    name=app.NAME,
+    version=app.get_version(),
+    url='http://pypi.wfp.org/pypi/%s/' % app.NAME,
+    
+    author='UN World Food Programme',
+    author_email='omep.gis@wfp.org',
+    license="WFP Property",
+    description='WFP GeoNode',
+
+    packages=find_packages('.'),
     include_package_data=True,
-    install_requires=[
-        'django-tastypie==0.11.0',
-        'psycopg2==2.5.3',
-        'python-memcached==1.53',
-        'raven==5.0.0',
-        'django-celery==3.1.10',
-        'django-supervisor==0.3.2',
-        'Pillow==2.3.0',
-        'supervisor==3.1.0',
-        'Wand==0.3.8',
-        'GeoNode==2.0.1',
-    ],
-    zip_safe=False,
+    dependency_links=['http://pypi.wfp.org/simple/'],
+    install_requires=read('wfp/requirements/install.pip'),
+    platforms=['linux'],
+    classifiers=[
+        'Environment :: Web Environment',
+        'Framework :: Django',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.7',
+        'Intended Audience :: Developers'
+    ]
 )

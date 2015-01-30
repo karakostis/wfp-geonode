@@ -11,7 +11,7 @@ class CustomFeedGenerator(Rss201rev2Feed):
     """
     def root_attributes(self):
         attrs = super(CustomFeedGenerator, self).root_attributes()
-        attrs['xmlns:epweb'] = 'http://epweb.wfp.org/'
+        attrs['xmlns:epweb'] = 'http://geonode.wfp.org/'
         return attrs
         
     def add_item_elements(self, handler, item):
@@ -24,11 +24,21 @@ class CustomFeedGenerator(Rss201rev2Feed):
         handler.addQuickElement(u'epweb:fileType', item['epweb:fileType'])
         handler.addQuickElement(u'epweb:fileSize', item['epweb:fileSize'])
         handler.addQuickElement(u'epweb:printSize', item['epweb:printSize'])
+        handler.startElement(u'epweb:countries', {})
+        for region in item['epweb:countries']:
+            handler.addQuickElement(u'epweb:country', region.name, {
+                'iso3': region.code,
+            })
+        handler.endElement(u'epweb:countries')
+
         
 class WFPDocumentsFeed(Feed):
     """
     RSS feed of all public static maps.
     """
+    
+    # Elements for the top-level, channel
+    
     feed_type = CustomFeedGenerator
     title = "WFP/OMEP Maps Repository RSS"
     link = settings.SITEURL
@@ -40,6 +50,8 @@ class WFPDocumentsFeed(Feed):
         public_wfpdocs = WFPDocument.objects.filter(document__id__in=public_docs)
         return public_wfpdocs.order_by('-document__date')[:20]
 
+    # Elements for each item
+    
     def item_title(self, item):
         return item.document.title
 
@@ -56,7 +68,6 @@ class WFPDocumentsFeed(Feed):
         return 'omep.gis@wfp.org'
     
     def item_extra_kwargs(self, obj):
-        #import ipdb;ipdb.set_trace()
         thumb_url = '%s%s' % (settings.SITEURL[:-1], 
             obj.document.get_thumbnail_url())
         return {
@@ -67,6 +78,7 @@ class WFPDocumentsFeed(Feed):
             'epweb:createDate' : str(obj.document.date),
             'epweb:fileType' : obj.document.extension.upper(),
             'epweb:fileSize' : str(obj.get_file_size()),
-            'epweb:printSize' : WFPDocument.FORMAT_CHOICES[obj.page_format][1]
+            'epweb:printSize' : WFPDocument.FORMAT_CHOICES[obj.page_format][1],
+            'epweb:countries' : obj.document.regions.all(),
         }
 

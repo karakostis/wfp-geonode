@@ -16,7 +16,10 @@ GEOSERVER_URL = os.environ['geoserver_url']
 DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
-PROXY_ALLOWED_HOSTS = ('localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', )
+PROXY_ALLOWED_HOSTS = (
+    'localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', 
+    '10.11.40.4', '10.11.40.90',
+    )
 ALLOWED_HOSTS = PROXY_ALLOWED_HOSTS
 
 SITENAME = 'GeoNode'
@@ -204,6 +207,10 @@ OGP_URL = "http://geodata.tufts.edu/solr/select"
 RAVEN_CONFIG = {
     'dsn': 'https://6b076aa9d9a74fb89ce91095e323e349:b6ee71a3b5a347928108e4ad584aebfd@app.getsentry.com/28339',
 }
+
+# application user (i.e. user to authenticate for OPWeb)
+EXT_APP_USER = os.environ['ext_app_user']
+EXT_APP_USER_PWD = os.environ['ext_app_user_pwd']
 
 # Load more settings from a file called dev_settings.py if it exists
 try:

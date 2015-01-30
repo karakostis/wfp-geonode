@@ -1,7 +1,13 @@
+from urlparse import urlsplit
+from httplib import HTTPConnection,HTTPSConnection
+import urllib2, base64
+import json
+
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-import json
 from django.http import HttpResponse
+from django.conf import settings
+from django.http.request import validate_host
 
 from geonode.layers.models import Layer
 from geonode.maps.models import Map
@@ -9,6 +15,7 @@ from geonode.documents.models import Document
 from geonode.people.models import Profile
 from geonode.search.views import search_api
 from geonode.search.search import _filter_security
+from geonode.utils import ogc_server_settings
 
 from wfp.wfpdocs.models import WFPDocument
 
@@ -41,39 +48,78 @@ def contacts(request):
             'profiles': profiles,
         },
         context_instance=RequestContext(request))
-        
-def owslogin(request):
-    
-    # it will work only for requests from localhost!
-    #ip = request.META.get('REMOTE_ADDR')
-    #if ip != ('127.0.0.1'):
-    #        return HttpResponse(
-    #                "Operation not allowed.",
-    #                status=403,
-    #                content_type="text/plain"
-    #                )
-    
-    # authentication
-    username = ''
-    password = ''
-    if 'username' in request.GET:
-        username = request.GET.get('username', '')
-    if 'password' in request.GET:
-        password = request.GET.get('password', '')
-    from django.contrib.auth import authenticate, login
-    user = authenticate(username = username, password = password)
-    if user is not None:
-        login(request, user)
-    else:
-        return HttpResponse(
-            "Operation not allowed.",
-            status=403,
-            content_type="text/plain"
-        )
 
+def generate_token():
+    return 'awXYzF45df'
+    
+def get_token(request):
     response_data = {}
-    response_data['result'] = 'ok'
-    response_data['message'] = 'Authenticated with GeoNode for OWS requests.'
-    return HttpResponse(json.dumps(response_data), 
-        content_type="application/json")
+    response_data['token'] = generate_token()
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+def apps_proxy(request):
+    PROXY_ALLOWED_HOSTS = (ogc_server_settings.hostname,) + getattr(settings, 'PROXY_ALLOWED_HOSTS', ())
+
+    token = None
+    if 'token' in request.GET:
+        token = request.GET['token']
+    if token is None:
+        print "The proxy service requires a token."
+        return HttpResponse(
+                "The proxy service requires a token.",
+                status=400,
+                content_type="text/plain"
+                )
+    if token != generate_token():
+        print "The provided token is invalid."
+        return HttpResponse(
+                "The provided token is invalid.",
+                status=400,
+                content_type="text/plain"
+                )
+
+    print request.GET
+    if 'url' in request.GET:
+        raw_url = request.GET['url']
+    else:
+        querystring = urllib2.unquote(request.META['QUERY_STRING'])
+        raw_url = '%sows?%s' % (settings.OGC_SERVER['default']['LOCATION'], querystring)
+    
+    url = urlsplit(raw_url)
+    if url is None:
+        return HttpResponse(
+                "The proxy service requires a URL-encoded URL as a parameter.",
+                status=400,
+                content_type="text/plain"
+                )
+                
+    if not settings.DEBUG:
+        print url.hostname
+        if not validate_host(url.hostname, PROXY_ALLOWED_HOSTS):
+            return HttpResponse(
+                    "DEBUG is set to False but the host of the path provided to the proxy service (%s) is not in the"
+                    " PROXY_ALLOWED_HOSTS setting." % url.hostname,
+                    status=403,
+                    content_type="text/plain"
+                    )
+
+    print 'proxying to %s' % raw_url
+    proxy_request = urllib2.Request(raw_url)
+    base64string = base64.encodestring('%s:%s' % (settings.EXT_APP_USER, settings.EXT_APP_USER_PWD)).replace('\n', '')
+    proxy_request.add_header("Authorization", "Basic %s" % base64string)
+    result = urllib2.urlopen(proxy_request)
+
+    response = HttpResponse(
+            result,
+            status=result.code,
+            content_type=result.headers["Content-Type"]
+            )
+
+    return response
+
+
+def test_proxy(request):
+    # todo remove this
+    from django.shortcuts import render_to_response
+    return render_to_response('test_proxy.html', RequestContext(request, {
+        'token': generate_token(),  }))

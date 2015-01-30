@@ -46,8 +46,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.autosummary',
               'sphinx.ext.coverage',
               'sphinx.ext.viewcode',
-              # 'djangodocs',
-              'wfp']
+         ]
 
 next_version = '0.1'
 # github_project_url = 'https://github.com/saxix/django-adminactions/'

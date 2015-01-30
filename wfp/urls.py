@@ -9,8 +9,10 @@ urlpatterns = patterns('',
     # Static pages
     url(r'^$', views.index, name='home'),
     url(r'^contacts/$', views.contacts, name='contacts'),
-    # OWS proxy
-    url(r'^owslogin/$', views.owslogin, name='owslogin'),
+    # external applications proxy
+    url(r'^apps_proxy/$', views.apps_proxy, name='apps-proxy'),
+    url(r'^get_token/$', views.get_token, name='get-token'),
+    url(r'^test_proxy/$', views.test_proxy, name='test-proxy'),
     # WFP documents views
     (r'^wfpdocs/', include('wfp.wfpdocs.urls')),
     # gis views
