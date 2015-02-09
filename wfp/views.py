@@ -78,7 +78,6 @@ def apps_proxy(request):
                 content_type="text/plain"
                 )
 
-    print request.GET
     if 'url' in request.GET:
         raw_url = request.GET['url']
     else:
