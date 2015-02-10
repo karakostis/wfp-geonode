@@ -211,6 +211,7 @@ RAVEN_CONFIG = {
 # application user (i.e. user to authenticate for OPWeb)
 EXT_APP_USER = os.environ['ext_app_user']
 EXT_APP_USER_PWD = os.environ['ext_app_user_pwd']
+EXT_APP_IPS = ( '127.0.0.1', '10.11.40.4', '10.11.40.90' )
 
 # Load more settings from a file called dev_settings.py if it exists
 try:

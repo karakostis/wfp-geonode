@@ -87,12 +87,23 @@ def _check_token(token):
         return False
 
     return True
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
     
 def get_token(request):
-    # TODO check domain name
-    print 'Server name is: %s' % request.META['SERVER_NAME']
+    print 'ip is: %s' % get_client_ip(request)
     response_data = {}
-    response_data['token'] = _generate_token()
+    if get_client_ip(request) in settings.EXT_APP_IPS:
+        token = _generate_token()
+    else:
+        token = 'invalid'
+    response_data['token'] = token
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def apps_proxy(request):
