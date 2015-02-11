@@ -130,7 +130,8 @@ def apps_proxy(request):
     if 'url' in request.GET:
         raw_url = request.GET['url']
     else:
-        querystring = urllib2.unquote(request.META['QUERY_STRING'])
+        #querystring = urllib2.unquote(request.META['QUERY_STRING'])
+        querystring = request.META['QUERY_STRING']
         raw_url = '%sows?%s' % (settings.OGC_SERVER['default']['LOCATION'], querystring)
     
     url = urlsplit(raw_url)
