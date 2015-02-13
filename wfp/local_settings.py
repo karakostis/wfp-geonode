@@ -164,6 +164,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'wfp.contrib.services',
     'wfp.wfpdocs',
     'wfp.gis',
+    'wfp.trainings',
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
