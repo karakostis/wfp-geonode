@@ -1,4 +1,4 @@
-{% extends "documents/document_base.html" %}
+{% extends "site_base.html" %}
 {% load geonode_auth %}
 {% load i18n %}
 {% load dialogos_tags %}
@@ -17,31 +17,20 @@
 
 {% block body_class %}trainings{% endblock %}
 
-{% block jumbotron %}
-<header class="jumbotron">
-  <div class="container">
-    <div class="row">
-      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Explore Trainings" %}</h1>
-      <a href="{% url "trainings-list" %}" class="btn btn-primary pull-right">{% trans "Explore Trainings" %}</a>
-    </div>
-  </div>
-</header>
-{% endblock %}
-
 {% block body_outer %}
   <div class="span6">
     <h2 class="page-title">{{ training.title }}</h2>
   </div>
   <div class="span6 action-group pull-right">
-
-      <div class="btn-group">
-          <a href="{% if training.manual %}{{ training.manual.url }}{% endif %}" class="btn" >{% trans "Download Training" %} </a>
-      </div>
+    <div class="btn-group">
+        <a href="{% if training.manual %}{{ training.manual.url }}{% endif %}" class="btn" >{% trans "Download Training" %} </a>
     </div>
   </div>
 
   <div class="span8">
-    <a href="" target="_blank">Download the {{ training }} training</a>
+    <a href="{% if training.manual %}{{ training.manual.url }}{% endif %}" >
+    <img src="{{ MEDIA_URL }}{{ training.logo }}" />
+    </a>
        
     <div class="map-actions">
       <ul class="nav nav-tabs">
@@ -56,7 +45,6 @@
       
       <article class="description tab-pane active" id="info">
         <ul class="unstyled wide">
-      
           <li>
             <strong>{% trans "Title" %}:</strong>
             {{ training.title }}
@@ -72,20 +60,17 @@
           <li>
             <strong>Tags:</strong>
             {% for tag in training.keywords.all %}
-              {{ tag.name }}
+              <a href="{% url 'trainings_browse' tag.name %}">
+                {{ tag.name }}
+              </a>
             {% endfor %}
           </li>
-          <li>Datasets:<li>
-            <ul>
-              {% for layer in training.layers.all %}
-              <li>
-                <a href="{% url 'layer_detail' layer.typename %}">
-                {{ layer.title }}</a>
-              </li>
-              {% endfor %}
-            </ul>
-          
+          <li>
+            <strong>Owner:</strong> WFP Geospatial Support Unit (GSU)
+          </li>
         </ul>
+        
+        <p>For any question, please contact: {{ THEME_ACCOUNT_CONTACT_EMAIL }}</p>
       </article>
       
       <article id="share" class="tab-pane">
@@ -108,22 +93,25 @@
 
   <aside class="span4">
     <div class="well">
-      <h4>{% trans "Resource using this document" %}</h4>
-      {% if layer.maps %}
-      <p>{% trans "List of resources using this document:" %}</p>
+      <h4>{% trans "Layers used in this training" %}</h4>
+      {% if training.layers %}
+        <p>{% trans "List of layers using this training:" %}</p>
+        
+        <ul class="unstyled space">
+          {% for layer in training.layers.all %}
+            <li>
+              <a href="{% url 'layer_detail' layer.typename %}">
+              {{ layer.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>{% trans "This training doesn't use any layer" %}</p>
       {% endif %}
-      <ul class="unstyled space">
-        {% if related.title %}
-        <p>{% trans "This document is related to a " %} {{ document.content_type.name }}</p>
-        <a href='{{ related.get_absolute_url }}'>{{ related.title }}</a>
-        {% else %}
-        <p>{% trans "This document is not related to any maps or layers" %}</p>
-        {% endif %}
-      </ul>
     </div>
 
   </aside>
-  {% include "_permissions_form.html" %}
+
 {% endblock %}
 
 {% block extra_script %}
@@ -135,12 +123,12 @@
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(training, 'script', 'facebook-jssdk'));</script>
 {% endif %}
     {% if request.user.is_authenticated %}
         {% user_rating_js request.user training "training" %}
     {% else %}
-        {% overall_rating document "training" as the_training_rating %}
+        {% overall_rating training "training" as the_training_rating %}
     {% endif %}
     <script type="text/javascript">
     $(function() {
@@ -164,5 +152,4 @@
         })();
         {% endif %}
     </script>
-    {% include "_permissions_form_js.html" %}
 {% endblock extra_script %}

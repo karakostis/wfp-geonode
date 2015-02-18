@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
 from geonode.layers.models import Layer
+
+from utils import update_training_cache
 
 class Training(models.Model):
     """
@@ -17,13 +20,16 @@ class Training(models.Model):
     layers = models.ManyToManyField(Layer, blank=True)
     abstract = models.TextField(_('abstract'), blank=True, help_text=_('brief narrative summary of the content of the training'))
     keywords = TaggableManager(_('keywords'), blank=True, help_text=_('commonly used word(s) or formalised word(s) or phrase(s) used to describe the subject (space or comma-separated'))
-
+  
     def __unicode__(self):
         return self.title
         
     class Meta:
         ordering = ('title',)
         verbose_name_plural = 'GIS Trainings'
+        
+    def get_absolute_url(self):
+        return reverse('training-detail', args=(self.id,))
         
     def get_layers(self):
         layers = []

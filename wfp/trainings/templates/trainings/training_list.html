@@ -20,7 +20,7 @@
                 <h2><a href="#" class="toggle toggle-nav"><i class="icon-chevron-right"></i> {% trans "Keywords" %}</a></h2>
                 <ul class="nav" id="keywords">
                   {% for tag in tags.values %}
-                    <li><a data-class="{{ tag.slug }}" class="trigger-query">{{ tag.name }} <span class="badge pull-right">{{ tag.count }}</span></a></li>
+                    <li><a href="{% url 'trainings_browse' tag.name %}" data-class="{{ tag.slug }}" class="trigger-query">{{ tag.name }} <span class="badge pull-right">{{ tag.count }}</span></a></li>
                   {% endfor %}
                 </ul>
               </nav>
@@ -36,10 +36,10 @@
             <article>
               <div class="content">
                 <div class="item-header">
-                    <a href="{% url "training-detail" training.id %}">
+                    <a href="{% url "training_detail" training.id %}">
                       <img src="{{ MEDIA_URL }}{{ training.logo }}" />
                     </a>
-                  <h3><i class="icon-file-text-alt"></i> <a href="{% url 'training-detail' training.id %}">{{ training.title }}</a></h3>
+                  <h3><i class="icon-file-text-alt"></i> <a href="{% url 'training_detail' training.id %}">{{ training.title }}</a></h3>
                 </div>
                 <div class="details">
                   <div class="meta">
@@ -47,7 +47,9 @@
                     <p class="abstract">{{ training.abstract }}</p>
                     <p>Tags: 
                     {% for tag in training.keywords.all %}
+                      <a href="{% url 'trainings_browse' tag.name %}">
                       {{ tag.name }}
+                      </a>
                     {% endfor %}
                     </p>
                     <p>Datasets:<p>

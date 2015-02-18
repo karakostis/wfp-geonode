@@ -147,6 +147,16 @@ LANGUAGES = (
     ('fr', 'Français'),
 )
 
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'layers.layer', 'maps.map', 'dialogos.comment', 
+    'documents.document', 'trainings.training',),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': False,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
+}
+
 MAX_DOCUMENT_SIZE = 20 # MB
 ALLOWED_DOCUMENT_TYPES = [
     'doc', 'docx','gif', 'jpg', 'jpeg', 'ods', 'odt', 'pdf', 'png', 'ppt', 
