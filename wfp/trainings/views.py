@@ -1,11 +1,15 @@
 import collections
+import json
 
 from django.core.cache import cache
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
 from django.conf import settings
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 
+from geonode.utils import ogc_server_settings
+from geonode.utils import http_client
 from models import Training
 from utils import update_training_cache
 
@@ -46,3 +50,84 @@ def training_detail(request, id):
       RequestContext(request, {
         'training': training
     }))
+    
+    
+def training_download(request, id, template='trainings/training_download.html'):
+    """
+    Download all the layers of a training as a batch
+    """
+    training = get_object_or_404(Training, pk=id)
+
+    training_status = dict()
+    if request.method == 'POST':
+        url = "%srest/process/batchDownload/launch/" % ogc_server_settings.LOCATION
+
+        def perm_filter(layer):
+            return request.user.has_perm('layers.view_layer', obj=layer)
+
+        # here we build the json necessary to the rest batchDownload
+        data = { 
+                 'layers': [],
+                 "map":{  
+                         'readme': 'readme text here', # TODO define a text
+                         'title': training.title
+                       }
+               }
+        for layer in training.layers.all():
+            store_type = 'WFS'
+            if layer.storeType == 'coverageStore':
+                store_type = 'WCS'
+            layer_data = { 
+                           'metadataURL': '',
+                           'service': store_type,
+                           'name': layer.typename,
+                           'serviceURL': ''
+                         }
+            data['layers'].append(layer_data)
+            
+        training_json = json.dumps(data)
+
+        resp, content = http_client.request(url, 'POST', body=training_json)
+
+        status = int(resp.status)
+        
+        if status == 200:
+            training_status = json.loads(content)
+            request.session["training_status"] = training_status
+        else:
+            raise Exception('Could not start the download of %s. Error was: %s' % (training.title, content))
+
+    downloadable_layers = []
+    for layer in training.layers.all():
+        if request.user.has_perm('layers.view_layer', obj=layer):
+            downloadable_layers.append(layer)
+
+    return render_to_response(template, RequestContext(request, {
+         "training_status" : training_status,
+         "training" : training,
+         "downloadable_layers": downloadable_layers,
+         "geoserver" : ogc_server_settings.public_url,
+         "site" : settings.SITEURL
+    }))
+
+
+def training_download_check(request):
+    """
+    this is an endpoint for monitoring training downloads
+    """
+    #import ipdb;ipdb.set_trace()
+    try:
+        layer = request.session["training_status"]
+        if type(layer) == dict:
+            url = "%srest/process/batchDownload/status/%s" % (ogc_server_settings.LOCATION,layer["id"])
+            resp,content = http_client.request(url,'GET')
+            status= resp.status
+            if resp.status == 400:
+                return HttpResponse(content="Something went wrong",status=status)
+        else:
+            content = "Something Went wrong"
+            status  = 400
+    except ValueError:
+        # TODO: Is there any useful context we could include in this log?
+        logger.warn("User tried to check status, but has no download in progress.")
+    return HttpResponse(content=content,status=status)

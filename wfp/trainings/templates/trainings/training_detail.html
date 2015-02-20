@@ -24,6 +24,7 @@
   <div class="span6 action-group pull-right">
     <div class="btn-group">
         <a href="{% if training.manual %}{{ training.manual.url }}{% endif %}" class="btn" >{% trans "Download Training" %} </a>
+        <a href="{% url 'training_download' training.id %}" class="btn" >{% trans "Download Datasets" %} </a>
     </div>
   </div>
 
