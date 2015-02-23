@@ -21,10 +21,17 @@
   <div class="span6">
     <h2 class="page-title">{{ training.title }}</h2>
   </div>
-  <div class="span6 action-group pull-right">
+
+  <div class="action-group pull-right">
     <div class="btn-group">
-        <a href="{% if training.manual %}{{ training.manual.url }}{% endif %}" class="btn" >{% trans "Download Training" %} </a>
-        <a href="{% url 'training_download' training.id %}" class="btn" >{% trans "Download Datasets" %} </a>
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+        {% trans "Download Training" %}
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="{% if training.manual %}{{ training.manual.url }}{% endif %}">{% trans "Download Training" %} <i class="icon-chevron-right"></i></a></li>
+        <li><a href="{% url 'training_download' training.id %}">{% trans "Download Datasets" %} <i class="icon-chevron-right"></i></a></li>
+      </ul>
     </div>
   </div>
 
