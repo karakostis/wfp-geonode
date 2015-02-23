@@ -1,22 +1,27 @@
 import collections
 import json
+import logging
 
 from django.core.cache import cache
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.conf import settings
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 from geonode.utils import ogc_server_settings
 from geonode.utils import http_client
 from models import Training
-from utils import update_training_cache
 
-def trainings_browse(request, keyword = None):
-    
+logger = logging.getLogger("wfp.trainings.views")
+
+
+def trainings_browse(request, keyword=None):
+    """
+    Browse the trainings list.
+    """
     if keyword is not None:
-        results = Training.objects.filter(keywords__name = keyword)
+        results = Training.objects.filter(keywords__name=keyword)
     else:
         results = Training.objects.all()
 
@@ -26,33 +31,39 @@ def trainings_browse(request, keyword = None):
         tags = {}
         for item in Training.objects.all():
             for tagged_item in item.tagged_items.all():
-                tags[tagged_item.tag.slug] = tags.get(tagged_item.tag.slug,{})
+                tags[tagged_item.tag.slug] = tags.get(tagged_item.tag.slug, {})
                 tags[tagged_item.tag.slug]['slug'] = tagged_item.tag.slug
                 tags[tagged_item.tag.slug]['name'] = tagged_item.tag.name
-                tags[tagged_item.tag.slug]['count'] = tags[tagged_item.tag.slug].get('count',0) + 1
+                tags[tagged_item.tag.slug]['count'] = (
+                    tags[tagged_item.tag.slug].get('count', 0) + 1)
         tags = collections.OrderedDict(sorted(tags.items()))
         print tags
         cache.set('training_tags', tags, 60)
-    
-    return render_to_response('trainings/training_list.html', RequestContext(request, {
-        'object_list': results,
-        'tags': tags,
-    }))
 
-    
+    return render_to_response(
+        'trainings/training_list.html',
+        RequestContext(request, {
+            'object_list': results,
+            'tags': tags,
+        })
+    )
+
+
 def training_detail(request, id):
     """
-    The view that show details of each training
+    Show the details of each training
     """
     training = get_object_or_404(Training, pk=id)
 
-    return render_to_response("trainings/training_detail.html", 
-      RequestContext(request, {
-        'training': training
-    }))
-    
-    
-def training_download(request, id, template='trainings/training_download.html'):
+    return render_to_response(
+        'trainings/training_detail.html',
+        RequestContext(request, {'training': training})
+    )
+
+
+def training_download(
+        request, id,
+        template='trainings/training_download.html'):
     """
     Download all the layers of a training as a batch
     """
@@ -60,16 +71,17 @@ def training_download(request, id, template='trainings/training_download.html'):
 
     training_status = dict()
     if request.method == 'POST':
-        url = "%srest/process/batchDownload/launch/" % ogc_server_settings.LOCATION
+        url = ("%srest/process/batchDownload/launch/"
+               % ogc_server_settings.LOCATION)
 
         def perm_filter(layer):
             return request.user.has_perm('layers.view_layer', obj=layer)
 
         # here we build the json necessary to the rest batchDownload
-        data = { 
+        data = {
                  'layers': [],
-                 "map":{  
-                         'readme': 'readme text here', # TODO define a text
+                 "map": {
+                         'readme': training.abstract,
                          'title': training.title
                        }
                }
@@ -77,25 +89,28 @@ def training_download(request, id, template='trainings/training_download.html'):
             store_type = 'WFS'
             if layer.storeType == 'coverageStore':
                 store_type = 'WCS'
-            layer_data = { 
+            layer_data = {
                            'metadataURL': '',
                            'service': store_type,
                            'name': layer.typename,
                            'serviceURL': ''
                          }
             data['layers'].append(layer_data)
-            
+
         training_json = json.dumps(data)
 
         resp, content = http_client.request(url, 'POST', body=training_json)
 
         status = int(resp.status)
-        
+
         if status == 200:
             training_status = json.loads(content)
             request.session["training_status"] = training_status
         else:
-            raise Exception('Could not start the download of %s. Error was: %s' % (training.title, content))
+            raise Exception(
+                'Could not start the download of %s. Error was: %s' %
+                (training.title, content)
+            )
 
     downloadable_layers = []
     for layer in training.layers.all():
@@ -103,31 +118,38 @@ def training_download(request, id, template='trainings/training_download.html'):
             downloadable_layers.append(layer)
 
     return render_to_response(template, RequestContext(request, {
-         "training_status" : training_status,
-         "training" : training,
+         "training_status": training_status,
+         "training": training,
          "downloadable_layers": downloadable_layers,
-         "geoserver" : ogc_server_settings.public_url,
-         "site" : settings.SITEURL
+         "geoserver": ogc_server_settings.public_url,
+         "site": settings.SITEURL
     }))
 
 
 def training_download_check(request):
     """
-    this is an endpoint for monitoring training downloads
+    Endpoint for monitoring training downloads
     """
-    #import ipdb;ipdb.set_trace()
     try:
         layer = request.session["training_status"]
         if type(layer) == dict:
-            url = "%srest/process/batchDownload/status/%s" % (ogc_server_settings.LOCATION,layer["id"])
-            resp,content = http_client.request(url,'GET')
-            status= resp.status
+            url = (
+                "%srest/process/batchDownload/status/%s" %
+                (ogc_server_settings.LOCATION, layer["id"])
+            )
+            resp, content = http_client.request(url, 'GET')
+            status = resp.status
             if resp.status == 400:
-                return HttpResponse(content="Something went wrong",status=status)
+                return HttpResponse(
+                    content="Something went wrong",
+                    status=status
+                )
         else:
             content = "Something Went wrong"
-            status  = 400
+            status = 400
     except ValueError:
         # TODO: Is there any useful context we could include in this log?
-        logger.warn("User tried to check status, but has no download in progress.")
-    return HttpResponse(content=content,status=status)
+        logger.warn(
+            'User tried to check status, but has no download in progress.'
+        )
+    return HttpResponse(content=content, status=status)
