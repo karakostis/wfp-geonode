@@ -1,0 +1,37 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block title %} {% trans "Upload Document" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}documents upload{% endblock body_class %}
+
+{% block head %}
+    {% include "geonode/ext_header.html" %}
+    {% include "geonode/app_header.html" %}
+    {{ block.super }}
+{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Upload Trainings" %}</h1>
+      <a href="{% url "trainings_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Trainings" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+  <div class="block">
+    <div class="span8">
+      <form id="upload_training" method="post" action="" enctype="multipart/form-data" >
+        {{ form.as_table }}
+        <div><input type="submit" value="Upload"/></div>
+        {% csrf_token %}
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+

@@ -4,14 +4,18 @@ import logging
 
 from django.core.cache import cache
 from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import permission_required
 
 from geonode.utils import ogc_server_settings
 from geonode.utils import http_client
+
 from models import Training
+from forms import TrainingForm
 
 logger = logging.getLogger("wfp.trainings.views")
 
@@ -58,6 +62,27 @@ def training_detail(request, id):
     return render_to_response(
         'trainings/training_detail.html',
         RequestContext(request, {'training': training})
+    )
+
+
+@permission_required('trainings.add_training')
+def training_upload(request):
+    """
+    Upload a new training
+    """
+    if request.method == 'GET':
+        form = TrainingForm()
+    else:
+        form = TrainingForm(request.POST, request.FILES)
+        if form.is_valid():
+            training = form.save()
+            return HttpResponseRedirect(
+                reverse('training_detail', kwargs={'id': training.id})
+            )
+
+    return render_to_response(
+        'trainings/training_upload.html',
+        RequestContext(request, {'form': form})
     )
 
 

@@ -3,7 +3,11 @@ from django.conf.urls.defaults import patterns, url
 urlpatterns = patterns(
     'wfp.trainings.views',
     url(
-        r'^check/$', 'training_download_check',
+        r'^upload', 'training_upload',
+        name='training_upload'
+    ),
+    url(
+        r'^check$', 'training_download_check',
         name='training_download_check'
     ),
     url(
@@ -11,15 +15,15 @@ urlpatterns = patterns(
         name='trainings_browse'
     ),
     url(
-        r'^(?P<keyword>[^/]*)/$', 'trainings_browse',
+        r'^(?P<keyword>[^/]*)$', 'trainings_browse',
         name='trainings_browse'
     ),
     url(
-        r'^(?P<id>\d+)/?$', 'training_detail',
+        r'^(?P<id>\d+)/$', 'training_detail',
         name='training_detail'
     ),
     url(
-        r'^(?P<id>\d+)/download$', 'training_download',
+        r'^(?P<id>\d+)/download/$', 'training_download',
         name='training_download'
     ),
 )
