@@ -40,7 +40,7 @@ class WFPDocumentsFeed(Feed):
     # Elements for the top-level, channel
     
     feed_type = CustomFeedGenerator
-    title = "WFP/OMEP Maps Repository RSS"
+    title = "WFP GeoNode Maps Repository RSS"
     link = settings.SITEURL
     description = "Latest maps from WFP/GeoNode Maps Repository."
 
@@ -62,10 +62,10 @@ class WFPDocumentsFeed(Feed):
         return item.document.date
         
     def item_author_name(self, item):
-        return 'OMEP GIS'
+        return 'WFP GeoNode'
             
     def item_author_email(self, item):
-        return 'omep.gis@wfp.org'
+        return settings.THEME_ACCOUNT_CONTACT_EMAIL
     
     def item_extra_kwargs(self, obj):
         thumb_url = '%s%s' % (settings.SITEURL[:-1], 

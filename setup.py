@@ -19,7 +19,7 @@ setup(
     url='http://pypi.wfp.org/pypi/%s/' % app.NAME,
     
     author='UN World Food Programme',
-    author_email='omep.gis@wfp.org',
+    author_email='hq.gis@wfp.org',
     license="WFP Property",
     description='WFP GeoNode',
 
