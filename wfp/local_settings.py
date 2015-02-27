@@ -169,8 +169,8 @@ INSTALLED_APPS = INSTALLED_APPS + (
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ['email_host']
 EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL = 'omep.gis@wfp.org'
-THEME_ACCOUNT_CONTACT_EMAIL = 'omep.gis@wfp.org'
+DEFAULT_FROM_EMAIL = 'hq.gis@wfp.org'
+THEME_ACCOUNT_CONTACT_EMAIL = 'hq.gis@wfp.org'
 
 # Account
 REGISTRATION_OPEN = True
@@ -211,6 +211,7 @@ RAVEN_CONFIG = {
 # application user (i.e. user to authenticate for OPWeb)
 EXT_APP_USER = os.environ['ext_app_user']
 EXT_APP_USER_PWD = os.environ['ext_app_user_pwd']
+EXT_APP_IPS = ( '127.0.0.1', '10.11.40.4', '10.11.40.90' )
 
 # Load more settings from a file called dev_settings.py if it exists
 try:

@@ -79,7 +79,7 @@ function Identify(e) {
     var X = map.layerPointToContainerPoint(e.layerPoint).x;
     var Y = map.layerPointToContainerPoint(e.layerPoint).y;
     // compose the URL for the request
-    var URL = url + 'SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=' + layer_name + '&QUERY_LAYERS=' + layer_name + '&BBOX='+BBOX+'&FEATURE_COUNT=1&HEIGHT='+HEIGHT+'&WIDTH='+WIDTH+'&INFO_FORMAT=text%2Fhtml&SRS=EPSG%3A4326&X='+X+'&Y='+Y;
+    var URL = url + '&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=' + layer_name + '&QUERY_LAYERS=' + layer_name + '&BBOX='+BBOX+'&FEATURE_COUNT=1&HEIGHT='+HEIGHT+'&WIDTH='+WIDTH+'&INFO_FORMAT=text%2Fhtml&SRS=EPSG%3A4326&X='+X+'&Y='+Y;
     //send the asynchronous HTTP request using jQuery $.ajax
     $.ajax({
         url: URL,
