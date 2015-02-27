@@ -169,8 +169,8 @@ INSTALLED_APPS = INSTALLED_APPS + (
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ['email_host']
 EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL = 'omep.gis@wfp.org'
-THEME_ACCOUNT_CONTACT_EMAIL = 'omep.gis@wfp.org'
+DEFAULT_FROM_EMAIL = 'hq.gis@wfp.org'
+THEME_ACCOUNT_CONTACT_EMAIL = 'hq.gis@wfp.org'
 
 # Account
 REGISTRATION_OPEN = True
