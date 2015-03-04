@@ -18,7 +18,7 @@
       <h2 class="page-title">{% trans "Upload Layers" %}</h2>
         <p>{% trans "Supported formats: shapefile, GeoTIFF. For shapefile .shp, .dbf, .shx, .prj files are needed." %}
         <br />{% trans "In case your files size is more than 50 Mb please contact" %}
-        <a <a href="mailto:omep.gis@wfp.org" >omep.gis@wfp.org</a>.</p>
+        <a <a href="mailto:{{ THEME_ACCOUNT_CONTACT_EMAIL }}" >{{ THEME_ACCOUNT_CONTACT_EMAIL }}</a>.</p>
 
         {% if incomplete %}
         <section class="widget" id="incomplete-download-list">
