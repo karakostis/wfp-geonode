@@ -200,6 +200,16 @@ DOWNLOAD_FORMATS_RASTER = [
 # Other settings
 SOCIAL_BUTTONS = False
 
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'layers.layer', 'maps.map', 'dialogos.comment', 
+    'documents.document'),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': False,
+    'USE_JSONFIELD': False,
+    'GFK_FETCH_DEPTH': 1,
+}
+
 # Migrations
 SOUTH_MIGRATION_MODULES = {
     'base': 'wfp.migrations.base.migrations',
