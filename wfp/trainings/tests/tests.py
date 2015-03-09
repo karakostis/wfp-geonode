@@ -1,11 +1,14 @@
+import StringIO
+
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from geonode.search.populate_search_test_data import create_models
 
 from wfp.trainings.models import Training
-from wfp.trainings.tests.fixtures import training_factory
+from wfp.trainings.tests.fixtures import training_factory, get_random_date
 
 
 class LayersTest(TestCase):
@@ -45,3 +48,32 @@ class LayersTest(TestCase):
                 '<p class="search-count">Total: %s</p>' % tagged_count,
                 status_code=200
             )
+
+    def test_training_upload(self):
+        """ Tests uploading a new training """
+
+        logo_file = StringIO.StringIO(
+            'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00'
+            '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;')
+        logo = SimpleUploadedFile(
+            'logo_test_file.gif', logo_file.read(), 'image/gif')
+        manual_file = StringIO.StringIO(
+            'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00'
+            '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;')
+        manual = SimpleUploadedFile(
+            'logo_test_file.gif', manual_file.read(), 'image/gif')
+
+        c = Client()
+        c.login(username='admin', password='admin')
+        c.post(
+            reverse('training_upload'),
+            data={
+                    'title': 'Uploaded Training',
+                    'abstract': 'Abstract for uploaded training',
+                    'publication_date': get_random_date(),
+                    'logo': logo,
+                    'manual': manual,
+                 },
+            follow=True)
+
+        self.assertEquals(Training.objects.all().count(), 1)

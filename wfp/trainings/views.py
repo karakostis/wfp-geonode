@@ -41,7 +41,6 @@ def trainings_browse(request, keyword=None):
                 tags[tagged_item.tag.slug]['count'] = (
                     tags[tagged_item.tag.slug].get('count', 0) + 1)
         tags = collections.OrderedDict(sorted(tags.items()))
-        print tags
         cache.set('training_tags', tags, 60)
 
     return render_to_response(
