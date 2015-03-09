@@ -147,6 +147,16 @@ LANGUAGES = (
     ('fr', 'Français'),
 )
 
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'layers.layer', 'maps.map', 'dialogos.comment', 
+    'documents.document', 'trainings.training',),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': False,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
+}
+
 MAX_DOCUMENT_SIZE = 20 # MB
 ALLOWED_DOCUMENT_TYPES = [
     'doc', 'docx','gif', 'jpg', 'jpeg', 'ods', 'odt', 'pdf', 'png', 'ppt', 
@@ -164,6 +174,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'wfp.contrib.services',
     'wfp.wfpdocs',
     'wfp.gis',
+    'wfp.trainings',
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -188,6 +199,16 @@ DOWNLOAD_FORMATS_RASTER = [
 
 # Other settings
 SOCIAL_BUTTONS = False
+
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'layers.layer', 'maps.map', 'dialogos.comment', 
+    'documents.document'),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': False,
+    'USE_JSONFIELD': False,
+    'GFK_FETCH_DEPTH': 1,
+}
 
 # Migrations
 SOUTH_MIGRATION_MODULES = {

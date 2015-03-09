@@ -1,0 +1,107 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block body %}
+<div class="span12">
+  <h3>{% trans "Download" %} {{training.title}}</h3>
+  <p>
+    {% blocktrans %}
+      Here you can download all the layers of this training that
+      are hosted on this GeoNode.
+    {% endblocktrans %}
+    <ul>
+      {% for layer in downloadable_layers %} 
+        <li>
+          <a href="{% url 'layer_detail' layer.typename %}">
+          {{ layer.title }}</a>
+        </li>
+      {% empty %}
+      {% blocktrans %}
+      <div class="alert alert-warning">Could not find downloadable layers for this training. You can go back to  
+      {% endblocktrans %}<a href="{% url 'training_detail' training.id %}">{{training.title}}</a></div>
+      {% endfor %} 
+    </ul>
+
+    {% if training_status %}
+      <div class="alert alert-success span8" id="download">
+          <div id="pb-status">{% trans 'Downloading' %}...</div>
+          <div class="progress">
+            <div id="pb" class="bar bar-success"></div>
+          </div>
+          <a class="btn" href="#" id="cancel">{%  trans 'Cancel' %}</a>
+          <a class="btn" href="{% url 'training_download' training.id %}" style="display:none;" id="retry">{%  trans 'Retry' %}</a>
+      </div>
+    {% elif downloadable_layers|length > 0 %} 
+      <form action="{% url 'training_download' training.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-actions">
+          <input type="submit" class="btn btn-primary" value="{% trans "Start downloading this training" %}" /> 
+        </div>
+      </form>
+    {% endif %} 
+</div>
+{% endblock %}
+{% block extra_script %}
+<script type="text/javascript">
+
+  {% autoescape off %}
+
+  {% if training_status %} 
+      
+  $(function(){
+
+    "use strict";
+
+    var processID;
+    var checkStatus = setInterval(function (){
+
+      $.ajax({
+        type: "GET",
+        url : "{% url 'training_download_check' %}"
+      })
+      .done(function(result){
+        var response = $.parseJSON(result);
+        processID = response.process.id;
+
+        if (response.process.status === "FINISHED") {
+          $('#cancel').hide();
+          $("#pb-status").html("{% trans  "Download Complete" %}");
+          location.href = "{{geoserver}}rest/process/batchDownload/download/" +  processID;
+          clearInterval(checkStatus);
+        }
+
+        if (response.process.status === "FAILED") {
+          $('#download').attr({class:'alert alert-error'});
+          $('.progress').hide();
+          $('#cancel').hide();
+          $('#retry').show();
+          $("#pb-status").html("{% trans  "Download Failed" %}");
+          clearInterval(checkStatus);
+        }
+
+        $("#pb").css("width", response.process.progress + "%");
+      });
+    }, 1000);
+
+    $("#cancel").click(function(){
+      $.ajax({
+        type: "GET",
+        url: "{{geoserver}}rest/process/batchDownload/kill/" + processID
+      })
+      .done(function(){
+        window.alert("You successfuly canceled the download"); 
+        location.href = "{% url 'training_detail' training.id %}";
+        clearInterval(checkStatus);
+      })
+      .fail(function(){
+        clearInterval(checkStatus); // break if something fails
+      });
+    });
+  });
+
+  {% endif %}
+  
+  {% endautoescape %}
+
+</script>
+{% endblock extra_script %}
