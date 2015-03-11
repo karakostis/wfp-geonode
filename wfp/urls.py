@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     (r'^wfpdocs/', include('wfp.wfpdocs.urls')),
     # gis views
     (r'^gis/', include('wfp.gis.urls')),
+    # trainings views
+    (r'^trainings/', include('wfp.trainings.urls')),
  ) + \
 urlpatterns
 
@@ -24,3 +26,9 @@ if 'wfp.contrib.services' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         (r'^services/', include('wfp.contrib.services.urls')),
     )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', 
+            {'document_root': settings.MEDIA_ROOT}),
+   )

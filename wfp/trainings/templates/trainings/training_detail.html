@@ -1,0 +1,163 @@
+{% extends "site_base.html" %}
+{% load geonode_auth %}
+{% load i18n %}
+{% load dialogos_tags %}
+{% load agon_ratings_tags %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load base_tags %}
+
+{% block title %}{{ document.title }} — {{ block.super }}{% endblock %}
+
+{% block head %}
+
+{{ block.super }}
+{% endblock %}
+
+
+{% block body_class %}trainings{% endblock %}
+
+{% block body_outer %}
+  <div class="span9">
+    <h2 class="page-title">{{ training.title }}</h2>
+  </div>
+
+  <div class="action-group pull-right">
+    <div class="btn-group">
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+        {% trans "Download Training" %}
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="{% if training.manual %}{{ training.manual.url }}{% endif %}">{% trans "Download Training" %} <i class="icon-chevron-right"></i></a></li>
+        <li><a href="{% url 'training_download' training.id %}">{% trans "Download Datasets" %} <i class="icon-chevron-right"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="span8">
+    <a href="{% if training.manual %}{{ training.manual.url }}{% endif %}" >
+    <img src="{{ MEDIA_URL }}{{ training.logo }}" />
+    </a>
+       
+    <div class="map-actions">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#info" data-toggle="tab"><i class="icon-info-sign"></i> {% trans "Info" %}</a></li>
+        <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> {% trans "Comments" %}</a></li>
+        <li><a href="#rate" data-toggle="tab"><i class="icon-star"></i> {% trans "Ratings" %}</a></li>
+        <li><a href="#share" data-toggle="tab"><i class="icon-share"></i> {% trans "Share" %}</a></li>
+      </ul>
+    </div>
+
+    <div class="tab-content">
+      
+      <article class="description tab-pane active" id="info">
+        <ul class="unstyled wide">
+          <li>
+            <strong>{% trans "Title" %}:</strong>
+            {{ training.title }}
+          </li>
+          <li>
+            <strong>{% trans 'Publication Date' %}:</strong>
+            {{ training.publication_date }}
+          </li>
+          <li>
+            <strong>Abstract:</strong>
+            {{ training.abstract }}
+          </li>
+          <li>
+            <strong>Tags:</strong>
+            {% for tag in training.keywords.all %}
+              <a href="{% url 'trainings_browse' tag.name %}">
+                {{ tag.name }}
+              </a>
+            {% endfor %}
+          </li>
+          <li>
+            <strong>Owner:</strong> WFP Geospatial Support Unit (GSU)
+          </li>
+        </ul>
+        
+        <p>For any question, please contact: {{ THEME_ACCOUNT_CONTACT_EMAIL }}</p>
+      </article>
+      
+      <article id="share" class="tab-pane">
+        <!-- TODO: Move this to a reusable template snippet -->
+        <header>
+          <h3>{% trans "Share This Training" %}</h3>
+        </header>
+        <g:plusone size="small" href="http://{{ request.get_host }}{{ request.get_full_path }}"></g:plusone>
+        <div class="fb-like" data-href="http://{{ request.get_host }}{{ request.get_full_path }}" data-send="false" data-width="50" data-layout="button_count" data-show-faces="false"></div>
+        <!-- TODO: Add more sharing options -->
+      </article>
+        
+      <article id="comments" class="tab-pane">
+        {% with training as obj %}
+        {% include "_comments.html" %}
+        {% endwith %}
+      </article>
+    </div>
+  </div>
+
+  <aside class="span4">
+    <div class="well">
+      <h4>{% trans "Layers used in this training" %}</h4>
+      {% if training.layers %}
+        <p>{% trans "List of layers using this training:" %}</p>
+        
+        <ul class="unstyled space">
+          {% for layer in training.layers.all %}
+            <li>
+              <a href="{% url 'layer_detail' layer.typename %}">
+              {{ layer.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>{% trans "This training doesn't use any layer" %}</p>
+      {% endif %}
+    </div>
+
+  </aside>
+
+{% endblock %}
+
+{% block extra_script %}
+{% if SOCIAL_BUTTONS %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(training, 'script', 'facebook-jssdk'));</script>
+{% endif %}
+    {% if request.user.is_authenticated %}
+        {% user_rating_js request.user training "training" %}
+    {% else %}
+        {% overall_rating training "training" as the_training_rating %}
+    {% endif %}
+    <script type="text/javascript">
+    $(function() {
+        $('div.overall_rating').raty({
+            half: true,
+            readOnly: true,
+            start: $('div.overall_rating').data('rating'),
+            path: "{{ STATIC_URL }}lib/img/"
+            {% if not request.user.is_authenticated %},
+            score: {{ the_training_rating }}
+            {% endif %}
+        });
+        var activeTab = $('[href=' + location.hash + ']');
+        activeTab && activeTab.tab('show');
+    });
+        {% if SOCIAL_BUTTONS %}
+        (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+        {% endif %}
+    </script>
+{% endblock extra_script %}
