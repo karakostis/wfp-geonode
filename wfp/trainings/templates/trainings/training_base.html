@@ -1,0 +1,25 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block body_class %}trainings{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Explore Trainings" %}</h1>
+      {% if perms.trainings.add_training %}
+        <a href="{% url "training_upload" %}" class="btn btn-danger btn-large pull-right">{% trans "Upload Trainings" %}</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body_outer %}
+  {% block body %}{% endblock body %}
+  {% block sidebar %}{% endblock sidebar %}
+{% endblock body_outer %}

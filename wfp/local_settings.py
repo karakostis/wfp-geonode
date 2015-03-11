@@ -16,6 +16,21 @@ GEOSERVER_URL = os.environ['geoserver_url']
 DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    "django.core.context_processors.tz",
+    'django.core.context_processors.media',
+    "django.core.context_processors.static",
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'account.context_processors.account',
+    'pinax_theme_bootstrap_account.context_processors.theme',
+    'geonode.context_processors.resource_urls',
+    'wfp.context_processors.wfp_geonode',
+)
+
 PROXY_ALLOWED_HOSTS = (
     'localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', 
     '10.11.40.4', '10.11.40.90',
@@ -147,6 +162,16 @@ LANGUAGES = (
     ('fr', 'Français'),
 )
 
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'layers.layer', 'maps.map', 'dialogos.comment', 
+    'documents.document', 'trainings.training',),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': False,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
+}
+
 MAX_DOCUMENT_SIZE = 20 # MB
 ALLOWED_DOCUMENT_TYPES = [
     'doc', 'docx','gif', 'jpg', 'jpeg', 'ods', 'odt', 'pdf', 'png', 'ppt', 
@@ -164,6 +189,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'wfp.contrib.services',
     'wfp.wfpdocs',
     'wfp.gis',
+    'wfp.trainings',
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -188,6 +214,16 @@ DOWNLOAD_FORMATS_RASTER = [
 
 # Other settings
 SOCIAL_BUTTONS = False
+
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'layers.layer', 'maps.map', 'dialogos.comment', 
+    'documents.document'),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': False,
+    'USE_JSONFIELD': False,
+    'GFK_FETCH_DEPTH': 1,
+}
 
 # Migrations
 SOUTH_MIGRATION_MODULES = {
