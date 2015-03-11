@@ -16,6 +16,21 @@ GEOSERVER_URL = os.environ['geoserver_url']
 DEBUG = TEMPLATE_DEBUG = False
 DEBUG_STATIC = False
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    "django.core.context_processors.tz",
+    'django.core.context_processors.media',
+    "django.core.context_processors.static",
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'account.context_processors.account',
+    'pinax_theme_bootstrap_account.context_processors.theme',
+    'geonode.context_processors.resource_urls',
+    'wfp.context_processors.wfp_geonode',
+)
+
 PROXY_ALLOWED_HOSTS = (
     'localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', 
     '10.11.40.4', '10.11.40.90',
