@@ -11,7 +11,7 @@ from wfp.trainings.models import Training
 from wfp.trainings.tests.fixtures import training_factory, get_random_date
 
 
-class LayersTest(TestCase):
+class TrainingTest(TestCase):
 
     def setUp(self):
         create_models('layer')
@@ -23,7 +23,7 @@ class LayersTest(TestCase):
         training = training_factory(title=title)
         self.assertEquals(Training.objects.get(pk=training.id).title, title)
 
-    def test_document_details(self):
+    def test_training_details(self):
         """ Tests accessing the details view of a training """
 
         training = training_factory()
@@ -77,3 +77,8 @@ class LayersTest(TestCase):
             follow=True)
 
         self.assertEquals(Training.objects.all().count(), 1)
+
+        training = Training.objects.all()[0]
+        c = Client()
+        response = c.get(reverse('training_detail', args=(str(training.id),)))
+        self.assertEquals(response.status_code, 200)
