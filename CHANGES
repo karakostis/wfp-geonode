@@ -1,0 +1,7 @@
+GeoNode WFPGeoNode 2.2.6
+
+  * Added the training application, an application to manage trainings within GeoNode
+  * Added tests for the wfpdocs and training application for continuous integration
+  * Handling text size of abstract and supplemental information in lists and details pages 
+
+ -- Paolo Corti   Tue Mar 10 15:07:03 CET 2015
