@@ -540,7 +540,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
         'TIMEOUT': 60 * 60 * 24,
-        'KEY_PREFIX' : os.environ['site_url'],
+        'KEY_PREFIX' : SITEURL,
     }
 }
 
@@ -574,7 +574,7 @@ RAVEN_CONFIG = {
 }
 
 # application user (i.e. user to authenticate for OPWeb)
-EXT_APP_USER = os.environ['ext_app_user']
-EXT_APP_USER_PWD = os.environ['ext_app_user_pwd']
+EXT_APP_USER = os.getenv('ext_app_user', 'ext_app_user')
+EXT_APP_USER_PWD = os.getenv('ext_app_user_pwd', 'secret')
 EXT_APP_IPS = ( '127.0.0.1', '10.11.40.4', '10.11.40.90' )
 
