@@ -5,5 +5,5 @@ def run_tests(options):
     """
     Run WFP GeoNode's Unit Test Suite
     """
-    sh("python manage.py test wfp.trainings.tests.tests wfp.wfpdocs.tests.tests --settings=wfp.settings.default --traceback")
+    sh("python manage.py test wfp.trainings.tests.tests wfp.wfpdocs.tests.tests --settings=wfp.settings.testing --traceback")
     sh('flake8 wfp')
