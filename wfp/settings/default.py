@@ -9,18 +9,19 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 DEBUG_STATIC = False
 
-SECRET_KEY = os.getenv('secret_key', 'fake_secret_key_for_wfp_geonode')
-SITEURL = os.getenv('site_url', 'http://localhost:8000/')
-GEONODE_USER = os.getenv('geonode_user', 'gnadmin')
-GEONODE_PWD = os.getenv('geonode_pwd', 'gnadmin')
-GEONODE_DJANGO_DB = os.getenv('geonode_django_db', 'sdi_django')
-GEONODE_POSTGIS_DB = os.getenv('geonode_postgis_db', 'sdi_uploads')
-GEOSERVER_USER = os.getenv('geoserver_user', 'admin')
-GEOSERVER_PWD = os.getenv('geoserver_pwd', 'geoserver')
-GEOSERVER_URL = os.getenv('geoserver_url', 'http://localhost:8080/geoserver')
+# read wallet
+from wfp_commonlib import wallet
+from wfp_commonlib.wallet import Wallet
+wallet.OBFUSCATE = ['SECRET_KEY', 'PASSWORD',]
+try:
+    wallet = Wallet(os.path.expanduser('~/.wfp-geonode.json'), obfuscate=True)
+except IOError:
+    raise
+
+SECRET_KEY = wallet.SECRET_KEY
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('email_host', 'fake')
+EMAIL_HOST = wallet.EMAIL_HOST
 EMAIL_PORT = 25
 DEFAULT_FROM_EMAIL = 'hq.gis@wfp.org'
 THEME_ACCOUNT_CONTACT_EMAIL = 'hq.gis@wfp.org'
@@ -34,19 +35,19 @@ os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': GEONODE_DJANGO_DB,
-        'USER': GEONODE_USER,
-        'PASSWORD': GEONODE_PWD,
-        'HOST': 'localhost',
+        'NAME': wallet.DATABASES.default.NAME,
+        'USER': wallet.DATABASES.default.USER,
+        'PASSWORD': wallet.DATABASES.default.PASSWORD,
+        'HOST': wallet.DATABASES.default.HOST,
         'PORT': '5432',
     },
     # vector datastore for uploads
     'uploaded' : {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': GEONODE_POSTGIS_DB,
-        'USER' : GEONODE_USER,
-        'PASSWORD' : GEONODE_PWD,
-        'HOST' : 'localhost',
+        'NAME': wallet.DATABASES.uploaded.NAME,
+        'USER' : wallet.DATABASES.uploaded.USER,
+        'PASSWORD' : wallet.DATABASES.uploaded.PASSWORD,
+        'HOST' : wallet.DATABASES.uploaded.HOST,
         'PORT' : '5432',
     }
 }
@@ -356,13 +357,13 @@ CACHE_TIME=0
 OGC_SERVER = {
     'default' : {
         'BACKEND' : 'geonode.geoserver',
-        'LOCATION' : GEOSERVER_URL,
+        'LOCATION' : wallet.GEOSERVER_URL,
         # PUBLIC_LOCATION needs to be kept like this because in dev mode
         # the proxy won't work and the integration tests will fail
         # the entire block has to be overridden in the local_settings
-        'PUBLIC_LOCATION' : GEOSERVER_URL,
-        'USER' : GEOSERVER_USER,
-        'PASSWORD' : GEOSERVER_PWD,
+        'PUBLIC_LOCATION' : wallet.GEOSERVER_URL,
+        'USER' : wallet.OGC_SERVER.default.USER,
+        'PASSWORD' : wallet.OGC_SERVER.default.PASSWORD,
         'MAPFISH_PRINT_ENABLED' : True,
         'PRINTNG_ENABLED' : True,
         'GEONODE_SECURITY_ENABLED' : True,
@@ -392,7 +393,7 @@ CATALOGUE = {
         # ("pycsw_http", "pycsw_local", "geonetwork", "deegree")
         'ENGINE': 'geonode.catalogue.backends.pycsw_local',
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
-        'URL': '%scatalogue/csw' % SITEURL,
+        'URL': '%scatalogue/csw' % wallet.SITE_URL,
     }
 }
 
@@ -408,7 +409,7 @@ PYCSW = {
             'identification_fees': 'None',
             'identification_accessconstraints': 'None',
             'provider_name': 'Organization Name',
-            'provider_url': SITEURL,
+            'provider_url': wallet.SITE_URL,
             'contact_name': 'Lastname, Firstname',
             'contact_position': 'Position Title',
             'contact_address': 'Mailing Address',
@@ -451,7 +452,7 @@ DEFAULT_MAP_ZOOM = 0
 MAP_BASELAYERS = [{
     "source": {
         "ptype": "gxp_wmscsource",
-        "url": GEOSERVER_URL + "wms",
+        "url": wallet.GEOSERVER_URL + "wms",
         "restUrl": "/gs/rest"
      }
   },{
@@ -540,7 +541,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
         'TIMEOUT': 60 * 60 * 24,
-        'KEY_PREFIX' : SITEURL,
+        'KEY_PREFIX' : wallet.SITE_URL,
     }
 }
 
