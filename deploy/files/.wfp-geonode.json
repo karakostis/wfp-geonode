@@ -1,6 +1,6 @@
 {
     "SECRET_KEY": "",
-    "SITE_URL": "http://localhost:8000/",
+    "SITEURL": "http://localhost:8000/",
     "GEOSERVER_URL": "http://localhost:8080/geoserver/",
     "EMAIL_HOST": "smtprelay.global.wfp.org",
     "DATABASES": {

@@ -12,12 +12,13 @@ DEBUG_STATIC = False
 # read wallet
 from wfp_commonlib import wallet
 from wfp_commonlib.wallet import Wallet
-wallet.OBFUSCATE = ['SECRET_KEY', 'PASSWORD',]
+wallet.OBFUSCATE = ['SECRET_KEY', 'PASSWORD', 'EXT_APP_USER_PWD',]
 try:
     wallet = Wallet(os.path.expanduser('~/.wfp-geonode.json'), obfuscate=True)
 except IOError:
     raise
 
+SITEURL = wallet.SITEURL
 SECRET_KEY = wallet.SECRET_KEY
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -393,7 +394,7 @@ CATALOGUE = {
         # ("pycsw_http", "pycsw_local", "geonetwork", "deegree")
         'ENGINE': 'geonode.catalogue.backends.pycsw_local',
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
-        'URL': '%scatalogue/csw' % wallet.SITE_URL,
+        'URL': '%scatalogue/csw' % SITEURL,
     }
 }
 
@@ -409,7 +410,7 @@ PYCSW = {
             'identification_fees': 'None',
             'identification_accessconstraints': 'None',
             'provider_name': 'Organization Name',
-            'provider_url': wallet.SITE_URL,
+            'provider_url': SITEURL,
             'contact_name': 'Lastname, Firstname',
             'contact_position': 'Position Title',
             'contact_address': 'Mailing Address',
@@ -533,6 +534,7 @@ PROXY_ALLOWED_HOSTS = (
 ALLOWED_HOSTS = PROXY_ALLOWED_HOSTS
 
 # The proxy to use when making cross origin requests.
+
 PROXY_URL = '/proxy/?url='
 
 # django cache
@@ -541,7 +543,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
         'TIMEOUT': 60 * 60 * 24,
-        'KEY_PREFIX' : wallet.SITE_URL,
+        'KEY_PREFIX' : SITEURL,
     }
 }
 
