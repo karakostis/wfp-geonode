@@ -1,0 +1,28 @@
+{
+    "SECRET_KEY": "",
+    "SITEURL": "http://localhost:8000/",
+    "GEOSERVER_URL": "http://localhost:8080/geoserver/",
+    "EMAIL_HOST": "smtprelay.global.wfp.org",
+    "DATABASES": {
+        "default": {
+            "HOST": "localhost",
+            "PASSWORD": "",
+            "NAME": "sdi_django",
+            "USER": "gnadmin"
+        },
+        "uploaded": {
+            "HOST": "localhost",
+            "PASSWORD": "",
+            "NAME": "sdi_uploads",
+            "USER": "gnadmin"
+        }
+    },
+    "OGC_SERVER": {
+        "default" : {
+            "USER" : "admin",
+            "PASSWORD" : ""
+        }
+    },
+    "EXT_APP_USER": "ext_app_user",
+    "EXT_APP_USER_PWD": "ext_app_user_pwd"
+}
