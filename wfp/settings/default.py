@@ -14,7 +14,11 @@ from wfp_commonlib import wallet
 from wfp_commonlib.wallet import Wallet
 wallet.OBFUSCATE = ['SECRET_KEY', 'PASSWORD', 'EXT_APP_USER_PWD',]
 try:
-    wallet_fn = os.path.expanduser('~/.wfp-geonode_credentials.json')
+    # TODO we need to run uwsgi with same user of geonode!
+    # wallet_fn = os.path.expanduser('~/.wfp-geonode_credentials.json')
+    # for now we need this hack :(
+    user = os.path.dirname(__file__).split('/')[2]
+    wallet_fn = '/home/%s/.wfp-geonode_credentials.json' % user
     wallet = Wallet(wallet_fn, obfuscate=True)
 
 except IOError:
