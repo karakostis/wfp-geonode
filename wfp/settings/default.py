@@ -18,7 +18,10 @@ try:
     # wallet_fn = os.path.expanduser('~/.wfp-geonode_credentials.json')
     # for now we need this hack :(
     user = os.path.dirname(__file__).split('/')[2]
-    wallet_fn = '/home/%s/.wfp-geonode_credentials.json' % user
+    if user in ('sdi', 'training'):
+        wallet_fn = '/home/%s/.wfp-geonode_credentials.json' % user
+    else:
+        wallet_fn = os.path.expanduser('~/.wfp-geonode_credentials.json')
     wallet = Wallet(wallet_fn, obfuscate=True)
 
 except IOError:
