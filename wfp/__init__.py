@@ -8,18 +8,6 @@ NAME = 'wfp-geonode'
 VERSION = __version__ = (2, 2, 6, 'final', 0)
 __author__ = 'WFP development team'
 
-# generate at first startup the credentials file
-def startup():
-    try:
-        credentials_file = os.path.expanduser('~/.wfp-geonode_credentials.json')
-        if not os.path.isfile(credentials_file):
-            import shutil
-            credentials_template = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), 'deploy/files/wfp-geonode_credentials.json')
-            shutil.copyfile(credentials_template, credentials_file)
-    except IOError:
-        raise
-
-startup()
 
 def get_version():  # pragma: no cover
     """Derives a PEP386-compliant version number from VERSION."""
