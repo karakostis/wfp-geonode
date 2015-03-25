@@ -6,7 +6,7 @@ project. It is currently in production at http://geonode.wfp.org
 # Links
 
    * Project home page: http://codeassist.wfp.org/stash/projects/GEONODE/repos/wfp-geonode/browse
-   * Issue tracker: http://codeassist.wfp.org/jira/browse/GEONODE/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel
+   * Issue tracker: http://codeassist.wfp.org/jira/browse/GEONODE
    * Download: http://pypi.wfp.org/packages/wfp-geonode/
    * Docs: http://readthedocs.wfp.org/docs/wfp-geonode/en/latest/
    * CI: http://ci.wfp.org/job/wfp-geonode/
