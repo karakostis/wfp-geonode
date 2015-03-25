@@ -14,7 +14,9 @@ from wfp_commonlib import wallet
 from wfp_commonlib.wallet import Wallet
 wallet.OBFUSCATE = ['SECRET_KEY', 'PASSWORD', 'EXT_APP_USER_PWD',]
 try:
-    wallet = Wallet(os.path.expanduser('~/.wfp-geonode.json'), obfuscate=True)
+    wallet_fn = os.path.expanduser('~/.wfp-geonode_credentials.json')
+    wallet = Wallet(wallet_fn, obfuscate=True)
+
 except IOError:
     raise
 
