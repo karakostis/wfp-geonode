@@ -1,7 +1,16 @@
 *.pyc
 *.mo
+.cache
 wfp.egg-info
 docs/_build
 docs/_static
 docs/_templates
+celerybeat-schedule
+celeryev.pid
+dist
+env
+supervisord.log
+wfp/dev_settings.py
+wfp_geonode.egg-info
+www
 
