@@ -1,3 +1,5 @@
+import os
+
 # generate at first startup the credentials file (this is done by fabric/ansible
 # in production but for testing we don't have this opportunity
 try:
