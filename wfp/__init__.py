@@ -5,7 +5,7 @@ import datetime
 import os
 
 NAME = 'wfp-geonode'
-VERSION = __version__ = (2, 2, 6, 'final', 0)
+VERSION = __version__ = (2, 2, 7, 'final', 0)
 __author__ = 'WFP development team'
 
 # generate at first startup the credentials file
