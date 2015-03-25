@@ -586,7 +586,7 @@ RAVEN_CONFIG = {
 }
 
 # application user (i.e. user to authenticate for OPWeb)
-EXT_APP_USER = os.getenv('ext_app_user', 'ext_app_user')
-EXT_APP_USER_PWD = os.getenv('ext_app_user_pwd', 'secret')
+EXT_APP_USER = wallet.EXT_APP_USER
+EXT_APP_USER_PWD = wallet.EXT_APP_USER_PWD
 EXT_APP_IPS = ( '127.0.0.1', '10.11.40.4', '10.11.40.90' )
 
