@@ -13,8 +13,8 @@ from models import WFPDocument, Category
 from forms import WFPDocumentForm
 from geonode.documents.forms import DocumentForm
 from geonode.people.forms import ProfileForm
-from geonode.maps.views import _perms_info
-from geonode.documents.views import DOCUMENT_LEV_NAMES, IMGTYPES
+from geonode.security.views import _perms_info_json
+from geonode.documents.models import IMGTYPES
 from geonode.documents.views import _resolve_document
 from geonode.documents.views import _PERMISSION_MSG_DELETE
 
@@ -45,7 +45,7 @@ def document_detail(request, docid):
     document.save()
 
     return render_to_response("wfpdocs/document_detail.html", RequestContext(request, {
-        'permissions_json': json.dumps(_perms_info(document, DOCUMENT_LEV_NAMES)),
+        'permissions_json': _perms_info_json(document),
         'document': document,
         'imgtypes': IMGTYPES,
         'related': related

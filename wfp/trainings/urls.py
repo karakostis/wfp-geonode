@@ -1,4 +1,16 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url, include
+from tastypie.api import Api
+from .api import TrainingResource, TagResourceSimple
+
+from geonode.api import api as geonode_api
+from geonode.api.urls import api
+
+from wfp.trainings.models import Training
+
+geonode_api.FILTER_TYPES['training'] = Training
+api.register(TrainingResource())
+api.unregister(geonode_api.TagResource())
+api.register(TagResourceSimple())
 
 urlpatterns = patterns(
     'wfp.trainings.views',
@@ -25,5 +37,8 @@ urlpatterns = patterns(
     url(
         r'^(?P<id>\d+)/download/$', 'training_download',
         name='training_download'
+    ),
+    url(
+        r'^wfp/', include(api.urls)
     ),
 )

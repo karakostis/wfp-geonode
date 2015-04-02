@@ -7,7 +7,7 @@ from geonode.urls import urlpatterns
 urlpatterns = patterns('',
 
     # Static pages
-    url(r'^$', views.index, name='home'),
+    # url(r'^$', views.index, name='home'),
     url(r'^contacts/$', views.contacts, name='contacts'),
     # external applications proxy
     url(r'^apps_proxy/$', views.apps_proxy, name='apps-proxy'),

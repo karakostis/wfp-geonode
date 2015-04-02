@@ -40,7 +40,7 @@ class Training(models.Model):
         verbose_name_plural = 'GIS Trainings'
 
     def get_absolute_url(self):
-        return reverse('training-detail', args=(self.id,))
+        return reverse('training_detail', args=(self.id,))
 
     def get_layers(self):
         layers = []

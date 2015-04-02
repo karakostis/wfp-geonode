@@ -1,6 +1,5 @@
 {% extends "trainings/training_base.html" %}
 {% load i18n %}
-{% load pagination_tags %}
 {% load staticfiles %}
 {% load url from future %}
 
@@ -9,72 +8,21 @@
 {% block body_class %}documents documents-list explore{% endblock %}
 
 {% block body %}
-    <div class="span12">
-      <div class="row" id="contain-slider">
-        <div class="span4">
-          <div class="selections">
-          </div>
-          <div id="slide-pane">
-            <a href="#" class="toggle toggle-pane"><i class="icon-chevron-left"></i></a>
-              <nav class="filter">
-                <h2><a href="#" class="toggle toggle-nav"><i class="icon-chevron-right"></i> {% trans "Keywords" %}</a></h2>
-                <ul class="nav" id="keywords">
-                  {% for tag in tags.values %}
-                    <li><a href="{% url 'trainings_browse' tag.name %}" data-class="{{ tag.slug }}" class="trigger-query">{{ tag.name }} <span class="badge pull-right">{{ tag.count }}</span></a></li>
-                  {% endfor %}
-                </ul>
-              </nav>
-          </div>
-        </div>
-        <div class="tab-content span8 paginate paginate-auto" id="search-content">
-        <div class="tab-pane active list paginate-contents" id="all">
-          <p class="search-count">Total: {{ object_list|length }}</p>
-          {% if object_list|length > 0 %}
-          {% autopaginate object_list 4 %}
-          {% for training in object_list %}
-            
-            <article>
-              <div class="content">
-                <div class="item-header">
-                    <a href="{% url "training_detail" training.id %}">
-                      <img src="{{ MEDIA_URL }}{{ training.logo }}" />
-                    </a>
-                  <h3><i class="icon-file-text-alt"></i> <a href="{% url 'training_detail' training.id %}">{{ training.title }}</a></h3>
-                </div>
-                <div class="details">
-                  <div class="meta">
-                    <p>Published on: {{ training.publication_date }}</p>
-                    <p class="abstract">{{ training.abstract }}</p>
-                    <p>Tags: 
-                    {% for tag in training.keywords.all %}
-                      <a href="{% url 'trainings_browse' tag.name %}">
-                      {{ tag.name }}
-                      </a>
-                    {% endfor %}
-                    </p>
-                    <p>Datasets:<p>
-                      <ul>
-                        {% for layer in training.layers.all %}
-                        <li>
-                          <a href="{% url 'layer_detail' layer.typename %}">
-                          {{ layer.title }}</a>
-                        </li>
-                        {% endfor %}
-                      </ul>
-                  </div>
-                </div>
-              </div>
-            </article>
-            
-          {% endfor %}
-          {% else %}
-            <p class="search-count">{% trans "No data found" %}</p>
-          {% endif %}
-          </div>
-          {% if object_list|length > 0 %}
-            {% paginate %}
-          {% endif %}
-        </div>
-      </div>
-    </div>
+<div class="page-header">
+    {% if perms.trainings.add_training %}
+        <a href="{% url "training_upload" %}" class="btn btn-danger btn-large pull-right">{% trans "Upload Trainings" %}</a>
+    {% endif %}
+  <h2>{% trans "Explore Trainings" %}</h2>
+</div>
+  {% include "trainings/_training_content.html" %}
 {% endblock %}
+
+{% block extra_script %}
+  <script type="text/javascript">
+    SEARCH_URL = '{% url 'api_dispatch_list' api_name='api' resource_name='trainings' %}';
+    FILTER_TYPE = 'training';
+  </script>
+  {% with include_spatial='true' %}
+  {% include 'trainings/search_scripts.html' %}
+  {% endwith %}
+{% endblock extra_script %}

@@ -6,7 +6,6 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
 from geonode.documents.models import Document
 from geonode.base.models import Region
-from geonode.security.models import GenericObjectRoleMapping
 
 from models import WFPDocument, Category
 
@@ -65,9 +64,9 @@ class DocumentResource(WFPDocumentModelResource):
         authentication = BasicAuthentication()
         
     def dehydrate_is_public(self, bundle):
-        # TODO find a better way to avoid this additional query for every resource
-        public_docs = GenericObjectRoleMapping.objects.filter(subject=u'anonymous', object_ct__name='document').values_list('object_id', flat=True)
-        public = self.instance.id in public_docs
+        # TODO fix this
+        #public_docs = GenericObjectRoleMapping.objects.filter(subject=u'anonymous', object_ct__name='document').values_list('object_id', flat=True)
+        #public = self.instance.id in public_docs
         return public
         
 class WFPDocumentResource(WFPDocumentModelResource):

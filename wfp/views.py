@@ -17,34 +17,10 @@ from geonode.layers.models import Layer
 from geonode.maps.models import Map
 from geonode.documents.models import Document
 from geonode.people.models import Profile
-from geonode.search.views import search_api
-from geonode.search.search import _filter_security
-from geonode.utils import ogc_server_settings
 
 from wfp.wfpdocs.models import WFPDocument
 
-def index(request):
-    post = request.POST.copy()
-    post.update({'type': 'layer'})
-    request.POST = post
-    return search_page(request, template='site_index.html')
 
-def search_page(request, template='search/search.html', **kw): 
-    results, facets, query = search_api(request, format='html', **kw)
-
-    facets = {      
-        'maps' : Map.objects.count(),
-        'layers' : Layer.objects.count(),
-        'wfpdocuments': WFPDocument.objects.count(),
-        'users' : Profile.objects.count()
-    }
-    
-    featured_maps = Map.objects.filter(keywords__name__in=['featured'])
-    featured_maps = _filter_security(featured_maps, request.user, Map, 'view_map').order_by('data_quality_statement')[:4]
-    
-    return render_to_response(template, RequestContext(request, {'object_list': results, 
-        'facets': facets, 'total': facets['layers'], 'featured_maps': featured_maps }))
-    
 def contacts(request):
     profiles = Profile.objects.filter(user__groups__name='OMEP GIS Team').order_by('name')
     return render_to_response('contacts.html', 

@@ -1,5 +1,4 @@
 {% extends "site_base.html" %}
-{% load geonode_auth %}
 {% load i18n %}
 {% load dialogos_tags %}
 {% load agon_ratings_tags %}
@@ -91,11 +90,6 @@
         <!-- TODO: Add more sharing options -->
       </article>
         
-      <article id="comments" class="tab-pane">
-        {% with training as obj %}
-        {% include "_comments.html" %}
-        {% endwith %}
-      </article>
     </div>
   </div>
 
