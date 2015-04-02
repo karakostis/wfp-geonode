@@ -1,0 +1,2 @@
+-r testing.pip
+pygdal==1.10.1
