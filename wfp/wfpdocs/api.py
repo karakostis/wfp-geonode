@@ -77,7 +77,7 @@ class WFPDocumentResource(WFPDocumentModelResource):
     
     class Meta:
         queryset = WFPDocument.objects.all().order_by('-document__date')
-        resource_name = 'wfp-document'
+        resource_name = 'staticmaps'
         filtering = {
             'document': ALL_WITH_RELATIONS,
             'categories': ALL_WITH_RELATIONS,
