@@ -7,7 +7,7 @@ from geonode.api.urls import api
 
 from wfp.trainings.models import Training
 
-geonode_api.FILTER_TYPES['training'] = Training
+api.api_name = 'v2.4'
 api.register(TrainingResource())
 api.unregister(geonode_api.TagResource())
 api.register(TagResourceSimple())
@@ -39,6 +39,6 @@ urlpatterns = patterns(
         name='training_download'
     ),
     url(
-        r'^wfp/', include(api.urls)
+        r'^api/', include(api.urls)
     ),
 )

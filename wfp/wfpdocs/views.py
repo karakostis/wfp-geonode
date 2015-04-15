@@ -1,56 +1,132 @@
 import json, os, re
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext, loader
 from django.utils.translation import ugettext as _
 from django.conf import settings
-from geonode.documents.models import Document
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
+from django_downloadview.response import DownloadResponse
 from django.views.decorators.cache import cache_page
-from models import WFPDocument, Category
-from forms import WFPDocumentForm
+from django.db.models import F
+
+from geonode.documents.models import Document
 from geonode.documents.forms import DocumentForm
 from geonode.people.forms import ProfileForm
 from geonode.security.views import _perms_info_json
 from geonode.documents.models import IMGTYPES
 from geonode.documents.views import _resolve_document
 from geonode.documents.views import _PERMISSION_MSG_DELETE
+from geonode.utils import build_social_links
+
+from .models import WFPDocument, Category
+from .forms import WFPDocumentForm
 
 ALLOWED_DOC_TYPES = settings.ALLOWED_DOCUMENT_TYPES
 
-def document_browse(request, template='wfpdocs/document_list.html'):
-    from geonode.search.views import search_page
-    post = request.POST.copy()
-    post.update({'type': 'wfpdocument'})
-    request.POST = post
-    return search_page(request, template=template)
+_PERMISSION_MSG_DELETE = _("You are not permitted to delete this static map")
+_PERMISSION_MSG_GENERIC = _('You do not have permissions for this static map.')
+_PERMISSION_MSG_MODIFY = _("You are not permitted to modify this static map")
+_PERMISSION_MSG_METADATA = _(
+    "You are not permitted to modify this static map's metadata")
+_PERMISSION_MSG_VIEW = _("You are not permitted to view this static map")
 
-def document_detail(request, docid):
+
+def _resolve_document(request, slug, permission='base.change_resourcebase',
+                      msg=_PERMISSION_MSG_GENERIC, **kwargs):
+    '''
+    Resolve the document by the provided primary key and check the optional permission.
+    '''
+    #return resolve_object(request, Document, {'pk': docid},
+    #                      permission=permission, permission_msg=msg, **kwargs)
+    # TODO handle permissions here
+    document = WFPDocument.objects.get(slug=slug)
+    return document
+
+def document_detail(request, slug):
     """
-    The view that show details of each document
+    The view that show details of each static map
     """
-    document = get_object_or_404(Document, pk=docid)
-    if not request.user.has_perm('documents.view_document', obj=document):
-        return HttpResponse(loader.render_to_string('401.html',
-            RequestContext(request, {'error_message':
-                _("You are not allowed to view this document.")})), status=403)
+    document = None
     try:
-        related = document.content_type.get_object_for_this_type(id=document.object_id)
-    except:
+        document = _resolve_document(
+            request,
+            slug,
+            'base.view_resourcebase',
+            _PERMISSION_MSG_VIEW)
+
+    except Http404:
+        return HttpResponse(
+            loader.render_to_string(
+                '404.html', RequestContext(
+                    request, {
+                        })), status=404)
+
+    except PermissionDenied:
+        return HttpResponse(
+            loader.render_to_string(
+                '401.html', RequestContext(
+                    request, {
+                        'error_message': _("You are not allowed to view this document.")})), status=403)
+
+    if document is None:
+        return HttpResponse(
+            'An unknown error has occured.',
+            mimetype="text/plain",
+            status=401
+        )
+
+    else:
+        #try:
+        #    related = document.content_type.get_object_for_this_type(
+        #        id=document.object_id)
+        #except:
+        #    related = ''
+        # TODO figure out if we need this
         related = ''
 
-    document.popular_count += 1
-    document.save()
+        # Update count for popularity ranking,
+        # but do not includes admins or resource owners
+        if request.user != document.owner and not request.user.is_superuser:
+            WFPDocument.objects.filter(id=document.id).update(popular_count=F('popular_count') + 1)
 
-    return render_to_response("wfpdocs/document_detail.html", RequestContext(request, {
-        'permissions_json': _perms_info_json(document),
-        'document': document,
-        'imgtypes': IMGTYPES,
-        'related': related
-    }))
-    
+        metadata = document.link_set.metadata().filter(
+            name__in=settings.DOWNLOAD_FORMATS_METADATA)
+
+        # TODO handle permissions here
+        #perms_json = _perms_info_json(document)
+        perms_json = "{}"
+        context_dict = {
+            'permissions_json': perms_json,
+            'resource': document,
+            'metadata': metadata,
+            'imgtypes': IMGTYPES,
+            'related': related}
+
+        if settings.SOCIAL_ORIGINS:
+            context_dict["social_links"] = build_social_links(request, document)
+
+        return render_to_response(
+            "wfpdocs/document_detail.html",
+            RequestContext(request, context_dict))
+
+
+def wfpdocument_download(request, docid):
+    document = get_object_or_404(WFPDocument, pk=docid)
+    if not request.user.has_perm(
+            'base.download_resourcebase',
+            obj=document.get_self_resource()):
+        return HttpResponse(
+            loader.render_to_string(
+                '401.html', RequestContext(
+                    request, {
+                        'error_message': _("You are not allowed to view this document.")})), status=401)
+    return DownloadResponse(document.doc_file)
+
+
 @login_required
 def document_update(request, id=None, template_name='wfpdocs/document_form.html'):
     wfpdoc = None

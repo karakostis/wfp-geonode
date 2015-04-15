@@ -3,9 +3,9 @@ import random
 from django.contrib.auth.models import User
 from django_dynamic_fixture import G
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 
+from geonode.people.models import Profile
 from geonode.layers.models import Layer
 from geonode.documents.models import Document
 
@@ -15,11 +15,10 @@ from wfp.wfpdocs.models import Category
 
 def rol_capooti():
     username = 'roland.capooti'
-    user_model = get_user_model()
-    if User.objects.filter(username=username).count() == 1:
-        return User.objects.get(username=username)
+    if  Profile.objects.filter(username=username).count() == 1:
+        return Profile.objects.get(username=username)
     else:
-        return G(user_model, first_name='Roland', last_name='Capooti',
+        return G(Profile, first_name='Roland', last_name='Capooti',
                  username=username, password=make_password('test'),
                  email='roland.capooti@wfp.org')
 

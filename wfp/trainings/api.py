@@ -3,7 +3,6 @@ from django.contrib.contenttypes.models import ContentType
 from tastypie.resources import ModelResource
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie import fields
-
 from taggit.models import Tag
 
 from geonode.api.resourcebase_api import CommonModelApi, LayerResource

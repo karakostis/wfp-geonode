@@ -1,0 +1,58 @@
+{% load i18n %}
+<div class="row">
+  <div class="col-md-3">
+    <div class="selections">
+      <h5>
+        {% trans "Your selections" %}
+        <a href="." id="clear-search" class="pull-right">{% trans "Clear all filters" %}</a>
+      </h5>
+      </div>
+      <div id="slide-pane">
+        {% include "wfpdocs/_document_filters.html" %}
+        {% include "search/_region_filter.html" %}
+      </div>
+  </div>
+  <div class="col-md-9">
+    <div class="col-md-3">
+      <span>Total: </span>
+      <span ng-bind="total_counts"></span>
+    </div>
+    {% include "search/_sort_filters.html" %}
+    
+    <div class="col-md-12 grid-spacer">
+      {% verbatim %}
+      <article ng-repeat="item in results" resource_id="{{ item.id }}" ng-cloak class="ng-cloak">
+        <div class="row items-list">
+          <div class="col-xs-4 thumb">
+            <a href="{{ item.detail_url }}"><img ng-src="{{ item.thumbnail_url }}" /></a>
+          </div>
+          <div class="col-xs-8 item-info">
+            <h4><a href="{{ item.detail_url }}">{{ item.title }}</a></h4>
+            <p>Published by <a href="{{ item.owner.profile_detail_url }}">{{ item.owner.username }}</a> on {{ item.date | date:'MMMM dd, yyyy, HH:mm' }}</p>
+            <p>Print Format: {{ item.page_format }}, Orientation: {{ item.orientation }}</p>
+            <p>Source: {{ item.source }}</p>
+            <p>Regions:
+              <span ng-repeat="region in item.regions">
+                <a href="?regions__name__in={{ region.name }}">{{ region.name }}</a>
+              </span>
+            </p>
+            <p>Categories:
+              <span ng-repeat="category in item.categories">
+                <a href="?categories__name__in={{ category.name }}">{{ category.name }}</a>
+              </span>
+            </p>
+            <p class="actions">
+          <a href="{{ item.detail_url }}#info"><i class="fa fa-calendar-o"></i>{{ item.date|date:'d MMM y' }}</a> |
+          <a href="{{ item.detail_url }}"><i class="fa fa-eye"></i>{{ item.popular_count }}</a> |
+          <a href="{{ item.detail_url }}#share"><i class="fa fa-share"></i>{{ item.share_count }}</a> |
+          <a href="{{ item.detail_url }}#rate"><i class="fa fa-star"></i>{{ item.rating }}</a>
+          </div>
+        </div>
+      </article>
+      {% endverbatim %}
+    </div>
+
+    {% include 'search/_pagination.html' %}
+    </div>
+  </div>
+</div>

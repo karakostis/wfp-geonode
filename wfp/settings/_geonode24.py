@@ -48,3 +48,7 @@ OGC_SERVER = {
     }
 }
 
+INSTALLED_APPS = INSTALLED_APPS + (
+    'debug_toolbar',
+)
+
