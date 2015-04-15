@@ -1,0 +1,2 @@
+-r install.pip
+pygdal==1.9.2
