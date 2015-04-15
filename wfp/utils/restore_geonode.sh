@@ -6,7 +6,7 @@
 # read configuration
 # we need to have a gnadmin postgres user in place, with same password as in production
 CWD=$(pwd)
-DATE="20150315"
+DATE="20150322"
 BACKUP_DIR="/home/capooti/backup/geonode"
 VEDIR="/home/capooti/git/codeassist/wfp-geonode/env"
 
@@ -15,7 +15,7 @@ cd $BACKUP_DIR
 # remove old backup files and scp new ones
 function dowload_backup {
     rm $BACKUP_DIR/$DATE
-    scp -r capooti@thebeast:/gis/backup/data/sdi/$DATE $BACKUP_DIR
+    scp -r capooti@thebeast:/gis/backup/data/sdi/data/$DATE $BACKUP_DIR
 }
 
 # restore gn_django
@@ -65,13 +65,8 @@ dowload_backup
 restore_django
 restore_uploads
 restore_geoserver
-set_site_name
+#set_site_name
 
-# migrations
-#./manage.py migrate base --fake 0002
-#./manage.py migrate documents --fake 0001
-#./manage.py migrate documents
-#./manage.py migrate layers --fake 0001
 
 
 
