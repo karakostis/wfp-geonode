@@ -4,14 +4,22 @@ import subprocess
 import datetime
 import os
 
-# This will make sure the app is always imported when
-# Django starts so that shared_task will use this app.
-#from .celery import app as celery_app
-
 NAME = 'wfp-geonode'
-VERSION = __version__ = (2, 2, 6, 'final', 0)
+VERSION = __version__ = (2, 2, 7, 'final', 0)
 __author__ = 'WFP development team'
 
+# generate at first startup the credentials file
+def startup():
+    try:
+        credentials_file = os.path.expanduser('~/.wfp-geonode_credentials.json')
+        if not os.path.isfile(credentials_file):
+            import shutil
+            credentials_template = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), 'deploy/files/wfp-geonode_credentials.json')
+            shutil.copyfile(credentials_template, credentials_file)
+    except IOError:
+        raise
+
+startup()
 
 def get_version():  # pragma: no cover
     """Derives a PEP386-compliant version number from VERSION."""
@@ -35,8 +43,8 @@ def get_version():  # pragma: no cover
             sub += '-%s' % VERSION[4]
 
     return main + sub
-    
-    
+
+
 def get_git_changeset():  # pragma: no cover
     """Returns a numeric identifier of the latest git changeset.
 

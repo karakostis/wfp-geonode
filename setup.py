@@ -16,7 +16,7 @@ PyPIRCCommand.DEFAULT_REPOSITORY = 'http://pypi.wfp.org/pypi/'
 setup(
     name=app.NAME,
     version=app.get_version(),
-    url='http://pypi.wfp.org/pypi/%s/' % app.NAME,
+    url='http://codeassist.wfp.org/stash/projects/GEONODE/repos/wfp-geonode/browse',
     
     author='UN World Food Programme',
     author_email='hq.gis@wfp.org',
@@ -34,5 +34,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
         'Intended Audience :: Developers'
-    ]
+    ],
+    long_description=open('README.md').read()
 )
