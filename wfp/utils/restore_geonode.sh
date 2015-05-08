@@ -6,7 +6,7 @@
 # read configuration
 # we need to have a gnadmin postgres user in place, with same password as in production
 CWD=$(pwd)
-DATE="20150322"
+DATE="20150503"
 BACKUP_DIR="/home/capooti/backup/geonode"
 VEDIR="/home/capooti/git/codeassist/wfp-geonode/env"
 
@@ -26,7 +26,7 @@ function restore_django {
     psql -U gnadmin -c "DROP DATABASE $DB;" postgres
     psql -U gnadmin -c "CREATE DATABASE $DB OWNER gnadmin;" postgres
     psql -U gnadmin -c "CREATE EXTENSION POSTGIS;" $DB
-    psql -U gnadmin -f /usr/share/postgresql/9.2/contrib/postgis-2.1/legacy.sql $DB
+    psql -U gnadmin -f /usr/share/postgresql/9.3/contrib/postgis-2.1/legacy.sql $DB
     psql -U gnadmin $DB < $BACKUP_DIR/$DUMP 2> error_$DB.log
 }
 
@@ -38,7 +38,7 @@ function restore_uploads {
     psql -U gnadmin -c "DROP DATABASE $DB;" postgres
     psql -U gnadmin -c "CREATE DATABASE $DB OWNER gnadmin;" postgres
     psql -U gnadmin -c "CREATE EXTENSION POSTGIS;" $DB
-    psql -U gnadmin -f /usr/share/postgresql/9.2/contrib/postgis-2.1/legacy.sql $DB
+    psql -U gnadmin -f /usr/share/postgresql/9.3/contrib/postgis-2.1/legacy.sql $DB
     psql -U gnadmin $DB < $BACKUP_DIR/$DUMP 2> error_$DB.log
 }
 
@@ -54,6 +54,13 @@ function restore_geoserver {
     sed -i 's/geonode.wfp.org/localhost:8000/g' $GEOSERVER_DATA_DIRECTORY/data/security/auth/geonodeAuthProvider/config.xml
 }
 
+# restore media files
+function restore_media {
+    UPLOAD_DIR=/home/capooti/git/codeassist/wfp-geonode/wfp/uploaded
+    tar -xvf $BACKUP_DIR/$DATE/django.tar.gz
+    mv django/* $UPLOAD_DIR
+}
+
 # set site name
 function set_site_name {
     . $VEDIR/bin/activate
@@ -65,7 +72,8 @@ dowload_backup
 restore_django
 restore_uploads
 restore_geoserver
-#set_site_name
+restore_media
+set_site_name
 
 
 
