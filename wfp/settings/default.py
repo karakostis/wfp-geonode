@@ -93,7 +93,7 @@ MEDIA_ROOT = os.path.join(SITE_ROOT, "www/uploaded")
 MEDIA_URL = "/uploaded/"
 
 # static files
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "static_root")
 STATIC_URL = "/static/"
 
 # Additional directories which hold static files
