@@ -1,3 +1,10 @@
+GeoNode WFPGeoNode 2.2.9
+
+  * Using GeoNode 2.1.7 (that fixes metadata upload and add features to
+    importlayers)
+
+ -- Paolo Corti   Tue Apr 21 14:30:53 CEST 2015
+ 
 GeoNode WFPGeoNode 2.2.8
 
   * Using GeoNode 2.1.6 (that fixes #GEONODE-31)
@@ -6,8 +13,11 @@ GeoNode WFPGeoNode 2.2.8
  
 GeoNode WFPGeoNode 2.2.6
 
-  * Added the training application, an application to manage trainings within GeoNode
-  * Added tests for the wfpdocs and training application for continuous integration
-  * Handling text size of abstract and supplemental information in lists and details pages 
+  * Added the training application, an application to manage trainings within 
+    GeoNode
+  * Added tests for the wfpdocs and training application for continuous
+    integration
+  * Handling text size of abstract and supplemental information in lists and
+    details pages 
 
  -- Paolo Corti   Tue Mar 10 15:07:03 CET 2015
