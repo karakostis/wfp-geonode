@@ -128,6 +128,11 @@
                 {% if "change_resourcebase_metadata" in perms %}
                 <div class="col-sm-3">
                   <i class="fa fa-list-alt fa-3x"></i>
+                  <h4>Edit</h4>
+                  <a class="btn btn-default btn-block btn-xs" href="{% url "wfpdocs-update" resource.slug %}">{% trans "Edit" %}</a>
+                </div>
+                <div class="col-sm-3">
+                  <i class="fa fa-list-alt fa-3x"></i>
                   <h4>Metadata</h4>
                   <a class="btn btn-default btn-block btn-xs" href="{% url "document_metadata" resource.id %}">{% trans "Edit" %}</a>
                 </div>

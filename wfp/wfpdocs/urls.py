@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, url, include
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
+
+from .views import DocumentUpdateView
 
 from tastypie.api import Api
 
@@ -21,8 +24,11 @@ urlpatterns = patterns(
     url(r'^$', TemplateView.as_view(template_name='wfpdocs/document_list.html'),
                            name='wfpdocs-browse'),
     url(r'^(?P<slug>[\w-]+)/?$', 'document_detail', name='wfpdocs-detail'),
-    url(r'^upload/?$', 'document_update', name='wfpdocs-upload'),
-    url(r'^(?P<id>\d+)/update$', 'document_update', name='wfpdocs-update'),
+    #url(r'^upload/?$', 'document_update', name='wfpdocs-upload'),
+
+    url(r'^(?P<slug>[\w-]+)/update$', login_required(DocumentUpdateView.as_view()),
+                           name="wfpdocs-upload"),
+                           
     url(r'^(?P<docid>\d+)/remove$', 'document_remove',
         name='wfpdocs-remove'),
     url(r'^(?P<docid>\d+)/download/?$', 'wfpdocument_download', name='wfpdocument_download'),

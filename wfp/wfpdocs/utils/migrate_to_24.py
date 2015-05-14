@@ -31,7 +31,7 @@ join documents_document as d
 on w.document_id = d.resourcebase_ptr_id
 join base_resourcebase as b
 on d.resourcebase_ptr_id = b.id
-where d.resourcebase_ptr_id >= 1930
+where d.resourcebase_ptr_id < 1930 and d.resourcebase_ptr_id >= 1508
 order by id
 """
 
@@ -40,7 +40,7 @@ cur.execute(sql_wfpdocs)
 rows = cur.fetchall()
 for row in rows:
     # TODO real owner here
-    profile = Profile.objects.all()[4]
+    profile = Profile.objects.all()[1]
     id = row[0]
     title = row[1]
     date = row[2]

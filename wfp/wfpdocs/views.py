@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django_downloadview.response import DownloadResponse
 from django.views.decorators.cache import cache_page
+from django.views.generic.edit import UpdateView, CreateView
 from django.db.models import F
 
 from geonode.documents.models import Document
@@ -127,8 +128,30 @@ def wfpdocument_download(request, docid):
     return DownloadResponse(document.doc_file)
 
 
+class DocumentUpdateView(UpdateView):
+    #import ipdb;ipdb.set_trace()
+    template_name = 'wfpdocs/document_form.html'
+    pk_url_kwarg = 'docid'
+    form_class = WFPDocumentForm
+    queryset = WFPDocument.objects.all()
+    context_object_name = 'wfpdocument'
+
+    def form_valid(self, form):
+        """
+        If the form is valid, save the associated model.
+        """
+        import ipdb;ipdb.set_trace()
+        self.object = form.save()
+        return HttpResponseRedirect(
+            reverse(
+                'document_metadata',
+                args=(
+                    self.object.id,
+                )))
+
+
 @login_required
-def document_update(request, id=None, template_name='wfpdocs/document_form.html'):
+def document_update_old(request, id=None, template_name='wfpdocs/document_form.html'):
     wfpdoc = None
     content_type = None
     object_id = None
