@@ -25,6 +25,10 @@ $(function(){
             });
         });
         
+        if(params.types.length > 0){
+            params.types.push('wfpdocument');
+        }
+        
         if(params.date_start[0] === 'yyyy-mm-dd'){
             params.date_start = [''];
         }
