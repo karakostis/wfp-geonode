@@ -27,6 +27,9 @@
             <a href="{{ item.detail_url }}"><img ng-src="{{ item.thumbnail_url }}" /></a>
           </div>
           <div class="col-xs-8 item-info">
+            {% endverbatim %}{% if request.user.is_authenticated %}
+            <button class="btn btn-default btn-xs pull-right" ng-click="feature_select($event)">Select</button>
+            {% endif %}{% verbatim %}
             <h4><a href="{{ item.detail_url }}">{{ item.title }}</a></h4>
             <p>Published by <a href="{{ item.owner.profile_detail_url }}">{{ item.owner.username }}</a> on {{ item.date | date:'MMMM dd, yyyy, HH:mm' }}</p>
             <p>Print Format: {{ item.page_format }}, Orientation: {{ item.orientation }}</p>

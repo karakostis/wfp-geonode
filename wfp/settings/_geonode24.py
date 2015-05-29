@@ -49,6 +49,7 @@ OGC_SERVER = {
 }
 
 INSTALLED_APPS = INSTALLED_APPS + (
-    'debug_toolbar',
+    #'debug_toolbar',
 )
 
+MEDIA_ROOT = "/home/capooti/git/codeassist/wfp-geonode/www/uploaded"

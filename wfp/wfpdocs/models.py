@@ -1,6 +1,7 @@
 import os
 import datetime
 import logging
+import uuid
 
 from django.conf import settings
 from django.db import models
@@ -8,8 +9,10 @@ from django.db.models import signals
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.staticfiles import finders
+from django.utils.text import slugify
 
 from geonode.base.models import ResourceBase, resourcebase_post_save
+from geonode.layers.models import Layer
 
 IMGTYPES = ['jpg', 'jpeg', 'tif', 'tiff', 'png', 'gif']
 
@@ -48,21 +51,21 @@ class WFPDocument(ResourceBase):
     )
 
     source = models.CharField(max_length=255)
-    orientation = models.IntegerField('Orientation', choices=ORIENTATION_CHOICES)
-    page_format = models.IntegerField('Format', choices=FORMAT_CHOICES)
-    #document = models.OneToOneField(Document)
+    orientation = models.IntegerField('Orientation', choices=ORIENTATION_CHOICES, default=0)
+    page_format = models.IntegerField('Format', choices=FORMAT_CHOICES, default=0)
     doc_file = models.FileField(upload_to='documents', max_length=255, verbose_name=_('File'))
     extension = models.CharField(max_length=128, blank=True, null=True)
     last_version = models.BooleanField(default=False)
     date_updated = models.DateTimeField(auto_now=True, blank=False, null=False)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True) # TODO use django-autoslug
     categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
+    layers = models.ManyToManyField(Layer, blank=True)
 
     def __str__(self):  
           return "%s" % self.source
     
     def get_absolute_url(self):
-        return reverse('wfpdocs-detail', args=(self.slug,))
+        return reverse('wfpdocs_detail', args=(self.slug,))
         
     def get_file_size(self):
         try:
@@ -87,6 +90,13 @@ class WFPDocument(ResourceBase):
             categories.append(category.name)
         return ", ".join(categories)
     get_categories.short_description = 'Categories'
+    
+    def get_layers(self):
+        layers = []
+        for layer in self.layers.all():
+            layers.append(layer.name)
+        return ", ".join(layers)
+    get_layers.short_description = 'Layers'
     
     @property
     def class_name(self):
@@ -139,21 +149,43 @@ class WFPDocument(ResourceBase):
         return imgfile.getvalue()
     
 def pre_save_wfpdocument(instance, sender, **kwargs):
+
+    # slugify title and set slug
+    slug = slugify(unicode(instance.title))[0:40]
+    if  WFPDocument.objects.filter(slug=slug).count() > 0:
+        slug = '%s-%s' % (slug, instance.date.strftime('%s'))
+    instance.slug = slug
+    
     base_name, extension, doc_type = None, None, None
-    base_name, extension = os.path.splitext(instance.doc_file.name)
-    instance.extension = extension[1:]
-    doc_type_map = settings.DOCUMENT_TYPE_MAP
-    if doc_type_map is None:
-        doc_type = 'other'
-    else:
-        if instance.extension in doc_type_map:
-            doc_type = doc_type_map[''+instance.extension]
-        else:
+
+    if instance.doc_file:
+        base_name, extension = os.path.splitext(instance.doc_file.name)
+        instance.extension = extension[1:]
+        doc_type_map = settings.DOCUMENT_TYPE_MAP
+        if doc_type_map is None:
             doc_type = 'other'
-    instance.doc_type = doc_type
+        else:
+            if instance.extension in doc_type_map:
+                doc_type = doc_type_map[''+instance.extension]
+            else:
+                doc_type = 'other'
+        instance.doc_type = doc_type
 
     if not instance.uuid:
         instance.uuid = str(uuid.uuid1())
+    instance.csw_type = 'wfpdocument'
+
+    if instance.abstract == '' or instance.abstract is None:
+        instance.abstract = 'No abstract provided'
+
+    if instance.title == '' or instance.title is None:
+        instance.title = instance.doc_file.name
+
+    # TODO maybe we want to set based on the extent of the layers
+    instance.bbox_x0 = -180
+    instance.bbox_x1 = 180
+    instance.bbox_y0 = -90
+    instance.bbox_y1 = 90
 
     
 def create_thumbnail(sender, instance, created, **kwargs):

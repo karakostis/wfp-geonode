@@ -3,6 +3,11 @@ from django.core.urlresolvers import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.conf import settings
 
+from guardian.shortcuts import get_objects_for_user
+from guardian.shortcuts import get_anonymous_user
+
+from geonode.people.models import Profile
+
 from models import WFPDocument
 
 class CustomFeedGenerator(Rss201rev2Feed):
@@ -45,21 +50,21 @@ class WFPDocumentsFeed(Feed):
     description = "Latest maps from WFP/GeoNode Maps Repository."
 
     def items(self):
-        from geonode.security.models import GenericObjectRoleMapping
-        public_docs = GenericObjectRoleMapping.objects.filter(subject=u'anonymous', object_ct__name='document').values_list('object_id', flat=True)
-        public_wfpdocs = WFPDocument.objects.filter(document__id__in=public_docs)
-        return public_wfpdocs.order_by('-document__date')[:20]
+        anonymous_user = get_anonymous_user()
+        public_wfpdocs_ids = get_objects_for_user(anonymous_user, 'base.view_resourcebase').instance_of(WFPDocument).values_list('id', flat=True)
+        public_wfpdocs = WFPDocument.objects.filter(id__in=public_wfpdocs_ids)
+        return public_wfpdocs.order_by('-date')[:20]
 
     # Elements for each item
     
     def item_title(self, item):
-        return item.document.title
+        return item.title
 
     def item_description(self, item):
-        return item.document.title
+        return item.title
     
     def item_pubdate(self, item):
-        return item.document.date
+        return item.date
         
     def item_author_name(self, item):
         return 'WFP GeoNode'
@@ -68,17 +73,15 @@ class WFPDocumentsFeed(Feed):
         return settings.THEME_ACCOUNT_CONTACT_EMAIL
     
     def item_extra_kwargs(self, obj):
-        thumb_url = '%s%s' % (settings.SITEURL[:-1], 
-            obj.document.get_thumbnail_url())
         return {
             'category': obj.get_categories(),
-            'epweb:thumbURL' : thumb_url,
-            'epweb:previewURL' : thumb_url,
+            'epweb:thumbURL' : obj.get_thumbnail_url(),
+            'epweb:previewURL' : obj.get_thumbnail_url(),
             'epweb:source' : obj.source,
-            'epweb:createDate' : str(obj.document.date),
-            'epweb:fileType' : obj.document.extension.upper(),
+            'epweb:createDate' : str(obj.date),
+            'epweb:fileType' : obj.extension.upper(),
             'epweb:fileSize' : str(obj.get_file_size()),
             'epweb:printSize' : WFPDocument.FORMAT_CHOICES[obj.page_format][1],
-            'epweb:countries' : obj.document.regions.all(),
+            'epweb:countries' : obj.regions.all(),
         }
 

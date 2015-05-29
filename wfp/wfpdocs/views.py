@@ -14,6 +14,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic.edit import UpdateView, CreateView
 from django.db.models import F
 
+from geonode.utils import resolve_object
 from geonode.documents.models import Document
 from geonode.documents.forms import DocumentForm
 from geonode.people.forms import ProfileForm
@@ -41,11 +42,9 @@ def _resolve_document(request, slug, permission='base.change_resourcebase',
     '''
     Resolve the document by the provided primary key and check the optional permission.
     '''
-    #return resolve_object(request, Document, {'pk': docid},
-    #                      permission=permission, permission_msg=msg, **kwargs)
-    # TODO handle permissions here
-    document = WFPDocument.objects.get(slug=slug)
-    return document
+    wfpdoc = WFPDocument.objects.get(slug=slug)
+    return resolve_object(request, WFPDocument, {'pk': wfpdoc.id},
+                          permission=permission, permission_msg=msg, **kwargs)
 
 def document_detail(request, slug):
     """
@@ -115,8 +114,8 @@ def document_detail(request, slug):
             RequestContext(request, context_dict))
 
 
-def wfpdocument_download(request, docid):
-    document = get_object_or_404(WFPDocument, pk=docid)
+def document_download(request, slug):
+    document = get_object_or_404(WFPDocument, slug=slug)
     if not request.user.has_perm(
             'base.download_resourcebase',
             obj=document.get_self_resource()):
@@ -128,128 +127,59 @@ def wfpdocument_download(request, docid):
     return DownloadResponse(document.doc_file)
 
 
-class DocumentUpdateView(UpdateView):
-    #import ipdb;ipdb.set_trace()
-    template_name = 'wfpdocs/document_form.html'
-    pk_url_kwarg = 'docid'
+class DocumentUploadView(CreateView):
+    model = WFPDocument
     form_class = WFPDocumentForm
-    queryset = WFPDocument.objects.all()
-    context_object_name = 'wfpdocument'
-
+    
     def form_valid(self, form):
         """
         If the form is valid, save the associated model.
         """
-        import ipdb;ipdb.set_trace()
-        self.object = form.save()
+        self.object = form.save(commit=False)
+        self.object.owner = self.request.user
+        # by default, if RESOURCE_PUBLISHING=True then document.is_published
+        # must be set to False
+        is_published = True
+        if settings.RESOURCE_PUBLISHING:
+            is_published = False
+        self.object.is_published = is_published
+        self.object.save()
+        self.object.set_permissions(form.cleaned_data['permissions'])
         return HttpResponseRedirect(
             reverse(
-                'document_metadata',
+                'wfpdocs_detail',
                 args=(
-                    self.object.id,
+                    self.object.slug,
                 )))
 
 
-@login_required
-def document_update_old(request, id=None, template_name='wfpdocs/document_form.html'):
-    wfpdoc = None
-    content_type = None
-    object_id = None
-    if id:
-        wfpdoc = get_object_or_404(WFPDocument, pk=id)
-    if request.method == 'POST':
-        if 'resource' in request.POST:
-            resource = request.POST['resource']
-            if resource != 'no_link':
-                matches = re.match("type:(\d+)-id:(\d+)", resource).groups()
-                contenttype_id = matches[0]
-                object_id = matches[1]
-                content_type = ContentType.objects.get(id=contenttype_id)
-        title = request.POST['title']
-        doc_file = None
-        if 'file' in request.FILES:
-            doc_file = request.FILES['file']
-            if len(request.POST['title'])==0:
-                return HttpResponse(_('You need to provide a document title.'))
-            if not os.path.splitext(doc_file.name)[1].lower()[1:] in ALLOWED_DOC_TYPES:
-                return HttpResponse(_('This file type is not allowed.'))
-            if not doc_file.size < settings.MAX_DOCUMENT_SIZE * 1024 * 1024:
-                return HttpResponse(_('This file is too big.'))
-        else:
-            if wfpdoc is None:
-                return HttpResponse(_('You must provide a file.'))
-        # map document
-        form = WFPDocumentForm(request.POST)
-        if form.is_valid():
-            source = form.cleaned_data.get('source')
-            publication_date = form.cleaned_data.get('publication_date')
-            orientation = form.cleaned_data.get('orientation')
-            page_format = form.cleaned_data.get('page_format')
-            categories = form.cleaned_data.get('categories')
-            regions = form.cleaned_data.get('regions')
-            last_version = form.cleaned_data.get('last_version')
-        if wfpdoc is None:
-            wfpdoc = WFPDocument()
-        wfpdoc.source = source
-        wfpdoc.orientation = orientation
-        wfpdoc.page_format = page_format
-        wfpdoc.last_version = last_version
-        # if we are creating the static map, we need to create the document as well
-        if not id:
-            document = Document(content_type=content_type, object_id=object_id, 
-                title=title, doc_file=doc_file)
-            document.owner = request.user
-            document.save()
-            wfpdoc.document = document
-        else:
-            document = wfpdoc.document
-        # title=title, doc_file=doc_file, date=publication_date, regions=regions
-        document.owner = request.user
-        document.title = title
-        if doc_file:
-            document.doc_file = doc_file
-        document.date = publication_date
-        document.regions = regions
-        document.content_type=content_type
-        document.object_id=object_id
-        document.save()
-        document.update_thumbnail()
-        #wfpdoc = WFPDocument(source = source, orientation=orientation,
-        #    page_format=page_format, document=document)
-        wfpdoc.save()
-        wfpdoc.categories = categories
-        # permissions
-        if id is None:
-            from geonode.documents.views import document_set_permissions
-            permissionsStr = request.POST['permissions']
-            permissions = json.loads(permissionsStr)
-            document_set_permissions(document, permissions)
-        return HttpResponseRedirect(reverse('wfpdocs-browse'))
-    else: # GET
-        if wfpdoc:
-            form = WFPDocumentForm(instance=wfpdoc, 
-                initial={'regions': wfpdoc.document.regions.all()})
-        else:
-            form = WFPDocumentForm()
-        # some field in the form must be manually populated
-        return render_to_response(
-            'wfpdocs/document_form.html',
-            { 'form': form,
-            },
-            RequestContext(request)
-        )
+class DocumentUpdateView(UpdateView):
+    model = WFPDocument
+    form_class = WFPDocumentForm
+                
         
 @login_required
-def document_remove(request, docid, template='wfpdocs/document_remove.html'):
-    document = _resolve_document(request, docid, 'documents.delete_document',
-                           _PERMISSION_MSG_DELETE)
+def document_remove(request, slug, template='wfpdocs/document_remove.html'):
+    try:
+        document = _resolve_document(
+            request,
+            slug,
+            'base.delete_resourcebase',
+            _PERMISSION_MSG_DELETE)
 
-    if request.method == 'GET':
-        return render_to_response(template,RequestContext(request, {
-            "document": document
-        }))
-    if request.method == 'POST':
-        document.delete()
-        return HttpResponseRedirect(reverse("wfpdocs-browse"))
-    else:
-        return HttpResponse("Not allowed",status=403)
+        if request.method == 'GET':
+            return render_to_response(template, RequestContext(request, {
+                "document": document
+            }))
+        if request.method == 'POST':
+            document.delete()
+            return HttpResponseRedirect(reverse("wfpdocs_browse"))
+        else:
+            return HttpResponse("Not allowed", status=403)
+
+    except PermissionDenied:
+        return HttpResponse(
+            'You are not allowed to delete this document',
+            mimetype="text/plain",
+            status=401
+        )

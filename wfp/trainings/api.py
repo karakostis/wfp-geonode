@@ -36,7 +36,6 @@ class TrainingResource(ModelResource):
             #for keyword in keywords:
                 #orm_filters.update({'keywords__slug__in': filters['keywords__slug__in']})
             orm_filters.update({'keywords__slug__in': keywords})
-        #import ipdb;ipdb.set_trace()
         print orm_filters
         return orm_filters
         
@@ -44,7 +43,6 @@ class TrainingResource(ModelResource):
         keywords = applicable_filters.pop('keywords__slug__in', None)
         trainings = super(TrainingResource, self).apply_filters(request, applicable_filters)
         filters = {}
-        #import ipdb;ipdb.set_trace()
         if keywords:
             #filters.update(dict(keywords__slug__in=[keywords]))
             #base_object_list.filter(keywords).distinct()

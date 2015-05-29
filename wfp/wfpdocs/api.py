@@ -6,6 +6,8 @@ from tastypie.authentication import BasicAuthentication
 from tastypie.cache import SimpleCache
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from taggit.models import Tag
+from guardian.shortcuts import get_anonymous_user
+from guardian.shortcuts import get_objects_for_user
 
 from geonode.api.resourcebase_api import CommonModelApi, CommonMetaApi
 from geonode.api.api import TagResource, RegionResource, ProfileResource
@@ -15,7 +17,7 @@ from geonode.base.models import Region
 from models import WFPDocument, Category
 
 class TagResourceSimple(TagResource):
-    """ Tag API for models not inhereting form ResourceBase"""
+    """ Resource for Tag not inhereting form ResourceBase"""
 
     def dehydrate_count(self, bundle):
         tags = bundle.obj.taggit_taggeditem_items
@@ -25,7 +27,7 @@ class TagResourceSimple(TagResource):
         return count
 
 class WFPDocumentModelResource(ModelResource):
-    """Base resource for gis application."""
+    """Base resource for gis application"""
     
     class Meta:
         include_resource_uri = True
@@ -33,7 +35,7 @@ class WFPDocumentModelResource(ModelResource):
         authentication = BasicAuthentication()
 
 class CategoryResource(WFPDocumentModelResource):
-    """Resource  for Category model."""
+    """Resource  for Category"""
     
     count = fields.IntegerField()
     
@@ -53,52 +55,20 @@ class CategoryResource(WFPDocumentModelResource):
 
 
 class WFPDocumentResource(WFPDocumentModelResource):
-    
-    """Static Map API"""
-    
-    #document = fields.ToOneField(DocumentResource, 'document', full=True)
+    """Resource for Static Map"""
+
     keywords = fields.ToManyField(TagResource, 'keywords', null=True)
     categories = fields.ToManyField(CategoryResource, 'categories', full=True)
     regions = fields.ToManyField(RegionResource, 'regions', full=True)
     file_size = fields.CharField(attribute='get_file_size', readonly=True)
-    owner = fields.ToOneField(ProfileResource, 'owner', full=True)
-    
-    
-    #def build_filters(self, filters={}):
-    #    orm_filters = super(WFPDocumentResource, self).build_filters(filters)
-    #    categories = filters.getlist("categories__slug__in")
-    #    regions = filters.getlist("regions__name__in")
-    #    
-    #    if categories:
-    #        orm_filters.update({'categories__slug__in': categories})
-    #    if regions:
-    #        orm_filters.update({'regions__name__in': regions})
-    #    return orm_filters
-
-    #def apply_filters(self, request, applicable_filters):
-    #    categories = applicable_filters.pop('categories__slug__in', None)
-    #    regions = applicable_filters.pop('regions__name__in', None)
-
-    #   wfpdocs = super(WFPDocumentResource, self).apply_filters(request, applicable_filters)
-    #   filters = {}
-    #   
-    #   if categories:
-    #       wfpdocs = wfpdocs.filter(categories__slug__in=categories).distinct()
-    #   if regions:
-    #       wfpdocs = wfpdocs.filter(regions__name__in=regions).distinct()
-    #   return wfpdocs
+    geonode_page = fields.CharField(attribute='detail_url', readonly=True)
+    geonode_file = fields.FileField(attribute='doc_file')
+    thumbnail = fields.CharField(attribute='thumbnail_url', readonly=True)
+    is_public = fields.BooleanField(default=True)
 
     class Meta(CommonMetaApi):
         queryset = WFPDocument.objects.all().order_by('-date')
         resource_name = 'staticmaps'
-        #filtering = {
-            #'document': ALL_WITH_RELATIONS,
-        #    'categories': ALL_WITH_RELATIONS,
-        #    'date_updated': ALL,
-        #}
-        #include_resource_uri = True
-        #allowed_methods = ['get']
-        #authentication = BasicAuthentication()
         filtering = {
             'keywords': ALL_WITH_RELATIONS,
             'categories': ALL_WITH_RELATIONS,
@@ -106,10 +76,43 @@ class WFPDocumentResource(WFPDocumentModelResource):
             'date': ALL,
         }
         excludes = [
-          'csw_anytext', 'metadata_xml'
-          'owner__email',
+            'abstract',
+            'bbox_x0', 'bbox_x1', 'bbox_y0', 'bbox_y1',
+            'constraints_other',
+            'csw_anytext',
+            'csw_insert_date',
+            'csw_mdsource',
+            'csw_schema',
+            'csw_type',
+            'csw_typename',
+            'csw_wkt_geometry',
+            'data_quality_statement',
+            'date_type',
+            'distribution_description',
+            'distribution_url',
+            'edition',
+            'extension',
+            'featured',
+            'is_published',
+            'language',
+            'maintenance_frequency',
+            'metadata_uploaded',
+            'metadata_xml',
+            'owner',
+            'share_count',
+            'srid',
+            'supplemental_information',
+            'temporal_extent_end',
+            'temporal_extent_start',
+            # renamed
+            'doc_file',
         ]
         
+    def dehydrate_is_public(self, bundle):
+        anonymous_user = get_anonymous_user()
+        public_wfpdocs_ids = get_objects_for_user(anonymous_user, 'base.view_resourcebase').instance_of(WFPDocument).values_list('id', flat=True)
+        return bundle.obj.id in public_wfpdocs_ids
+
     def dehydrate_page_format(self, bundle):
         return WFPDocument.FORMAT_CHOICES[bundle.data['page_format']][1]
         
