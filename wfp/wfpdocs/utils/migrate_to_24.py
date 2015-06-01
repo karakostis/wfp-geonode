@@ -10,8 +10,9 @@ host = 'localhost'
 user = 'me'
 password = 'mypassword'
 
-conn = psycopg2.connect("dbname='%s' user='%s' port='5432' host='%s' password='%s'"
-    % (dbname, user, host, password))
+conn = psycopg2.connect(
+    "dbname='%s' user='%s' port='5432' host='%s' password='%s'" % (dbname, user, host, password)
+)
 
 sql_wfpdocs = """
 select d.resourcebase_ptr_id as id,
@@ -69,7 +70,7 @@ for row in rows:
     doc.save()
     # 1. categories
     sql_categories = """
-    select name from wfpdocs_wfpdocument_categories as wc 
+    select name from wfpdocs_wfpdocument_categories as wc
     join wfpdocs_category as c
     on wc.category_id = c.id
     where wfpdocument_id = %s
@@ -82,7 +83,7 @@ for row in rows:
         print 'Adding %s category to static map' % cat_name
         category = Category.objects.get(name=cat_name)
         doc.categories.add(category)
-        
+
     # 2. regions
     sql_regions = """
     select r.code, r.name from base_resourcebase_regions rbr
@@ -95,11 +96,9 @@ for row in rows:
     cur3 = conn.cursor()
     cur3.execute(sql_regions)
     rows3 = cur3.fetchall()
-    #import ipdb;ipdb.set_trace()
     for reg in rows3:
         region_code = reg[0]
         region_name = reg[1]
-        #import ipdb;ipdb.set_trace()
         if Region.objects.filter(code=region_code).count() == 1:
             print 'Adding %s region' % region_name
             region = Region.objects.get(code=region_code)
@@ -119,8 +118,6 @@ for row in rows:
     cur4 = conn.cursor()
     cur4.execute(sql_keywords)
     rows4 = cur4.fetchall()
-    #import ipdb;ipdb.set_trace()
     for key in rows4:
         keyword_name = key[1]
         doc.keywords.add(keyword_name)
-

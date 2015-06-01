@@ -1,4 +1,4 @@
-from wfp.settings.development import *
+from .development import *  # noqa
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -14,13 +14,13 @@ DATABASES = {
         'PORT': '5432',
     },
     # vector datastore for uploads
-    'uploaded' : {
+    'uploaded': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'sdi_uploads_24',
-        'USER' : wallet.DATABASES.uploaded.USER,
-        'PASSWORD' : wallet.DATABASES.uploaded.PASSWORD,
-        'HOST' : wallet.DATABASES.uploaded.HOST,
-        'PORT' : '5432',
+        'USER': wallet.DATABASES.uploaded.USER,
+        'PASSWORD': wallet.DATABASES.uploaded.PASSWORD,
+        'HOST': wallet.DATABASES.uploaded.HOST,
+        'PORT': '5432',
     }
 }
 
@@ -47,9 +47,5 @@ OGC_SERVER = {
         'TIMEOUT': 10  # number of seconds to allow for HTTP requests
     }
 }
-
-INSTALLED_APPS = INSTALLED_APPS + (
-    #'debug_toolbar',
-)
 
 MEDIA_ROOT = "/home/capooti/git/codeassist/wfp-geonode/www/uploaded"

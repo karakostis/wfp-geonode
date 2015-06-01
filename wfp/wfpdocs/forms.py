@@ -3,17 +3,11 @@ import datetime
 import json
 
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
 from django import forms
-from django.forms import HiddenInput, TextInput
-from django.conf import settings
+from django.forms import HiddenInput
 
-from geonode.base.models import Region
-from geonode.documents.forms import DocumentForm
-from geonode.layers.models import Layer
-from geonode.maps.models import Map
+from models import WFPDocument
 
-from models import WFPDocument, Category
 
 class WFPDocumentForm(forms.ModelForm):
     """
@@ -33,16 +27,23 @@ class WFPDocumentForm(forms.ModelForm):
         if hasattr(self.instance, 'document'):
             self.fields['publication_date'].initial = self.instance.document.date
         else:
-            self.fields['publication_date'].widget.widgets[0].attrs = {'class':'datepicker', 'data-date-format': 'yyyy-mm-dd', 'value': str(datetime.date.today())}
-            self.fields['publication_date'].widget.widgets[1].attrs = {"class":"time",
-        'value': datetime.datetime.now().strftime('%H:%M:%S')}
-        
+            self.fields['publication_date'].widget.widgets[0].attrs = {
+                'class': 'datepicker',
+                'data-date-format': 'yyyy-mm-dd',
+                'value': str(datetime.date.today())
+            }
+            self.fields['publication_date'].widget.widgets[1].attrs = {
+                'class': 'time',
+                'value': datetime.datetime.now().strftime('%H:%M:%S')
+            }
+
     class Meta:
         model = WFPDocument
-        fields = ('title', 'doc_file', 'source', 'orientation', 'page_format', 'categories', 'regions',
+        fields = (
+            'title', 'doc_file', 'source', 'orientation', 'page_format', 'categories', 'regions',
             'last_version', 'layers', 'keywords',
         )
-        
+
     def clean_doc_file(self):
         """
         Ensures the doc_file is valid.
@@ -55,7 +56,7 @@ class WFPDocumentForm(forms.ModelForm):
             raise forms.ValidationError(_("This file type is not allowed"))
 
         return doc_file
-    
+
     def clean_permissions(self):
         """
         Ensures the JSON field is JSON.

@@ -1,7 +1,6 @@
 import random
 import StringIO
 
-from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.hashers import make_password
@@ -10,7 +9,6 @@ from django_dynamic_fixture import G
 
 from geonode.people.models import Profile
 from geonode.layers.models import Layer
-from geonode.documents.models import Document
 
 from wfp.wfpdocs.models import WFPDocument
 from wfp.wfpdocs.models import Category
@@ -19,12 +17,13 @@ from wfp.wfpdocs.models import Category
 def rol_capooti():
     """ Factory for a sample user """
     username = 'roland.capooti'
-    if  Profile.objects.filter(username=username).count() == 1:
+    if Profile.objects.filter(username=username).count() == 1:
         return Profile.objects.get(username=username)
     else:
         return G(Profile, first_name='Roland', last_name='Capooti',
                  username=username, password=make_password('test'),
                  email='roland.capooti@wfp.org')
+
 
 def wfpdoc_factory(**kwargs):
     """ Factory for a static map """
@@ -60,7 +59,7 @@ def wfpdoc_factory(**kwargs):
     for i in range(0, 3):
         category = Category.objects.all()[id_list[i]]
         wfpdoc.categories.add(category)
-        
+
     # set permissions
     perm_spec = {
         "users": {
@@ -70,5 +69,5 @@ def wfpdoc_factory(**kwargs):
                 "view_resourcebase"]},
         "groups": {}}
     wfpdoc.set_permissions(perm_spec)
-    
+
     return wfpdoc

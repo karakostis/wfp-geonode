@@ -9,8 +9,10 @@ celerybeat-schedule
 celeryev.pid
 dist
 env
+env24
 supervisord.log
 wfp/dev_settings.py
 wfp_geonode.egg-info
 www
+wfp/uploaded
 

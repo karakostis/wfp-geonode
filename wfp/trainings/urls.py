@@ -1,11 +1,8 @@
 from django.conf.urls import patterns, url, include
-from tastypie.api import Api
 from .api import TrainingResource, TagResourceSimple
 
 from geonode.api import api as geonode_api
 from geonode.api.urls import api
-
-from wfp.trainings.models import Training
 
 api.api_name = 'v2.4'
 api.register(TrainingResource())

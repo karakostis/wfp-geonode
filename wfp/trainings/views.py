@@ -10,7 +10,6 @@ from django.conf import settings
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import permission_required
-from django.conf import settings
 
 from geonode.utils import http_client
 from geonode.geoserver.helpers import OGC_Servers_Handler

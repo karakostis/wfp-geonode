@@ -67,7 +67,8 @@ class TrainingTest(TestCase):
         c = Client()
         response = c.get(reverse('training_detail', args=(str(training.id),)))
         self.assertEquals(response.status_code, 200)
-        
+
+
 class TrainingApiTest(ResourceTestCase):
 
     def setUp(self):
@@ -88,7 +89,7 @@ class TrainingApiTest(ResourceTestCase):
         response = self.api_client.get(self.list_url)
         self.assertValidJSONResponse(response)
         self.assertEquals(len(self.deserialize(response)['objects']), 10)
-        
+
     def test_keywords_filters(self):
         """Test keywords filtering"""
 
@@ -100,4 +101,3 @@ class TrainingApiTest(ResourceTestCase):
             response = self.api_client.get(filter_url)
             self.assertValidJSONResponse(response)
             self.assertEquals(len(self.deserialize(response)['objects']), tagged_count)
-

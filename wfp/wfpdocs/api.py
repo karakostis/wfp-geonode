@@ -3,18 +3,15 @@ from django.contrib.contenttypes.models import ContentType
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.authentication import BasicAuthentication
-from tastypie.cache import SimpleCache
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
-from taggit.models import Tag
 from guardian.shortcuts import get_anonymous_user
 from guardian.shortcuts import get_objects_for_user
 
-from geonode.api.resourcebase_api import CommonModelApi, CommonMetaApi
-from geonode.api.api import TagResource, RegionResource, ProfileResource
-from geonode.documents.models import Document
-from geonode.base.models import Region
+from geonode.api.resourcebase_api import CommonMetaApi
+from geonode.api.api import TagResource, RegionResource
 
 from models import WFPDocument, Category
+
 
 class TagResourceSimple(TagResource):
     """ Resource for Tag not inhereting form ResourceBase"""
@@ -26,26 +23,28 @@ class TagResourceSimple(TagResource):
                 content_type=ctype).count()
         return count
 
+
 class WFPDocumentModelResource(ModelResource):
     """Base resource for gis application"""
-    
+
     class Meta:
         include_resource_uri = True
         allowed_methods = ['get']
         authentication = BasicAuthentication()
 
+
 class CategoryResource(WFPDocumentModelResource):
     """Resource  for Category"""
-    
+
     count = fields.IntegerField()
-    
+
     def dehydrate_count(self, bundle):
         return bundle.obj.wfpdocument_set.count()
-    
+
     class Meta:
         queryset = Category.objects.all()
         resource_name = 'wfpcategories'
-        excludes = ['id',]
+        excludes = ['id', ]
         filtering = {
             'name': ALL,
         }
@@ -107,18 +106,20 @@ class WFPDocumentResource(WFPDocumentModelResource):
             # renamed
             'doc_file',
         ]
-        
+
     def dehydrate_is_public(self, bundle):
         anonymous_user = get_anonymous_user()
-        public_wfpdocs_ids = get_objects_for_user(anonymous_user, 'base.view_resourcebase').instance_of(WFPDocument).values_list('id', flat=True)
+        public_wfpdocs_ids = get_objects_for_user(
+            anonymous_user, 'base.view_resourcebase'
+            ).instance_of(WFPDocument).values_list('id', flat=True)
         return bundle.obj.id in public_wfpdocs_ids
 
     def dehydrate_page_format(self, bundle):
         return WFPDocument.FORMAT_CHOICES[bundle.data['page_format']][1]
-        
+
     def dehydrate_orientation(self, bundle):
         return WFPDocument.ORIENTATION_CHOICES[bundle.data['orientation']][1]
-        
+
     def build_schema(self):
         base_schema = super(WFPDocumentResource, self).build_schema()
         for f in self._meta.object_class._meta.fields:
@@ -127,5 +128,3 @@ class WFPDocumentResource(WFPDocumentModelResource):
                     'choices': f.choices,
                 })
         return base_schema
-        
-

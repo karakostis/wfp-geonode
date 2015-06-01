@@ -1,5 +1,6 @@
 from wfp import get_version
 
+
 def wfp_geonode(request):
     """ Global values related to WFPGeoNode to pass to templates """
 

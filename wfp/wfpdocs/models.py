@@ -1,5 +1,4 @@
 import os
-import datetime
 import logging
 import uuid
 
@@ -18,11 +17,12 @@ IMGTYPES = ['jpg', 'jpeg', 'tif', 'tiff', 'png', 'gif']
 
 logger = logging.getLogger(__name__)
 
+
 class Category(models.Model):
     """
     A WFM Map Document category
     """
-    
+
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -31,17 +31,18 @@ class Category(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name_plural = 'Categories'
-        
+
+
 class WFPDocument(ResourceBase):
     """
     A WFP document
     """
-    
+
     ORIENTATION_CHOICES = (
         (0, 'Landscape'),
         (1, 'Portrait'),
     )
-    
+
     FORMAT_CHOICES = (
         (4, 'A4'),
         (0, 'A0'),
@@ -57,51 +58,52 @@ class WFPDocument(ResourceBase):
     extension = models.CharField(max_length=128, blank=True, null=True)
     last_version = models.BooleanField(default=False)
     date_updated = models.DateTimeField(auto_now=True, blank=False, null=False)
-    slug = models.SlugField(unique=True) # TODO use django-autoslug
+    # TODO use django-autoslug
+    slug = models.SlugField(unique=True)
     categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
     layers = models.ManyToManyField(Layer, blank=True)
 
-    def __str__(self):  
-          return "%s" % self.source
-    
+    def __str__(self):
+        return '%s' % self.source
+
     def get_absolute_url(self):
         return reverse('wfpdocs_detail', args=(self.slug,))
-        
+
     def get_file_size(self):
         try:
             num = self.doc_file.size
-            for x in ['bytes','KB','MB','GB','TB']:
+            for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
                 if num < 1024.0:
                     return "%3.1f %s" % (num, x)
                 num /= 1024.0
         except:
             return 0
-            
+
     def get_regions(self):
         regions = []
         for region in self.regions.all():
             regions.append(region.name)
-        return ", ".join(regions )
+        return ', '.join(regions)
     get_regions.short_description = 'Regions'
-    
+
     def get_categories(self):
         categories = []
         for category in self.categories.all():
             categories.append(category.name)
         return ", ".join(categories)
     get_categories.short_description = 'Categories'
-    
+
     def get_layers(self):
         layers = []
         for layer in self.layers.all():
             layers.append(layer.name)
         return ", ".join(layers)
     get_layers.short_description = 'Layers'
-    
+
     @property
     def class_name(self):
         return self.__class__.__name__
-    
+
     def _render_thumbnail(self):
         from cStringIO import StringIO
 
@@ -147,15 +149,16 @@ class WFPDocument(ResourceBase):
         imgfile = StringIO()
         img.save(imgfile, format='PNG')
         return imgfile.getvalue()
-    
+
+
 def pre_save_wfpdocument(instance, sender, **kwargs):
 
     # slugify title and set slug
     slug = slugify(unicode(instance.title))[0:40]
-    if  WFPDocument.objects.filter(slug=slug).count() > 0:
+    if WFPDocument.objects.filter(slug=slug).count() > 0:
         slug = '%s-%s' % (slug, instance.date.strftime('%s'))
     instance.slug = slug
-    
+
     base_name, extension, doc_type = None, None, None
 
     if instance.doc_file:
@@ -187,7 +190,7 @@ def pre_save_wfpdocument(instance, sender, **kwargs):
     instance.bbox_y0 = -90
     instance.bbox_y1 = 90
 
-    
+
 def create_thumbnail(sender, instance, created, **kwargs):
     from .tasks import create_wfpdoc_thumbnail
 

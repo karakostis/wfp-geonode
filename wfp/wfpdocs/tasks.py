@@ -14,6 +14,7 @@ from wfp.wfpdocs.models import WFPDocument
 
 log = get_task_logger(__name__)
 
+
 @periodic_task(run_every=crontab(minute=settings.SERVICE_UPDATE_INTERVAL))
 def remove_orphaned_images():
     if settings.MEDIA_ROOT == '':
@@ -53,12 +54,11 @@ def remove_orphaned_images():
             log.info('Removing image %s' % m)
             os.remove(m)
             c = c + 1
-    info = 'Removed %s images, from a total of %s (referenced %s)' % (c, 
-        len(media), len(referenced))
+    info = 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))
     log.info(info)
     return info
-    
-    
+
+
 @task(name='wfp.wfpdocs.tasks.update.create_document_thumbnail', queue='update')
 def create_wfpdoc_thumbnail(object_id):
     """

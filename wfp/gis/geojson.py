@@ -2,6 +2,7 @@ from tastypie.serializers import Serializer
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
+
 class GeoJSONSerializer(Serializer):
     """
     Custom GeoJSON tastypie serializer.
@@ -26,7 +27,7 @@ class GeoJSONSerializer(Serializer):
                     return
                 if key == 'resource_uri':
                     return
-                if type(value) == type({}):
+                if isinstance(value, dict):
                     for k in value:
                         recurse(k, value[k])
                 else:
