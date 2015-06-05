@@ -13,7 +13,7 @@ def migrate_resourcebase(resource_type):
     if resource_type == 'map':
         sql = sql + ' where id in (select resourcebase_ptr_id from maps_map)'
     if resource_type == 'document':
-        sql = sql + ' where id in (select resourcebase_ptr_id from documents_document)'
+        sql = sql + ' where id in (select resourcebase_ptr_id from documents_document) and id not in (select document_id from wfpdocs_wfpdocument)'
 
     polymorphic_ctype_id = utils.get_content_type_id(resource_type)
     

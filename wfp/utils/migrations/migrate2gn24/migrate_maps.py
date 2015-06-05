@@ -7,8 +7,8 @@ dst = utils.get_dst()
 src_cur = src.cursor()
 dst_cur = dst.cursor()
 
-src_cur.execute("select resourcebase_ptr_id, workspace, store, \"storeType\", name, typename, popular_count, share_count from layers_layer")
-#print str(src_cur)
+src_cur.execute("select resourcebase_ptr_id, zoom, projection, center_x, center_y, last_modified, popular_count, share_count from maps_map")
+
 for src_row in src_cur:
     assignments = []
     #resourcebase_ptr_id
@@ -28,33 +28,30 @@ for src_row in src_cur:
     assignments.append(utils.get_en_fields(id)[5])
     #data_quality_statement_en
     assignments.append(utils.get_en_fields(id)[6])
-    #workspace
+    #zoom
     assignments.append(src_row[1])
-    #store
+    #projection
     assignments.append(src_row[2])
-    #storeType
+    #center_x
     assignments.append(src_row[3])
-    #name
+    #center_y
     assignments.append(src_row[4])
-    #typename
+    #last_modified
     assignments.append(src_row[5])
-    #charset
-    assignments.append("UTF8")
-    #upload_session_id
-    assignments.append(None)
-    #service_id
-    assignments.append(None)
-    
+    #urlsuffix
+    assignments.append("unk")
+    #featuredurl
+    assignments.append("unknown")
+  
     try:
-        dst_cur.execute("insert into layers_layer(resourcebase_ptr_id, title_en, abstract_en, purpose_en, constraints_other_en, supplemental_information_en, distribution_description_en, data_quality_statement_en, workspace, store, \"storeType\", name, typename, charset, upload_session_id, service_id) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", assignments)
+        print assignments
+        dst_cur.execute("insert into maps_map(resourcebase_ptr_id, title_en, abstract_en, purpose_en, constraints_other_en, supplemental_information_en, distribution_description_en, data_quality_statement_en, zoom, projection, center_x, center_y, last_modified, urlsuffix, featuredurl) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", assignments)
         dst.commit()
     except Exception as error:
-        print 
-        print type(error)
-        print str(error) + "select resourcebase_ptr_id, workspace, store, \"storeType\", name, typename, popular_count, share_count, default_style_id from layers_layer"
+        print str(error) + "select resourcebase_ptr_id, zoom, projection, center_x, center_y, last_modified, popular_count, share_count from maps_map"
         print str(src_row)
         dst.rollback()
-        
+
 src_cur.close()
 dst_cur.close()
 src.close()
