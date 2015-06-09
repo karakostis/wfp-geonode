@@ -11,25 +11,27 @@
 
 # specific for wfp
 # 1. run wfp/update_esri_gn_store.sql
-# 4. run wfp/migrate_wfpdocs
+# 2. run wfp/migrate_wfpdocs
 
-migrate_people
-migrate_account
-migrate_accountemails
-migrate_avatars
-migrate_resourcebase # TODO regions, categories and other fields
-migrate_layers
-migrate_attributes
-migrate_maps
-migrate_maplayers
-migrate_documents
-migrate_tags
-migrate_permissions (*)
-migrate_contactroles
+python migrate_people
+python migrate_account
+python migrate_accountemails
+python migrate_avatars
+python migrate_resourcebase # TODO regions, categories and other fields
+python migrate_layers
+python migrate_attributes
+python migrate_maps
+python migrate_maplayers
+python migrate_documents
+python migrate_tags
+python migrate_user_permissions
+python create_authenticated_group
+python migrate_group_permissions (*)
+python migrate_contactroles (*)
 # wfp
-migrate_wfpdocs
-migrate_trainings
-migrate_traininglayers
+python migrate_wfpdocs
+python migrate_trainings
+python migrate_traininglayers
 
 # things not being migrated
 # actstream, agon_ratings, announcements, dialogos, notifications, messages

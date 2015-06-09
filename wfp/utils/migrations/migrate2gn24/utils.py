@@ -109,6 +109,17 @@ def get_en_fields(id):
     return en_fields
 
 
+def get_permissions_dict():
+    """Get auth permission id from code name"""
+    dst = get_dst()
+    dst_cur = dst.cursor()
+    dst_cur.execute("SELECT codename, id from auth_permission;")
+    permissions_dict = {}
+    for row in dst_cur.fetchall():
+        permissions_dict[row[0]] = row[1]
+    return permissions_dict
+
+
 def get_attributes_by_uuid(uuid, model):
     """Get attributes from layers/documents/maps for a given uuid"""
     src = get_src()
