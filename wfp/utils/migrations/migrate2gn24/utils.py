@@ -1,27 +1,31 @@
 import psycopg2
+import ConfigParser, os
+
+config = ConfigParser.ConfigParser()
+config.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'gn_migration.cfg'))
+
+gn20_dbname = config.get('db20', 'dbname')
+gn20_host = config.get('db20', 'host')
+gn20_user = config.get('db20', 'user')
+gn20_password = config.get('db20', 'password')
+
+gn24_dbname = config.get('db24', 'dbname')
+gn24_host = config.get('db24', 'host')
+gn24_user = config.get('db24', 'user')
+gn24_password = config.get('db24', 'password')
 
 def get_src():
-    """Get input db (GeoNode 2.0)"""
-    dbname = 'sdi_django'
-    host = 'localhost'
-    user = 'me'
-    password = 'mypassword'
-
+    """Get input db conn (GeoNode 2.0)"""
     conn = psycopg2.connect(
-        "dbname='%s' user='%s' port='5432' host='%s' password='%s'" % (dbname, user, host, password)
+        "dbname='%s' user='%s' port='5432' host='%s' password='%s'" % (gn20_dbname, gn20_user, gn20_host, gn20_password)
     )
     return conn
 
 
 def get_dst():
-    """Get output db (GeoNode 2.4)"""
-    dbname = 'sdi_django_24'
-    host = 'localhost'
-    user = 'me'
-    password = 'mypassword'
-
+    """Get output db conn (GeoNode 2.4)"""
     conn = psycopg2.connect(
-        "dbname='%s' user='%s' port='5432' host='%s' password='%s'" % (dbname, user, host, password)
+        "dbname='%s' user='%s' port='5432' host='%s' password='%s'" % (gn24_dbname, gn24_user, gn24_host, gn24_password)
     )
     return conn
 
@@ -55,6 +59,44 @@ def get_resourceid_by_oldid(id):
         return None
     new_id = dst_cur.next()[0]
     print 'Resource id %s is now %s' % (id, new_id)
+    return new_id
+
+
+def get_categoryid_by_oldid(id):
+    """Get a category id by old id"""
+    if id is None:
+        return None
+    src = get_src()
+    dst = get_dst()
+    src_cur = src.cursor()
+    src_cur.execute('SELECT identifier FROM base_topiccategory WHERE id=%s;' % id)
+    identifier = src_cur.next()[0]
+    dst_cur = dst.cursor()
+    dst_cur.execute("SELECT id FROM base_topiccategory WHERE identifier = '%s';" % identifier)
+    if dst_cur.rowcount == 0:
+        print 'Error! There is not this identifier in geonode 2.4 database'
+        return None
+    new_id = dst_cur.next()[0]
+    print 'Category id %s is now %s' % (id, new_id)
+    return new_id
+
+
+def get_spatrepid_by_oldid(id):
+    """Get a spatial representation id by old id"""
+    if id is None:
+        return None
+    src = get_src()
+    dst = get_dst()
+    src_cur = src.cursor()
+    src_cur.execute('SELECT identifier FROM from base_spatialrepresentationtype WHERE id=%s;' % id)
+    identifier = src_cur.next()[0]
+    dst_cur = dst.cursor()
+    dst_cur.execute("SELECT id FROM base_spatialrepresentationtype WHERE identifier = '%s';" % identifier)
+    if dst_cur.rowcount == 0:
+        print 'Error! There is not this identifier in geonode 2.4 database'
+        return None
+    new_id = dst_cur.next()[0]
+    print 'Spatial representation id %s is now %s' % (id, new_id)
     return new_id
 
 
@@ -110,15 +152,25 @@ def get_en_fields(id):
 
 
 def get_permissions_dict():
-    """Get auth permission id from code name"""
+    """Dict to get auth permission id from code name"""
     dst = get_dst()
     dst_cur = dst.cursor()
-    dst_cur.execute("SELECT codename, id from auth_permission;")
+    dst_cur.execute("SELECT codename, id FROM auth_permission;")
     permissions_dict = {}
     for row in dst_cur.fetchall():
         permissions_dict[row[0]] = row[1]
     return permissions_dict
 
+
+def get_regions_dict():
+    """Dict to get regions id from code"""
+    dst = get_dst()
+    dst_cur = dst.cursor()
+    dst_cur.execute("SELECT code, id FROM base_region;")
+    regions_dict = {}
+    for row in dst_cur.fetchall():
+        regions_dict[row[0]] = row[1]
+    return regions_dict
 
 def get_attributes_by_uuid(uuid, model):
     """Get attributes from layers/documents/maps for a given uuid"""

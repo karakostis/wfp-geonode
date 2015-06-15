@@ -16,7 +16,7 @@ DATABASES = {
     # vector datastore for uploads
     'uploaded': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'sdi_uploads_24',
+        'NAME': 'sdi_uploads',
         'USER': wallet.DATABASES.uploaded.USER,
         'PASSWORD': wallet.DATABASES.uploaded.PASSWORD,
         'HOST': wallet.DATABASES.uploaded.HOST,

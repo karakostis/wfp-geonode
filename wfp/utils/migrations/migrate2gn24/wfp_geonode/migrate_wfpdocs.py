@@ -1,10 +1,25 @@
-import psycopg2
+#!/usr/bin/python
+import os, sys
 
+path = os.path.dirname(__file__)
+geonode_path = os.path.abspath(os.path.join(path, '../../../../..'))
+sys.path.append(geonode_path)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wfp.settings._geonode24")
+
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+
+import utils
 from geonode.people.models import Profile
-from geonode.base.models import Region
+from geonode.base.models import Region, ResourceBase
 
 from wfp.wfpdocs.models import WFPDocument, Category
 from wfp.trainings.models import Training
+
+src = utils.get_src()
+dst = utils.get_dst()
+
+src_cur = src.cursor()
+src_cur2 = src.cursor()
 
 def migrate_wfpdocs():
     sql_wfpdocs = """
@@ -25,14 +40,12 @@ def migrate_wfpdocs():
     on w.document_id = d.resourcebase_ptr_id
     join base_resourcebase as b
     on d.resourcebase_ptr_id = b.id
-    where d.resourcebase_ptr_id < 1930 and d.resourcebase_ptr_id >= 1508
     order by id
     """
 
     WFPDocument.objects.all().delete()
-    cur = conn.cursor()
-    cur.execute(sql_wfpdocs)
-    rows = cur.fetchall()
+    src_cur.execute(sql_wfpdocs)
+    rows = src_cur.fetchall()
     for row in rows:
         # TODO real owner here
         profile = Profile.objects.all()[1]
@@ -49,6 +62,12 @@ def migrate_wfpdocs():
         wfpdocument_id = row[10]
         uuid = row[11]
         print id, title
+        #import ipdb;ipdb.set_trace()
+        # we need to remove existing doc, created from the migration process
+        try:
+            ResourceBase.objects.get(uuid=uuid).delete()
+        except Exception as error:
+            pass
         doc = WFPDocument()
         doc.title = title
         doc.owner = profile
@@ -69,62 +88,12 @@ def migrate_wfpdocs():
         on wc.category_id = c.id
         where wfpdocument_id = %s
         """ % wfpdocument_id
-        cur2 = conn.cursor()
-        cur2.execute(sql_categories)
-        rows2 = cur2.fetchall()
+        src_cur2.execute(sql_categories)
+        rows2 = src_cur2.fetchall()
         for cat in rows2:
             cat_name = cat[0]
             print 'Adding %s category to static map' % cat_name
             category = Category.objects.get(name=cat_name)
             doc.categories.add(category)
 
-        # 2. regions
-        sql_regions = """
-        select r.code, r.name from base_resourcebase_regions rbr
-        join base_resourcebase rb
-        on rbr.resourcebase_id = rb.id
-        join base_region r
-        on rbr.region_id = r.id
-        where rb.id = %s
-        """ % id
-        cur3 = conn.cursor()
-        cur3.execute(sql_regions)
-        rows3 = cur3.fetchall()
-        for reg in rows3:
-            region_code = reg[0]
-            region_name = reg[1]
-            if Region.objects.filter(code=region_code).count() == 1:
-                print 'Adding %s region' % region_name
-                region = Region.objects.get(code=region_code)
-                doc.regions.add(region)
-            else:
-                print 'It does not exist the region %s, %s' % (region_code, region_name)
-        # 3. keywords
-        sql_keywords = """
-        select rb.id, t.name from taggit_taggeditem tt
-        join base_resourcebase rb
-        on tt.object_id = rb.id
-        join taggit_tag t
-        on tt.tag_id = t.id
-        where tt.content_type_id = 58 and rb.id = %s
-        """ % id
-        # 4. TODO migrate POC metadata etc
-        cur4 = conn.cursor()
-        cur4.execute(sql_keywords)
-        rows4 = cur4.fetchall()
-        for key in rows4:
-            keyword_name = key[1]
-            doc.keywords.add(keyword_name)
-
-# db credentials
-dbname = 'sdi_django'
-host = 'localhost'
-user = 'me'
-password = 'mypassword'
-
-conn = psycopg2.connect(
-    "dbname='%s' user='%s' port='5432' host='%s' password='%s'" % (dbname, user, host, password)
-)
-
-#migrate_wfpdocs()
-migrate_trainings()
+migrate_wfpdocs()

@@ -15,4 +15,7 @@ wfp/dev_settings.py
 wfp_geonode.egg-info
 www
 wfp/uploaded
-
+*.sh~
+*.py~
+*.tmpl~
+*.cfg~

@@ -7,8 +7,10 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wfp.settings._geonode24")
 
 from geonode.groups.models import GroupProfile
 from geonode.people.models import Profile
+from geonode.maps.models import Map
+from geonode.documents.models import Document
 
-print 'Creating the authenticated group.'
+print 'Creating the authenticated group...'
 gp = GroupProfile.objects.create(
     title='Authenticated GeoNode Users',
     slug='authenticated',
@@ -16,8 +18,18 @@ gp = GroupProfile.objects.create(
     access='public',
 )
 # assign all existing users to this group
-print 'Now adding all users to the group:'
+print 'Now adding all users to the group...'
 for profile in Profile.objects.all():
     if profile.username != 'AnonymousUser':
         print 'Adding %s to the group' % profile.username
         gp.join(profile)
+
+# updates resources
+print 'Updating resources...'
+for m in Map.objects.all():
+    print 'Updating map %s' % m.title
+    m.save()
+
+for d in Document.objects.all():
+    print 'Updating document %s' % d.title
+    d.save()

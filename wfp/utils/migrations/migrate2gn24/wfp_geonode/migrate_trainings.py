@@ -26,6 +26,7 @@ for src_row in src_cur:
     assignments.append(src_row[4])
 
     try:
+        print 'Migrating training %s' % title
         dst_cur.execute("insert into trainings_training (title, logo, manual, publication_date, abstract) values (%s, %s, %s, %s, %s)", assignments)
         dst.commit()
     except Exception as error:

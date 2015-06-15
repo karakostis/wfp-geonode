@@ -49,7 +49,8 @@ for src_row in src_cur:
     #is_superuser
     assignments.append(src_row[2])
     #username
-    assignments.append(src_row[3])
+    username = src_row[3]
+    assignments.append(username)
     #first_name
     assignments.append(src_row[4])
     #last_name
@@ -90,7 +91,7 @@ for src_row in src_cur:
     assignments.append(src_row[22])
 
     try:
-        pass
+        print 'Migrating user %s' % username
         dst_cur.execute("insert into people_profile(password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, organization, profile, position, voice, fax, delivery, city, area, zipcode, country) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", assignments)
         dst.commit()
 

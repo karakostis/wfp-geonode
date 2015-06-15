@@ -1,11 +1,16 @@
 #!/usr/bin/python
 import utils
 
+src = utils.get_src()
+dst = utils.get_dst()
+ 
+src_cur = src.cursor()
+dst_cur = dst.cursor()
+
+dst_cur.execute('DELETE from base_resourcebase;')    
+
 def migrate_resourcebase(resource_type):
 
-    src_cur = src.cursor()
-    dst_cur = dst.cursor()
-    
     sql = "select uuid, owner_id, title, date, date_type, edition, abstract, purpose, maintenance_frequency, restriction_code_type_id, constraints_other, language, category_id, spatial_representation_type_id, temporal_extent_start, temporal_extent_end, supplemental_information, distribution_url, distribution_description, data_quality_statement, bbox_x0, bbox_x1, bbox_y0, bbox_y1, srid, csw_typename, csw_schema, csw_mdsource, csw_insert_date, csw_type, csw_anytext, csw_wkt_geometry, metadata_uploaded, metadata_xml, thumbnail_id from base_resourcebase"
     
     if resource_type == 'layer':
@@ -55,10 +60,10 @@ def migrate_resourcebase(resource_type):
         #language
         assignments.append(src_row[11])
         #category_id
+        assignments.append(utils.get_categoryid_by_oldid(src_row[12]))
         # TODO we need to make sure we use the correct id
-        assignments.append(src_row[12])
         #spatial_representation_type_id
-        assignments.append(src_row[13])
+        assignments.append(utils.get_spatrepid_by_oldid(src_row[13]))
         #temporal_extent_start
         assignments.append(src_row[14])
         #temporal_extent_end
@@ -123,16 +128,13 @@ def migrate_resourcebase(resource_type):
             print type(error)
             print str(error) + "select uuid, owner_id, title, date, date_type, edition, abstract, purpose, maintenance_frequency, restriction_code_type_id, constraints_other, language, category_id, spatial_representation_type_id, temporal_extent_start, temporal_extent_end, supplemental_information, distribution_url, distribution_description, data_quality_statement, bbox_x0, bbox_x1, bbox_y0, bbox_y1, srid, csw_typename, csw_schema, csw_mdsource, csw_insert_date, csw_type, csw_anytext, csw_wkt_geometry, metadata_uploaded, metadata_xml, thumbnail_id from base_resourcebase"
             dst.rollback()
-
-    src_cur.close()
-    dst_cur.close()
     
-src = utils.get_src()
-dst = utils.get_dst()
-    
+   
 migrate_resourcebase('layer')
 migrate_resourcebase('map')
 migrate_resourcebase('document')
 
+src_cur.close()
+dst_cur.close()
 src.close()
 dst.close()

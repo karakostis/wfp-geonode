@@ -33,6 +33,7 @@ for src_row in src_cur:
     assignments.append(utils.get_resourceid_by_oldid(src_row[1]))
 
     try:
+        print 'Adding layers to training %s' % training_id
         dst_cur.execute("insert into trainings_training_layers (training_id, layer_id) values (%s, %s)", assignments)
         dst.commit()
     except Exception as error:
