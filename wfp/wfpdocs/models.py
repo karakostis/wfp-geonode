@@ -4,6 +4,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.db import IntegrityError
 from django.db.models import signals
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -59,7 +60,7 @@ class WFPDocument(ResourceBase):
     last_version = models.BooleanField(default=False)
     date_updated = models.DateTimeField(auto_now=True, blank=False, null=False)
     # TODO use django-autoslug
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=255, blank=True)
     categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
     layers = models.ManyToManyField(Layer, blank=True)
 
@@ -150,14 +151,21 @@ class WFPDocument(ResourceBase):
         img.save(imgfile, format='PNG')
         return imgfile.getvalue()
 
+    def save(self, *args, **kwargs):
+        # we may want to set up slug explicitely
+        if self.slug is None:
+            slug = slugify(unicode(self.title))[0:250]
+            self.slug = slug
+        while True:
+            try:
+                return super(WFPDocument, self).save(*args, **kwargs)
+            except IntegrityError:
+                # generate a new slug
+                print 'Integrity Error...'
+                self.slug = '%s-%s' % (slug, (WFPDocument.objects.filter(title=self.title).count() + 1))
+
 
 def pre_save_wfpdocument(instance, sender, **kwargs):
-
-    # slugify title and set slug
-    slug = slugify(unicode(instance.title))[0:40]
-    if WFPDocument.objects.filter(slug=slug).count() > 0:
-        slug = '%s-%s' % (slug, instance.date.strftime('%s'))
-    instance.slug = slug
 
     base_name, extension, doc_type = None, None, None
 

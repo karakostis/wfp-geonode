@@ -9,6 +9,7 @@ from guardian.shortcuts import get_objects_for_user
 
 from geonode.api.resourcebase_api import CommonMetaApi
 from geonode.api.api import TagResource, RegionResource
+from geonode.api.authorization import GeoNodeAuthorization
 
 from models import WFPDocument, Category
 
@@ -30,7 +31,8 @@ class WFPDocumentModelResource(ModelResource):
     class Meta:
         include_resource_uri = True
         allowed_methods = ['get']
-        authentication = BasicAuthentication()
+        #authentication = BasicAuthentication()
+        authorization = GeoNodeAuthorization()
 
 
 class CategoryResource(WFPDocumentModelResource):
@@ -62,7 +64,7 @@ class WFPDocumentResource(WFPDocumentModelResource):
     file_size = fields.CharField(attribute='get_file_size', readonly=True)
     geonode_page = fields.CharField(attribute='detail_url', readonly=True)
     geonode_file = fields.FileField(attribute='doc_file')
-    thumbnail = fields.CharField(attribute='thumbnail_url', readonly=True)
+    thumbnail = fields.CharField(attribute='thumbnail_url', readonly=True, null=True)
     is_public = fields.BooleanField(default=True)
 
     class Meta(CommonMetaApi):
