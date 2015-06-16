@@ -492,8 +492,6 @@ NOSE_ARGS = [
 # GeoNode specific settings
 #
 
-SITEURL = "http://localhost:8000/"
-
 USE_QUEUE = False
 
 DEFAULT_WORKSPACE = 'geonode'
