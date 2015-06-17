@@ -88,7 +88,7 @@ def get_spatrepid_by_oldid(id):
     src = get_src()
     dst = get_dst()
     src_cur = src.cursor()
-    src_cur.execute('SELECT identifier FROM from base_spatialrepresentationtype WHERE id=%s;' % id)
+    src_cur.execute('SELECT identifier FROM base_spatialrepresentationtype WHERE id=%s;' % id)
     identifier = src_cur.next()[0]
     dst_cur = dst.cursor()
     dst_cur.execute("SELECT id FROM base_spatialrepresentationtype WHERE identifier = '%s';" % identifier)
