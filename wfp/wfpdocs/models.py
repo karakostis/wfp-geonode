@@ -136,9 +136,9 @@ class WFPDocument(ResourceBase):
                     img.sample(*size)
                     return img.make_blob('png')
             except:
-                logger.debug('Error generating the thumbnail with Wand')
-                return None
-        elif self.extension and self.extension.lower() in IMGTYPES and self.doc_file:
+                logger.debug('Error generating the thumbnail with Wand, cascading to a default image...')
+        # if we are still here, we use a default image thumb
+        if self.extension and self.extension.lower() in IMGTYPES and self.doc_file:
 
             img = Image.open(self.doc_file.path)
             img = ImageOps.fit(img, size, Image.ANTIALIAS)
