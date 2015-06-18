@@ -15,7 +15,8 @@ src_cur.execute("select title, logo, manual, publication_date, abstract from tra
 for src_row in src_cur:
     assignments = []
     # title
-    assignments.append(src_row[0])
+    title = src_row[0]
+    assignments.append(title)
     # logo
     assignments.append(src_row[1])
     # manual

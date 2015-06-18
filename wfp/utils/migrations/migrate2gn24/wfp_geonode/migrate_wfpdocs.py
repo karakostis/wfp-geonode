@@ -19,7 +19,7 @@ src = utils.get_src()
 dst = utils.get_dst()
 
 src_cur = src.cursor()
-src_cur2 = src.cursor()
+src_cur1 = src.cursor()
 
 def migrate_wfpdocs():
     sql_wfpdocs = """
@@ -34,7 +34,8 @@ def migrate_wfpdocs():
     d.popular_count,
     d.share_count,
     w.id as wfpdocument_id,
-    b.uuid
+    b.uuid,
+    b.owner_id
     from wfpdocs_wfpdocument as w
     join documents_document as d
     on w.document_id = d.resourcebase_ptr_id
@@ -47,8 +48,6 @@ def migrate_wfpdocs():
     src_cur.execute(sql_wfpdocs)
     rows = src_cur.fetchall()
     for row in rows:
-        # TODO real owner here
-        profile = Profile.objects.all()[1]
         id = row[0]
         title = row[1]
         date = row[2]
@@ -61,6 +60,8 @@ def migrate_wfpdocs():
         share_count = row[9]
         wfpdocument_id = row[10]
         uuid = row[11]
+        owner_id = utils.get_userid_by_oldid(row[12])
+        profile = Profile.objects.get(id=owner_id)
         print id, title
         #import ipdb;ipdb.set_trace()
         # we need to remove existing doc, created from the migration process
@@ -88,9 +89,9 @@ def migrate_wfpdocs():
         on wc.category_id = c.id
         where wfpdocument_id = %s
         """ % wfpdocument_id
-        src_cur2.execute(sql_categories)
-        rows2 = src_cur2.fetchall()
-        for cat in rows2:
+        src_cur1.execute(sql_categories)
+        rows1 = src_cur1.fetchall()
+        for cat in rows1:
             cat_name = cat[0]
             print 'Adding %s category to static map' % cat_name
             category = Category.objects.get(name=cat_name)
