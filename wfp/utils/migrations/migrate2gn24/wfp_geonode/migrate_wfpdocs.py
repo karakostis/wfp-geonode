@@ -20,6 +20,7 @@ dst = utils.get_dst()
 
 src_cur = src.cursor()
 src_cur1 = src.cursor()
+src_cur2 = src.cursor()
 
 def migrate_wfpdocs():
     sql_wfpdocs = """
@@ -96,5 +97,20 @@ def migrate_wfpdocs():
             print 'Adding %s category to static map' % cat_name
             category = Category.objects.get(name=cat_name)
             doc.categories.add(category)
+        # 2. keywords
+        sql_keywords = """
+        select rb.id, t.name from taggit_taggeditem tt
+        join base_resourcebase rb
+        on tt.object_id = rb.id
+        join taggit_tag t
+        on tt.tag_id = t.id
+        where tt.content_type_id = 58 and rb.id = %s
+        """ % id
+        src_cur2.execute(sql_keywords)
+        rows2 = src_cur2.fetchall()
+        for key in rows2:
+            keyword_name = key[1]
+            print 'Adding %s keyowrd to static map' % keyword_name
+            doc.keywords.add(keyword_name)
 
 migrate_wfpdocs()
