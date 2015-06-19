@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from tastypie.resources import ModelResource
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie import fields
+from taggit.models import Tag
 
 from geonode.api.resourcebase_api import LayerResource
 from geonode.api.api import TagResource
@@ -12,6 +13,11 @@ from .models import Training
 
 class TagResourceSimple(TagResource):
     """ Tag API for models not inhereting form ResourceBase """
+
+    class Meta:
+        resource_name = 'keywords'
+        ctype = ContentType.objects.get_for_model(Training)
+        queryset = Tag.objects.filter(taggit_taggeditem_items__content_type=ctype).distinct().order_by('name')
 
     def dehydrate_count(self, bundle):
         tags = bundle.obj.taggit_taggeditem_items

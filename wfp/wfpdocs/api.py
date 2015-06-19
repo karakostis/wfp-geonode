@@ -2,10 +2,11 @@ from django.contrib.contenttypes.models import ContentType
 
 from tastypie.resources import ModelResource
 from tastypie import fields
-from tastypie.authentication import BasicAuthentication
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from tastypie.authentication import BasicAuthentication, SessionAuthentication, MultiAuthentication
 from guardian.shortcuts import get_anonymous_user
 from guardian.shortcuts import get_objects_for_user
+from taggit.models import Tag
 
 from geonode.api.resourcebase_api import CommonMetaApi
 from geonode.api.api import TagResource, RegionResource
@@ -15,7 +16,12 @@ from models import WFPDocument, Category
 
 
 class TagResourceSimple(TagResource):
-    """ Resource for Tag not inhereting form ResourceBase"""
+    """ Resource for Tag not inhereting from ResourceBase"""
+
+    class Meta:
+        resource_name = 'keywords'
+        ctype = ContentType.objects.get_for_model(WFPDocument)
+        queryset = Tag.objects.filter(taggit_taggeditem_items__content_type=ctype).distinct().order_by('name')
 
     def dehydrate_count(self, bundle):
         tags = bundle.obj.taggit_taggeditem_items
@@ -31,7 +37,6 @@ class WFPDocumentModelResource(ModelResource):
     class Meta:
         include_resource_uri = True
         allowed_methods = ['get']
-        #authentication = BasicAuthentication()
         authorization = GeoNodeAuthorization()
 
 
@@ -50,9 +55,6 @@ class CategoryResource(WFPDocumentModelResource):
         filtering = {
             'name': ALL,
         }
-        include_resource_uri = True
-        allowed_methods = ['get']
-        authentication = BasicAuthentication()
 
 
 class WFPDocumentResource(WFPDocumentModelResource):
@@ -68,6 +70,10 @@ class WFPDocumentResource(WFPDocumentModelResource):
     is_public = fields.BooleanField(default=True)
 
     class Meta(CommonMetaApi):
+        authentication = MultiAuthentication(
+            BasicAuthentication(),
+            SessionAuthentication()
+        )
         queryset = WFPDocument.objects.all().order_by('-date')
         resource_name = 'staticmaps'
         filtering = {
