@@ -1,12 +1,14 @@
 from django.conf.urls import patterns, url, include
 from django.conf import settings
+from django.views.generic import TemplateView
+
 import views
 
 from geonode.urls import urlpatterns
 
 urlpatterns = patterns(
     '',
-    url(r'^contacts/$', views.contacts, name='contacts'),
+    url(r'^contacts/$', TemplateView.as_view(template_name='contacts.html'), name='contacts'),
     # external applications proxy
     url(r'^apps_proxy/$', views.apps_proxy, name='apps-proxy'),
     url(r'^get_token/$', views.get_token, name='get-token'),

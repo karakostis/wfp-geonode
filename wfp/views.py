@@ -17,17 +17,6 @@ from geonode.people.models import Profile
 from geonode.geoserver.helpers import ogc_server_settings
 
 
-def contacts(request):
-    profiles = Profile.objects.filter(user__groups__name='OMEP GIS Team').order_by('name')
-    return render_to_response(
-        'contacts.html',
-        {
-            'profiles': profiles,
-        },
-        context_instance=RequestContext(request)
-    )
-
-
 def _generate_token():
     timestamp = _num_days(date.today())
     ts_b36 = int_to_base36(timestamp)
