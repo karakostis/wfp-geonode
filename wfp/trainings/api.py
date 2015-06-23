@@ -18,6 +18,9 @@ class TagResourceSimple(TagResource):
         resource_name = 'keywords'
         ctype = ContentType.objects.get_for_model(Training)
         queryset = Tag.objects.filter(taggit_taggeditem_items__content_type=ctype).distinct().order_by('name')
+        filtering = {
+            'slug': ALL,
+        }
 
     def dehydrate_count(self, bundle):
         tags = bundle.obj.taggit_taggeditem_items

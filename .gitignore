@@ -19,3 +19,5 @@ wfp/uploaded
 *.py~
 *.tmpl~
 *.cfg~
+*.old
+gn_migration.cfg
