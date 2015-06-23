@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
-from tastypie.authentication import BasicAuthentication, SessionAuthentication, MultiAuthentication
+from tastypie.authentication import BasicAuthentication, SessionAuthentication, MultiAuthentication, Authentication
 from guardian.shortcuts import get_anonymous_user
 from guardian.shortcuts import get_objects_for_user
 from taggit.models import Tag
@@ -15,10 +15,20 @@ from geonode.api.authorization import GeoNodeAuthorization
 from models import WFPDocument, Category
 
 
-class TagResourceSimple(TagResource):
+class CommonMetaApi:
+    allowed_methods = ['get']
+    include_resource_uri = True
+    authentication = MultiAuthentication(
+            Authentication(),
+            BasicAuthentication(),
+    )
+    authorization = GeoNodeAuthorization()
+
+
+class TagResourceSimple(ModelResource):
     """ Resource for Tag not inhereting from ResourceBase"""
 
-    class Meta:
+    class Meta(CommonMetaApi):
         resource_name = 'keywords'
         ctype = ContentType.objects.get_for_model(WFPDocument)
         queryset = Tag.objects.filter(taggit_taggeditem_items__content_type=ctype).distinct().order_by('name')
@@ -31,16 +41,7 @@ class TagResourceSimple(TagResource):
         return count
 
 
-class WFPDocumentModelResource(ModelResource):
-    """Base resource for gis application"""
-
-    class Meta:
-        include_resource_uri = True
-        allowed_methods = ['get']
-        authorization = GeoNodeAuthorization()
-
-
-class CategoryResource(WFPDocumentModelResource):
+class CategoryResource(ModelResource):
     """Resource  for Category"""
 
     count = fields.IntegerField()
@@ -48,7 +49,7 @@ class CategoryResource(WFPDocumentModelResource):
     def dehydrate_count(self, bundle):
         return bundle.obj.wfpdocument_set.count()
 
-    class Meta:
+    class Meta(CommonMetaApi):
         queryset = Category.objects.all()
         resource_name = 'wfpcategories'
         excludes = ['id', ]
@@ -57,7 +58,7 @@ class CategoryResource(WFPDocumentModelResource):
         }
 
 
-class WFPDocumentResource(WFPDocumentModelResource):
+class WFPDocumentResource(ModelResource):
     """Resource for Static Map"""
 
     keywords = fields.ToManyField(TagResource, 'keywords', null=True)
@@ -70,10 +71,6 @@ class WFPDocumentResource(WFPDocumentModelResource):
     is_public = fields.BooleanField(default=True)
 
     class Meta(CommonMetaApi):
-        authentication = MultiAuthentication(
-            BasicAuthentication(),
-            SessionAuthentication()
-        )
         queryset = WFPDocument.objects.all().order_by('-date')
         resource_name = 'staticmaps'
         filtering = {
