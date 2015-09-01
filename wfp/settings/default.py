@@ -774,6 +774,17 @@ LAYER_PREVIEW_LIBRARY = 'geoext'
 
 SERVICE_UPDATE_INTERVAL = 0
 
+SEARCH_FILTERS = {
+    'TEXT_ENABLED': True,
+    'TYPE_ENABLED': True,
+    'CATEGORIES_ENABLED': True,
+    'OWNERS_ENABLED': True,
+    'KEYWORDS_ENABLED': True,
+    'DATE_ENABLED': True,
+    'REGION_ENABLED': True,
+    'EXTENT_ENABLED': True,
+}
+
 # Queue non-blocking notifications.
 NOTIFICATION_QUEUE_ALL = False
 
