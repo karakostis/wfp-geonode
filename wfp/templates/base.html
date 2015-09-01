@@ -10,7 +10,6 @@
       {% if DEBUG_STATIC %}
       <link href="{{ STATIC_URL }}lib/css/jquery.dataTables.css" rel="stylesheet" />
       <link href="{{ STATIC_URL }}lib/css/select2.css" rel="stylesheet"/>
-      <link href="{{ STATIC_URL }}lib/css/bootstrap.min.css" rel="stylesheet"/>
       <link href="{{ STATIC_URL }}lib/css/jquery-ui.css" rel="stylesheet"/>
       <link href="{{ STATIC_URL }}lib/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
       {% else %}
@@ -46,7 +45,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url "home" %}">GeoNode</a>
+          <a class="navbar-brand" href="{% url "home" %}"><strong>WFP</strong>GeoNode</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -81,11 +80,17 @@
 
            {% block extra_tab %}
            {% endblock %}
-            <li id="nav_people">
-              <a href="{% url "profile_browse" %}">{% trans "People" %}</a>
-            </li>
-            <li id="nav_groups">
-              <a href="{% url "group_list" %}">{% trans "Groups" %}</a>
+           
+           <!-- people -->
+           <li id="nav_people" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  {% trans "People" %}
+                  <i class="caret"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url "profile_browse" %}">{% trans "Users" %}</a></li>
+                 <li><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
+              </ul>
             </li>
             {% endblock %}
           </ul>

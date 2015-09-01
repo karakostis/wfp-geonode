@@ -1,5 +1,6 @@
 @import "../fonts/lato_font.css";
 @import "../css/font-awesome.css";
+/*@import "../css/bootstrap-theme.css";*/
 /*@import "../../../../../lib/python2.7/site-packages/pinax_theme_bootstrap/static/bootstrap/less/variables.less";*/
 /* Variables
 ----------------------- */
@@ -12,7 +13,7 @@ body {
   padding-top: 40px;
 }
 a {
-  color: #028baf;
+  color: #999999;
 }
 h1,
 h2,
@@ -80,32 +81,53 @@ article.tab-pane {
 .navbar {
   margin-bottom: 0;
 }
+.navbar-nav {
+  padding-left: 100px;
+}
+.navbar-nav > li > a {
+  padding-top: 20px;
+  font-size: 18px;
+}
 .navbar-inverse {
-  background-color: #333333;
+  background-color: #2a93fc;
   border-radius: 0;
 }
 .navbar-brand {
-  background: url(../img/logo.png) 15px 0 no-repeat;
-  height: 40px;
-  margin-right: 15px;
-  margin-top: 10px;
-  text-indent: -9999em;
+  background: url(../img/wfp_logo_72_white.png) 15px 0 no-repeat;
+  background-size: 40%;
+  height: 65px;
+  margin-right: 90px;
+  margin-top: 0px;
+  text-indent: 70px;
   width: 140px;
+  font-size: 32px;
+}
+.navbar-inverse .navbar-brand {
+  color: white;
 }
 .navbar-right > li > a {
+  margin-left: -70px;
   padding: 8px 15px;
+  font-size: 14px;
 }
 .nav-pills a {
   cursor: pointer;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
 }
 .navbar-collapse {
   max-height: none;
 }
 form#search {
-  margin-top: 8px;
+  margin-top: 12px;
 }
 form#search .fa {
   margin-right: 0;
+}
+.navbar-form .form-control {
+  background-color: #1f6ebd;
+  color: white;
 }
 .dropdown-toggle img {
   margin-right: 8px;
@@ -113,29 +135,23 @@ form#search .fa {
 .dropdown-menu {
   padding: 8px 15px;
 }
+.dropdown-toggle:active,
+.open .dropdown-toggle {
+  background: white !important;
+  color: black !important;
+}
+.dropdown-menu > li > a:hover {
+  background: #1f6ebd;
+  color: white;
+}
+.dropdown-menu > li > a {
+  color: black;
+}
 .avatar {
-  padding: 3px;
+  padding: 1px;
 }
 .avatar img {
-  border-radius: 3px;
-}
-.navbar-active {
-  color: white;
-}
-body.layers li#nav_layers a {
-  color: white;
-}
-body.maps li#nav_maps a {
-  color: white;
-}
-body.documents li#nav_documents a {
-  color: white;
-}
-body.people li#nav_people a {
-  color: white;
-}
-body.groups li#nav_groups a {
-  color: white;
+  border-radius: 1px;
 }
 /* autocomplete 
 ------------------------*/
@@ -145,7 +161,7 @@ body.groups li#nav_groups a {
 /* Home
 ----------------------- */
 .jumbotron {
-  background: #028baf;
+  background: #999999;
   color: white;
   padding: 40px 0 60px;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
@@ -165,7 +181,7 @@ body.groups li#nav_groups a {
   color: black;
 }
 .home-facets a:hover {
-  color: #028baf;
+  color: #999999;
   text-decoration: none;
 }
 /* Items

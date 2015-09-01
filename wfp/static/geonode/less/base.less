@@ -1,10 +1,11 @@
+/*@import "../css/bootstrap-theme.css";*/
 @import "../fonts/lato_font.css";
 @import "../css/font-awesome.css";
 /*@import "../../../../../lib/python2.7/site-packages/pinax_theme_bootstrap/static/bootstrap/less/variables.less";*/
 
 /* Variables
 ----------------------- */
-@brand-primary:   rgb(2, 139, 175);
+@brand-primary: rgb(153,153,153);
 @brand-alternate: #f05a24;
 @brand-info:      #5bc0de;
 @brand-warning:   rgb(158, 179, 67); // #f0ad4e;
@@ -15,6 +16,9 @@
 @gray:         lighten(#000, 33.5%); // #555
 @gray-light:   lighten(#000, 60%);   // #999
 @gray-lighter: rgb(204,204,204);
+
+@blue-wfp: rgb(42,147,252);
+@blue-wfp-dark: rgb(31,110,189);
 
 @body-bg:          #fff;
 @text-color:       @gray-dark;
@@ -27,6 +31,9 @@
 @font-family-base:        @font-family-sans-serif;
 
 @font-size-base:          14px;
+@font-size-nav-main:      18px;
+@font-size-nav-avatar:    14px;
+@font-size-wfp-brand:     32px;
 
 @font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
 @font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
@@ -112,31 +119,53 @@ article.tab-pane {
 .navbar {
   margin-bottom: 0;
 }
+.navbar-nav {
+  padding-left: 100px;
+}
+.navbar-nav > li > a {
+  padding-top: 20px;
+  font-size: @font-size-nav-main;
+}
+
 .navbar-inverse {
-  background-color: @gray-dark;
+  background-color: @blue-wfp;
   border-radius: 0;
 }
 .navbar-brand {
-  background: url(../img/logo.png) 15px 0 no-repeat;
-  height: 40px;
-  margin-right: 15px;
-  margin-top: 10px;
-  text-indent: -9999em;
+  background: url(../img/wfp_logo_72_white.png) 15px 0 no-repeat;
+  background-size: 40%;
+  height: 65px;
+  margin-right: 90px;
+  margin-top: 0px;
+  text-indent: 70px;
   width: 140px;
+  font-size: @font-size-wfp-brand;
+}
+.navbar-inverse .navbar-brand {
+    color: white;
 }
 .navbar-right > li > a {
+  margin-left: -70px;
   padding: 8px 15px;
+  font-size: @font-size-nav-avatar;
 }
 .nav-pills a {
   cursor: pointer;
 }
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
 .navbar-collapse {
   max-height: none;}
 form#search {
-  margin-top: 8px;
+  margin-top: 12px;
   .fa {
     margin-right: 0;
   }
+}
+.navbar-form .form-control {
+  background-color: @blue-wfp-dark;
+  color: white;
 }
 .dropdown-toggle {
   img {
@@ -146,29 +175,22 @@ form#search {
 .dropdown-menu {
   padding: 8px 15px;
 }
-.avatar {
-  padding: 3px;
-  img {
-   border-radius: 3px;
-  }
+.dropdown-toggle:active, .open .dropdown-toggle {
+  background: white !important;
+  color: black !important;
 }
-.navbar-active {
+.dropdown-menu > li > a:hover {
+  background: @blue-wfp-dark;
   color: white;
 }
-body.layers li#nav_layers a {
-  .navbar-active;
+.dropdown-menu > li > a {
+  color: black;
 }
-body.maps li#nav_maps a {
-  .navbar-active;
-}
-body.documents li#nav_documents a {
-  .navbar-active;
-}
-body.people li#nav_people a {
-  .navbar-active;
-}
-body.groups li#nav_groups a {
-  .navbar-active;
+.avatar {
+  padding: 1px;
+  img {
+   border-radius: 1px;
+  }
 }
 /* autocomplete 
 ------------------------*/
