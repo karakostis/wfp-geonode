@@ -211,7 +211,7 @@ form#search .fa {
   white-space: nowrap;
 }
 .items-list h4 a {
-  color: #333333;
+  color: #005580;
 }
 .items-list h4 a:hover {
   color: #f05a24;
@@ -222,10 +222,10 @@ form#search .fa {
   font-size: 14px;
 }
 .items-list .owner a {
-  color: #333333;
+  color: #005580;
 }
 .items-list .owner a:hover {
-  color: #f05a24;
+  color: #005580;
   text-decoration: none;
 }
 .items-list .thumb img {
