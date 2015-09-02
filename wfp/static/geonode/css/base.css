@@ -8,7 +8,7 @@
 ----------------------- */
 body {
   background: #cccccc;
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-size: 14px;
   padding-top: 40px;
 }
@@ -80,9 +80,10 @@ article.tab-pane {
 ----------------------- */
 .navbar {
   margin-bottom: 0;
+  border-bottom: 3px solid #4fb1eb;
 }
 .navbar-nav {
-  padding-left: 100px;
+  padding-left: 80px;
 }
 .navbar-nav > li > a {
   padding-top: 20px;
@@ -101,6 +102,8 @@ article.tab-pane {
   text-indent: 70px;
   width: 140px;
   font-size: 32px;
+  line-height: 30px;
+  vertical-align: middle;
 }
 .navbar-inverse .navbar-brand {
   color: white;
