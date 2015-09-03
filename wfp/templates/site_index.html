@@ -70,59 +70,78 @@
     
   
   
-  {% endblock %}
+  {% endblock %}<!-- block here -->
 
   {% block mainbody %}
   <div class="container">
+  
+    {% verbatim %}
+    <!-- featured-maps -->
+    <div class="row">
+      <section class="featured-maps">
+        <h3>Recent Maps</h3>
+        <div ng-app="featured">
+          <div ng-repeat="item in featured">
+            <div class="col-md-3">
+              <div class="map-thumb">
+                <a href="{{ item.detail_url }}" class="map-link">
+                  <img src="{{ item.thumbnail_url }}" />
+                </a>
+                <div class="map-abstract">
+                  <p><a href="{{ item.detail_url }}"><strong>{{ item.owner__username }}</strong>, <em class="timestamp">{{ item.date }}</em></a></p>
+                  <p><a href="{{ item.detail_url }}">{{ item.abstract }}</a></p>
+                </div>
+                <div class="map-title"><a href="{{ item.detail_url }}" class="map-link">{{ item.title }}</a></div>
+                <div class="views pull-right"><i class="icon-eye-open"></i>{{ item.popular_count }}</div>
+              </div><!-- map-thumb -->
+            </div><!-- col-md-3 -->
+          </div><!-- ng-repeat -->
+        </div><!-- ng-app -->
+      </section>
+    </div><!-- featured-maps -->
+    {% endverbatim %}
+  
+    <!-- facets -->
     <div class="row home-facets">
     {% with facet_type='home' %}
      {% facets as facets %}
-      <div class="col-md-4">
-        <p><a href="{% url "layer_browse" %}"><i class="fa fa-square-o fa-5x rotate-45"></i></a></p>
-        <h2><a href="{% url "layer_browse" %}">{{ facets.layer|default:_("No") }} {% blocktrans count counter=facets.layer %}Layer{% plural %}Layers{% endblocktrans %}</a></h2>
-        <p>{% trans "Click to search for geospatial data published by other users, organizations and public sources. Download data in standard formats." %}</p> 
-        {% if user.is_authenticated %}
-        <p class="text-center"><a class="btn btn-default" href="{% url "layer_upload" %}" role="button">{% trans "Add layers" %} &raquo;</a></p>
-        {% else %}
-        <p class="text-center"><a class="btn btn-default" href="{% url "layer_browse" %}" role="button">{% trans "Explore layers" %} &raquo;</a></p>        
-        {% endif %}
+      <div class="col-md-1">
+      <p><a href="{% url "layer_browse" %}"><i class="fa fa-square-o fa-4x rotate-45"></i></a></p>
       </div>
-      <div class="col-md-4">
-        <p><a href="{% url "maps_browse" %}"><i class="fa fa-map-marker fa-5x"></i></a></p>
-        <h2><a href="{% url "maps_browse" %}">{{ facets.map|default:_("No") }} {% blocktrans count counter=facets.map %}Map{% plural %}Maps{% endblocktrans %}</a></h2>
-        <p>{% trans "Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only." %}</p>
-        {% if user.is_authenticated %}
-        <p><a class="btn btn-default" href="{% url "new_map" %}" role="button">{% trans "Create maps" %} &raquo;</a></p>
-        {% else %}
-        <p><a class="btn btn-default" href="{% url "maps_browse" %}" role="button">{% trans "Explore maps" %} &raquo;</a></p>
-        {% endif %}
+      <div class="col-md-3">
+        <h2><a href="{% url "layer_browse" %}">{% trans "Explore Data" %}</a></h2>
+        <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
       </div>
-      <div class="col-md-4">
-        <p><a href="{% url "profile_browse" %}"><i class="fa fa-user fa-5x"></i></a></p>
-        <h2><a href="{% url "profile_browse" %}">{{ facets.user|default:_("No") }} {% blocktrans count counter=facets.user %}User{% plural %}Users{% endblocktrans %}</a></h2>
-        <p>{% trans "GeoNode allows registered users to easily upload geospatial data in several formats including shapefile and GeoTiff." %}</p>
-        <p><a class="btn btn-default" href="{% url "profile_browse" %}" role="button">{% trans "See users" %} &raquo;</a></p>
+      <div class="col-md-1">
+      <p><a href="{% url "layer_browse" %}"><i class="fa fa-map-marker fa-4x"></i></a></p>
+      </div>
+      <div class="col-md-3">
+        <h2><a href="{% url "layer_browse" %}">{% trans "Explore Data" %}</a></h2>
+        <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
+      </div>
+      <div class="col-md-1">
+      <p><a href="{% url "layer_browse" %}"><i class="fa fa-cloud-upload fa-4x"></i></a></p>
+      </div>
+      <div class="col-md-3">
+        
+        <h2><a href="{% url "layer_browse" %}">{% trans "Explore Data" %}</a></h2>
+        <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
       </div>
     {% endwith %}
-    </div>
+    </div><!-- facets -->
   </div>
-  {% verbatim %}
-  <div ng-app="featured">
-    <div ng-repeat="item in featured">
-      <!--{{ item.title }}-->
-    </div>
-  </div>
-  {% endverbatim %}
-  {% endblock %}
   
-{% endblock %}
+  {% endblock %}<!-- block mainbody -->
+
+{% endblock %}<!-- block middle -->
+
 
 {% block extra_script %}
 {% if DEBUG_STATIC %}
 <script src="{{ STATIC_URL }}lib/js/angular.js"></script>
 {% endif %}
   <script type="text/javascript">
-    FEATURED_URL = '{% url 'api_dispatch_list' api_name='api' resource_name='featured' %}'
+    FEATURED_URL = '{% url 'api_dispatch_list' api_name='api' resource_name='featured' %}?limit=4'
     'use strict';
     (function(){  
       var module = angular.module('featured', []);
