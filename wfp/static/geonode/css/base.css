@@ -768,6 +768,7 @@ social-numbers {
 /* featured maps */
 section.featured-maps {
   margin: 20px 100px;
+  margin-top: 70px;
 }
 section.featured-maps h3 {
   margin-left: 10px;
