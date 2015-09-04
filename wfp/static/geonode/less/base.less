@@ -17,11 +17,13 @@
 @gray-light:   lighten(#000, 60%);   // #999
 @gray-lighter: rgb(204,204,204);
 
+/* wfp colors */
 @font-family-wfp: 'Open Sans', 'Arial', sans-serif;
 @blue-wfp: rgb(42,147,252);
 @blue-wfp-light: #005580;
 @blue-wfp-very-light: #2a93fc;
 @blue-wfp-dark: rgb(31,110,189);
+@footer-bg: #3a4d67;
 
 @body-bg:          #fff;
 @text-color:       @gray-dark;
@@ -530,11 +532,35 @@ nav.filter {
     }*/
 
 /* Footer
------------------------ */
+   ----------------------------- */
 footer {
+  background: @footer-bg;
   border-top: 1px solid @gray-light;
-  padding: 20px;
+  bottom: 0;
+  color: @gray-light;
+  left: 0;
+  padding: 10px 0 0;
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+  img {
+    margin-bottom: 5px;
+    margin-top: -5px;
+  }
+  label {
+    margin-right: 10px;
+  }
+  a {
+    color: white;
+    &:hover {
+      color: @brand-primary;
+    }
+  }
+  form {
+    margin: 0;
+  }
 }
+
 
 /* Etc
 ----------------------- */

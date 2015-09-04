@@ -4,6 +4,7 @@
 /*@import "../../../../../lib/python2.7/site-packages/pinax_theme_bootstrap/static/bootstrap/less/variables.less";*/
 /* Variables
 ----------------------- */
+/* wfp colors */
 /* Basics
 ----------------------- */
 body {
@@ -476,10 +477,33 @@ nav.filter li a {
         background: @gray-light;
     }*/
 /* Footer
------------------------ */
+   ----------------------------- */
 footer {
+  background: #3a4d67;
   border-top: 1px solid #999999;
-  padding: 20px;
+  bottom: 0;
+  color: #999999;
+  left: 0;
+  padding: 10px 0 0;
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+}
+footer img {
+  margin-bottom: 5px;
+  margin-top: -5px;
+}
+footer label {
+  margin-right: 10px;
+}
+footer a {
+  color: white;
+}
+footer a:hover {
+  color: #999999;
+}
+footer form {
+  margin: 0;
 }
 /* Etc
 ----------------------- */
