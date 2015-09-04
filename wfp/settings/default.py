@@ -280,6 +280,7 @@ WFP_APPS = (
     'djcelery',
     'raven.contrib.django.raven_compat',
     'django.contrib.gis',
+    'wfp.wfp_geonode',
     'wfp.wfpdocs',
     'wfp.gis',
     'wfp.trainings',
