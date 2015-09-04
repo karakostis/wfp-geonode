@@ -13,7 +13,7 @@
   
   
   <!-- Carousel
-    ================================================== -->
+  ================================================== -->
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -67,18 +67,28 @@
       <span class="sr-only">Next</span>
     </a>
   </div><!-- /.carousel -->
-    
+  {% endblock %}
   
-  
-  {% endblock %}<!-- block here -->
-
   {% block mainbody %}
+  <!-- social -->
+  {% with facet_type='home' %}
+     {% facets as facets %}
+  <section class="social">
+    <div class="row">
+      <div class="col-md-3"><p><a href="{% url 'layer_browse' %}">{% trans "Layers" %} <span class="count">{{ facets.layer }}</span></a></p></div>
+      <div class="col-md-3"><p><a href="{% url 'maps_browse' %}">{% trans "Maps" %} <span class="count">{{ facets.map }}</span></a></p></div>
+      <div class="col-md-3"><p><a href="{% url 'wfpdocs_browse' %}">{% trans "Static Maps" %} <span class="count">{{ facets.wfpdocument }}</span></a></p></div>
+      <div class="col-md-3"><p><a href="{% url 'profile_browse' %}">{% trans "Users" %} <span class="count">{{ facets.user }}</span></a></p></div>
+    </div>
+  </section>
+  {% endwith %}
+  <!-- social -->
+
   <div class="container">
-  
     {% verbatim %}
     <!-- featured-maps -->
-    <div class="row">
-      <section class="featured-maps">
+    <section class="featured-maps">
+      <div class="row">
         <h3>Recent Maps</h3>
         <div ng-app="featured">
           <div ng-repeat="item in featured">
@@ -97,8 +107,9 @@
             </div><!-- col-md-3 -->
           </div><!-- ng-repeat -->
         </div><!-- ng-app -->
-      </section>
-    </div><!-- featured-maps -->
+      
+      </div><!-- featured-maps -->
+    </section>
     {% endverbatim %}
   
     <!-- facets -->

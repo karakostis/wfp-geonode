@@ -9,7 +9,7 @@ from geonode.urls import urlpatterns
 urlpatterns = patterns(
     '',
     url(r'^/?$',
-       TemplateView.as_view(template_name='site_index.html'),
+       TemplateView.as_view(template_name='index.html'),
        name='home'),
     url(r'^contacts/$', TemplateView.as_view(template_name='contacts.html'), name='contacts'),
     # external applications proxy

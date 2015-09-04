@@ -722,14 +722,48 @@ footer {
   margin: 0px 90px;
   text-align: left;
 }
-.fa-square-o {
+.home-facets .fa-cloud-upload {
   color: #2a93fc;
 }
-.fa-map-marker {
+.home-facets .fa-square-o {
   color: #2a93fc;
 }
-.fa-cloud-upload {
+.home-facets .fa-map-marker {
   color: #2a93fc;
+}
+/* social */
+section.social {
+  background: white;
+  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;
+  margin-bottom: -60px;
+}
+section.social .row {
+  margin: 0px 240px;
+}
+section.social .col-md-3 {
+  border-right: 1px solid #cccccc;
+  margin-right: -1px;
+  padding: 5px 5px;
+}
+section.social .col-md-3 p {
+  margin-top: 10px;
+}
+section.social .col-md-3 a {
+  color: #555555;
+}
+section.social .col-md-3 a:hover {
+  color: #1f6ebd;
+  text-decoration: none;
+}
+section.social .col-md-3 .count {
+  float: right;
+  font-size: 1.4em;
+  line-height: 0.8em;
+  margin-right: 5px;
+}
+social-numbers {
+  margin: 100px 100px;
 }
 /* featured maps */
 section.featured-maps {
