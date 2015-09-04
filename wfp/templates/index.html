@@ -85,10 +85,10 @@
   <!-- social -->
 
   <div class="container">
-    {% verbatim %}
     <!-- featured-maps -->
     <section class="featured-maps">
-      <h3>Recent Maps</h3>
+      <h3>{% trans "Recent Maps" %}</h3>
+      {% verbatim %}
       <div class="row">
         <div ng-app="featured">
           <div ng-repeat="item in featured">
@@ -122,20 +122,19 @@
         <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
       </div>
       <div class="col-md-1">
-      <p><a href="{% url "layer_browse" %}"><i class="fa fa-map-marker fa-4x"></i></a></p>
+      <p><a href="{% url "maps_browse" %}"><i class="fa fa-map-marker fa-4x"></i></a></p>
       </div>
       <div class="col-md-3">
-        <h2><a href="{% url "layer_browse" %}">{% trans "Explore Data" %}</a></h2>
-        <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
+        <h2><a href="{% url "maps_browse" %}">{% trans "Explore Maps" %}</a></h2>
+        <p>{% trans "Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only." %}</p>
       </div>
       <div class="col-md-1">
-      <p><a href="{% url "layer_browse" %}"><i class="fa fa-cloud-upload fa-4x"></i></a></p>
+      <p><a href="{% url "layer_upload" %}"><i class="fa fa-cloud-upload fa-4x"></i></a></p>
       </div>
       <div class="col-md-3">
-        
-        <h2><a href="{% url "layer_browse" %}">{% trans "Explore Data" %}</a></h2>
-        <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
-      </div>
+        <h2><a href="{% url "layer_upload" %}">{% trans "Upload Data" %}</a></h2>
+        <p>{% trans "GeoNode allows registered users for easily upload geospatial data in several formats including shapefile, GeoTiff and KML" %}.</p>
+        </div>
     </div><!-- facets -->
   </div>
   
