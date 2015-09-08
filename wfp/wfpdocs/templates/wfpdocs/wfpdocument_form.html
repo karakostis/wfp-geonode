@@ -14,13 +14,15 @@
 
 {% block body %}
 
-<div class="col-md-8">
+<div class="col-md-6">
   <form id="upload_form" method="post" enctype="multipart/form-data" action="">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
     {{ form|as_bootstrap }}
     <button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
   </form>
-
+</div>
+<div class="col-md-2">
+  <!-- empty space for tooltips -->
 </div>
 
 {% endblock %}
@@ -37,7 +39,25 @@
 {% endblock %}
 
 {% block extra_script %}
-{% include "_permissions_form_js.html" %}
+  {% include 'metadata_form_js.html' %}
+  <script type="text/javascript">
+    $(function() {
+      var pickerOptions = {
+          format: 'YYYY-MM-DD hh:mm',
+          pickDate: true,
+          pickTime: true,
+          language: 'en',
+          icons: {
+              time: 'fa fa-clock-o',
+              date: 'fa fa-calendar',
+              up: 'fa fa-chevron-up',
+              down: 'fa fa-chevron-down'
+          }
+      };
+      $('#id_date_picker').datetimepicker(pickerOptions);
+    });
+  </script>
+  {% include "_permissions_form_js.html" %}
 
 <script type="text/javascript">
     $('#id_doc_file').on('change', function(){

@@ -39,6 +39,11 @@ class WFPDocument(ResourceBase):
     A WFP document
     """
 
+    source_help_text = _('Please provide Source for the map - ex: WFP CO Afghanistan')
+    orientation_help_text = _('Orientation of the map')
+    format_help_text = _('Format of the map')
+    categories_help_text = _('Assign one or more categories to the map.')
+
     ORIENTATION_CHOICES = (
         (0, 'Landscape'),
         (1, 'Portrait'),
@@ -52,16 +57,19 @@ class WFPDocument(ResourceBase):
         (3, 'A3'),
     )
 
-    source = models.CharField(max_length=255)
-    orientation = models.IntegerField('Orientation', choices=ORIENTATION_CHOICES, default=0)
-    page_format = models.IntegerField('Format', choices=FORMAT_CHOICES, default=0)
+    source = models.CharField(max_length=255, help_text=source_help_text)
+    orientation = models.IntegerField('Orientation', choices=ORIENTATION_CHOICES, default=0,
+        help_text=orientation_help_text)
+    page_format = models.IntegerField('Format', choices=FORMAT_CHOICES, default=0,
+        help_text=format_help_text)
     doc_file = models.FileField(upload_to='documents', max_length=255, verbose_name=_('File'))
     extension = models.CharField(max_length=128, blank=True, null=True)
     last_version = models.BooleanField(default=False)
     date_updated = models.DateTimeField(auto_now=True, blank=False, null=False)
     # TODO use django-autoslug
     slug = models.SlugField(unique=True, max_length=255, blank=True)
-    categories = models.ManyToManyField(Category, verbose_name='categories', blank=True)
+    categories = models.ManyToManyField(Category, verbose_name='categories', blank=True,
+        help_text=categories_help_text)
     layers = models.ManyToManyField(Layer, blank=True)
 
     def __str__(self):
@@ -157,7 +165,7 @@ class WFPDocument(ResourceBase):
 
     def save(self, *args, **kwargs):
         # we may want to set up slug explicitely
-        if self.slug is None:
+        if self.slug is None or self.slug == '':
             slug = slugify(unicode(self.title))[0:250]
             self.slug = slug
         while True:
