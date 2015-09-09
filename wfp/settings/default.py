@@ -704,20 +704,10 @@ DOWNLOAD_FORMATS_METADATA = [
     'Atom', 'DIF', 'Dublin Core', 'ebRIM', 'FGDC', 'ISO',
 ]
 DOWNLOAD_FORMATS_VECTOR = [
-    'JPEG', 'PDF', 'PNG', 'Zipped Shapefile', 'GML 2.0', 'GML 3.1.1', 'CSV',
-    'Excel', 'GeoJSON', 'KML', 'View in Google Earth', 'Tiles',
+    'Zipped Shapefile', 'CSV', 'Excel', 'GeoJSON', 'KML',
 ]
 DOWNLOAD_FORMATS_RASTER = [
-    'JPEG',
-    'PDF',
-    'PNG',
-    'ArcGrid',
-    'GeoTIFF',
-    'Gtopo30',
-    'ImageMosaic',
-    'KML',
-    'View in Google Earth',
-    'Tiles',
+    'GeoTIFF', 'JPEG', 'PNG', 'ArcGrid', 'KML',
 ]
 
 ACCOUNT_NOTIFY_ON_PASSWORD_CHANGE = False
