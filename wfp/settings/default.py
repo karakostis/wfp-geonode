@@ -146,11 +146,11 @@ ROOT_URLCONF = 'wfp.urls'
 OGC_SERVER = {
     'default' : {
         'BACKEND' : 'geonode.geoserver',
-        'LOCATION' : wallet.GEOSERVER_URL,
+        'LOCATION' : wallet.GEOSERVER_URL.encode('utf-8'),
         # PUBLIC_LOCATION needs to be kept like this because in dev mode
         # the proxy won't work and the integration tests will fail
         # the entire block has to be overridden in the local_settings
-        'PUBLIC_LOCATION' : wallet.GEOSERVER_URL,
+        'PUBLIC_LOCATION' : wallet.GEOSERVER_URL.encode('utf-8'),
         'USER' : wallet.OGC_SERVER.default.USER,
         'PASSWORD' : wallet.OGC_SERVER.default.PASSWORD,
         'MAPFISH_PRINT_ENABLED' : True,
