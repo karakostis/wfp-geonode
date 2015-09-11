@@ -87,21 +87,21 @@
   <div class="container">
     <!-- featured-maps -->
     <section class="featured-maps">
-      <h3>{% trans "Recent Maps" %}</h3>
+      <h3>{% trans "Featured Maps" %}</h3>
       {% verbatim %}
       <div class="row">
         <div ng-app="featured">
           <div ng-repeat="item in featured">
             <div class="col-md-3">
               <div class="map-thumb">
-                <a href="{{ item.detail_url }}" class="map-link">
+                <a href="/maps/{{ item.id }}/view" class="map-link">
                   <img src="{{ item.thumbnail_url }}" />
                 </a>
                 <div class="map-abstract">
-                  <p><a href="{{ item.detail_url }}"><strong>{{ item.owner__username }}</strong>, <em class="timestamp">{{ item.date }}</em></a></p>
-                  <p><a href="{{ item.detail_url }}">{{ item.abstract }}</a></p>
+                  <p><a href="/maps/{{ item.id }}/view"><strong>{{ item.owner__username }}</strong>, <em class="timestamp">{{ item.date }}</em></a></p>
+                  <p><a href="/maps/{{ item.id }}/view">{{ item.abstract }}</a></p>
                 </div>
-                <div class="map-title"><a href="{{ item.detail_url }}" class="map-link">{{ item.title }}</a></div>
+                <div class="map-title"><a href="/maps/{{ item.id }}/view" class="map-link">{{ item.title }}</a></div>
                 <div class="views pull-right"><i class="icon-eye-open"></i>{{ item.popular_count }}</div>
               </div><!-- map-thumb -->
             </div><!-- col-md-3 -->
