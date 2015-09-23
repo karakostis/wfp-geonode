@@ -88,4 +88,4 @@ class Employee(models.Model):
         return self.profile.position
 
     def __unicode__(self):
-        return '%s in %s' % (self.profile.name, self.office.place)
+        return '%s in %s' % (self.profile.get_full_name(), self.office.place)
