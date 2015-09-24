@@ -192,13 +192,19 @@ footer {
 }
 
 /* Carousel */
+.carousel-inner {
+  height: 320px;
+}
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
   width: 100%;
+}
+.carousel-caption {
+  bottom: 100px;
 }
 
 /* home-facets */
 .home-facets{
-  margin: 0px 90px;
+  margin: -20px 90px;
   text-align: left;
   .fa-cloud-upload {
     color: @blue-wfp-very-light;
@@ -208,6 +214,13 @@ footer {
   }
   .fa-map-marker {
     color: @blue-wfp-very-light;
+  }
+  h2 {
+    font-weight: normal;
+    font-size: 22px;
+  }
+  p {
+    font-size: 13px;
   }
 }
 
@@ -221,6 +234,7 @@ section.social {
   border-top: 1px solid @gray-lighter;
   margin-bottom: -60px;
   .col-md-3 {
+    line-height: 10px;
     border-right: 1px solid @gray-lighter;
     margin-right: -1px;
     padding: 5px 5px;
@@ -237,7 +251,7 @@ section.social {
     .count {
       float: right;
       font-size: 1.4em;
-      line-height: 0.8em;
+      line-height: 0.7em;
       margin-right: 5px;
     }
   }
@@ -251,6 +265,9 @@ social-numbers {
 section.featured-maps {
   margin: 20px 100px;
   margin-top: 70px;
+  h3 {
+    font-weight: normal;
+  }
 }
 section.featured-maps h3 {
   margin-left: 10px;
@@ -367,4 +384,8 @@ section.featured-maps div.views {
 section.featured-maps div.views i {
   font-size: 14px;
   margin-right: 5px;
+}
+
+#wrap {
+    padding-bottom: 90px;
 }
