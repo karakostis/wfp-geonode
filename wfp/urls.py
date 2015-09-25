@@ -6,6 +6,8 @@ import views
 
 from geonode.urls import urlpatterns
 
+from wfp_geonode.urls import api
+
 urlpatterns = patterns(
     '',
     url(r'^/?$',
@@ -22,6 +24,8 @@ urlpatterns = patterns(
     (r'^gis/', include('wfp.gis.urls')),
     # trainings views
     (r'^trainings/', include('wfp.trainings.urls')),
+    # wfp api
+    url(r'', include(api.urls)),
  ) + urlpatterns
 
 if 'wfp.contrib.services' in settings.INSTALLED_APPS:
