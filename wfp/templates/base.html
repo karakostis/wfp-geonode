@@ -53,42 +53,42 @@
               <a href="{% url "layer_browse" %}">{% trans "Layers" %}</a>
             </li>
 
-            <!-- maps -->
-            <li id="nav_maps" class="dropdown">
+            <!-- all maps -->
+            <li id="nav_allmaps" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                   {% trans "Maps" %}
                   <i class="caret"></i>
               </a>
               <ul class="dropdown-menu">
-                  <li><a href="{% url "maps_browse" %}">{% trans "Interactive Maps" %}</a></li>
-                  <li><a href="{% url "wfpdocs_browse" %}">{% trans "Static Maps" %}</a></li>
+                  <li id="nav_dinamycmaps"><a href="{% url "maps_browse" %}">{% trans "Interactive Maps" %}</a></li>
+                  <li id="nav_staticmaps"><a href="{% url "wfpdocs_browse" %}">{% trans "Static Maps" %}</a></li>
               </ul>
             </li>
             
-            <!-- documents -->
-            <li id="nav_documents" class="dropdown">
+            <!-- resources -->
+            <li id="nav_resources" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                   {% trans "Resources" %}
                   <i class="caret"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="{% url "document_browse" %}">{% trans "Documents" %}</a></li>
-                 <li><a href="{% url "trainings_browse" %}">{% trans "Trainings" %}</a></li>
+                <li id="nav_standarddocs"><a href="{% url "document_browse" %}">{% trans "Documents" %}</a></li>
+                 <li id="nav_trainings"><a href="{% url "trainings_browse" %}">{% trans "Trainings" %}</a></li>
               </ul>
             </li>
 
            {% block extra_tab %}
            {% endblock %}
            
-           <!-- people -->
-           <li id="nav_people" class="dropdown">
+           <!-- community -->
+           <li id="nav_community" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                   {% trans "Users" %}
                   <i class="caret"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="{% url "profile_browse" %}">{% trans "Users" %}</a></li>
-                 <li><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
+                <li id="nav_wfpusers"><a href="{% url "profile_browse" %}">{% trans "Users" %}</a></li>
+                 <li id="nav_wfpgroups"><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
               </ul>
             </li>
             {% endblock %}
