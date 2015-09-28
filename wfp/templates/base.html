@@ -164,10 +164,12 @@
             WFPGeoNode {{ WFPGEONODE_VERSION }}, {% trans "powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %} {{ VERSION }}</a> |
             <a href="{% url "contacts" %}">{% trans "Contacts" %}</a> |
             <a href="http://cdn.wfp.org/legal/terms/">{% trans "Terms of Use" %}</a> |
-            <a href="/help/">{% trans "Get Started" %}</a> |
-            <a href="{% url "about" %}">{% trans "About" %}</a>
+            <a href="/help/">{% trans "Get Started" %}</a>
           </div>
           <div class="col-md-4">
+            <div class="col-md-1 pull-right">
+              <a href="http://www.wfp.org"><img src="{{ STATIC_URL }}geonode/img/wfp_logo_36_white.png"></a>          
+            </div>
             <label class="hidden">{% trans "Language" %}</label>
             {% if csrf_token != "NOTPROVIDED" %}
             {% get_current_language as LANGUAGE %}
