@@ -164,7 +164,7 @@
             WFPGeoNode{% if user.is_superuser %} {{ WFPGEONODE_VERSION }}{% endif %}, {% trans "powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}{% if user.is_superuser %} {{ VERSION }}{% endif %}</a> |
             <a href="{% url "contacts" %}">{% trans "Contacts" %}</a> |
             <a href="http://cdn.wfp.org/legal/terms/">{% trans "Terms of Use" %}</a> |
-            <a href="/help/">{% trans "Get Started" %}</a>
+            <a href="{{ STATIC_URL }}docs/html/index.html">{% trans "Get Started" %}</a>
           </div>
           <div class="col-md-4">
             <div class="col-md-1 pull-right">
