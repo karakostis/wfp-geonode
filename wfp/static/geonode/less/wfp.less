@@ -9,6 +9,8 @@
 @blue-wfp-light: #005580;
 @blue-wfp-very-light: #2a93fc;
 @blue-wfp-dark: rgb(31,110,189);
+@red-wfp: rgb(218,79,73);
+@red-wfp-dark: #BD362F;
 @footer-bg: #3a4d67;
 
 @font-size-nav-main:      18px;
@@ -395,7 +397,17 @@ section.featured-maps div.views i {
 }
 
 .profile-avatar img {
-    max-width: 100px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  max-width: 100px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* button red */
+.btn-red {
+  background-color: @red-wfp;
+  border-color: @red-wfp;
+}
+.btn-red:hover, .btn-red:focus {
+  background-color: @red-wfp-dark;
+  border-color: @red-wfp-dark;
 }
