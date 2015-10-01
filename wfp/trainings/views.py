@@ -11,13 +11,14 @@ from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import permission_required
 
-from geonode.utils import ogc_server_settings
 from geonode.utils import http_client
+from geonode.geoserver.helpers import OGC_Servers_Handler
 
 from models import Training
 from forms import TrainingForm
 
 logger = logging.getLogger("wfp.trainings.views")
+ogc_server_settings = OGC_Servers_Handler(settings.OGC_SERVER)['default']
 
 
 def trainings_browse(request, keyword=None):

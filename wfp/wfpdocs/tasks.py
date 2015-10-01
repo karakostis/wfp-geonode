@@ -1,14 +1,19 @@
-from celery.schedules import crontab
-from celery.decorators import periodic_task
-from celery.utils.log import get_task_logger
-
 from collections import defaultdict
 import os
+
 from django.conf import settings
 from django.db import models
 from django.db.models.loading import cache
 
+from celery.task import task
+from celery.schedules import crontab
+from celery.decorators import periodic_task
+from celery.utils.log import get_task_logger
+
+from wfp.wfpdocs.models import WFPDocument
+
 log = get_task_logger(__name__)
+
 
 @periodic_task(run_every=crontab(minute=settings.SERVICE_UPDATE_INTERVAL))
 def remove_orphaned_images():
@@ -49,7 +54,23 @@ def remove_orphaned_images():
             log.info('Removing image %s' % m)
             os.remove(m)
             c = c + 1
-    info = 'Removed %s images, from a total of %s (referenced %s)' % (c, 
-        len(media), len(referenced))
+    info = 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))
     log.info(info)
     return info
+
+
+@task(name='wfp.wfpdocs.tasks.update.create_document_thumbnail', queue='update')
+def create_wfpdoc_thumbnail(object_id):
+    """
+    Runs the create_thumbnail logic on a wfpdoc.
+    """
+
+    try:
+        document = WFPDocument.objects.get(id=object_id)
+
+    except WFPDocument.DoesNotExist:
+        return
+
+    image = document._render_thumbnail()
+    filename = 'doc-%s-thumb.png' % document.id
+    document.save_thumbnail(filename, image)

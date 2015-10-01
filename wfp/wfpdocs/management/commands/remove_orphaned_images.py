@@ -43,11 +43,11 @@ class Command(NoArgsCommand):
                         referenced.append(os.path.abspath(target_file.path))
 
         # Print each file in MEDIA_ROOT that is not referenced in the database
-	c = 0
-	for m in media:
+        c = 0
+        for m in media:
             if m not in referenced:
                 print 'Removing image %s' % m
-		os.remove(m)
-		c = c + 1
+        os.remove(m)
+        c = c + 1
 
-	print 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))
+        print 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))

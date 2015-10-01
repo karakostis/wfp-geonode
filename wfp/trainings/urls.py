@@ -1,4 +1,13 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url, include
+from .api import TrainingResource, TagResourceSimple
+
+from geonode.api import api as geonode_api
+from geonode.api.urls import api
+
+api.api_name = 'v2.4'
+api.register(TrainingResource())
+api.unregister(geonode_api.TagResource())
+api.register(TagResourceSimple())
 
 urlpatterns = patterns(
     'wfp.trainings.views',
@@ -25,5 +34,8 @@ urlpatterns = patterns(
     url(
         r'^(?P<id>\d+)/download/$', 'training_download',
         name='training_download'
+    ),
+    url(
+        r'^api/', include(api.urls)
     ),
 )

@@ -1,52 +1,93 @@
-from django import forms
-from models import WFPDocument, Category
-from geonode.base.models import Region
-from geonode.documents.forms import DocumentForm
-from geonode.layers.models import Layer
-from geonode.maps.models import Map
+import os
 import datetime
-from django.contrib.contenttypes.models import ContentType
+import json
 
-class WFPDocumentForm(forms.ModelForm):
-    publication_date = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
-    source = forms.CharField(required=False)
-    orientation = forms.ChoiceField(WFPDocument.ORIENTATION_CHOICES)
-    page_format = forms.ChoiceField(WFPDocument.FORMAT_CHOICES)
-    categories = forms.ModelMultipleChoiceField(Category.objects.all(), required=False)
-    regions = forms.ModelMultipleChoiceField(Region.objects.all(), required=False)
-    last_version = forms.BooleanField(initial=True, required=False)
-    resource = forms.ChoiceField(label='Link to')
-        
+from django.utils.translation import ugettext_lazy as _
+from django import forms
+from django.forms import HiddenInput
+
+from bootstrap3_datetime.widgets import DateTimePicker
+from modeltranslation.forms import TranslationModelForm
+import autocomplete_light
+from autocomplete_light.contrib.taggit_tagfield import TagField, TagWidget
+
+from models import WFPDocument
+
+
+class WFPDocumentForm(TranslationModelForm):
+    """
+    For to upload Static Maps.
+    """
+    permissions = forms.CharField(
+        widget=HiddenInput(
+            attrs={
+                'name': 'permissions',
+                'id': 'permissions'}),
+        required=True)
+    _date_widget_options = {
+        "icon_attrs": {"class": "fa fa-calendar"},
+        "attrs": {"class": "form-control input-sm"},
+        "format": "%Y-%m-%d %H:%M",
+        # Options for the datetimepickers are not set here on purpose.
+        # They are set in the metadata_form_js.html template because
+        # bootstrap-datetimepicker uses jquery for its initialization
+        # and we need to ensure it is available before trying to
+        # instantiate a new datetimepicker. This could probably be improved.
+        "options": False,
+        }
+    date = forms.DateTimeField(
+        localize=True,
+        widget=DateTimePicker(**_date_widget_options)
+    )
+    keywords = TagField(
+        required=False,
+        help_text=_("A space or comma-separated list of keywords"),
+        widget=TagWidget('TagAutocomplete'))
+
     def __init__(self, *args, **kwargs):
         super(WFPDocumentForm, self).__init__(*args, **kwargs)
-        # publication date
-        if hasattr(self.instance, 'document'):
-            self.fields['publication_date'].initial = self.instance.document.date
-        else:
-            self.fields['publication_date'].widget.widgets[0].attrs = {'class':'datepicker', 'data-date-format': 'yyyy-mm-dd', 'value': str(datetime.date.today())}
-            self.fields['publication_date'].widget.widgets[1].attrs = {"class":"time",
-        'value': datetime.datetime.now().strftime('%H:%M:%S')}
-        # resource
-        rbases = list(Layer.objects.all())
-        rbases += list(Map.objects.all())
-        rbases.sort(key=lambda x: x.title)
-        rbases_choices = []
-        rbases_choices.append(['no_link', '---------'])
-        for obj in rbases:
-            type_id = ContentType.objects.get_for_model(obj.__class__).id
-            obj_id = obj.id
-            form_value = "type:%s-id:%s" % (type_id, obj_id)
-            display_text = '%s (%s)' % (obj.title, obj.geonode_type)
-            rbases_choices.append([form_value, display_text])
-        self.fields['resource'].choices = rbases_choices
-        try:
-            if self.instance.document.content_type:
-                self.fields['resource'].initial = 'type:%s-id:%s' % (
-                    self.instance.document.content_type.id, self.instance.document.object_id)
-        except:
-            pass
-        
+        # we need to override help_text for title (comes from ResourceBase)
+        title_help_text = _('Please use the following convention: Country Name, Theme, Date - ex: Afghanistan, Snow Forecast, 17 - 23 February 2015')
+        title_field = self.fields['title']
+        title_field.help_text = title_help_text
+        for field in self.fields:
+            help_text = self.fields[field].help_text
+            self.fields[field].help_text = None
+            if help_text != '':
+                self.fields[field].widget.attrs.update(
+                    {
+                        'class': 'has-popover',
+                        'data-content': help_text,
+                        'data-placement': 'right',
+                        'data-container': 'body',
+                        'data-html': 'true'})
+
     class Meta:
         model = WFPDocument
-        exclude = ('document',)
-        
+        fields = (
+            'title', 'doc_file', 'source', 'orientation', 'page_format', 'categories', 'keywords', 'regions', 'last_version', 'layers', 'date',
+        )
+
+    def clean_doc_file(self):
+        """
+        Ensures the doc_file is valid.
+        """
+        doc_file = self.cleaned_data.get('doc_file')
+
+        if doc_file and not os.path.splitext(
+                doc_file.name)[1].lower()[
+                1:] in ('gif', 'jpg', 'jpeg', 'pdf', 'png'):
+            raise forms.ValidationError(_("This file type is not allowed"))
+
+        return doc_file
+
+    def clean_permissions(self):
+        """
+        Ensures the JSON field is JSON.
+        """
+        permissions = self.cleaned_data['permissions']
+
+        try:
+            return json.loads(permissions)
+        except ValueError:
+            raise forms.ValidationError(_("Permissions must be valid JSON."))

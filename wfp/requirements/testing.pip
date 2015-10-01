@@ -1,3 +1,4 @@
 -r install.pip
+django-debug-toolbar
 django-dynamic-fixture==1.8.1
 feedparser==5.1.3

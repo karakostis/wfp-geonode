@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.gis.db import models as gismodels
 from geonode.people.models import Profile
 
+
 class Office(gismodels.Model):
     """
     Model for WFP Office.
@@ -29,62 +30,62 @@ class Office(gismodels.Model):
     verifiedol = gismodels.CharField(max_length=254, null=True, blank=True)
     geometry = gismodels.PointField()
     objects = gismodels.GeoManager()
-    
+
     def __unicode__(self):
         return '%s' % (self.place)
-        
+
     class Meta:
         ordering = ['place']
+
 
 class Employee(models.Model):
     """
     Model for WFP Profile.
     """
-    
+
     GIS_LEVEL_CHOICES = (
         (0, 'Basic'),
         (1, 'Intermediate'),
         (2, 'Advanced'),
     )
-    
+
     DUTIES_CHOICES = (
         (0, 'GIS'),
         (1, 'Not GIS')
     )
-    
+
     gis_level = models.IntegerField(null=True, blank=True, choices=GIS_LEVEL_CHOICES)
-    duties_type = models.IntegerField(blank = True, null=True, choices=DUTIES_CHOICES)
+    duties_type = models.IntegerField(blank=True, null=True, choices=DUTIES_CHOICES)
     profile = models.OneToOneField(Profile, primary_key=True)
     office = models.ForeignKey(Office, null=True, blank=True)
-        
+
     @property
     def geometry(self):
         return self.office.geometry
-        
+
     @property
     def place(self):
         return self.office.place
-        
+
     @property
     def country(self):
         return self.office.country
-        
+
     @property
     def wfpregion(self):
         return self.office.wfpregion
-        
+
     @property
     def facility(self):
         return self.office.facility
-        
+
     @property
     def name(self):
         return self.profile.name
-        
+
     @property
     def position(self):
         return self.profile.position
 
-    
     def __unicode__(self):
-        return '%s in %s' % (self.profile.name, self.office.place)
+        return '%s in %s' % (self.profile.get_full_name(), self.office.place)
