@@ -4,7 +4,10 @@ import geonode
 from kombu import Queue
 from geonode.celery_app import app  # flake8: noqa
 
+#print os.path.abspath(os.path.join(yourpath, os.pardir))
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+SITE_ROOT = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir))
 GEONODE_ROOT = os.path.abspath(os.path.dirname(geonode.__file__))
 
 DEBUG = True
@@ -109,7 +112,7 @@ EXTRA_LANG_INFO = {
 USE_I18N = True
 
 # media files
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "uploaded")
+MEDIA_ROOT = os.path.join(SITE_ROOT, "www/uploaded")
 MEDIA_URL = "/uploaded/"
 
 # static files

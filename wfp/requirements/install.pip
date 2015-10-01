@@ -1,9 +1,9 @@
 django-celery==3.1.10
 django-supervisor==0.3.2
-#-e /home/capooti/git/github/geonode
+django-tastypie==0.11.0
 geonode==2.4b27
-psycopg2==2.5.3
 Pillow==2.3.0
+psycopg2==2.5.3
 python-memcached==1.53
 raven==5.0.0
 South==1.0.2
