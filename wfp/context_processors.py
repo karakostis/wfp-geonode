@@ -1,3 +1,7 @@
+import json
+
+from django.http import HttpResponse
+
 from wfp import get_version
 
 
@@ -7,9 +11,6 @@ def wfp_geonode(request):
         WFPGEONODE_VERSION=get_version(),
     )
 
-# middleware to use django-debug-toolbar with tastypie
-from django.http import HttpResponse
-import json
 
 class NonHtmlDebugToolbarMiddleware(object):
     """

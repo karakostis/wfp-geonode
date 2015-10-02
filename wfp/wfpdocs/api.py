@@ -3,12 +3,11 @@ from django.contrib.contenttypes.models import ContentType
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
-from tastypie.authentication import BasicAuthentication, SessionAuthentication, MultiAuthentication, Authentication
+from tastypie.authentication import BasicAuthentication, MultiAuthentication, Authentication
 from guardian.shortcuts import get_anonymous_user
 from guardian.shortcuts import get_objects_for_user
 from taggit.models import Tag
 
-from geonode.api.resourcebase_api import CommonMetaApi
 from geonode.api.api import TagResource, RegionResource
 from geonode.api.authorization import GeoNodeAuthorization
 

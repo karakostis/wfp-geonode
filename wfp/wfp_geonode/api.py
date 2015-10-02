@@ -12,9 +12,9 @@ from wfp.wfpdocs.models import WFPDocument
 
 class WfpProfileResource(ProfileResource):
     """ WFP Profile api """
-    
+
     wfpdocs_count = fields.IntegerField(default=0)
-    
+
     def dehydrate_wfpdocs_count(self, bundle):
         obj_with_perms = get_objects_for_user(bundle.request.user,
                                               'base.view_resourcebase').instance_of(WFPDocument)

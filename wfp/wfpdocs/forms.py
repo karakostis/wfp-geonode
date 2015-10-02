@@ -1,5 +1,4 @@
 import os
-import datetime
 import json
 
 from django.utils.translation import ugettext_lazy as _
@@ -8,7 +7,6 @@ from django.forms import HiddenInput
 
 from bootstrap3_datetime.widgets import DateTimePicker
 from modeltranslation.forms import TranslationModelForm
-import autocomplete_light
 from autocomplete_light.contrib.taggit_tagfield import TagField, TagWidget
 
 from models import WFPDocument
@@ -47,7 +45,10 @@ class WFPDocumentForm(TranslationModelForm):
     def __init__(self, *args, **kwargs):
         super(WFPDocumentForm, self).__init__(*args, **kwargs)
         # we need to override help_text for title (comes from ResourceBase)
-        title_help_text = _('Please use the following convention: Country Name, Theme, Date - ex: Afghanistan, Snow Forecast, 17 - 23 February 2015')
+        title_help_text = _(
+            'Please use the following convention: Country Name, Theme, Date - '
+            'ex: Afghanistan, Snow Forecast, 17 - 23 February 2015'
+        )
         title_field = self.fields['title']
         title_field.help_text = title_help_text
         for field in self.fields:
@@ -65,7 +66,8 @@ class WFPDocumentForm(TranslationModelForm):
     class Meta:
         model = WFPDocument
         fields = (
-            'title', 'doc_file', 'source', 'orientation', 'page_format', 'categories', 'keywords', 'regions', 'last_version', 'layers', 'date',
+            'title', 'doc_file', 'source', 'orientation', 'page_format', 'categories',
+            'keywords', 'regions', 'last_version', 'layers', 'date',
         )
 
     def clean_doc_file(self):

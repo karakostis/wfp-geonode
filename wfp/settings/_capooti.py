@@ -29,4 +29,4 @@ INSTALLED_APPS = INSTALLED_APPS + (
 )
 
 MEDIA_ROOT = "/home/capooti/git/codeassist/wfp-geonode/www/uploaded"
-STATIC_ROOT="/home/capooti/git/codeassist/wfp-geonode/www/static/"
+STATIC_ROOT = "/home/capooti/git/codeassist/wfp-geonode/www/static/"

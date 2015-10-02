@@ -4,8 +4,6 @@ import base64
 import json
 from datetime import date
 
-from django.template import RequestContext
-from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.conf import settings
 from django.http.request import validate_host
@@ -13,7 +11,6 @@ from django.utils.http import int_to_base36, base36_to_int
 from django.utils import six
 from django.utils.crypto import constant_time_compare, salted_hmac
 
-from geonode.people.models import Profile
 from geonode.geoserver.helpers import ogc_server_settings
 
 
@@ -134,16 +131,3 @@ def apps_proxy(request):
             )
 
     return response
-
-
-def test_proxy(request):
-    # TODO remove this
-    from django.shortcuts import render_to_response
-    return render_to_response(
-        'test_proxy.html',
-        RequestContext(
-            request, {
-                'token': _generate_token(),
-            }
-        )
-    )

@@ -1,7 +1,5 @@
 from django import template
 
-from agon_ratings.models import Rating
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 

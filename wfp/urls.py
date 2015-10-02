@@ -10,14 +10,11 @@ from wfp_geonode.urls import api
 
 urlpatterns = patterns(
     '',
-    url(r'^/?$',
-       TemplateView.as_view(template_name='index.html'),
-       name='home'),
+    url(r'^/?$', TemplateView.as_view(template_name='index.html'), name='home'),
     url(r'^contacts/$', TemplateView.as_view(template_name='contacts.html'), name='contacts'),
     # external applications proxy
     url(r'^apps_proxy/$', views.apps_proxy, name='apps-proxy'),
     url(r'^get_token/$', views.get_token, name='get-token'),
-    url(r'^test_proxy/$', views.test_proxy, name='test-proxy'),
     # WFP documents views
     (r'^wfpdocs/', include('wfp.wfpdocs.urls')),
     # gis views

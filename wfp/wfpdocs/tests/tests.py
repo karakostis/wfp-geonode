@@ -19,6 +19,7 @@ if 'geonode.geoserver' in settings.INSTALLED_APPS:
     signals.pre_save.disconnect(geoserver_pre_save, sender=Layer)
     signals.post_save.disconnect(geoserver_post_save, sender=Layer)
 
+
 class WFPDocTest(TestCase):
 
     def setUp(self):

@@ -3,12 +3,11 @@ from .default import *  # noqa
 DEBUG = TEMPLATE_DEBUG = True
 DEBUG_STATIC = True
 
-#INSTALLED_APPS = INSTALLED_APPS + (
-#    'debug_toolbar',
-#)
+# INSTALLED_APPS = INSTALLED_APPS + (
+#     'debug_toolbar',
+# )
 
 MIDDLEWARE_CLASSES += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    #'wfp.context_processors.NonHtmlDebugToolbarMiddleware',
+    # 'wfp.context_processors.NonHtmlDebugToolbarMiddleware',
 )
-

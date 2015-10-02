@@ -6,4 +6,4 @@ def run_tests(options):
     Run WFP GeoNode's Unit Test Suite
     """
     sh("python manage.py test wfp.trainings.tests.tests wfp.wfpdocs.tests.tests --settings=wfp.settings.testing --traceback")
-    sh('flake8 wfp')
+    sh('flake8 wfp--max-line-length=120')
