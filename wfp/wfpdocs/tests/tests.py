@@ -3,17 +3,26 @@ import StringIO
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.conf import settings
 
+from geonode.layers.models import Layer
 from geonode.base.populate_test_data import create_models
 
 from wfp.wfpdocs.models import WFPDocument
 from wfp.wfpdocs.tests.fixtures import wfpdoc_factory
 
 
+if 'geonode.geoserver' in settings.INSTALLED_APPS:
+    from django.db.models import signals
+    from geonode.geoserver.signals import geoserver_pre_save
+    from geonode.geoserver.signals import geoserver_post_save
+    signals.pre_save.disconnect(geoserver_pre_save, sender=Layer)
+    signals.post_save.disconnect(geoserver_post_save, sender=Layer)
+
 class WFPDocTest(TestCase):
 
     def setUp(self):
-        create_models('layer')
+        create_models(type='layer')
 
     def test_wfpdoc_creation(self):
         """ Tests the creation of a static map """
@@ -59,8 +68,7 @@ class WFPDocTest(TestCase):
                     'source': 'WFP GIS',
                     'orientation': WFPDocument.ORIENTATION_CHOICES[0][0],
                     'page_format': WFPDocument.FORMAT_CHOICES[0][0],
-                    'publication_date_0': '2015-03-09',
-                    'publication_date_1': '18:10:17',
+                    'date': '2015-10-02',
                     'resource': 'no_link',
                     'last_version': 'on',
                     'permissions': '{"users":{"AnonymousUser": []}}'
