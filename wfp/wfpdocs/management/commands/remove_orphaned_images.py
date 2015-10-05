@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+#########################################################################
+#
+# Copyright (C) 2012-2015 Paolo Corti, pcorti@gmail.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#########################################################################
+
 from collections import defaultdict
 import os
 from django.conf import settings
@@ -43,11 +63,11 @@ class Command(NoArgsCommand):
                         referenced.append(os.path.abspath(target_file.path))
 
         # Print each file in MEDIA_ROOT that is not referenced in the database
-	c = 0
-	for m in media:
+        c = 0
+        for m in media:
             if m not in referenced:
                 print 'Removing image %s' % m
-		os.remove(m)
-		c = c + 1
+        os.remove(m)
+        c = c + 1
 
-	print 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))
+        print 'Removed %s images, from a total of %s (referenced %s)' % (c, len(media), len(referenced))

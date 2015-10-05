@@ -1,48 +1,42 @@
 {% extends "wfpdocs/document_base.html" %}
 {% load i18n %}
-{% load pagination_tags %}
 {% load staticfiles %}
 {% load url from future %}
 
-{% block title %} {% trans "Explore Map Documents" %} - {{ block.super }} {% endblock %}
+{% block title %} {% trans "Explore Documents" %} - {{ block.super }} {% endblock %}
 
 {% block body_class %}documents documents-list explore{% endblock %}
 
 {% block body %}
-    <div class="span8 filter">      
-      {% include "search/_sort_filters.html" %}
-    </div>
-    <div class="span4">
-      <div class="pull-right" data-viewby="list">
-        {% include "_viewby.html" %}
-      </div>
-    </div>
-    <div class="span12">
-      <div class="row" id="contain-slider">
-        <div class="span4">
-          <div class="selections">
-            <h4>
-              {% trans "Your selections" %}
-              <a href="." id="clear-search" class="pull-right">{% trans "Clear all" %}</a>
-            </h4>
-          </div>
-          <div id="slide-pane">
-            <a href="#" class="toggle toggle-pane"><i class="icon-chevron-left"></i></a>
-            {% with type='document' %} 
-            {% include "wfpdocs/_general_filters.html" %}
-            {% endwith %}
-          </div>
-        </div>
-        <div class="tab-content span8 paginate paginate-auto" id="search-content">
-          {% include 'search/search_content.html' %}
-        </div>
-      </div>
-    </div>
+<div class="page-header">
+  <a href="{% url "wfpdocs_upload" %}" class="btn btn-primary pull-right btn-red">{% trans "Upload Static Map" %}</a>
+  <h2>{% trans "Explore Static Maps" %}</h2>
+</div>
+  {% with include_type_filter='true' %}
+  {% with facet_type='documents' %}
+  {% with header='Document Type' %}
+  {% with filter='doc_type__in' %}
+  {% include "wfpdocs/_document_content.html" %}
+  {% endwith %}
+  {% endwith %}
+  {% endwith %}
+  {% endwith %}
+  {% include "_bulk_permissions_form.html" %}
 {% endblock %}
 
 {% block extra_script %}
+  {% if GEONODE_SECURITY_ENABLED %}
+    {% include "_permissions_form_js.html" %}
+  {% endif %}
   <script type="text/javascript">
-  var default_type = 'wfpdocument';
+      {% if HAYSTACK_SEARCH %}
+          SEARCH_URL = '{% url 'api_get_search' api_name='v2.4' resource_name='staticmaps'%}'
+      {% else %}
+          SEARCH_URL = '{% url 'api_dispatch_list' api_name='v2.4' resource_name='staticmaps' %}';
+      {% endif %}
+    FILTER_TYPE = 'staticmaps';
   </script>
-  {% include 'search_scripts.html' %}
+  {% with include_spatial='true' %}
+  {% include 'wfpdocs/search_scripts.html' %}
+  {% endwith %}
 {% endblock extra_script %}

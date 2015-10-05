@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Advanced User Module &mdash; WFP GeoNode 2.4 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="WFP GeoNode 2.4 documentation" href="../../index.html" />
+    <link rel="prev" title="Basic User Module" href="../basic_user_module/index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../basic_user_module/index.html" title="Basic User Module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WFP GeoNode 2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="advanced-user-module">
+<span id="id1"></span><h1>Advanced User Module<a class="headerlink" href="#advanced-user-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-objectives">
+<h2>Module Objectives<a class="headerlink" href="#module-objectives" title="Permalink to this headline">¶</a></h2>
+<p>Upon completion of the Advanced User Module, the participant is expected to be able to:</p>
+<ul class="simple">
+<li>Understand how to manage user accounts, including set up, log in and creating profiles;</li>
+<li>Upload data layers and documents correctly;</li>
+<li>Understand and apply crucial practice for setting permissions, editing metadata and using naming conventions;</li>
+<li>Style layers appropriately in order to create explanatory appearances;</li>
+<li>Produce illustrative maps in WFPGeoNode;</li>
+<li>Edit data in layers and understand the consequences of such procedures;</li>
+<li>Identify his/her own information gaps when producing a GIS-product in WFPGeoNode.</li>
+</ul>
+</div>
+<div class="section" id="advanced-level">
+<h2>Advanced Level<a class="headerlink" href="#advanced-level" title="Permalink to this headline">¶</a></h2>
+<p>The following sections explain how to manage a user account and profile; how to upload layers using correct file formats and procedures; how to style a layer using color symbolization by creating rules and conditions; and how to easily modify data directly in the layer. As in the previous module, the sections are focused on either a specific interface, or on specific functions.</p>
+<div class="section" id="register-a-new-account">
+<h3>Register a New Account<a class="headerlink" href="#register-a-new-account" title="Permalink to this headline">¶</a></h3>
+<p>The WFPGeoNode platform supports an authorization system that gives you granular control over access
+of all uploaded and published information. Since most advanced features in WFPGeoNode are only open
+for registered users, a user account needs to be activated. To request a user account, send an email to
+<a class="reference external" href="mailto:omep&#46;gis&#37;&#52;&#48;wfp&#46;org">omep<span>&#46;</span>gis<span>&#64;</span>wfp<span>&#46;</span>org</a> where you explain how you intend to use WFPGeoNode. Once your request has been
+processed you will receive an email with instructions on how to proceed with the registration.</p>
+</div>
+<div class="section" id="sign-in-and-create-a-profile">
+<h3>Sign in and Create a Profile<a class="headerlink" href="#sign-in-and-create-a-profile" title="Permalink to this headline">¶</a></h3>
+<p>As soon as your user account is activated you can log in to WFPGeoNode by using <strong>Sign in</strong> in the top-right corner on the homepage (<em>Figure 25</em>).</p>
+<img alt="../../_images/Sign_in_drop_down_box.jpg" src="../../_images/Sign_in_drop_down_box.jpg" />
+<p><em>Figure 25: Sign in drop-down box</em></p>
+<p>It is useful to update your profile once you are signed in, since the information you provide here can be of great added value to other users. It allows the WFPGeoNode community to view details on for example location, job position, and previous activities of a specific user. Since all layers and maps are closely associated with the user uploading or creating them, a comprehensive profile quickly allows you to understand the context in which they were created. Once you are signed in you can access your profile by clicking on your name in the top-right corner and using <strong>Profile</strong> (<em>Figure 26</em>).</p>
+<img alt="../../_images/Profile_drop_down_box.jpg" src="../../_images/Profile_drop_down_box.jpg" />
+<p><em>Figure 26: Profile drop-down box</em></p>
+<p>In the profile interface you can view detailed information about your user account, as well as <strong>Edit Profile Information</strong>, manage <strong>Account Settings</strong> and <strong>Change Password</strong>. All layers/maps/ documents that have been uploaded and created by the specific user are visible in the content list under <strong>Resources</strong>
+(<em>Figure 27</em>).</p>
+<img alt="../../_images/Profile_interface_showing_content_created_by_the_user.jpg" src="../../_images/Profile_interface_showing_content_created_by_the_user.jpg" />
+<p><em>Figure 27: Profile interface showing content created by the user</em></p>
+<p>Use <strong>Edit Profile Information</strong> to manage information on e.g. your organization, location, job description and contact details, and to upload your picture (<em>Figure 28</em>).</p>
+<img alt="../../_images/Edit_profile_information.jpg" src="../../_images/Edit_profile_information.jpg" />
+<p><em>Figure 28: Edit profile information</em></p>
+</div>
+<div class="section" id="permissions">
+<h3>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h3>
+<p><strong>Permissions</strong> determine who can view, download, edit and manage layers and maps. It is important to understand the differences between these settings since neglecting specifying permissions can result in giving unintentional access to layers/maps. The following settings are available:</p>
+<p><strong>Who can view and download this data?</strong></p>
+<ul class="simple">
+<li><strong>Anyone</strong>: allows anyone to access the data, including unregistered users.</li>
+<li><strong>Any registered users</strong>: only users with a WFPGeoNode account can access data.</li>
+<li><strong>Only users who can edit</strong>: limits access to users specified in below setting.</li>
+</ul>
+<p><strong>Who can edit this data?</strong></p>
+<ul class="simple">
+<li><strong>Any registered users</strong>: allows any user to edit, replace or remove your data.</li>
+<li><strong>Only the following users</strong>: limits editing rights to the users you specify (in addition to the owner of the layer/map).</li>
+</ul>
+<p><strong>Who can manage and edit this data?</strong></p>
+<ul class="simple">
+<li>Limits managing permissions to specified users. They become the only users able to set the permissions of the layer/map. The user uploading a layer is by default the owner of that layer with full managing permissions.</li>
+</ul>
+<p>To ensure correct permissions are selected, adjust them before uploading new layers or creating maps (<em>Figure 29</em>). You can change these settings later in the Layer View and Map View interfaces, by using the red <strong>Edit Layer/Edit Map</strong> button and <strong>Edit (Map) Permissions</strong>.</p>
+<img alt="../../_images/Setting_permissions.jpg" src="../../_images/Setting_permissions.jpg" />
+<p><em>Figure 29: Setting Permissions</em></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Ensure permissions for editing reflect your intentions by selecting “Only the following users” if you do not want anyone else to be able to remove your data.</p>
+</div>
+</div>
+<div class="section" id="naming-conventions">
+<h3>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h3>
+<p>Before uploading layers to WFPGeoNode, you need to rename the files according to the common naming conventions. This practice ensures that just one comprehensive and easy to follow standard is respected throughout the system. In brief, the naming convention for baseline data is:</p>
+<ul class="simple">
+<li>iso3_class_description_(source)_(date yyyymmdd)</li>
+</ul>
+<p>Following this logic, a shapefile (comprising of four individual files) representing Indonesian administrative boundaries level 1, containing data originating from the government should be named:</p>
+<ul class="simple">
+<li>idn_bnd_adm1_gov.shp</li>
+<li>idn_bnd_adm1_gov.shx</li>
+<li>idn_bnd_adm1_gov.dbf</li>
+<li>idn_bnd_adm1_gov.prj</li>
+</ul>
+<p>The part of the name with the description must not contain an underscore even if the description is more than one word. In addition, only lower case is allowed and the total length of the name cannot supersede 40 letters. Further detailed description of the files should instead be provided as metadata after the upload.</p>
+<p>The naming convention for static maps is:</p>
+<ul class="simple">
+<li>iso3_class_description_format_date</li>
+</ul>
+<p>Following this, a map containing security levels prefectures for Central African Republic in A3 landscapeformat which has been produced on 08 May 2014, should be named:</p>
+<ul class="simple">
+<li>CAF_SEC_PrefecturesSecurityLevel_A3L_20140508</li>
+</ul>
+<p>More in-depth information on naming conventions can be found in Annex 2. To request a list of the most recent naming conventions, contact <a class="reference external" href="mailto:omep&#46;gis&#37;&#52;&#48;wfp&#46;org">omep<span>&#46;</span>gis<span>&#64;</span>wfp<span>&#46;</span>org</a>.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The naming conventions apply to data files such as Shapefiles and GeoTIFF, which is different from providing a title for the data layer. Data files need to be named correctly before being uploaded to WFPGeoNode, whereas the title of the data layer is provided as metadata after the layer is uploaded and can be modified multiple times.</p>
+</div>
+</div>
+<div class="section" id="upload-data-layers">
+<h3>Upload Data Layers<a class="headerlink" href="#upload-data-layers" title="Permalink to this headline">¶</a></h3>
+<p>In WFPGeoNode it is possible to upload your own data to the system, allowing you to create raster and vector layers that can be shared or used to create maps.</p>
+<p>There are two main ways to start uploading data:</p>
+<ul class="simple">
+<li>On the Homepage by using Upload Data</li>
+<li>On the Explore Layers interface by using Upload Layers</li>
+</ul>
+<p>Following either of these procedures the Upload Layers interface will appear (<em>Figure 30</em>).</p>
+<img alt="../../_images/Upload_layer_interface.jpg" src="../../_images/Upload_layer_interface.jpg" />
+<p><em>Figure 30: Upload layer interface</em></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">WFPGeoNode supports uploading of vector layers in Shapefile format (comprised of four files with the extensions: .shp, .prj, .shx, .dbf) and raster layers in GeoTIFF format. The system also supports optional pre-defined visulatization styles in SLD format for both layers formats, as well as pre-defined metadata in XML format for raster layers (see Annex 1 for online resources on how to create SLD files).</p>
+</div>
+<p>To select the data you would like to upload, simply drag-and-drop your files onto the gray area, or use <strong>Browse</strong> and select the files from your file system. The files will appear below the drag-and-drop area, and the system will automatically specify the file format as Shapefiles or GeoTIFF (<em>Figure 31</em>). In case a required file is missing (for shapefiles) you will be requested to add the file before you can proceed uploading.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">In case total size of the files you wish to upload is more than 50 MB the process can be very time consuming or even return errors in low bandwidth environments. For upload sizes larger than 50 MB, contact <a class="reference external" href="mailto:omep&#46;gis&#37;&#52;&#48;wfp&#46;org">omep<span>&#46;</span>gis<span>&#64;</span>wfp<span>&#46;</span>org</a> for assistance.</p>
+</div>
+<p>Before starting the upload, the <strong>Permissions</strong> of the layer needs to be specified on the right side of the gray drag-and-drop area (see previous section for details on permissions). By clicking on <strong>Upload File</strong> the process of uploading the files will start (<em>Figure 32</em>).</p>
+<img alt="../../_images/Four_files_have_been_selected_for_upload.jpg" src="../../_images/Four_files_have_been_selected_for_upload.jpg" />
+<p><em>Figure 31: Four files have been selected for upload</em></p>
+<img alt="../../_images/Upload_in_process.jpg" src="../../_images/Upload_in_process.jpg" />
+<p><em>Figure 32: Upload in process</em></p>
+<p>After a successful upload, three options on how to continue managing the data will appear (<em>Figure 33</em>):</p>
+<ul class="simple">
+<li><strong>Layer Info</strong> allows you to access the Layer View interface from which you can proceed to edit the layer, including changing <strong>Permissions</strong> for your layer after upload.</li>
+<li><strong>Edit Metadata</strong> takes you to an interface where detailed information on the layer should be provided. In the section below, this function will be explained in more detail.</li>
+<li><strong>Manage styles</strong> allows you to select a predefined appearance for your layer amongst the styles already created. This is a complex function that should be reserved for administrators or very advanced users.</li>
+</ul>
+<img alt="../../_images/After_successful_upload_three_options.jpg" src="../../_images/After_successful_upload_three_options.jpg" />
+<p><em>Figure 33: After successful upload - three options</em></p>
+</div>
+<div class="section" id="metadata">
+<h3>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h3>
+<p>By providing additional information about the layer after it has been uploaded, you are able to specify the data and make the layer more accessible to other users. Providing metadata thereby helps contextualize layers and aims to increase the overall user experience of the WFPGeoNode community.</p>
+<p>After a layer has been uploaded, or if you are in the <em>Layer View</em> interface, you can use <strong>Edit Metadata</strong> to start providing more information about your layer. Some fields are automatically filled in, but most are left empty for you to provide information (<em>Figure 34</em>).</p>
+<img alt="../../_images/Metadata_interface_information_to_be_provided.jpg" src="../../_images/Metadata_interface_information_to_be_provided.jpg" />
+<p><em>Figure 34: Metadata interface - information to be provided</em></p>
+<p>Below are a few comments on different types of metadata that will greatly enhance the quality of your
+layer and help contextualize it for other users:</p>
+<ul class="simple">
+<li><strong>Title</strong>: Provide an explanatory name for your layer. The name should not follow the naming conventions</li>
+</ul>
+<p>for data files but instead correctly reflect main aspects of the data. Start the title with a geographical
+specification (country, region, or “Global”).</p>
+<ul class="simple">
+<li><strong>Abstract</strong>: Provide a brief description for your layer. This text will appear together with your layer e.g. in the search results.</li>
+<li><strong>Keywords region</strong>: Select one or more countries that the layer represents.</li>
+<li><strong>Keywords</strong>: Specify keywords for your layer to appear in search results.</li>
+<li><strong>Supplemental information</strong>: Specify what the attributes represent by giving a brief description of each attribute. This information is the only explanation other users will have to understand the attribute short names and therefore it is critical that a description is provided. The supplemental information will appear under your layer in the Layer View interface when you click Show/Hide.</li>
+<li><strong>Attributes</strong>: Provide further descriptions of all the attribute short names or change the display order of the attributes.</li>
+</ul>
+<p>Click <strong>Update</strong> at the bottom to save and enter the Layer View interface.</p>
+</div>
+<div class="section" id="style-a-layer-and-create-rules">
+<h3>Style a Layer and Create Rules<a class="headerlink" href="#style-a-layer-and-create-rules" title="Permalink to this headline">¶</a></h3>
+<p>To display certain data attributes of a layer it is possible to modify the appearance of the layer, i.e. style
+the layer, in a variety of ways. This may include control over the colors of lines (e.g. roads) or areas (e.g.
+regions), as well as the display of labels (e.g. names of cities). It is also possible to use rules to support
+complex symbolization schemes based on database and scale conditions.</p>
+<p>Below are a few different ways to begin editing a style in WFPGeoNode:</p>
+<ul class="simple">
+<li>Directly after uploading a data layer by clicking on Layer Info to view the layer and then using the red button Edit Layer and Edit Styles.</li>
+<li>In the Layer View interface by using the red button Edit Layer and Edit Style, or directly on the Layer Styles palette symbol (Figure 35).</li>
+<li>In the Map Composer interface by using the palette symbol (<em>Figure 35</em>).</li>
+</ul>
+<img alt="../../_images/Layer_view_default_mode_with_different_tools_for_editing_styles.jpg" src="../../_images/Layer_view_default_mode_with_different_tools_for_editing_styles.jpg" />
+<p><em>Figure 35: Layer view - default mode with different tools for editing styles</em></p>
+<p>Following any of the above procedures, a pop-up window will allow you to choose <strong>Style</strong> and set <strong>Rules</strong> (<em>Figure 36</em>). Here you can <strong>Add, Remove, Duplicate</strong> or <strong>Edit</strong> rules.</p>
+<img alt="../../_images/Layer_styles_pop_up_window_set_rules.jpg" src="../../_images/Layer_styles_pop_up_window_set_rules.jpg" />
+<p><em>Figure 36: Layer styles pop-up window - set rules</em></p>
+<p>To create a color scheme for the rule, select it and use the <strong>Edit</strong> symbol. Another pop-up window will
+appear where you find three tabs called <strong>Basic, Labels</strong> and <strong>Advanced</strong> that contain options for defining
+the rule. Aspects of the rule that you set under one of the tabs are cumulative for the entire rule. This
+means that you can create a rule by setting the color in the Basic tab and then a database condition to
+control the display of that color in the Advanced tab.</p>
+<p>In the <strong>Basic</strong> tab it is possible to change the following styling options:</p>
+<ul class="simple">
+<li>Name of the rule</li>
+<li>Symbol to represent a feature and its size and rotation</li>
+<li>Color and opacity (transparency) of a feature</li>
+<li>Style, color, width and opacity of the line of the feature.</li>
+</ul>
+<p><em>Figure 37a</em> shows the default style of the <strong>Basic</strong> tab. <em>Figure 37b</em> provides an example of how certain aspects
+of a rule can be changed, such as symbol, color and stroke.</p>
+<img alt="../../_images/Basic_tab_default.jpg" src="../../_images/Basic_tab_default.jpg" />
+<p><em>Figure 37a: Basic Tab - default</em></p>
+<img alt="../../_images/Basic_tab_modified.jpg" src="../../_images/Basic_tab_modified.jpg" />
+<p><em>Figure 37b: Basic tab - modified</em></p>
+<p>In the <strong>Labels</strong> tab it is possible to do the following:</p>
+<ul class="simple">
+<li>Select a field to use as content for your labels</li>
+<li>Choose a font type, size and style for the Label</li>
+<li>Choose the color for the Label as well as the opacity</li>
+<li>Choose a halo (background color) including color, size, and opacity</li>
+</ul>
+<p>The user must know what the shortname of a particular attribute represent in order to set the label values.
+In <em>Figure 38</em> the <strong>Label Feature</strong> box has been ticked and the <strong>Label values</strong> specified to “whlocation”. In
+the example below, this shortname represents the names of the locations of the warehouses that needs
+to be displayed in the layer.</p>
+<img alt="../../_images/Labels_tab_modified.jpg" src="../../_images/Labels_tab_modified.jpg" />
+<p><em>Figure 38: Labels Tab - modified</em></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">A description of what the attribute names represents can be found under the Information tab in the Layer View interface. The supplemental information that the owner of the dataset provided when editing the metadata, will appear when clicking <strong>Show/Hide</strong>.</p>
+</div>
+<p>In the <strong>Advanced tab</strong> it is possible to do the following:</p>
+<ul class="simple">
+<li>Limit the visualization of what has been defined in the Basic and Label tabs in terms of one or more database conditions. It is also possible to set multiple groups of conditions.</li>
+<li>Limit the visualization of what has been defined in the Basic and Label tabs in terms of minimum and maximum scale display.</li>
+</ul>
+<p><em>Figure 39</em> shows how the box <strong>Limit</strong> by condition has been ticked, allowing you to specify conditions for when aspects of the other two tabs should be displayed in the layer. In this example, the specified condition will result in only displaying WFP warehouses with latitude of above 10 in the layer.</p>
+<p>In order to limit the conditions of how the values are displayed the user must know what the name of a particular attribute represents. Moreover, the range of values that exists for that attribute also has to be known in order to create a meaningful display of the data (which will be visible in a legend).</p>
+<img alt="../../_images/Advanced_tab_modified.jpg" src="../../_images/Advanced_tab_modified.jpg" />
+<p><em>Figure 39: Advanced tab - modified</em></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">To quickly find out the value of a feature you can use the Identify tool in the toolbar, and click on a feature. A box with all attributes and their associated values will appear for that specific feature. Alternatively, you can use the Query symbol in the Map Composer interface to view the entire attribute table of a specific layer, and all associated values.</p>
+</div>
+<img alt="../../_images/Map_of_WFP_global_warehouses_with_latitude_of_above_10.jpg" src="../../_images/Map_of_WFP_global_warehouses_with_latitude_of_above_10.jpg" />
+<p><em>Figure 40: Map of WFP Global Warehouses with latitude of above 10</em></p>
+<p>Multiple rules in the same layer can be used to create a visual distinction between different values or ranges of values. The different rules and the associated color schemes will be represented in a legend for an appealing visual reference. Use the <strong>Add</strong> symbol to create new rules, or <strong>Duplicate</strong> existing rules before editing.</p>
+<p>In <em>Figure 41</em> another rule has been customized after duplicating the first rule in order to visualize warehouses with latitude of below 10 degrees in red. In addition, the names of the rules in the Basic tab have been changed to better visualize the color scheme in the legend.</p>
+<img alt="../../_images/A_second_rule_created_for_warehouses_with_latitude_below_10.jpg" src="../../_images/A_second_rule_created_for_warehouses_with_latitude_below_10.jpg" />
+<p><em>Figure 41: A second rule created for warehouses with latitude below 10</em></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">To save time and ensure coherence between multiple rules, start by editing just one rule. Make changes to the features that you would like to carry over to all other the rules, e.g. the Stroke and the Label Features in most cases. Then Duplicate the rule as necessary to obtain the number of rules you would like to create for the layer, before you proceed to cutomize each rule.</p>
+</div>
+</div>
+<div class="section" id="style-a-raster-layer">
+<h3>Style a Raster Layer<a class="headerlink" href="#style-a-raster-layer" title="Permalink to this headline">¶</a></h3>
+<p>For raster layers it is possible to define a rule for each range of values in the dataset. In the <em>Map Composer</em> interface click on the palette symbol <strong>Layer Style</strong> for the selected raster overlay. In the leftside panel under the section <strong>Color Map Entries</strong> you can set rules for displaying the data by selecting an entry and clicking <strong>Edit</strong>.</p>
+<p><em>Figure 42</em> provides an example of a classification created for the layer “Indonesia DEM 90m”. A first threshold has been defined at 100 meters and illustrated with black color, and a second threshold has been defined at 500 meters with white coloring.</p>
+<img alt="../../_images/Styling_a_raster_layer.jpg" src="../../_images/Styling_a_raster_layer.jpg" />
+<p><em>Figure 42: Styling a raster layer</em></p>
+</div>
+<div class="section" id="manage-different-styles">
+<h3>Manage Different Styles<a class="headerlink" href="#manage-different-styles" title="Permalink to this headline">¶</a></h3>
+<p>WFPGeoNode supports functions to create multiple styles in order to visualize several sets of attribute data in the same layer. Subsequently, it facilitates interactive presentations of layers and maps since it allows the user to easily switch between different ways of displaying interrelated data.</p>
+<p>To create multiple styles use the <strong>Add</strong> button in the styles section. In the pop-up window a title for the style needs to be provided, as well as a short abstract explaining which aspects of the data are associated with the style (<em>Figure 43</em>).</p>
+<img alt="../../_images/Create_an_additional_style.jpg" src="../../_images/Create_an_additional_style.jpg" />
+<p><em>Figure 43: Create an additional style</em></p>
+<p>Proceed to edit the rules for that particular style to visualize other aspects of the data. In the <em>Map Composer</em> view it is then possible to simply use the palette symbol to change the visualization of the dataset. In the example below an additional style has been created to visualize another set of data in the same layer containing regional specification of the warehouses (<em>Figure 44</em>)</p>
+<img alt="../../_images/Additional_style_created_for_the_same_layer.jpg" src="../../_images/Additional_style_created_for_the_same_layer.jpg" />
+<p><em>Figure 44: Additional style created for the same layer</em></p>
+</div>
+<div class="section" id="modify-data-in-a-layer">
+<h3>Modify Data in a Layer<a class="headerlink" href="#modify-data-in-a-layer" title="Permalink to this headline">¶</a></h3>
+<p>Depending on permissions, it is possible to edit data directly in a vector layer by modifying existing features. The layer needing editing has to be selected in the left-side panel in the <em>Map Composer</em> interface before the <strong>Edit</strong> and <strong>Modify</strong> buttons can be selected. You can then click on a specific point, line or polygon feature in the map, and a pop-up window with all attribute values will appear. After clicking <strong>Edit</strong>, all points defining the shape of the feature will become visible in the map. In the example below the point that needs modification is highlighted in blue (Figure 45).</p>
+<img alt="../../_images/Modify_data_of_a_feature.jpg" src="../../_images/Modify_data_of_a_feature.jpg" />
+<p><em>Figure 45: Modify data of a feature</em></p>
+<p>Since a point feature only has one geographic reference simply drag-and-drop the symbol to the new location. The attribute values in the pop-up window needs editing before clicking <strong>Save</strong>. In the example below the blue square containing the point symbol has been moved to Niamey and the field specifying
+the name of the market has been changed to “Niamey” (<em>Figure 46</em>).</p>
+<img alt="../../_images/Modify_the_data_of_a_point.jpg" src="../../_images/Modify_the_data_of_a_point.jpg" />
+<p><em>Figure 46: Modify data of a point</em></p>
+<p>Lines and polygons have at least two or more points defining the shape of the feature, which will appear as squares in the map after you using <strong>Edit</strong>. The zoom helps to properly distinguish between the locations of the points. In the example below a line has been selected for editing in order to create an extension of a road leading to the airport (<em>Figure 47</em>).</p>
+<img alt="../../_images/Modify_data_of_a_line.jpg" src="../../_images/Modify_data_of_a_line.jpg" />
+<p><em>Figure 47: Modify data of a line</em></p>
+<p>The shape of the line is visible as white and transparent squares. It is possible to drag-and-drop these squares to different locations on the map in order to modify existing data. In Figure 48 the road extension is visible.</p>
+<img alt="../../_images/Modified_line.jpg" src="../../_images/Modified_line.jpg" />
+<p><em>Figure 48: Modified line</em></p>
+<p>In a similar way, the shape of the polygon is visible as white and transparent squares, which you can drag-and-drop to different locations on the map (<em>Figure 49</em>).</p>
+<img alt="../../_images/Modifiy_the_data_of_a_polygon.jpg" src="../../_images/Modifiy_the_data_of_a_polygon.jpg" />
+<p><em>Figure 49: Modify data of a polygon</em></p>
+<p>It is also possible to modify values of an attribute without changing the shape of the feature. In the example below the value of the attribute NTCLASS has been re-classified from “Secondary” to “Primary” and the attribute FCLASS from “3” to “2” (<em>Figure 50</em>). Because of the style of the layer the re-classified
+road automatically changes color to red after clicking <strong>Save</strong>.</p>
+<img alt="../../_images/Attribute_fields_modified.jpg" src="../../_images/Attribute_fields_modified.jpg" />
+<p><em>Figure 50: Attribute fields - modified</em></p>
+</div>
+<div class="section" id="create-and-remove-data-in-a-layer">
+<h3>Create and Remove Data in a Layer<a class="headerlink" href="#create-and-remove-data-in-a-layer" title="Permalink to this headline">¶</a></h3>
+<p>To generate new data directly in the layer, select the layer in the left-side panel in the Map Composer interface and use the <strong>Edit</strong> and <strong>Create</strong> buttons. If you wish to generate a point on the map simply doubleclick on the location and a feature window will appear with no associated values. The attribute values needs to be provided before clicking <strong>Save</strong>. In the example below the location of a new WFP warehouse has been double-clicked and the name of the location has been provided in the attribute table (<em>Figure 51</em>).</p>
+<img alt="../../_images/Create_data_for_a_point.jpg" src="../../_images/Create_data_for_a_point.jpg" />
+<p><em>Figure 51: Create data for a point</em></p>
+<p>To generate data in the shape of lines or polygons to symbolize e.g. roads or flood-areas, click once at the starting location and double-click at the endpoint. A pop-up window will appear with empty fields for you to provide the attribute values.</p>
+<p>In <em>Figure 52</em>, a feature in the shape of a line representing a road has been created by clicking on several locations between two settlements. The value for the attribute field NTLCLASS has also been provided.</p>
+<img alt="../../_images/Create_data_for_a_line.jpg" src="../../_images/Create_data_for_a_line.jpg" />
+<p><em>Figure 52: Create data for a line</em></p>
+<p>In <em>Figure 53</em>, a feature in the shape of a polygon representing an island has been created by clicking on several locations on the map.</p>
+<img alt="../../_images/Create_data_for_a_polygon.jpg" src="../../_images/Create_data_for_a_polygon.jpg" />
+<p><em>Figure 53: Create data for a polygon</em></p>
+<p>To remove existing data, or newly generated data, use Edit and Modify in the toolbar and select the feature. In the pop-up window there is a Delete button that allows you to remove the feature completely from the layer after you confirm your choice (<em>Figure 54</em>).</p>
+<img alt="../../_images/Delete_a_feature.jpg" src="../../_images/Delete_a_feature.jpg" />
+<p><em>Figure 54: Delete a figure</em></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">By editing data in the <em>Map Composer</em> interface you are not just changing the appearance of all the maps using the layer, but more importantly you are editing the original dataset. If these changes are due to version updates of the layer, this should be noted in the metadata in order to avoid confusion for other users. In the <em>Metadata</em> interface, adjust settings for e.g. <strong>Data Type, Edition and Maintenance Frequency</strong>.</p>
+</div>
+</div>
+<div class="section" id="upload-documents-and-static-maps">
+<h3>Upload Documents and Static Maps<a class="headerlink" href="#upload-documents-and-static-maps" title="Permalink to this headline">¶</a></h3>
+<p>which will appear as images.</p>
+<p>To upload a static map use the permanent link <strong>Maps</strong> &#8211;&gt; <strong>Static Maps</strong>, then use the red button <strong>Upload Static Maps</strong>. Use <strong>Browse</strong> to find your map and provide detailed information about the map as required before clicking <strong>Save</strong> (<em>Figure 55</em>).</p>
+<img alt="../../_images/Upload_static_map.jpg" src="../../_images/Upload_static_map.jpg" />
+<p><em>Figure 55: Upload static map</em></p>
+<p>To upload a new document and link it with existing data use <strong>Upload Documents</strong> in the <em>Explore Documents</em> interface. Provide a title for the document, select the layer or map you wish to link it with (optional) and find your document by using <strong>Browse</strong>. Set <strong>Permissions</strong> for your document before you click <strong>Upload</strong> (<em>Figure 56</em>).</p>
+<p>After the upload it is important to contextualize the document by providing correct metadata. In the metadata interface, it is also possible to change or remove the linkage to other layers an maps in WFPGeoNode.</p>
+<img alt="../../_images/Upload_documents.jpg" src="../../_images/Upload_documents.jpg" />
+<p><em>Figure 56: Upload documents</em></p>
+</div>
+<div class="section" id="remove-and-replace-layers-maps-and-documents">
+<h3>Remove and Replace Layers, Maps, and Documents<a class="headerlink" href="#remove-and-replace-layers-maps-and-documents" title="Permalink to this headline">¶</a></h3>
+<p>With favorable permissions, it is possible to remove or replace data, maps or documents by simply clicking on the selected item and using the red <strong>Edit (Layer/Map/Document)</strong> button. A drop-down box allows the user to remove/replace layers and documents, and to remove maps (<em>Figure 57</em>). When replacing
+a layer the user has to upload another set of data containing the same attribute structure as the old one. When removing a layer/map/document the user will be asked to confirm the selection before final removal is completed.</p>
+<img alt="../../_images/Remove_and_replace_layer.jpg" src="../../_images/Remove_and_replace_layer.jpg" />
+<p><em>Figure 57: Remove and replace layer</em></p>
+</div>
+</div>
+<div class="section" id="exercise-advanced-user">
+<h2>Exercise: Advanced User<a class="headerlink" href="#exercise-advanced-user" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of the exercise is to create a map that can be used for geospatial identification of areas with the highest aggregated risk in the case of natural disasters occurring. The map will visualize the results of a multivariate analysis that combines frequency of natural shocks (cyclones, floods, and droughts), aggravating factors (degradation, land cover, and terrain slopes) and other vulnerability factors (such as high population densities, high poverty indices and food insecurity). Maps like these can contribute to a rapid identification of certain focus areas, and guide programs, for example potential DRR-programs and resilience building.</p>
+<p>In this exercise the participant will combine skills acquired in the previous basic module with knowledge gained so far in the advanced module. The exercise will be more complex than the previous one since the participant will practice how to set rules and conditions for associated data. The exercise will result in an advanced map with the use of color schemes representing the outcome of the Multivariate Risk Analysis.</p>
+<div class="section" id="layers-used">
+<h3>Layers Used<a class="headerlink" href="#layers-used" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Indonesia Multivariate Risk Analysis for DRR</li>
+<li>Indonesia Settlements</li>
+<li>World Oceans and Seas</li>
+</ul>
+</div>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Start by finding the Exercise Data files for the first layer and re-name them according to the naming conventions. Consequently the files should be re-named as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>idn_nhr_multiriskanalysis_wfp.shp</li>
+<li>idn_nhr_multiriskanalysis_wfp.shx</li>
+<li>idn_nhr_multiriskanalysis_wfp.prj</li>
+<li>idn_nhr_multiriskanalysis_wfp.dbf</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Upload the first data layer into WFPGeoNode by using the quick link on the homepage <strong>Upload data</strong> to get to the <em>Upload Layers</em> interface.</p>
+</li>
+<li><p class="first">Drag-and-drop the four shapefiles onto the gray rectangular area. When your screen looks like the image in <em>Figure 58</em>, click <strong>Upload files</strong>.</p>
+</li>
+</ol>
+<img alt="../../_images/Data_files_to_be_uploaded.jpg" src="../../_images/Data_files_to_be_uploaded.jpg" />
+<p><em>Figure 58: Data files to be uploaded</em></p>
+<ol class="arabic" start="4">
+<li><p class="first">Click <strong>Edit Metadata</strong> and fill in the following information in the empty field:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Title</strong>: Indonesia Multivariate Risk Analysis for DRR</li>
+<li><strong>Abstract</strong>: The layer represents a Multivariate Risk Analysis performed for Indonesia that combines the frequency of Natural Shocks (cyclones,              floods, and droughts), Aggravating factor (degradation, land cover, and terrain slopes) and others Vulnerability factors (high population               densities; higher poverty indices; and food insecurity).</li>
+<li><strong>Keywords region</strong>: Indonesia</li>
+<li><strong>Keywords</strong>: Multivariate Risk Analysis, DRR</li>
+<li><strong>Supplemental Information</strong>: F_A_reclas: Priority areas based on the multivariate risk analysis</li>
+<li><strong>Attributes (Description)</strong>: F_A_reclas = Priority Area</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<img alt="../../_images/Edit_metadata.jpg" src="../../_images/Edit_metadata.jpg" />
+<p><em>Figure 59: Edit metadata</em></p>
+<p>When the Metadata has been filled in and looks like <em>Figure 59</em> click <strong>Update</strong> at the bottom of the page to go to the <em>Layer View</em> interface.</p>
+<ol class="arabic simple" start="5">
+<li>Change permissions for the layer so that you later will be able to edit the data. Click on the red button <strong>Edit Layer -&gt; Edit Permissions</strong>. Under <strong>Who can edit data</strong>, select <strong>Only the following user</strong> and type in your username. Save your changes.</li>
+<li>You will now start to modify the appearance of the layer. A default style is used to visualize the data, which at this stage means that one single red rule is associated to all values stored in the layer. This style does not reveal any explanatory differences in the data. Therefore, to better visualize the data, you need to associate different colors to each value of a specific attribute by creating rules. Start by <strong>Zooming</strong> in on the most southern province by double-clicking on it.</li>
+<li>Click on the palette symbol for <strong>Layer Styles</strong> to edit the rule of the layer. A pop-up window will display the default style (<em>Figure 60</em>). Select the rule <strong>Untitled 1</strong> -&gt; click <strong>Edit</strong>.</li>
+<li>Change the <strong>Stroke</strong> in the <strong>Basic</strong> tab to <strong>Color: White</strong>, and <strong>Width: 0.1</strong> before you click <strong>Save</strong> (<em>Figure 61</em>).</li>
+<li>Select the rule again and click Duplicate, until you have five rules. Now you can start customizing the first rule by selecting it and clicking <strong>Edit</strong>.</li>
+</ol>
+<img alt="../../_images/Palette_symbol_to_edit_rules.jpg" src="../../_images/Palette_symbol_to_edit_rules.jpg" />
+<p><em>Figure 60 Palette Symbol to edit rules</em></p>
+<img alt="../../_images/Basic_tab_changes.jpg" src="../../_images/Basic_tab_changes.jpg" />
+<p><em>Figure 61: Basic tab changes</em></p>
+<ol class="arabic simple" start="10">
+<li>Change the fill color and the name of the rule so it looks like <em>Figure 62a</em>. Then click the <strong>Advanced</strong> tab and tick the box <strong>Limit by condition</strong>. In the drop-down box choose the F_A_reclas where all the values are stored for each provinces’ level of priority. Change the settings so that the rule only applies to features where F_A_reclas has a value equal to 1 (<em>Figure 62b</em>). Only these features should be displayed in the layer after you click <strong>Save</strong>.</li>
+</ol>
+<img alt="../../_images/Customize_name_color.jpg" src="../../_images/Customize_name_color.jpg" />
+<p><em>Figure 62a: Customize name/color</em></p>
+<img alt="../../_images/Customize_conditions.jpg" src="../../_images/Customize_conditions.jpg" />
+<p><em>Figure 62b: Customize conditions</em></p>
+<ol class="arabic simple" start="11">
+<li>Edit the other four rules in the same manner so that your layer looks like the layer in <em>Figure 63</em></li>
+</ol>
+<img alt="../../_images/The_styled_layer_with_colors_representing_priority_areas.jpg" src="../../_images/The_styled_layer_with_colors_representing_priority_areas.jpg" />
+<p><em>Figure 63: The styled layer with colors representing priority areas</em></p>
+<ol class="arabic simple" start="12">
+<li>To save the layer as a map click <strong>Create a map</strong> to access the <em>Map Composer</em> interface. Use the <strong>Map</strong> button on the top-left side and click <strong>Save Map</strong>. To find your map easily during the exercise type in your name at the beginning of the title of the map followed by “Indonesia Multivariate Risk Analysis for DRR”. Provide the same abstract as for the metadata, and click <strong>Save as copy</strong> (<em>Figure 64</em>).</li>
+<li>Upload the layer “Indonesia Settlements” by following the instructions above (step 1-5). In order to easily find your layer later, add your own name in the title followed by “Indonesia Settlements” when providing metadata</li>
+</ol>
+<img alt="../../_images/Provide_title_and_abstract_before_saving.jpg" src="../../_images/Provide_title_and_abstract_before_saving.jpg" />
+<p><em>Figure 64: Provide title and abstract before saving</em></p>
+<ol class="arabic simple" start="14">
+<li>The layer will be styled so that the name of the settlements will only be visible at a certain scale. <strong>Zoom in</strong> on the southern province and click the palette symbol for <strong>Layer Styles</strong>. Select <strong>Untitled 1</strong> and click <strong>Edit</strong> (<em>Figure 65</em>).</li>
+</ol>
+<img alt="../../_images/Edit_style_for_Indonesia_Settlements.jpg" src="../../_images/Edit_style_for_Indonesia_Settlements.jpg" />
+<p><em>Figure 65: Edit style for Indonesia Settlements</em></p>
+<ol class="arabic simple" start="15">
+<li>Under the <strong>Basic tab</strong>, un-check the <strong>Fill</strong> and the <strong>Stroke</strong> (<em>Figure 66a</em>). Under the <strong>Labels tab</strong>, tick the <strong>Label Features</strong> box, choose the correct <strong>Label values</strong> (NAME), and adjust the <strong>Halo</strong> settings (<em>Figure 66b</em>).</li>
+</ol>
+<img alt="../../_images/Basic_tab_modified_advanced_exercise.jpg" src="../../_images/Basic_tab_modified_advanced_exercise.jpg" />
+<p><em>Figure 66a: Basic tab - modified</em></p>
+<img alt="../../_images/Labels_tab_modified_advanced_exercise.jpg" src="../../_images/Labels_tab_modified_advanced_exercise.jpg" />
+<p><em>Figure 66b: Labels tab - modified</em></p>
+<img alt="../../_images/Advanced_tab_modified_advanced_exercise.jpg" src="../../_images/Advanced_tab_modified_advanced_exercise.jpg" />
+<p><em>Figure 66c: Advanced tab - modified</em></p>
+<ol class="arabic simple" start="16">
+<li>Under the <strong>Advanced</strong> tab, check the boxes for <strong>Limit by scale</strong> and <strong>Min scale limit</strong>. Adjust the scale and click <strong>Save</strong> (<em>Figure 66c</em>). The layer is now styled and ready to be used in your saved map.</li>
+<li>Return to your map and the Map Composer interface. To start adding the other two layers click on the green symbol to <strong>Add Layers</strong> -&gt; select the layer “World Oceans and Seas” -&gt; click <strong>Add Layer</strong>. Select your styled layer “Indonesia Settlements” -&gt; click <strong>Add Layer</strong> -&gt; click <strong>Done</strong>. All layers should now be visible on the map (<em>Figure 67</em>), and you can drag the layers up and down to change their order of display. Now, click <strong>Save</strong> to save the map.</li>
+</ol>
+<img alt="../../_images/Map_composer_interface_for_Indonesia_Multivariate_Risk_Analysis_for_DRR.jpg" src="../../_images/Map_composer_interface_for_Indonesia_Multivariate_Risk_Analysis_for_DRR.jpg" />
+<p><em>Figure 67: Map composer interface for Indonesia Multivariate Risk Analysis for DRR</em></p>
+<ol class="arabic simple" start="18">
+<li>Zoom out and notice how the names of the settlements disappear from the map because of the scale conditions previously set.</li>
+<li>You will now modify the data for one of the districts called Aceh Besar, resulting in an increase of the aggregated risk. To find the district, select the layer in the left-side panel and click <strong>Query</strong> to open the attribute table for the layer. Under the district column, find Aceh Besar and click on the name tolocalize the district on the map. You have to zoom out to find the district (<em>Figure 68</em>).</li>
+</ol>
+<img alt="../../_images/Localize_a_district_with_the_Query_tool.jpg" src="../../_images/Localize_a_district_with_the_Query_tool.jpg" />
+<p><em>Figure 68: Localize a district with the Query tool</em></p>
+<ol class="arabic simple" start="20">
+<li>Zoom in on the district, select <strong>Edit</strong> symbol -&gt; <strong>Modify</strong> and click on the district in the map. Select the value of the F_A_reclas attribute and click <strong>Edit</strong> -&gt; change the value to 4 and click <strong>Save</strong> (<em>Figure 69</em>). Unselect the <strong>Edit</strong> symbol and the <strong>Query</strong> symbol by clicking on each. The district should now appear in yellow.</li>
+</ol>
+<img alt="../../_images/Edit_the_data_directly_in_the_layer.jpg" src="../../_images/Edit_the_data_directly_in_the_layer.jpg" />
+<p><em>Figure 69: Edit data directly in the layer</em></p>
+<ol class="arabic simple" start="21">
+<li>Click on the <strong>Print</strong> symbol to save the map as a pdf file. Adjust the settings in the popup window and click <strong>Print</strong> (<em>Figure 70</em>).</li>
+</ol>
+<img alt="../../_images/Adjust_settings_before_printing.jpg" src="../../_images/Adjust_settings_before_printing.jpg" />
+<p><em>Figure 70: Adjust settings before printing</em></p>
+<ol class="arabic" start="22">
+<li><p class="first">Upload your pdf file as a static map in WFPGeoNode by using the permanent link <strong>Maps -&gt; Static maps</strong>. Click on the red button <strong>Upload Static Map</strong>. Use <strong>Browse</strong> to find your pdf file and provide detailed information about your map as follows so it looks like Figure 71 below. Click <strong>Save</strong> when you are done.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Title</strong>: [Name] Indonesia Static Map</li>
+<li><strong>Source</strong>: WFP</li>
+<li><strong>Orientation</strong>: Landscape</li>
+<li><strong>Page format</strong>: A4</li>
+<li><strong>Categories</strong>: Vulnerability Analysis</li>
+<li><strong>Regions</strong>: Indonesia</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<img alt="../../_images/Provide_detailed_information_about_the_static_map.jpg" src="../../_images/Provide_detailed_information_about_the_static_map.jpg" />
+<p><em>Figure 71: Provide detailed information about the static map</em></p>
+<img alt="../../_images/Final_map_with_associated_layers_and_documents.jpg" src="../../_images/Final_map_with_associated_layers_and_documents.jpg" />
+<p><em>Figure 72: Final map with associated layers and documents</em></p>
+</div>
+</div>
+<div class="section" id="annex-1-online-resources">
+<h2>Annex 1: Online Resources<a class="headerlink" href="#annex-1-online-resources" title="Permalink to this headline">¶</a></h2>
+<p>GeoNode website
+<a class="reference external" href="http://geonode.org/">http://geonode.org/</a></p>
+<p>GeoNode Demo
+<a class="reference external" href="http://demo.geonode.org/">http://demo.geonode.org/</a></p>
+<p>GeoNode Documentation
+<a class="reference external" href="http://docs.geonode.org/en/latest/index.html">http://docs.geonode.org/en/latest/index.html</a></p>
+<p>WorldMap – GeoNode instance of the Harvard University
+<a class="reference external" href="http://worldmap.harvard.edu/">http://worldmap.harvard.edu/</a></p>
+<p>WorldMap documentation
+<a class="reference external" href="http://projects.iq.harvard.edu/worldmap/book/faq">http://projects.iq.harvard.edu/worldmap/book/faq</a></p>
+<p>Open Data for the Horn – GeoNode instance for the emergency in the Horn of Africa
+<a class="reference external" href="http://horn.rcmrd.org/">http://horn.rcmrd.org/</a></p>
+<p>HaitiData – GeoNode instance for the Haiti emergency
+<a class="reference external" href="http://www.haitidata.org/">http://www.haitidata.org/</a></p>
+<p>Virtual Kenya project – GeoNode instance for Kenya
+<a class="reference external" href="http://maps.virtualkenya.org/">http://maps.virtualkenya.org/</a></p>
+<p>National Information System for Risk Reduction in Bolivia
+<a class="reference external" href="http://geosinager.defensacivil.gob.bo/layers/">http://geosinager.defensacivil.gob.bo/layers/</a></p>
+<p>Desktop tools for creating layer styles
+<a class="reference external" href="http://wald.intevation.org/projects/arcmap2sld/">http://wald.intevation.org/projects/arcmap2sld/</a></p>
+<p>List of iso3 standards for country naming conventions
+<a class="reference external" href="http://unstats.un.org/unsd/tradekb/Knowledgebase/Country-Code">http://unstats.un.org/unsd/tradekb/Knowledgebase/Country-Code</a></p>
+<p>Google Earth Plug-In
+<a class="reference external" href="http://www.google.com/earth/explore/products/plugin.html">http://www.google.com/earth/explore/products/plugin.html</a></p>
+</div>
+<div class="section" id="annex-2-wfp-naming-conventions-for-geographic-datasets">
+<h2>Annex 2: WFP Naming Conventions for Geographic Datasets<a class="headerlink" href="#annex-2-wfp-naming-conventions-for-geographic-datasets" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="background">
+<h3>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<p>WFP uses two main systems to store and manage geographic information. A spatial data infrastructure called SDI, which is based on the ESRI technology, and an open source web platform called GeoNode, which provides easy access to the whole set of GIS data managed by WFP. Both systems are based on a proper geographic database to store GIS data and are synchronized to guarantee that the most updated information is available to both GIS experts as well as users who are interested in accessing such information but have no GIS expertise available.</p>
+<p>The WFP SDI and GeoNode use a common naming convention for GIS •datasets to ensure that just one comprehensible and easy to follow standard is respected and proposed to RBs and COs.</p>
+<p>A non-exhaustive list of layers, descriptions and layer nomenclature is collated with input from HQ, RB and CO level and made available through the Global GIS Architecture. COs are free to add any layers of interest that are not included in the list yet.</p>
+</div>
+<div class="section" id="naming-convention-for-baseline-data">
+<h3>Naming Convention for Baseline Data<a class="headerlink" href="#naming-convention-for-baseline-data" title="Permalink to this headline">¶</a></h3>
+<p>(boundaries, settlements, hydrology etc.)</p>
+<p>iso3_class_description_(source)_(date yyyymmdd)
+iso3= ISO3 country code. For global datasets the ISO3 is replaced by “wld”.
+YYYY = YEAR, MM = MONTH DD= DAY</p>
+<p><strong>Example</strong>
+Indonesia Administrative boundaries level1 provided by the government:</p>
+<blockquote>
+<div><ul class="simple">
+<li>idn_bnd_adm1_gov</li>
+</ul>
+<p>The date is present in case we need to keep history of past versions of the same layer:</p>
+<ul class="simple">
+<li>idn_bnd_adm1_gov_20100102</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="naming-conventions-for-maps">
+<h3>Naming Conventions for Maps<a class="headerlink" href="#naming-conventions-for-maps" title="Permalink to this headline">¶</a></h3>
+<p>iso3_class_description_format_date</p>
+<p>iso3= ISO3 country code, date YYYY = YEAR, MM = MONTH DD= DAY</p>
+<p><strong>Example</strong>
+Map containing security levels by prefectures for Central African Republic in A3 landscap format produced
+on 08 May 2014:</p>
+<blockquote>
+<div><ul class="simple">
+<li>CAF_SEC_PrefecturesSecurityLevel_A3L_20140508</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Advanced User Module</a><ul>
+<li><a class="reference internal" href="#module-objectives">Module Objectives</a></li>
+<li><a class="reference internal" href="#advanced-level">Advanced Level</a><ul>
+<li><a class="reference internal" href="#register-a-new-account">Register a New Account</a></li>
+<li><a class="reference internal" href="#sign-in-and-create-a-profile">Sign in and Create a Profile</a></li>
+<li><a class="reference internal" href="#permissions">Permissions</a></li>
+<li><a class="reference internal" href="#naming-conventions">Naming Conventions</a></li>
+<li><a class="reference internal" href="#upload-data-layers">Upload Data Layers</a></li>
+<li><a class="reference internal" href="#metadata">Metadata</a></li>
+<li><a class="reference internal" href="#style-a-layer-and-create-rules">Style a Layer and Create Rules</a></li>
+<li><a class="reference internal" href="#style-a-raster-layer">Style a Raster Layer</a></li>
+<li><a class="reference internal" href="#manage-different-styles">Manage Different Styles</a></li>
+<li><a class="reference internal" href="#modify-data-in-a-layer">Modify Data in a Layer</a></li>
+<li><a class="reference internal" href="#create-and-remove-data-in-a-layer">Create and Remove Data in a Layer</a></li>
+<li><a class="reference internal" href="#upload-documents-and-static-maps">Upload Documents and Static Maps</a></li>
+<li><a class="reference internal" href="#remove-and-replace-layers-maps-and-documents">Remove and Replace Layers, Maps, and Documents</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-advanced-user">Exercise: Advanced User</a><ul>
+<li><a class="reference internal" href="#layers-used">Layers Used</a></li>
+<li><a class="reference internal" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#annex-1-online-resources">Annex 1: Online Resources</a></li>
+<li><a class="reference internal" href="#annex-2-wfp-naming-conventions-for-geographic-datasets">Annex 2: WFP Naming Conventions for Geographic Datasets</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#naming-convention-for-baseline-data">Naming Convention for Baseline Data</a></li>
+<li><a class="reference internal" href="#naming-conventions-for-maps">Naming Conventions for Maps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../basic_user_module/index.html"
+                        title="previous chapter">Basic User Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/training/advanced_user_module/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2013, UN World Food Programme.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="../../_sources/training/advanced_user_module/index.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

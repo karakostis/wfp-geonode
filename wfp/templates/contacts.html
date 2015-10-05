@@ -3,49 +3,44 @@
 {% load i18n %}
 {% load friendly_loader %}
 {% friendly_load avatar_tags %}
-{% friendly_load relationship_tags %}
 
-{% block title %} {% trans "GeoNode Contacts" %} — {{ block.super }} {% endblock %}
+{% block title %} {% trans "WFPGeoNode Contacts" %} — {{ block.super }} {% endblock %}
 
-{% block body_class %}contacts{% endblock %}
+{% block body_class %}people people-list explore{% endblock %}
 
-{% block jumbotron %}
-<header class="jumbotron">
-  <div class="container">
-    <div class="row">
-      <h1 class="span6"><i class="icon-hand-right"></i>{% trans "GeoNode Contacts" %}</h1>
+{% block body_outer %}
+  {% block body %}
+  <div class="page-header">
+    <h2>{% trans "WFPGeoNode Contacts" %}</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <p class="lead">{% trans "Contacts for WFPGeoNode." %}</p>
+      <p>WFPGeoNode is the WFP's corporate web application for creating and sharing geospatial data and maps.
+  It has been designed by the Emergency Preparedness and Response Unit (WFP OSEP) to empower non-GIS experts to easily produce maps with information already available in GeoNode or uploaded through a very simple process.
+  If you want to learn more about the WFPGeoNode or experience any problem while using it please contact hq.gis@wfp.org and an expert will get back to you soon.</p>
     </div>
   </div>
-</header>
-{% endblock %}
 
-{% block body %}
-
-<div class="row">
-  <div class="span12">
-    <p><strong>WFP</strong>GeoNode is the WFP's corporate web application for creating and sharing geospatial data and maps.</p>
-    <p>It has been designed by the Emergency Preparedness and Response Unit (WFP OSEP) to empower non-GIS experts to easily produce maps with information already available in GeoNode or uploaded through a very simple process.</p>
-    <p>If you want to learn more about the WFPGeoNode or experience any problem while using it please contact <a href="mailto:{{ THEME_ACCOUNT_CONTACT_EMAIL }}">{{ THEME_ACCOUNT_CONTACT_EMAIL }}</a> and an expert will get back to you soon.</p>
-    <h3>OSEP GIS Team</h3>
+  <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="tab-content col-sm-12" id="search-content">
+            {% include "people/_profile_list_item.html" %}
+          </div>
+        </div>
+      </div>
   </div>
-</div>
+  {% endblock body %}
+  {% block sidebar %}{% endblock sidebar %}
+{% endblock body_outer %}
 
-<div class="row">
-  <div class="span12">
-    <ol class="people group">
-      {% for profile in profiles %}
-        <li class="group">
-          <a href="{% url "profile_detail" profile.user.username %}" >{% avatar profile.user 218 %}</a>
-          <h3><i class="icon-user"></i> <a href="{% url "profile_detail" profile.user.username %}">{{ profile.name }}</a>
-          {% if user.is_authenticated %}
-            {% if  profile.email %}<a href="mailto:{{ profile.user.email }}"><i class="icon-envelope-alt icon-large"></i></a>{% endif %}
-          {% endif %}
-          </h3>
-        </li>
-      {% endfor %}
-    </ol>
-  </div>
-</div>
-  
-
-{% endblock %}
+{% block extra_script %}
+<script type="text/javascript">
+  SEARCH_URL = '{% url 'api_dispatch_list' api_name='api' resource_name='profiles' %}?group=omep-gis-team';
+</script>
+  {% with include_spatial='false' %}
+  {% include 'search/search_scripts.html' %}
+  {% endwith %}
+{% endblock extra_script %}

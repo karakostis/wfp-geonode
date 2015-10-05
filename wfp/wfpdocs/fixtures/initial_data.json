@@ -145,5 +145,19 @@
     "fields": {
         "name": "Other"
     }
+},
+{
+    "pk": 22, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Environmental"
+    }
+},
+{
+    "pk": 23, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Political"
+    }
 }
 ]

@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+#########################################################################
+#
+# Copyright (C) 2012-2015 Paolo Corti, pcorti@gmail.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#########################################################################
+
 import collections
 import json
 import logging
@@ -11,13 +31,14 @@ from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import permission_required
 
-from geonode.utils import ogc_server_settings
 from geonode.utils import http_client
+from geonode.geoserver.helpers import OGC_Servers_Handler
 
 from models import Training
 from forms import TrainingForm
 
 logger = logging.getLogger("wfp.trainings.views")
+ogc_server_settings = OGC_Servers_Handler(settings.OGC_SERVER)['default']
 
 
 def trainings_browse(request, keyword=None):
