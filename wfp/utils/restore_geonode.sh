@@ -1,12 +1,13 @@
 #!/bin/bash
 #set -o verbose
 
-# TODO here donwload backup archives
+# this script helps to reconfigure my dev box with current copy of GeoNode databases
+# and GeoServer data directory
 
 # read configuration
 # we need to have a gnadmin postgres user in place, with same password as in production
 CWD=$(pwd)
-DATE="20150906"
+DATE="20150927"
 BACKUP_DIR="/home/capooti/backup/geonode"
 VEDIR="/home/capooti/git/codeassist/wfp-geonode/env"
 GEOSERVER_DATA_DIRECTORY=/home/capooti/git/github/geonode/geoserver
@@ -54,8 +55,17 @@ function restore_geoserver {
     sed -i 's/geonode.wfp.org/localhost:8000/g' $GEOSERVER_DATA_DIRECTORY/data/security/auth/geonodeAuthProvider/config.xml
 }
 
+# restore media files
+function restore_media {
+    UPLOAD_DIR=/home/capooti/git/codeassist/wfp-geonode/www/uploaded
+    mkdir $UPLOAD_DIR
+    tar -xvf $BACKUP_DIR/$DATE/django.tar.gz
+    mv django/* $UPLOAD_DIR
+}
+
 # main
-dowload_backup
-restore_django
-restore_uploads
-restore_geoserver
+#dowload_backup
+#restore_django
+#restore_uploads
+#restore_geoserver
+restore_media
