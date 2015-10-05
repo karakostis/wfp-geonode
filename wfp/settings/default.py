@@ -181,7 +181,7 @@ UPLOADER = {
 
 # A tuple of hosts the proxy can send requests to.
 PROXY_ALLOWED_HOSTS = (
-    'localhost', 'geonode.wfp.org', '.wfp.org', '.anl.gov', 
+    'localhost', 'geonode.wfp.org', '.wfp.org', 
     '10.11.40.4', '10.11.40.90',
     )
 ALLOWED_HOSTS = PROXY_ALLOWED_HOSTS
