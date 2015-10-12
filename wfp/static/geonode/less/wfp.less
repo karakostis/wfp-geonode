@@ -75,10 +75,18 @@ form#search {
 .navbar-form .form-control {
   height: 30px;
   font-size: @font-size-wfp-small;
+  background: @blue-wfp-dark;
+  color: white;
+  border: 1px white;
 }
-.btn-primary {
-    padding: 0px 5px;
-    font-size: 19px;
+.form-control::-webkit-input-placeholder { color: white; }
+.form-control:-moz-placeholder { color: white; }
+.form-control::-moz-placeholder { color: white; }
+.form-control:-ms-input-placeholder { color: white; }
+
+.btn-search {
+    padding: 4px 5px;
+    font-size: 14px;
     border-radius: 5px;
 }
 
@@ -109,9 +117,6 @@ form#search {
   font-size: @font-size-wfp-small;
   margin-top: 2px;
 }
-
-/* Items
------------------------ */
 
 /* Items
 ----------------------- */
