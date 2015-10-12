@@ -13,9 +13,10 @@
 @red-wfp-dark: #BD362F;
 @footer-bg: #3a4d67;
 
-@font-size-nav-main:      18px;
-@font-size-nav-avatar:    14px;
+@font-size-nav-main:      16px;
+@font-size-wfp-small:    13px;
 @font-size-wfp-brand:     32px;
+
 
 body {
   font-family: @font-family-wfp;
@@ -30,8 +31,9 @@ body {
   padding-left: 80px;
 }
 .navbar-nav > li > a {
-  padding-top: 20px;
   font-size: @font-size-nav-main;
+  margin: 0px;
+  padding: 24px 10px;
 }
 
 .navbar-inverse {
@@ -52,10 +54,10 @@ body {
 .navbar-inverse .navbar-brand {
     color: white;
 }
-.navbar-right > li > a {
+.navbar > li > a {
   margin-left: -70px;
   padding: 8px 15px;
-  font-size: @font-size-nav-avatar;
+  font-size: @font-size-nav-main;
 }
 .nav-pills a {
   cursor: pointer;
@@ -64,14 +66,22 @@ body {
     color: white;
 }
 .navbar-collapse {
-  max-height: none;}
+  max-height: none;
+}
 form#search {
-  margin-top: 12px;
+  margin-top: 18px;
+  width: 190px;
 }
 .navbar-form .form-control {
-  background-color: @blue-wfp-dark;
-  color: white;
+  height: 30px;
+  font-size: @font-size-wfp-small;
 }
+.btn-primary {
+    padding: 0px 5px;
+    font-size: 19px;
+    border-radius: 5px;
+}
+
 .dropdown-toggle:active, .open .dropdown-toggle {
   background: white !important;
   color: black !important;
@@ -84,10 +94,20 @@ form#search {
   color: black;
 }
 .avatar {
+  color: white;
   padding: 1px;
   img {
-   border-radius: 1px;
+    margin-top: -5px;
+    border-radius: 5px;
   }
+}
+.avatar-text {
+  font-size: @font-size-wfp-small;
+  margin-top: -23px;
+}
+.avatar-unlogged-text {
+  font-size: @font-size-wfp-small;
+  margin-top: 2px;
 }
 
 /* Items
