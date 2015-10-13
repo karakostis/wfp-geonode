@@ -617,11 +617,29 @@ MAP_BASELAYERS = [{
     "visibility": True
 }, {
     "source": {"ptype": "gxp_mapquestsource"},
+    "name":"naip",
+    "title":"Satellite Imagery",
+    "group":"background",
+    "visibility": False
+}, {
+    "source": {"ptype": "gxp_mapquestsource"},
     "name": "naip",
     "group": "background",
     "visibility": False
 }, {
     "source": {"ptype": "gxp_mapboxsource"},
+    "name": "geography-class",
+    "title": "Political MapBox",
+    "fixed": True,
+    "visibility": False,
+    "group":"background"
+}, {
+    "source": {"ptype": "gxp_mapboxsource"},
+    "name": "world-light",
+    "title": "Light base layer",
+    "fixed": True,
+    "visibility": False,
+    "group":"background"
 }]
 
 SOCIAL_BUTTONS = True
