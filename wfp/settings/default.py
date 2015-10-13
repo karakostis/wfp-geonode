@@ -784,7 +784,7 @@ SEARCH_FILTERS = {
     'TEXT_ENABLED': True,
     'TYPE_ENABLED': True,
     'CATEGORIES_ENABLED': True,
-    'OWNERS_ENABLED': True,
+    'OWNERS_ENABLED': False,
     'KEYWORDS_ENABLED': True,
     'DATE_ENABLED': True,
     'REGION_ENABLED': True,
