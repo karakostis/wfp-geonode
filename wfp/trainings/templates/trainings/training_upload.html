@@ -1,9 +1,11 @@
 {% extends "site_base.html" %}
+{% load bootstrap_tags %}
 {% load i18n %}
+{% load url from future %}
 
 {% block title %} {% trans "Upload Training" %} - {{ block.super }} {% endblock %}
 
-{% block body_class %}documents upload{% endblock body_class %}
+{% block body_class %}documents upload{% endblock %}
 
 {% block head %}
     {% include "geonode/ext_header.html" %}
@@ -11,28 +13,42 @@
     {{ block.super }}
 {% endblock %}
 
-{% block jumbotron %}
-<header class="jumbotron">
-  <div class="container">
-    <div class="row">
-      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Upload Training" %}</h1>
-      <a href="{% url "trainings_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Trainings" %}</a>
-    </div>
-  </div>
-</header>
-{% endblock %}
-
 {% block body %}
-  <div class="block">
-    <div class="span8">
-      <form id="upload_training" method="post" action="" enctype="multipart/form-data" >
-        {{ form.as_table }}
-        <section class="upload-btn">
-        <div><input type="submit" class="btn btn-primary pull-right" value="{% trans "Save" %}"/></div>
-        {% csrf_token %}
-        </section>
-      </form>
-    </div>
+<div class="page-header">
+  <a href="{% url "trainings_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Trainings" %}</a>
+  <h2 class="page-title">{% trans "Upload Trainings" %}</h2>
+</div>
+<div class="row">
+  <div class="col-md-10">
+    <form id="upload_training" method="post" action="" enctype="multipart/form-data" >
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+      {{ form|as_bootstrap }}
+      <button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
+    </form>
   </div>
-
+  <div class="col-md-2">
+  <!-- empty space for tooltips -->
+  </div>
+</div>
 {% endblock %}
+
+{% block extra_script %}
+  {% include 'metadata_form_js.html' %}
+  <script type="text/javascript">
+    $(function() {
+      var pickerOptions = {
+          format: 'YYYY-MM-DD hh:mm',
+          pickDate: true,
+          pickTime: true,
+          language: 'en',
+          icons: {
+              time: 'fa fa-clock-o',
+              date: 'fa fa-calendar',
+              up: 'fa fa-chevron-up',
+              down: 'fa fa-chevron-down'
+          }
+      };
+      $('#id_publication_date_picker').datetimepicker(pickerOptions);
+    });
+  </script>
+{% endblock extra_script %}

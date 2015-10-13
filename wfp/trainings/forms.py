@@ -19,6 +19,12 @@
 #########################################################################
 
 from django.forms import ModelForm
+from django import forms
+from django.forms import HiddenInput
+from django.utils.translation import ugettext_lazy as _
+
+from bootstrap3_datetime.widgets import DateTimePicker
+from autocomplete_light.contrib.taggit_tagfield import TagField, TagWidget
 
 from models import Training
 
@@ -27,6 +33,40 @@ class TrainingForm(ModelForm):
     """
     Form to add/update a training
     """
+
+    _date_widget_options = {
+        "icon_attrs": {"class": "fa fa-calendar"},
+        "attrs": {"class": "form-control input-sm"},
+        "format": "%Y-%m-%d %H:%M",
+        # Options for the datetimepickers are not set here on purpose.
+        # They are set in the metadata_form_js.html template because
+        # bootstrap-datetimepicker uses jquery for its initialization
+        # and we need to ensure it is available before trying to
+        # instantiate a new datetimepicker. This could probably be improved.
+        "options": False,
+        }
+    publication_date = forms.DateTimeField(
+        localize=True,
+        widget=DateTimePicker(**_date_widget_options)
+    )
+    keywords = TagField(
+        required=False,
+        help_text=_("A space or comma-separated list of keywords"),
+        widget=TagWidget('TagAutocomplete'))
+
+    def __init__(self, *args, **kwargs):
+        super(TrainingForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            help_text = self.fields[field].help_text
+            self.fields[field].help_text = None
+            if help_text != '':
+                self.fields[field].widget.attrs.update(
+                    {
+                        'class': 'has-popover',
+                        'data-content': help_text,
+                        'data-placement': 'right',
+                        'data-container': 'body',
+                        'data-html': 'true'})
 
     class Meta:
         model = Training

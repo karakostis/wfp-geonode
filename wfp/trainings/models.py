@@ -35,7 +35,7 @@ class Training(models.Model):
 
     title = models.CharField(
         _('title'), max_length=255,
-        help_text=_('name by which the cited manual is known'))
+        help_text=_('name by which the cited training is known'))
     logo = models.ImageField(upload_to="trainings/logos")
     manual = models.FileField(upload_to='trainings/manuals')
     publication_date = models.DateField(
