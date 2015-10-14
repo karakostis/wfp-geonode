@@ -119,9 +119,16 @@
             {% endif %}
             {% if user.is_authenticated %}
             <li>
-              <a href="#" data-toggle="modal" data-target="#UserModal" role="button" aria-expanded="false" class="avatar">
-                {% avatar user 30 %}{% if user.first_name %}<div class="avatar-text">&nbsp;&nbsp;{{ user.first_name }}{% else %}{{ user.username|truncatechars:15 }}</div>{% endif %}
-              </a>
+              <div class="avatar">
+                <a href="#" data-toggle="modal" data-target="#UserModal" role="button" aria-expanded="false">
+                  {% avatar user 30 %}
+                  <div class="avatar-text">
+                  {% if user.first_name %}{{ user.first_name }}
+                  {% else %}{{ user.username|truncatechars:10 }}
+                  {% endif %}
+                  </div>
+                </a>
+              </div>
             </li>
             {% else %}
             <li>

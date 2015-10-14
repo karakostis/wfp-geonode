@@ -103,19 +103,21 @@ form#search {
 }
 .avatar {
   color: white;
-  padding: 1px;
   img {
-    margin-top: -5px;
+    margin-top: 15px;
     border-radius: 5px;
   }
-}
-.avatar-text {
-  font-size: @font-size-wfp-small;
-  margin-top: -23px;
-}
-.avatar-unlogged-text {
-  font-size: @font-size-wfp-small;
-  margin-top: 2px;
+  .avatar-text {
+    font-size: @font-size-wfp-small;
+    margin-top: 0px;
+    color: white;
+  }
+  a {
+    &:hover {
+      color: white;
+      text-decoration: none
+    };
+  }
 }
 
 /* Items
