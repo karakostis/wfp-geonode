@@ -1,3 +1,17 @@
+GeoNode WFPGeoNode 2.4.1
+
+  * Removed Bing maps issue
+  * Several design improvement
+  * Hidden the manage style page, as it is now working (#GEONODE-73)
+  * Fixed the training upload page (#GEONODE-70)
+  * Improved carousel responsiveness (#GEONODE-34)
+  * Re-added the mapbox and mapquest base layers
+  * Rearranged filter orders (#GEONODE-41)
+  * Bumped GeoNode 2.4b28
+  * Implemented custom thumbnails (#GEONODE-65)
+
+ -- Paolo Corti   Wed Oct 14 17:57:13 CEST 2015
+
 GeoNode WFPGeoNode 2.4.0
 
   * Using standard unforked GeoNode 2.4.0
