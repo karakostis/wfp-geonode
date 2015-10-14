@@ -84,10 +84,11 @@ def get_client_ip(request):
 def get_token(request):
     print 'ip is: %s' % get_client_ip(request)
     response_data = {}
-    if get_client_ip(request) in settings.EXT_APP_IPS:
+    client_ip = get_client_ip(request)
+    if client_ip in settings.EXT_APP_IPS:
         token = _generate_token()
     else:
-        token = 'invalid'
+        token = 'Invalid request. IP %s is not in EXT_APP_IPS' % client_ip
     response_data['token'] = token
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 

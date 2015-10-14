@@ -1,3 +1,9 @@
+GeoNode WFPGeoNode 2.4.0
+
+  * Using standard unforked GeoNode 2.4.0
+
+ -- Paolo Corti   Mon Oct  5 13:55:30 CEST 2015
+
 GeoNode WFPGeoNode 2.2.10
 
   * Using WFPGeoNode 2.1.8, fixing a problem with importlayers

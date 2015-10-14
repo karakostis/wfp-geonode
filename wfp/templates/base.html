@@ -35,10 +35,10 @@
   <body class="{% block body_class %}{% endblock %}">
 
     {% block header %}
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -76,9 +76,6 @@
                  <li id="nav_trainings"><a href="{% url "trainings_browse" %}">{% trans "Trainings" %}</a></li>
               </ul>
             </li>
-
-           {% block extra_tab %}
-           {% endblock %}
            
            <!-- community -->
            <li id="nav_community" class="dropdown">
@@ -91,36 +88,52 @@
                  <li id="nav_wfpgroups"><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
               </ul>
             </li>
+            
+            
+            
             {% endblock %}
           </ul>
-          <form class="navbar-form" id="search" action="{% url "search" %}" >
-            <div class="col-md-3">
-              <div class="input-group">
-                {% if HAYSTACK_SEARCH %}
-                <input id="search_input" type="text" placeholder="Search" class="form-control" name="q">
-                {% else %}
-                <input id="search_input" type="text" placeholder="Search" class="form-control" name="title__icontains">
-                {% endif %}
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-                </span>
-              </div>
-            </div>
-          </form>
+          
           <ul class="nav navbar-nav navbar-right">
+          
+          <!-- search -->
+           <li id="nav_search" >
+             <div>
+             <form class="navbar-form" id="search" role="search" action="{% url "search" %}" >
+                <div class="input-group">
+                  {% if HAYSTACK_SEARCH %}
+                  <input id="search_input" type="text" placeholder="Search" class="form-control" name="q">
+                  {% else %}
+                  <input id="search_input" type="text" placeholder="Search" class="form-control" name="title__icontains">
+                  {% endif %}
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary btn-search" type="submit"><i class="fa fa-search"></i></button>
+                  </span>
+                </div>
+             </form>
+             </div>
+           </li>
+            
             {% if not user.is_authenticated and REGISTRATION_OPEN %}
             <li><a href="{% url "account_signup" %}">{% trans "Register" %}</a></li>
             {% endif %}
             {% if user.is_authenticated %}
             <li>
-              <a href="#" data-toggle="modal" data-target="#UserModal" role="button" aria-expanded="false">
-                {% avatar user 30 %} {% if user.first_name %}{{ user.first_name }}{% else %} {{ user.username|truncatechars:15 }}{% endif %}
-              </a>
+              <div class="avatar">
+                <a href="#" data-toggle="modal" data-target="#UserModal" role="button" aria-expanded="false">
+                  {% avatar user 30 %}
+                  <div class="avatar-text">
+                  {% if user.first_name %}{{ user.first_name }}
+                  {% else %}{{ user.username|truncatechars:10 }}
+                  {% endif %}
+                  </div>
+                </a>
+              </div>
             </li>
             {% else %}
             <li>
-              <a href="#" data-toggle="modal" data-target="#SigninModal" role="button" >
-                {% trans "Sign in" %} 
+              <a href="#" data-toggle="modal" data-target="#SigninModal" role="button"  class="avatar">
+                <div class="avatar-unlogged-text">{% trans "Sign in" %}</div>
               </a>
             </li>
             {% endif %}
@@ -161,7 +174,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            WFPGeoNode{% if user.is_superuser %} {{ WFPGEONODE_VERSION }}{% endif %}, {% trans "powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}{% if user.is_superuser %} {{ VERSION }}{% endif %}</a> |
+            <a href="http://geonode.org">WFPGeoNode{% if user.is_superuser %} {{ WFPGEONODE_VERSION }}{% endif %}</a> |
             <a href="{% url "contacts" %}">{% trans "Contacts" %}</a> |
             <a href="http://cdn.wfp.org/legal/terms/">{% trans "Terms of Use" %}</a> |
             <a href="{{ STATIC_URL }}docs/html/index.html">{% trans "Get Started" %}</a>
@@ -296,7 +309,7 @@
             choiceSelector: 'span',
             hideAfter: 200,
             minimumCharacters: 1,
-            placeholder: '{% trans 'Type your search here ...' %}',
+            placeholder: '{% trans 'Search...' %}',
             appendAutocomplete: $('#search_input')
         });
         $('#search_input').bind('selectChoice', function(e, choice, autocomplete) {

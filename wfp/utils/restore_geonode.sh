@@ -30,7 +30,7 @@ function restore_django {
     psql -U gnadmin -c "DROP DATABASE $DB_DJANGO;" postgres
     psql -U gnadmin -c "CREATE DATABASE $DB_DJANGO OWNER gnadmin;" postgres
     psql -U gnadmin -c "CREATE EXTENSION POSTGIS;" $DB_DJANGO
-    psql -U gnadmin -f /usr/share/postgresql/9.2/contrib/postgis-2.1/legacy.sql $DB_DJANGO
+    psql -U gnadmin -f /usr/share/postgresql/9.3/contrib/postgis-2.1/legacy.sql $DB_DJANGO
     psql -U gnadmin $DB_DJANGO < $BACKUP_DIR/$DUMP_DJANGO 2> error_$DB_DJANGO.log
 }
 
@@ -40,7 +40,7 @@ function restore_uploads {
     psql -U gnadmin -c "DROP DATABASE $DB_DATA;" postgres
     psql -U gnadmin -c "CREATE DATABASE $DB_DATA OWNER gnadmin;" postgres
     psql -U gnadmin -c "CREATE EXTENSION POSTGIS;" $DB_DATA
-    psql -U gnadmin -f /usr/share/postgresql/9.2/contrib/postgis-2.1/legacy.sql $DB_DATA
+    psql -U gnadmin -f /usr/share/postgresql/9.3/contrib/postgis-2.1/legacy.sql $DB_DATA
     psql -U gnadmin $DB_DATA < $BACKUP_DIR/$DUMP_DATA 2> error_$DB_DATA.log
 }
 
@@ -64,8 +64,8 @@ function restore_media {
 }
 
 # main
-#dowload_backup
-#restore_django
-#restore_uploads
-#restore_geoserver
+dowload_backup
+restore_django
+restore_uploads
+restore_geoserver
 restore_media

@@ -7,7 +7,7 @@ DEBUG_STATIC = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'sdi_django_24',
+        'NAME': 'sdi_django',
         'USER': wallet.DATABASES.default.USER,
         'PASSWORD': wallet.DATABASES.default.PASSWORD,
         'HOST': wallet.DATABASES.default.HOST,

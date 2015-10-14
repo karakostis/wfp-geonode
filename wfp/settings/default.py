@@ -617,17 +617,29 @@ MAP_BASELAYERS = [{
     "visibility": True
 }, {
     "source": {"ptype": "gxp_mapquestsource"},
+    "name":"naip",
+    "title":"Satellite Imagery",
+    "group":"background",
+    "visibility": False
+}, {
+    "source": {"ptype": "gxp_mapquestsource"},
     "name": "naip",
     "group": "background",
     "visibility": False
 }, {
-    "source": {"ptype": "gxp_bingsource"},
-    "name": "AerialWithLabels",
+    "source": {"ptype": "gxp_mapboxsource"},
+    "name": "geography-class",
+    "title": "Political MapBox",
     "fixed": True,
     "visibility": False,
-    "group": "background"
+    "group":"background"
 }, {
     "source": {"ptype": "gxp_mapboxsource"},
+    "name": "world-light",
+    "title": "Light base layer",
+    "fixed": True,
+    "visibility": False,
+    "group":"background"
 }]
 
 SOCIAL_BUTTONS = True
@@ -726,8 +738,9 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 # Number of results per page listed in the GeoNode search pages
 CLIENT_RESULTS_LIMIT = 10
 
-# Number of items returned by the apis 0 equals no limit
+# API settings
 API_LIMIT_PER_PAGE = 0
+API_INCLUDE_REGIONS_COUNT = True
 
 LEAFLET_CONFIG = {
     'TILES': [
@@ -772,7 +785,7 @@ SEARCH_FILTERS = {
     'TEXT_ENABLED': True,
     'TYPE_ENABLED': True,
     'CATEGORIES_ENABLED': True,
-    'OWNERS_ENABLED': True,
+    'OWNERS_ENABLED': False,
     'KEYWORDS_ENABLED': True,
     'DATE_ENABLED': True,
     'REGION_ENABLED': True,

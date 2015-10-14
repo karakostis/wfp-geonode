@@ -20,7 +20,8 @@
 
 from tastypie.api import Api
 
-from .api import WfpProfileResource
+from .api import WfpProfileResource, FeaturedMapResource
 
 api = Api(api_name='api')
 api.register(WfpProfileResource())
+api.register(FeaturedMapResource())

@@ -13,9 +13,10 @@
 @red-wfp-dark: #BD362F;
 @footer-bg: #3a4d67;
 
-@font-size-nav-main:      18px;
-@font-size-nav-avatar:    14px;
+@font-size-nav-main:      16px;
+@font-size-wfp-small:    13px;
 @font-size-wfp-brand:     32px;
+
 
 body {
   font-family: @font-family-wfp;
@@ -30,8 +31,9 @@ body {
   padding-left: 80px;
 }
 .navbar-nav > li > a {
-  padding-top: 20px;
   font-size: @font-size-nav-main;
+  margin: 0px;
+  padding: 24px 10px;
 }
 
 .navbar-inverse {
@@ -52,10 +54,10 @@ body {
 .navbar-inverse .navbar-brand {
     color: white;
 }
-.navbar-right > li > a {
+.navbar > li > a {
   margin-left: -70px;
   padding: 8px 15px;
-  font-size: @font-size-nav-avatar;
+  font-size: @font-size-nav-main;
 }
 .nav-pills a {
   cursor: pointer;
@@ -64,14 +66,30 @@ body {
     color: white;
 }
 .navbar-collapse {
-  max-height: none;}
+  max-height: none;
+}
 form#search {
-  margin-top: 12px;
+  margin-top: 18px;
+  width: 190px;
 }
 .navbar-form .form-control {
-  background-color: @blue-wfp-dark;
+  height: 30px;
+  font-size: @font-size-wfp-small;
+  background: @blue-wfp-dark;
   color: white;
+  border: 1px white;
 }
+.form-control::-webkit-input-placeholder { color: white; }
+.form-control:-moz-placeholder { color: white; }
+.form-control::-moz-placeholder { color: white; }
+.form-control:-ms-input-placeholder { color: white; }
+
+.btn-search {
+    padding: 4px 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
 .dropdown-toggle:active, .open .dropdown-toggle {
   background: white !important;
   color: black !important;
@@ -84,14 +102,23 @@ form#search {
   color: black;
 }
 .avatar {
-  padding: 1px;
+  color: white;
   img {
-   border-radius: 1px;
+    margin-top: 15px;
+    border-radius: 5px;
+  }
+  .avatar-text {
+    font-size: @font-size-wfp-small;
+    margin-top: 0px;
+    color: white;
+  }
+  a {
+    &:hover {
+      color: white;
+      text-decoration: none
+    };
   }
 }
-
-/* Items
------------------------ */
 
 /* Items
 ----------------------- */
@@ -198,14 +225,34 @@ footer {
 }
 
 /* Carousel */
+
 .carousel-inner {
   height: 320px;
 }
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
-  width: 100%;
+  min-width: 100%;
+  height: 100%;
 }
 .carousel-caption {
-  bottom: 100px;
+  top: 15%;
+}
+.carousel-indicators li { visibility: hidden; }
+
+@media(max-width: 1000px) {
+.carousel-caption h1 {
+  font-size: 20px;
+  }
+  .carousel-caption p {
+  font-size: 15px;
+  }
+}
+
+.image-credit {
+  font-size: 13px;
+  position: absolute;
+  bottom: 50px;
+  right: 0px;
+  text-align:right;
 }
 
 /* home-facets */
