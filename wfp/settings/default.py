@@ -738,8 +738,9 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 # Number of results per page listed in the GeoNode search pages
 CLIENT_RESULTS_LIMIT = 10
 
-# Number of items returned by the apis 0 equals no limit
+# API settings
 API_LIMIT_PER_PAGE = 0
+API_INCLUDE_REGIONS_COUNT = True
 
 LEAFLET_CONFIG = {
     'TILES': [

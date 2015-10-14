@@ -2,7 +2,8 @@ django-celery==3.1.10
 django-geoexplorer==4.0.4
 django-supervisor==0.3.2
 django-tastypie==0.11.0
-geonode==2.4b27
+#geonode==2.4b27
+-e git+https://github.com/GeoNode/geonode.git@eb43f99334af2c50b101c01b965ea18fa9bcd245#egg=GeoNode
 Pillow==2.3.0
 psycopg2==2.5.3
 python-memcached==1.53
