@@ -19,19 +19,23 @@
 #########################################################################
 
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from tastypie import fields
-from tastypie.constants import ALL
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from tastypie.resources import ModelResource
 from guardian.shortcuts import get_objects_for_user
 
+from geonode.api.authorization import GeoNodeAuthorization
 from geonode.api.api import ProfileResource
 from geonode.api.api import CountJSONSerializer
+from geonode.base.models import ResourceBase
 
 from wfp.wfpdocs.models import WFPDocument
 
 
 class WfpProfileResource(ProfileResource):
-    """ WFP Profile api """
+    """ WFP Profile API """
 
     wfpdocs_count = fields.IntegerField(default=0)
 
@@ -43,6 +47,7 @@ class WfpProfileResource(ProfileResource):
     class Meta:
         queryset = get_user_model().objects.exclude(username='AnonymousUser')
         resource_name = 'wfp-profiles'
+        authorization = GeoNodeAuthorization()
         allowed_methods = ['get']
         ordering = ['username', 'date_joined']
         excludes = ['is_staff', 'password', 'is_superuser',
@@ -52,3 +57,37 @@ class WfpProfileResource(ProfileResource):
             'username': ALL,
         }
         serializer = CountJSONSerializer()
+
+
+class FeaturedMapResource(ModelResource):
+    """ WFP Featured Maps API """
+
+    owner = fields.ToOneField(ProfileResource, 'owner', full=True)
+    custom_thumbnail = fields.FileField()
+
+    def dehydrate_custom_thumbnail(self, bundle):
+        from wfp.gis.models import CustomThumbnail
+        rb = bundle.obj
+        thumb = CustomThumbnail.objects.filter(object_id=rb.id, content_type=rb.polymorphic_ctype).first()
+        # we cascade to default thumbnail if custom does not exist
+        thumb_url = rb.thumbnail_url
+        if thumb:
+            thumb_url = '%s%s' % (settings.MEDIA_URL, thumb.thumbnail)
+        return thumb_url
+
+    class Meta:
+        queryset = ResourceBase.objects.filter(featured=True).order_by('-date')
+        if settings.RESOURCE_PUBLISHING:
+            queryset = queryset.filter(is_published=True)
+        resource_name = 'wfp-featured-maps'
+        authorization = GeoNodeAuthorization()
+        allowed_methods = ['get']
+        filtering = {'title': ALL,
+                     'keywords': ALL_WITH_RELATIONS,
+                     'regions': ALL_WITH_RELATIONS,
+                     'category': ALL_WITH_RELATIONS,
+                     'owner': ALL_WITH_RELATIONS,
+                     'date': ALL,
+                     }
+        ordering = ['date', 'title', 'popular_count']
+        max_limit = None

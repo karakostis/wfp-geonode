@@ -20,23 +20,30 @@
 
 from django.contrib import admin
 from django.contrib.gis.admin import GeoModelAdmin
-from models import Office, Employee
+
 from geonode.people.models import Profile
 from geonode.people.admin import ProfileAdmin
+
+from models import Office, Employee, CustomThumbnail
 
 
 class EmployeeInline(admin.StackedInline):
     model = Employee
 
 
-class OfficeAdmin(GeoModelAdmin):
-    model = Office
-
-
 class ExtendedProfileAdmin(ProfileAdmin):
     inlines = [EmployeeInline, ]
 
 
+class OfficeAdmin(GeoModelAdmin):
+    model = Office
+
+
+class CustomThumbnailAdmin(admin.ModelAdmin):
+    model = CustomThumbnail
+
+
 admin.site.register(Office, OfficeAdmin)
+admin.site.register(CustomThumbnail, CustomThumbnailAdmin)
 admin.site.unregister(Profile)
 admin.site.register(Profile, ExtendedProfileAdmin)

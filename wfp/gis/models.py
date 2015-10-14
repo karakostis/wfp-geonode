@@ -19,7 +19,10 @@
 #########################################################################
 
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from django.contrib.gis.db import models as gismodels
+
 from geonode.people.models import Profile
 
 
@@ -109,3 +112,17 @@ class Employee(models.Model):
 
     def __unicode__(self):
         return '%s in %s' % (self.profile.get_full_name(), self.office.place)
+
+
+class CustomThumbnail(models.Model):
+    """
+    Model for custom thumbnails for WFP GeoNode objects
+    """
+    thumbnail = models.ImageField(upload_to='custom_thumbs')
+    title = models.CharField(max_length=255)
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    def __unicode__(self):
+        return self.title
