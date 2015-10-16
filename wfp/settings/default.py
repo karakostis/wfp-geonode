@@ -549,9 +549,9 @@ PYCSW = {
         #},
         'metadata:main': {
             'identification_title': 'WFP GeoNode Catalogue',
-            'identification_abstract': 'GeoNode is an open source platform that facilitates the creation, sharing,' \
-             ' and collaborative use of geospatial data',
-            'identification_keywords': 'sdi,catalogue,discovery,metadata,GeoNode',
+            'identification_abstract': 'WFP GeoNode provides geospatial datasets related to emergencies and ' \
+             ' crisisi management, vulnerability analysis mapping and logistic',
+            'identification_keywords': 'sdi,catalogue,discovery,metadata,GeoNode,wfp,emergencies,crisis,analysis',
             'identification_keywords_type': 'theme',
             'identification_fees': 'None',
             'identification_accessconstraints': 'None',
