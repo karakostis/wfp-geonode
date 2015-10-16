@@ -419,6 +419,8 @@ MIDDLEWARE_CLASSES = (
     # It sets temporary the involved layers as public before restoring the permissions.
     # Beware that for few seconds the involved layers are public there could be risks.
     # 'geonode.middleware.PrintProxyMiddleware',
+    "account.middleware.LocaleMiddleware",
+    "account.middleware.TimezoneMiddleware",
 )
 
 
@@ -475,9 +477,10 @@ ACTSTREAM_SETTINGS = {
 
 # Settings for Social Apps
 AUTH_PROFILE_MODULE = 'people.Profile'
-REGISTRATION_OPEN = True
-ACCOUNT_OPEN_SIGNUP = False
-ACCOUNT_SIGNUP_REDIRECT_URL = 'profile_edit_current'
+REGISTRATION_OPEN = False
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_APPROVAL_REQUIRED = False
+ACCOUNT_SIGNUP_REDIRECT_URL = 'profile_edit'
 
 #
 # Test Settings
