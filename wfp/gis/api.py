@@ -62,12 +62,17 @@ class OfficeResource(GisModelResource):
 class ProfileResource(GisModelResource):
     """Resource  for Profile"""
 
+    name = fields.CharField(readonly=True)
+
     class Meta:
         queryset = Profile.objects.all()
         resource_name = 'profile'
-        fields = ['name', 'position', ]
+        fields = ['position', ]
         include_resource_uri = False
         allowed_methods = ['get']
+
+    def dehydrate_name(self, bundle):
+        return '%s %s' % (bundle.obj.first_name, bundle.obj.last_name)
 
 
 class EmployeeResource(GisModelResource):
