@@ -18,6 +18,8 @@
 #
 #########################################################################
 
+from urlparse import urlparse
+
 from django.contrib.contenttypes.models import ContentType
 
 from tastypie.resources import ModelResource
@@ -86,7 +88,7 @@ class WFPDocumentResource(ModelResource):
     file_size = fields.CharField(attribute='get_file_size', readonly=True)
     geonode_page = fields.CharField(attribute='detail_url', readonly=True)
     geonode_file = fields.FileField(attribute='doc_file')
-    thumbnail = fields.CharField(attribute='thumbnail_url', readonly=True, null=True)
+    thumbnail = fields.CharField(attribute='thumbnail', readonly=True, null=True)
     is_public = fields.BooleanField(default=True)
 
     class Meta(CommonMetaApi):
@@ -127,6 +129,7 @@ class WFPDocumentResource(ModelResource):
             'supplemental_information',
             'temporal_extent_end',
             'temporal_extent_start',
+            'thumbnail_url',
             # renamed
             'doc_file',
         ]
@@ -143,6 +146,10 @@ class WFPDocumentResource(ModelResource):
 
     def dehydrate_orientation(self, bundle):
         return WFPDocument.ORIENTATION_CHOICES[bundle.data['orientation']][1]
+
+    def dehydrate_thumbnail(self, bundle):
+        url = urlparse(bundle.obj.thumbnail_url)
+        return url.path
 
     def build_schema(self):
         base_schema = super(WFPDocumentResource, self).build_schema()
