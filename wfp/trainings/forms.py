@@ -23,7 +23,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from bootstrap3_datetime.widgets import DateTimePicker
-from autocomplete_light.contrib.taggit_tagfield import TagField, TagWidget
+from autocomplete_light.contrib.taggit_field import TaggitField, TaggitWidget
 
 from models import Training
 
@@ -48,10 +48,10 @@ class TrainingForm(ModelForm):
         localize=True,
         widget=DateTimePicker(**_date_widget_options)
     )
-    keywords = TagField(
+    keywords = TaggitField(
         required=False,
         help_text=_("A space or comma-separated list of keywords"),
-        widget=TagWidget('TagAutocomplete'))
+        widget=TaggitWidget('TagAutocomplete'))
 
     def __init__(self, *args, **kwargs):
         super(TrainingForm, self).__init__(*args, **kwargs)
