@@ -1,4 +1,19 @@
-GeoNode WFPGeoNode 2.4.1
+WFPGeoNode 2.4.2
+
+  * Now thumbnail is relative in wfpdocs api as per opweb request
+  * Removing javascript files from WFP project static files, as we use the general ones
+  * Adding categories in layer upload
+  * Restoring the name attribute in gis api as per #GEONODE-87
+  * Version number of static files now is in geonode master. We need only to add it to wfp static ones now
+  * For now we will use geonode from trunk until next official release. Must be installed manually
+  * Updated to latest django-taggit
+  * Updated the search box
+  * Making autocomplete-light happy
+  * Using trunk in dev env and jenkins (that now should be fixed)
+
+ -- Paolo Corti   Tue Oct 20 16:08:51 CEST 2015
+
+WFPGeoNode 2.4.1
 
   * Removed Bing maps issue
   * Several design improvement
@@ -12,20 +27,20 @@ GeoNode WFPGeoNode 2.4.1
 
  -- Paolo Corti   Wed Oct 14 17:57:13 CEST 2015
 
-GeoNode WFPGeoNode 2.4.0
+WFPGeoNode 2.4.0
 
   * Using standard unforked GeoNode 2.4.0
 
  -- Paolo Corti   Mon Oct  5 13:55:30 CEST 2015
 
-GeoNode WFPGeoNode 2.2.10
+WFPGeoNode 2.2.10
 
   * Using WFPGeoNode 2.1.8, fixing a problem with importlayers
 
  -- Paolo Corti   Thu May 14 14:54:21 CEST 2015
 
 
-GeoNode WFPGeoNode 2.2.9
+WFPGeoNode 2.2.9
 
   * Using GeoNode 2.1.7 (that fixes metadata upload and add features to
     importlayers)
@@ -33,14 +48,14 @@ GeoNode WFPGeoNode 2.2.9
  -- Paolo Corti   Tue Apr 21 14:30:53 CEST 2015
 
 
-GeoNode WFPGeoNode 2.2.8
+WFPGeoNode 2.2.8
 
   * Using GeoNode 2.1.6 (that fixes #GEONODE-31)
 
  -- Paolo Corti   Wed Apr 15 16:23:25 CEST 2015
 
 
-GeoNode WFPGeoNode 2.2.6
+WFPGeoNode 2.2.6
 
   * Added the training application, an application to manage trainings within 
     GeoNode
