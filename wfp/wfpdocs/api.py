@@ -129,7 +129,6 @@ class WFPDocumentResource(ModelResource):
             'supplemental_information',
             'temporal_extent_end',
             'temporal_extent_start',
-            'thumbnail_url',
             # renamed
             'doc_file',
         ]
