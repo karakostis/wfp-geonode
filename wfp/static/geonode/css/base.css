@@ -142,6 +142,9 @@ body.groups li#nav_groups a {
 .yourlabs-autocomplete {
   top: 100%;
 }
+.input-group .yourlabs-autocomplete {
+  top: 30px !important;
+}
 /* Home
 ----------------------- */
 .jumbotron {

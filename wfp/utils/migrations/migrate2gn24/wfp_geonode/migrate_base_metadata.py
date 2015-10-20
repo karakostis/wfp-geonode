@@ -4,7 +4,7 @@ import os, sys
 path = os.path.dirname(__file__)
 geonode_path = os.path.abspath(os.path.join(path, '../../../../..'))
 sys.path.append(geonode_path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wfp.settings._geonode24")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wfp.settings.default")
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 
@@ -16,7 +16,7 @@ def update_regions():
     from geonode.base.models import Region
 
     # WLD becomes GLO (id=1)
-    glo = Region.objects.filter(code='WLD')[0]
+    glo = Region.objects.filter(code='GLO')[0]
     glo.code = 'GLO'
     glo.save()
 
@@ -77,8 +77,6 @@ def update_restrictions():
 
     from geonode.base.models import RestrictionCodeType
 
-    print 'Model RestrictionCodeType migrated'
-
     for identifier in ('copyright', 'intellectualPropertyRights', 'patentPending', 'trademark'):
         rct = RestrictionCodeType.objects.get(identifier=identifier)
         rct.is_choice = False
@@ -99,6 +97,8 @@ def update_restrictions():
     rct = RestrictionCodeType.objects.get(identifier='restricted')
     rct.gn_description = 'Withheld from general circulation or disclosure'
     rct.save()
+    
+    print 'Model RestrictionCodeType migrated'
 
 def update_topiccategories():
     # identifier: biota, gn_description: Natural Hazards
@@ -139,7 +139,9 @@ def update_topiccategories():
         tc.gn_description = category['gn_description']
         tc.save()
 
-#update_regions()
-#update_representationtypes()
-#update_restrictions()
+    print 'Model TopicCategory migrated'
+
+update_regions()
+update_representationtypes()
+update_restrictions()
 update_topiccategories()

@@ -19,11 +19,11 @@
 </div>
 <div class="row">
   <div class="col-md-8">
+    {% if incomplete %}
     <p>{% trans "Supported formats: shapefile, GeoTIFF. For shapefile .shp, .dbf, .shx, .prj files are needed." %}
     <br />{% trans "Please contact" %}
     <a <a href="mailto:{{ THEME_ACCOUNT_CONTACT_EMAIL }}" >{{ THEME_ACCOUNT_CONTACT_EMAIL }}</a>
     {% trans "in case your files are bigger than 50 Mb." %}</p>
-    {% if incomplete %}
     <section class="widget" id="incomplete-download-list">
       <h3>{% trans "Incomplete Uploads" %}</h3>
       <p>{% trans "You have the following incomplete uploads" %}:</p>
@@ -86,6 +86,25 @@
       </select>
     </section>
 
+    <section id="category">
+    <br>
+    <div class="col-md-12">
+      <fieldset id="category_form">
+        <label class="control-label required-field">{% trans "Category" %}</label><br>
+        {% autoescape off %}
+        {% for choice in category_form.category_choice_field.field.choices %}
+        <div class="radio col-md-6">
+          <input type="radio" class="category" name="category_choice_field" value="{{ choice.0 }}"
+            {% if choice.0 == 1 %} checked="checked" {% endif %}> 
+            {{ choice.1 }}
+          </input>
+        </div>
+        {% endfor %}
+        {% endautoescape %}
+      </fieldset>
+    </div>
+    </section>
+    
     <section>
       <a href="#" id="clear-button" class="btn btn-default">{% trans "Clear" %}</a>
       <a href="#" id="upload-button" class="btn btn-danger">{% trans "Upload files" %}</a>
@@ -108,7 +127,7 @@
 <script data-main="{% static 'geonode/js/upload/main' %}" 
   src="{% static 'lib/js/require.js' %}">
 </script>
-
+<script type="text/javascript" src="{% static 'geonode/js/upload/cookie.js' %}"></script>
 <script type="text/javascript">
 {% autoescape off %}
 

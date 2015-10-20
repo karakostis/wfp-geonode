@@ -419,6 +419,8 @@ MIDDLEWARE_CLASSES = (
     # It sets temporary the involved layers as public before restoring the permissions.
     # Beware that for few seconds the involved layers are public there could be risks.
     # 'geonode.middleware.PrintProxyMiddleware',
+    "account.middleware.LocaleMiddleware",
+    "account.middleware.TimezoneMiddleware",
 )
 
 
@@ -474,10 +476,11 @@ ACTSTREAM_SETTINGS = {
 }
 
 # Settings for Social Apps
+AUTH_PROFILE_MODULE = 'people.Profile'
 REGISTRATION_OPEN = False
-ACCOUNT_EMAIL_CONFIRMATION_EMAIL = False
-ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
+ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_APPROVAL_REQUIRED = False
+ACCOUNT_SIGNUP_REDIRECT_URL = 'profile_edit'
 
 #
 # Test Settings
@@ -549,9 +552,9 @@ PYCSW = {
         #},
         'metadata:main': {
             'identification_title': 'WFP GeoNode Catalogue',
-            'identification_abstract': 'GeoNode is an open source platform that facilitates the creation, sharing,' \
-             ' and collaborative use of geospatial data',
-            'identification_keywords': 'sdi,catalogue,discovery,metadata,GeoNode',
+            'identification_abstract': 'WFP GeoNode provides geospatial datasets related to emergencies and ' \
+             ' crisisi management, vulnerability analysis mapping and logistic',
+            'identification_keywords': 'sdi,catalogue,discovery,metadata,GeoNode,wfp,emergencies,crisis,analysis',
             'identification_keywords_type': 'theme',
             'identification_fees': 'None',
             'identification_accessconstraints': 'None',
