@@ -27,9 +27,12 @@ from django.forms import HiddenInput
 
 from bootstrap3_datetime.widgets import DateTimePicker
 from modeltranslation.forms import TranslationModelForm
+import autocomplete_light
 from autocomplete_light.contrib.taggit_field import TaggitField, TaggitWidget
 
 from models import WFPDocument
+
+autocomplete_light.autodiscover() # flake8: noqa
 
 
 class WFPDocumentForm(TranslationModelForm):

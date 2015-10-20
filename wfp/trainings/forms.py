@@ -23,9 +23,12 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from bootstrap3_datetime.widgets import DateTimePicker
+import autocomplete_light
 from autocomplete_light.contrib.taggit_field import TaggitField, TaggitWidget
 
 from models import Training
+
+autocomplete_light.autodiscover() # flake8: noqa
 
 
 class TrainingForm(ModelForm):
