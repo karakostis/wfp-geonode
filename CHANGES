@@ -1,3 +1,17 @@
+WFPGEoNode 2.4.3
+
+  * Setting a less aggressive cache timeout for #GEONODE-85
+  * Now using geonode rc1
+  * Refactored static maps api: now region and keywords should work correctly
+  * Added a migration script to tag resource with the global region
+  * Using correct setting file
+  * Updating style in a couple of templates
+  * We need to migrate the osm store correctly
+  * Fixed a layer name (supply routes)
+  * Using correct filters in static maps list page
+
+ -- Paolo Corti   Wed Oct 21 17:33:04 CEST 2015
+
 WFPGeoNode 2.4.2
 
   * Now thumbnail is relative in wfpdocs api as per opweb request
