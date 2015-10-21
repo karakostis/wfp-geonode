@@ -18,11 +18,9 @@
 <script src="{{ STATIC_URL }}geonode/js/search/search.js"></script>
 <script type="text/javascript">
   $("body").attr('ng-controller', 'geonode_search_controller');
-  //CATEGORIES_ENDPOINT = '{% url 'api_dispatch_list' api_name='api' resource_name='categories' %}';
-  //KEYWORDS_ENDPOINT = '{% url 'api_dispatch_list' api_name='api' resource_name='keywords' %}';
-  CATEGORIES_ENDPOINT = '/wfpdocs/api/v2.4/wfpcategories/';
-  KEYWORDS_ENDPOINT = '/wfpdocs/api/v2.4/keywords/';
-  REGIONS_ENDPOINT = '{% url 'api_dispatch_list' api_name='api' resource_name='regions' %}';
+  CATEGORIES_ENDPOINT = '{% url 'api_dispatch_list' api_name='v2.4' resource_name='wfp-categories' %}';
+  KEYWORDS_ENDPOINT = '{% url 'api_dispatch_list' api_name='v2.4' resource_name='wfp-keywords' %}';
+  REGIONS_ENDPOINT = '{% url 'api_dispatch_list' api_name='v2.4' resource_name='wfp-regions' %}';
   HAYSTACK_SEARCH = "{{ HAYSTACK_SEARCH }}".toLowerCase() === "true";
   HAYSTACK_FACET_COUNTS = "{{ HAYSTACK_FACET_COUNTS }}".toLowerCase() === "true";
   CLIENT_RESULTS_LIMIT = {{ CLIENT_RESULTS_LIMIT }};
