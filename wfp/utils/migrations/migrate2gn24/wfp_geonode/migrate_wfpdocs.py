@@ -4,7 +4,7 @@ import os, sys
 path = os.path.dirname(__file__)
 geonode_path = os.path.abspath(os.path.join(path, '../../../../..'))
 sys.path.append(geonode_path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wfp.settings._geonode24")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wfp.settings.default")
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 
@@ -45,7 +45,7 @@ def migrate_wfpdocs():
     order by id
     """
 
-    WFPDocument.objects.all().delete()
+    #WFPDocument.objects.all().delete()
     src_cur.execute(sql_wfpdocs)
     rows = src_cur.fetchall()
     for row in rows:

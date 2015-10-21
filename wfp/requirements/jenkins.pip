@@ -1,3 +1,3 @@
 -r testing.pip
--e git+https://github.com/GeoNode/geonode.git@8297f03b24d6e3cd8622e615cb02a838e5107de8#egg=GeoNode
+#-e git+https://github.com/GeoNode/geonode.git@8297f03b24d6e3cd8622e615cb02a838e5107de8#egg=GeoNode
 pygdal==1.9.2

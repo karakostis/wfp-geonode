@@ -1,8 +1,9 @@
 # to run on the source database before geonode migrate.sh
-# 0. only WFP: run wfp/schema_changes.sql
-# 1. run wfp/update_esri_gn_store.sql
-# 2. run wfp/set_owner_when_is_null.sql
-# 3. run wfp/remove_bing_maps.sql
+# only WFP: run wfp_geonode/schema_changes.sql
+# run wfp_geonode/update_esri_gn_store.sql
+# run wfp_geonode/update_osm_store.sql
+# run wfp_geonode/set_owner_when_is_null.sql
+# run wfp_geonode/remove_bing_maps.sql
 python $DIR/migrate_base_metadata.py
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )

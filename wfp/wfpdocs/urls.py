@@ -24,7 +24,7 @@ from django.views.generic import TemplateView
 
 from .views import DocumentUploadView, DocumentUpdateView
 
-from .api import WFPDocumentResource, CategoryResource, TagResourceSimple
+from .api import WFPDocumentResource, CategoryResource, TagResourceSimple, RegionResource
 from feeds import WFPDocumentsFeed
 
 from geonode.api import api as geonode_api
@@ -36,6 +36,8 @@ api.register(WFPDocumentResource())
 api.register(CategoryResource())
 api.unregister(geonode_api.TagResource())
 api.register(TagResourceSimple())
+api.unregister(geonode_api.RegionResource())
+api.register(RegionResource())
 
 urlpatterns = patterns(
     'wfp.wfpdocs.views',

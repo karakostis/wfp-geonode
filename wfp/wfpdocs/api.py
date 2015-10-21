@@ -18,19 +18,26 @@
 #
 #########################################################################
 
+import json
+import time
 from urlparse import urlparse
 
 from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
+from django.db.models import Count
+from django.core.serializers.json import DjangoJSONEncoder
 
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.authentication import BasicAuthentication, MultiAuthentication, Authentication
+from tastypie.serializers import Serializer
 from guardian.shortcuts import get_anonymous_user
 from guardian.shortcuts import get_objects_for_user
 from taggit.models import Tag
 
-from geonode.api.api import TagResource, RegionResource
+from geonode.base.models import ResourceBase, Region
+from geonode.api.api import TagResource, TypeFilteredResource
 from geonode.api.authorization import GeoNodeAuthorization
 
 from models import WFPDocument, Category
@@ -46,11 +53,70 @@ class CommonMetaApi:
     authorization = GeoNodeAuthorization()
 
 
+class CountJSONSerializerWFPDocs(Serializer):
+    """Custom serializer to post process the api and add counts for static maps"""
+
+    def get_resources_counts(self, options):
+        if settings.SKIP_PERMS_FILTER:
+            resources = ResourceBase.objects.all()
+        else:
+            resources = get_objects_for_user(
+                options['user'],
+                'base.view_resourcebase'
+            )
+        if settings.RESOURCE_PUBLISHING:
+            resources = resources.filter(is_published=True)
+
+        if options['title_filter']:
+            resources = resources.filter(title__icontains=options['title_filter'])
+
+        resources = resources.instance_of(WFPDocument)
+
+        counts = list(resources.values(options['count_type']).annotate(count=Count(options['count_type'])))
+
+        return dict([(c[options['count_type']], c['count']) for c in counts])
+
+    def to_json(self, data, options=None):
+        options = options or {}
+        data = self.to_simple(data, options)
+        counts = self.get_resources_counts(options)
+        if 'objects' in data:
+            for item in data['objects']:
+                item['count'] = counts.get(item['id'], 0)
+        # Add in the current time.
+        data['requested_time'] = time.time()
+
+        return json.dumps(data, cls=DjangoJSONEncoder, sort_keys=True)
+
+
+class RegionResource(TypeFilteredResource):
+    """ Resource for Region filtered for WFPDocument """
+
+    def serialize(self, request, data, format, options={}):
+        options['count_type'] = 'regions'
+        options['user'] = request.user
+
+        return super(RegionResource, self).serialize(request, data, format, options)
+
+    class Meta:
+        queryset = Region.objects.all().order_by('name')
+        resource_name = 'wfp-regions'
+        allowed_methods = ['get']
+        filtering = {
+            'name': ALL,
+            'code': ALL,
+        }
+        if settings.API_INCLUDE_REGIONS_COUNT:
+            serializer = CountJSONSerializerWFPDocs()
+
+
 class TagResourceSimple(ModelResource):
-    """ Resource for Tag not inhereting from ResourceBase"""
+    """ Resource for Tag filtered for WFPDocument"""
+
+    count = fields.IntegerField()
 
     class Meta(CommonMetaApi):
-        resource_name = 'keywords'
+        resource_name = 'wfp-keywords'
         ctype = ContentType.objects.get_for_model(WFPDocument)
         queryset = Tag.objects.filter(taggit_taggeditem_items__content_type=ctype).distinct().order_by('name')
 
@@ -72,7 +138,7 @@ class CategoryResource(ModelResource):
 
     class Meta(CommonMetaApi):
         queryset = Category.objects.all()
-        resource_name = 'wfpcategories'
+        resource_name = 'wfp-categories'
         excludes = ['id', ]
         filtering = {
             'name': ALL,
