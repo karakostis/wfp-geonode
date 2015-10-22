@@ -25,8 +25,8 @@ import datetime
 import os
 
 NAME = 'wfp-geonode'
-VERSION = __version__ = (2, 4, 3, 'final', 0)
-__author__ = 'WFP development team'
+VERSION = __version__ = (2, 4, 4, 'final', 0)
+__author__ = 'WFP development team, Paolo Corti (pcorti@gmail.com)'
 
 
 def get_version():  # pragma: no cover
