@@ -16,7 +16,7 @@ project. It is currently in production at http://geonode.wfp.org
 
 First, clone the repository:
 
-    git clone ssh://git@codeassist.wfp.org:7999/omep/wfp-geonode.git
+    git clone ssh://git@codeassist.wfp.org:7999/geonode/wfp-geonode.git
     
 Create a virtualenv:
 
@@ -24,6 +24,10 @@ Create a virtualenv:
 
 Create the geonode django and uploads databases using postgres and postgis 
 (you can restore them from dumps or populate them with syncdb).
+
+Copy the wfp/settings/_capooti.py file to wfp/settings/_yourusername.py
+
+Add in _yourusername anything more you want to install, for example the Django toolbar.
 
 Activate the virtualenv:
 
