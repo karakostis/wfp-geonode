@@ -1,3 +1,12 @@
+WFPGEoNode 2.4.4
+
+  * Now using GeoNode RC2
+  * Updated installation instructions
+  * Restoring correct configuration in training settings
+  * Now restore works for both env (sdi and training)
+  
+ -- Paolo Corti   Thu Oct 22 17:49:02 CEST 2015
+
 WFPGEoNode 2.4.3
 
   * Setting a less aggressive cache timeout for #GEONODE-85
