@@ -1,3 +1,10 @@
+WFPGEoNode 2.4.5
+
+  * Now static maps are correctly saved with permissions and related objects
+  * Making flake8 happy
+  
+ -- Paolo Corti   Fri Oct 23 17:56:09 CEST 2015
+
 WFPGEoNode 2.4.4
 
   * Now using GeoNode RC2
