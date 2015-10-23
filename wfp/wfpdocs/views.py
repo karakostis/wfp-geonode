@@ -30,6 +30,8 @@ from django_downloadview.response import DownloadResponse
 from django.views.generic.edit import UpdateView, CreateView
 from django.db.models import F
 
+from guardian.shortcuts import get_perms
+
 from geonode.utils import resolve_object
 from geonode.security.views import _perms_info_json
 from geonode.documents.models import IMGTYPES
@@ -103,6 +105,7 @@ def document_detail(request, slug):
 
         # TODO handle permissions here
         context_dict = {
+            'perms_list': get_perms(request.user, document.get_self_resource()),
             'permissions_json': _perms_info_json(document),
             'resource': document,
             'metadata': metadata,
@@ -130,24 +133,29 @@ def document_download(request, slug):
     return DownloadResponse(document.doc_file)
 
 
+def updateWFPDocument(doc, form):
+    # TODO refactor this using common code with the DocumentUploadView
+    is_published = True
+    if settings.RESOURCE_PUBLISHING:
+        is_published = False
+    doc.is_published = is_published
+    doc.save()
+    doc.set_permissions(form.cleaned_data['permissions'])
+    doc.regions = form.cleaned_data['regions']
+    doc.categories = form.cleaned_data['categories']
+    doc.layers = form.cleaned_data['layers']
+    for keyword in form.cleaned_data['keywords']:
+        doc.keywords.add(keyword)
+
+
 class DocumentUploadView(CreateView):
     model = WFPDocument
     form_class = WFPDocumentForm
 
     def form_valid(self, form):
-        """
-        If the form is valid, save the associated model.
-        """
         self.object = form.save(commit=False)
         self.object.owner = self.request.user
-        # by default, if RESOURCE_PUBLISHING=True then document.is_published
-        # must be set to False
-        is_published = True
-        if settings.RESOURCE_PUBLISHING:
-            is_published = False
-        self.object.is_published = is_published
-        self.object.save()
-        self.object.set_permissions(form.cleaned_data['permissions'])
+        updateWFPDocument(self.object, form)
         return HttpResponseRedirect(
             reverse(
                 'wfpdocs_detail',
@@ -156,9 +164,29 @@ class DocumentUploadView(CreateView):
                 )))
 
 
-class DocumentUpdateView(UpdateView):
+class WFPDocumentUpdateView(UpdateView):
+    """ We extend UpdateView as we need to pass self.object in context as resource """
     model = WFPDocument
+
+    def get_context_data(self, **context):
+        context[self.context_object_name] = self.object
+        context['resource'] = self.object
+        return context
+
+
+class DocumentUpdateView(WFPDocumentUpdateView):
     form_class = WFPDocumentForm
+
+    def form_valid(self, form):
+        doc = form.save(commit=False)
+        doc.owner = self.request.user
+        updateWFPDocument(doc, form)
+        return HttpResponseRedirect(
+            reverse(
+                'wfpdocs_detail',
+                args=(
+                    self.object.slug,
+                )))
 
 
 @login_required
