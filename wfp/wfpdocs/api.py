@@ -47,8 +47,8 @@ class CommonMetaApi:
     allowed_methods = ['get']
     include_resource_uri = True
     authentication = MultiAuthentication(
-            Authentication(),
             BasicAuthentication(),
+            Authentication(),
     )
     authorization = GeoNodeAuthorization()
 
@@ -157,11 +157,7 @@ class WFPDocumentResource(ModelResource):
     thumbnail = fields.CharField(attribute='thumbnail', readonly=True, null=True)
     is_public = fields.BooleanField(default=True)
 
-    class Meta():
-        allowed_methods = ['get']
-        include_resource_uri = True
-        # TODO For now available only with basic authentication
-        authentication = BasicAuthentication()
+    class Meta(CommonMetaApi):
         queryset = WFPDocument.objects.all().order_by('-date')
         resource_name = 'staticmaps'
         filtering = {
