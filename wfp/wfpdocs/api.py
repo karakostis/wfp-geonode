@@ -21,7 +21,9 @@
 import json
 import time
 from urlparse import urlparse
+import base64
 
+from django.contrib.auth import authenticate
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.db.models import Count
@@ -30,7 +32,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
-from tastypie.authentication import BasicAuthentication, MultiAuthentication, Authentication
+from tastypie.authentication import BasicAuthentication
 from tastypie.serializers import Serializer
 from guardian.shortcuts import get_anonymous_user
 from guardian.shortcuts import get_objects_for_user
@@ -43,13 +45,54 @@ from geonode.api.authorization import GeoNodeAuthorization
 from models import WFPDocument, Category
 
 
+class MixedBasicAuthentication(BasicAuthentication):
+    """
+    Custom authentication that mix BasicAuthentication (needed from OPWeb) and Authentication.
+    Unluckily it seems that MultiAuthentication does not help when mixing those two ones,
+    see: https://github.com/django-tastypie/django-tastypie/issues/1390
+    """
+
+    def is_authenticated(self, request, **kwargs):
+        """
+        Checks a user's basic auth credentials against the current
+        Django auth backend.
+        Otherwise just return True, as the static maps API is read only.
+        """
+        if not request.META.get('HTTP_AUTHORIZATION'):
+            return True
+
+        try:
+            (auth_type, data) = request.META['HTTP_AUTHORIZATION'].split()
+            if auth_type.lower() != 'basic':
+                return self._unauthorized()
+            user_pass = base64.b64decode(data).decode('utf-8')
+        except:
+            return self._unauthorized()
+
+        bits = user_pass.split(':', 1)
+
+        if len(bits) != 2:
+            return self._unauthorized()
+
+        if self.backend:
+            user = self.backend.authenticate(username=bits[0], password=bits[1])
+        else:
+            user = authenticate(username=bits[0], password=bits[1])
+
+        if user is None:
+            return self._unauthorized()
+
+        if not self.check_active(user):
+            return False
+
+        request.user = user
+        return True
+
+
 class CommonMetaApi:
     allowed_methods = ['get']
     include_resource_uri = True
-    authentication = MultiAuthentication(
-            BasicAuthentication(),
-            Authentication(),
-    )
+    authentication = MixedBasicAuthentication()
     authorization = GeoNodeAuthorization()
 
 
