@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
     {% block head %}
       {% if DEBUG_STATIC %}
@@ -31,7 +31,7 @@
       </style>
     <![endif]-->
   </head>
-  
+
   <body class="{% block body_class %}{% endblock %}">
 
     {% block header %}
@@ -64,7 +64,7 @@
                   <li id="nav_staticmaps"><a href="{% url "wfpdocs_browse" %}">{% trans "Static Maps" %}</a></li>
               </ul>
             </li>
-            
+
             <!-- resources -->
             <li id="nav_resources" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -76,7 +76,7 @@
                  <li id="nav_trainings"><a href="{% url "trainings_browse" %}">{% trans "Trainings" %}</a></li>
               </ul>
             </li>
-           
+
            <!-- community -->
            <li id="nav_community" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -88,14 +88,14 @@
                  <li id="nav_wfpgroups"><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
               </ul>
             </li>
-            
-            
-            
+
+
+
             {% endblock %}
           </ul>
-          
+
           <ul class="nav navbar-nav navbar-right">
-          
+
           <!-- search -->
            <li id="nav_search" >
              <div>
@@ -113,7 +113,7 @@
              </form>
              </div>
            </li>
-            
+
             {% if not user.is_authenticated and REGISTRATION_OPEN %}
             <li><a href="{% url "account_signup" %}">{% trans "Register" %}</a></li>
             {% endif %}
@@ -168,7 +168,7 @@
     </div>
     {% endblock middle %}
   </div>
-    
+
     {% block footer %}
     <footer class="footer">
       <div class="container">
@@ -181,7 +181,7 @@
           </div>
           <div class="col-md-4">
             <div class="col-md-1 pull-right">
-              <a href="http://www.wfp.org"><img src="{{ STATIC_URL }}geonode/img/wfp_logo_36_white.png"></a>          
+              <a href="http://www.wfp.org"><img src="{{ STATIC_URL }}geonode/img/wfp_logo_36_white.png"></a>
             </div>
             <label class="hidden">{% trans "Language" %}</label>
             {% if csrf_token != "NOTPROVIDED" %}
@@ -282,7 +282,7 @@
     </div>
     {% endif %}
     <!-- End of Modal -->
-    
+
     {% if DEBUG_STATIC %}
     <script src="{{ STATIC_URL }}lib/js/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}lib/js/jquery.dataTables.js"></script>
