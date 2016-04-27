@@ -21,3 +21,4 @@ wfp/uploaded
 *.cfg~
 *.old
 gn_migration.cfg
+.DS_Store
