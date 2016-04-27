@@ -181,8 +181,9 @@ UPLOADER = {
 
 # A tuple of hosts the proxy can send requests to.
 PROXY_ALLOWED_HOSTS = (
-    'localhost', 'geonode.wfp.org', '.wfp.org', 
-    '10.11.40.4', '10.11.40.90',
+    'localhost', 'geonode.wfp.org', '.wfp.org',
+    '10.11.40.4', '10.11.40.90', 'gdacs.org',
+    'bindup.crowdmap.com', 'geoserver.wfppal.org/geoserver',
     )
 ALLOWED_HOSTS = PROXY_ALLOWED_HOSTS
 
@@ -414,7 +415,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # This middleware allows to print private layers for the users that have 
+    # This middleware allows to print private layers for the users that have
     # the permissions to view them.
     # It sets temporary the involved layers as public before restoring the permissions.
     # Beware that for few seconds the involved layers are public there could be risks.
@@ -632,14 +633,14 @@ MAP_BASELAYERS = [{
 }, {
     "source": {"ptype": "gxp_mapboxsource"},
     "name": "geography-class",
-    "title": "Political MapBox",
+    "title": "Political MapBox (not printable)",
     "fixed": True,
     "visibility": False,
     "group":"background"
 }, {
     "source": {"ptype": "gxp_mapboxsource"},
     "name": "world-light",
-    "title": "Light base layer",
+    "title": "Light base layer (not printable)",
     "fixed": True,
     "visibility": False,
     "group":"background"

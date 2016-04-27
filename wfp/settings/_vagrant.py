@@ -14,3 +14,8 @@ UPLOADER = {
         'GEOGIG_ENABLED': False,
     }
 }
+
+SLACK_ENABLED = False
+SLACK_WEBHOOK_URLS = [
+    "https://hooks.slack.com/services/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"
+]
