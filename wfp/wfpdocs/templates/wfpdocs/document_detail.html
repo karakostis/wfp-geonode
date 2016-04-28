@@ -37,7 +37,7 @@
       <p><a href="{% url "wfpdocs_download" resource.slug %}" target="_blank">Download the {{ resource }} document</a></p>
       {%  endif %}
     {%  endif %}
-       
+
     <div class="documents-actions">
       {% include "_actions.html" %}
     </div>
@@ -81,11 +81,11 @@
       {% block social_links %}
         {% include "social_links.html" %}
       {% endblock %}
-        
+
       <article id="comments" class="tab-pane">
       {% include "_comments.html" %}
       </article>
-        
+
       <article id="rate" class="tab-pane">
         <!-- TODO: Move this to a reusable template snippet -->
         {% if request.user.is_authenticated %}

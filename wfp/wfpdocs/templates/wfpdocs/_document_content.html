@@ -15,7 +15,7 @@
       <span ng-bind="total_counts"></span>
     </div>
     {% include "search/_sort_filters.html" %}
-    
+
     <div class="col-md-12 grid-spacer">
       {% verbatim %}
       <article ng-repeat="item in results" resource_id="{{ item.id }}" ng-cloak class="ng-cloak">
