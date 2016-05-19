@@ -137,7 +137,7 @@ body.people li#nav_people a {
 body.groups li#nav_groups a {
   color: white;
 }
-/* autocomplete 
+/* autocomplete
 ------------------------*/
 .yourlabs-autocomplete {
   top: 100%;
@@ -262,6 +262,7 @@ body.groups li#nav_groups a {
 .grid-spacer {
   margin-top: 30px;
 }
+
 /* Control items
 ----------------------- */
 .controls {
