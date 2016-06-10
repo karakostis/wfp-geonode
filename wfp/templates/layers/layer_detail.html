@@ -18,6 +18,7 @@
 {% endif %}
 {% include "layers/layer_leaflet_modal_map.html" %}
 {{ block.super }}
+
 {% endblock %}
 
 
@@ -143,7 +144,7 @@
         {% endif %}
         </li>
       {% endif %}
-    <div class="modal fade" id="download-layer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="download-layer" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -153,8 +154,8 @@
 
 
           <div class="modal-body">
-            <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button">
-                Layer Filtering
+            <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
+                Do you want to filter it?
             </button>
           </br></br>
 
@@ -194,11 +195,11 @@
                                       <ul class="dropdown-menu dropdown-menu-attributes" id="attribute_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
                                           {% if schema %}
                                               {% for key, values in schema.properties.items %}
-                                                    <li><a href="#" id= {{ key }} data-type= {{ values }} data-schema= 'yes'>{{ key | capfirst }}</a></li>
+                                                    <li><a href="#" id= {{ key }} data-type= {{ values }} data-schema= 'yes'>{{ key }}</a></li>
                                               {% endfor %}
                                           {% else %}
                                               {% for attribute in resource.attributes %}
-                                                    <li><a href="#" id= {{ attribute }} data-type= 'string' data-schema= 'no'> {{ attribute | capfirst }} </a></li>
+                                                    <li><a href="#" id= {{ attribute }} data-type= 'string' data-schema= 'no'> {{ attribute }} </a></li>
                                               {% endfor %}
                                           {% endif %}
                                       </ul>
@@ -221,10 +222,11 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="single_value" placeholder="" data-toggle="tooltip" title="">
+                        <input type="text" class="form-control js-data-array" id="single_value" placeholder="" data-toggle="tooltip" title="">
                         <div class="input-group-btn" id="button_query">
                             <a href="#" id="query_part" class="btn btn-primary btn-mg" data-toggle="modal" data-target="#myModal" title=""><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
+
                     </div>
                     </br>
                     <div class="text_area" style="visibility:hidden;">
@@ -239,14 +241,14 @@
                       <div id="preview_map_modal"></div>
                     </div>
                 </div>
-                </br>
+                <hr style="width: 100%; color: #757575; height: 1px;" />
             </div>
 
             {% if links %}
+            <h4>{% trans "Pick your download format:" %}</h4>
             <ul>
               {% for link in links %}
-              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls">'{% trans link.name %}'</a></li>
-
+              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls">{% trans link.name %}</a></li>
               {% endfor %}
             </ul>
             {% endif %}
@@ -486,7 +488,6 @@
         $('<ul/>', {
             'class': 'arcgis-legend',
             html: items.join('')
-
         }).appendTo('#legend_placeholder');
 
     });
@@ -510,14 +511,43 @@
         $(".dropdown-menu-attributes li a").click(function(){
             $("#modal-button-attributes:first-child").text($(this).text());
             $("#modal-button-attributes:first-child").val($(this).text());
+
+            // functionality added for the autocomplete
+            property_name = $("#modal-button-attributes:first-child").text();
+
+            data_from_django = {{ feature_properties | safe }};
+            selected_data = data_from_django[property_name];
+
+            selected_data_prepare = [];
+            for (i = 0; i < selected_data.length; i++) {
+                jsonString = {
+                    id: i,
+                    text: selected_data[i].toString()
+                };
+                selected_data_val = jsonString;
+                selected_data_prepare.push(selected_data_val);
+
+            }
+
+            $(".js-data-array").select2({
+              data: selected_data_prepare,
+              // allow new values by the user
+              createSearchChoice:function(term, data) {
+                if ($(data).filter( function() {
+                  return this.text.localeCompare(term)===0;
+                }).length===0) {
+                  return {id:term, text:term};
+                }
+              },
+            })
+
         });
-        // on dropdown change, change the value of dropdown
+
         $(".dropdown-menu-operators li a").click(function(){
             $("#modal-button-operators:first-child").text($(this).text());
             $("#modal-button-operators:first-child").val($(this).text());
         });
 
-        // on dropdown change, change the value of dropdown
         $(".dropdown-menu-and-or li a").click(function(){
             $("#modal-button-and-or:first-child").text($(this).text());
             $("#modal-button-and-or:first-child").val($(this).text());
@@ -544,24 +574,21 @@
         });
 
         // add class selected when an element from the list is clicked.
-        // Used later to recognize if button was pressed
         $("#operator_list li:not(.divider)").click(function(){
             // Ensure only the current one is selected
             $("#operator_list li:not(.divider)").removeClass('selected');
             $(this).addClass('selected');
         });
         $("#attribute_list li:not(.divider)").click(function(){
-            // Ensure only the current one is selected
             $("#attribute_list li:not(.divider)").removeClass('selected');
             $(this).addClass('selected');
         });
         $("#and-or li:not(.divider)").click(function(){
-            // Ensure only the current one is selected
             $("#and-or li:not(.divider)").removeClass('selected');
             $(this).addClass('selected');
         });
 
-        // on button click, add value from textarea in array
+
         $(document.body).on("click", "#button_query",function(e) {
             $(".text_area").css("visibility", "visible");
             attribute_list = $("#attribute_list li.selected a").attr('id');
@@ -570,6 +597,8 @@
             logical_operator_dropdown = $("#and-or li.selected a").attr('id');
             attribute_data_type = $("#attribute_list li.selected a").attr('data-type'); // get the type of variable.
             attribute_data_schema = $("#attribute_list li.selected a").attr('data-schema');
+
+            single_value_input = ($('#single_value').select2('data').text).trim();
 
             if(attribute_list == null || operator_list == null || single_value_input == "" ||  logical_operator_dropdown == null) {
                 if($("#missing-values").length == 0) {
@@ -583,20 +612,24 @@
                 }
                 // validation that user enters a string for a string attribute or a number for a number attribute
                 if (attribute_data_schema == 'yes' && attribute_data_type == 'string' && !isNaN(single_value_input) ){
-                      $('#single_value').css('background-color' , '#f26161');
-                      $('#single_value').val("");
-                      $('#single_value').attr("placeholder", "You entered a number. Not a string.");
-                } else if (attribute_data_schema == 'yes' && attribute_data_type !== 'string' && isNaN(single_value_input)){
-                    $('#single_value').css('background-color' , '#f26161');
-                    $('#single_value').val("");
-                    $('#single_value').attr("placeholder", "You entered a string. Not a number.");
-                } else {
-                    $('#single_value').css('background-color' , '#ffffff');
-                    $('#single_value').attr("placeholder", "");
+                      if($("#wrong-data-type").length !== 0) {
+                          $('#wrong-data-type').empty();
+                      }
+                      $( "#query-filter-tools" ).after( "<p id='wrong-data-type'> You entered a number. Not a string.</p>" );
+                      $('#wrong-data-type').css({ "color": "#bd362f", "font-style": "italic"  });
 
-                    // control of single_value_input; string or number
+                } else if (attribute_data_schema == 'yes' && attribute_data_type !== 'string' && isNaN(single_value_input)){
+                    if($("#wrong-data-type").length !== 0) {
+                        $('#wrong-data-type').empty();
+                    }
+                    $( "#query-filter-tools" ).after( "<p id='wrong-data-type'> You entered a string. Not a number.</p>" );
+                    $('#wrong-data-type').css({ "color": "#bd362f", "font-style": "italic"  });
+
+                } else {
+                    $( "p" ).remove( "#wrong-data-type" );
+
+                    // check of single_value_input; string or number
                     if (isNaN(single_value_input)){
-                        // if not a number then check if the operator type
                         if (operator_list == "=" || operator_list == "<>" || operator_list == ">" || operator_list == "<" || operator_list == ">=" || operator_list == "<=" ){
                             single_value_input = "'" + single_value_input + "'";
                         } else if (operator_list == " LIKE ") {
@@ -607,7 +640,6 @@
                     input = attribute_list + operator_list + single_value_input;
                     input_id = attribute_list + single_value_input;
 
-                    // create input text area with id of the single value
                     $("#added_rules").append( '<div class="input-group user-input-filters"><div class="input-group-btn" id="erase_query"><a href="#"  class="btn btn-primary btn-mg" data-toggle="modal" data-target="#myModal" title="" ><span class="glyphicon glyphicon-minus"></span></a></div><input type="text" class="form-control" id="' + input_id + '" placeholder="" data-toggle="tooltip" title="" value="' + input + '"readonly></br></div>');
 
                     // push data to array
@@ -618,9 +650,7 @@
             }
         });
 
-        // remove div element on button click
         $("div").on("click","#erase_query",function(){
-            // remove value from array
             value_to_be_removed = $(this).siblings('input').val();
             var index = query.indexOf(value_to_be_removed);
             query.splice(index, 1);
@@ -630,10 +660,8 @@
         // on url click append the array values in the existing href
         $(document.body).on("click", ".urls",function(e) {
 
-            // get the href value of tab
             var tab = $('#tabContent .active > a').attr('href')
             if(tab == '#query_builder'){
-                // get the value of dropdown menu
                 logical_operator = $("#and-or li.selected a").attr('id');
                 // get the array, join it, add necessary values and add it in the UI
                 if (typeof query !== 'undefined') {

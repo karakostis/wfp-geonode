@@ -10,8 +10,8 @@
 {% block middle %}
    {{ block.super }}
   {% block hero %}
-  
-  
+
+
   <!-- Carousel
   ================================================== -->
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -68,7 +68,7 @@
     </a>
   </div><!-- /.carousel -->
   {% endblock %}
-  
+
   {% block mainbody %}
   <!-- social -->
   {% with facet_type='home' %}
@@ -107,11 +107,11 @@
             </div><!-- col-md-3 -->
           </div><!-- ng-repeat -->
         </div><!-- ng-app -->
-      
+
       </div><!-- featured-maps -->
     </section>
     {% endverbatim %}
-  
+
     <!-- facets -->
     <div class="row home-facets">
       <div class="col-md-1">
@@ -137,7 +137,7 @@
         </div>
     </div><!-- facets -->
   </div>
-  
+
   {% endblock %}<!-- block mainbody -->
 
 {% endblock %}<!-- block middle -->
@@ -150,14 +150,14 @@
   <script type="text/javascript">
     FEATURED_URL = '{% url 'api_dispatch_list' api_name='api' resource_name='wfp-featured-maps' %}?limit=4'
     'use strict';
-    (function(){  
+    (function(){
       var module = angular.module('featured', []);
       module.run(function($http, $rootScope){
         $http.get(FEATURED_URL).success(function(data){
           $rootScope.featured = data.objects;
         });
       });
-    })(); 
+    })();
   </script>
 
 {% endblock extra_script %}
