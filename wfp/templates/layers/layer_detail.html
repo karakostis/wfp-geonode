@@ -160,15 +160,15 @@
           </br></br>
 
           <ul class="nav nav-tabs" id="tabContent" style="display: none;">
-              <li class="active"><a href="#query_builder" data-toggle="tab">Query Builder</a></li>
-              <li><a href="#map" data-toggle="tab">Map Filter</a></li>
+              <li class="active"><a href="#query_builder" data-toggle="tab">{% trans "Query Builder" %}</a></li>
+              <li><a href="#map" data-toggle="tab">{% trans "Map Filter" %}</a></li>
           </ul>
           </br>
 
             <div class="tab-content" style="display: none;">  <!--  added now-->
                 <div id="query_builder" class="tab-pane fade in active">
                     <div class="form-inline" style=" display: inline-table; vertical-align: middle; width: auto;  ">
-                        Match
+                        {% trans "Match" %}
                         <div class="input-group" style=" display: inline-table; vertical-align: middle; width: auto;  ">
                             <div class="input-group-btn" id="drop_operator_list">
                                <div class="btn-group btn-group-xs">
@@ -183,14 +183,14 @@
                                 </div>
                             </div>
                         </div>
-                         of the following:
+                        {% trans "of the following:" %}
                     </div>
                     </br></br>
                     <div class="input-group" id = "query-filter-tools">
                         <div class="input-group-btn">
                             <div class="btn-group btn-group-sm">
                                 <div class="dropdown">
-                                  <button class="btn btn-primary dropdown-toggle" id="modal-button-attributes" type="button" data-toggle="dropdown" data-target="#">Attribute
+                                  <button class="btn btn-primary dropdown-toggle" id="modal-button-attributes" type="button" data-toggle="dropdown" data-target="#">{% trans "Attribute" %}
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu dropdown-menu-attributes" id="attribute_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
                                           {% if schema %}
@@ -207,7 +207,7 @@
                             </div>
                             <div class="btn-group btn-group-sm">
                                 <div class="dropdown">
-                                  <button class="btn btn-primary dropdown-toggle" id="modal-button-operators" type="button" data-toggle="dropdown" data-target="#">Operator
+                                  <button class="btn btn-primary dropdown-toggle" id="modal-button-operators" type="button" data-toggle="dropdown" data-target="#">{% trans "Operator" %}
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu dropdown-menu-operators" id="operator_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
             	                         <li><a href="#" id="=">=</a></li>
@@ -526,8 +526,8 @@
                 };
                 selected_data_val = jsonString;
                 selected_data_prepare.push(selected_data_val);
-
             }
+            
 
             $(".js-data-array").select2({
               data: selected_data_prepare,
