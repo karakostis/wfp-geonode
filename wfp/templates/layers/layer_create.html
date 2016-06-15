@@ -1,7 +1,7 @@
 {% extends "upload/layer_upload_base.html" %}
 {% load i18n %}
 {% load staticfiles %}
-
+{% load bootstrap_toolkit %}
 {% block title %} {% trans "Create Layer"  %} - {{ block.super }}  {% endblock %}
 
 {% block body_class %}layers create{% endblock %}
@@ -28,8 +28,8 @@
                   <button class="btn btn-primary dropdown-toggle" id="button-methods" type="button" data-toggle="dropdown" style="width: 100%;">Pick Up Method
                   <span class="caret"></span></button>
                       <ul class="dropdown-menu dropdown-menu-methods" style="width: 95%;">
-                        <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span> from excel</a></li>
-                        <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span> empty layer</a></li>
+                        <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span> From existing layer</a></li>
+                        <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span> Empty layer</a></li>
                       </ul>
               </div>
           </div>
@@ -50,7 +50,6 @@
                                               <li><a href="#" id= {{ cntr }}>{{ cntr }}</a></li>
                                         {% endfor %}
                                     {% endif %}
-
                                 </ul>
                           </div>
                       </div>
@@ -68,10 +67,18 @@
 
         <form id="file-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+          {% if errormsgs %}
+            {% for value in errormsgs %}
+                </p>  {{ value }} </p>
+            {% endfor %}
+
+          {% endif %}
+          {% for error in form.non_field_errors %}
+               {{ error }} </br>
+          {% endfor %}
+        </br>
           {% for field in form.visible_fields %}
-               {{ field.help_text }} <br/>
-               {{ field }} <br/>
-               {{ field.errors }}<br/>
+                   {{ field|as_bootstrap }} </br>
           {% endfor %}
           <button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
         </form>
@@ -112,6 +119,7 @@
 
 <script data-main="{% static 'geonode/js/upload/main' %}"
   src="{% static 'lib/js/require.js' %}">
+  alert("fdf")
 </script>
 <script type="text/javascript">
 {% autoescape off %}
@@ -155,29 +163,6 @@
         $(document.body).on("click", ".dropdown-menu-countries li a",function(e) {
             $("#button-countries:first-child").text($(this).text());
             $("#button-countries:first-child").val($(this).text());
-
-            /*
-            selected_btn = $(".selected").attr("id");
-            property_name = $("#button-countries:first-child").val();
-
-            if (selected_btn == "region"){
-                regions_per_countries = {{ regions | safe }};
-                selected_data = regions_per_countries[property_name];
-
-                $( "#_all_values" ).empty();
-                for (i = 0; i < selected_data.length; i++) {
-                    $('<option value="' + selected_data[i] + '">' + selected_data[i] + '</option>').appendTo("#_all_values");
-                }
-            } else if (selected_btn == "province"){
-                provinces_per_countries = {{ provinces | safe }};
-                selected_data = provinces_per_countries[property_name];
-
-                $( "#_all_values" ).empty();
-                for (i = 0; i < selected_data.length; i++) {
-                    $('<option value="' + selected_data[i] + '">' + selected_data[i] + '</option>').appendTo("#_all_values");
-                }
-            }
-            */
         });
 
 
@@ -190,8 +175,7 @@
             element_id = ["_panel_container", "_panel_msg"];
             clear_content(element_id);
             if (selected_val == "excel_layer"){
-                $("#_panel_container").append( '<i> Create layer for: </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:25%">Global Layer</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:25%">Country layer by admin1</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:25%">Country layer by admin2</button><button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">By location</button>');
-
+                $("#_panel_container").append( '<i> Create layer from: </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:25%">Global Layer</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:25%">Country layer by admin1</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:25%">Country layer by admin2</button><button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">By location</button>');
 
                 $( "._btn-select").click(function() {
 
