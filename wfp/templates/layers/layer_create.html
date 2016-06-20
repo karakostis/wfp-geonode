@@ -59,7 +59,7 @@
                   <select multiple="multiple" class="has-popover form-control" id="_all_values" data-container="body" data-content="keyword identifies a location Hold down &quot;Control&quot;, or &quot;Command&quot; on a Mac, to select more than one." data-html="true" data-placement="right" name="regions" data-original-title="" title="">
                   </select>
               -->
-                  <a href="#" class="btn btn-primary pull-right" id="download_xls">{% trans "Download as CSV" %}</a>
+                  <a href="#" class="btn btn-primary pull-right" id="download_csv">{% trans "Download as CSV" %}</a>
               </div>
           </div>
         </div>
@@ -138,7 +138,7 @@
     $(document).ready(function() {
 
 
-        $(document.body).on("click", "#download_xls",function(e) {
+        $(document.body).on("click", "#download_csv",function(e) {
 
             selected_country = ($("#button-countries").val())
             //selected_subareas = $('#_all_values').val();
@@ -146,8 +146,8 @@
 
             //id = "?country=" + selected_country + "&areas=" + selected_subareas + "&btn=" + selected_btn
             id = "?country=" + selected_country + "&btn=" + selected_btn
-            whole_url = "{% url 'download_xls' %}" + id
-            $("#download_xls").attr("href", whole_url)
+            whole_url = "{% url 'download_csv' %}" + id
+            $("#download_csv").attr("href", whole_url)
 
             $.ajax({
                 type: "GET",
@@ -189,8 +189,8 @@
                     clear_content(element_id);
                     if (clicked_btn == "country"){
 
-                        $("#download_xls").clone().appendTo('#_panel_msg');
-                        $("#download_xls").css("display", "block");
+                        $("#download_csv").clone().appendTo('#_panel_msg');
+                        $("#download_csv").css("display", "block");
 
 
                     } else if (clicked_btn == "region"){
