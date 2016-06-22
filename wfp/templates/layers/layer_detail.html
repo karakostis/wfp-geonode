@@ -152,13 +152,13 @@
             <h4 class="modal-title" id="myModalLabel">{% trans "Download Layer" %}</h4>
           </div>
 
-
           <div class="modal-body">
-            <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
-                Do you want to filter it?
-            </button>
-          </br></br>
-
+              {% if layer_type == "vector" %}
+                <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
+                  {% trans "Do you want to filter it?" %}
+                </button>
+                </br></br>
+              {% endif %}
           <ul class="nav nav-tabs" id="tabContent" style="display: none;">
               <li class="active"><a href="#query_builder" data-toggle="tab">{% trans "Query Builder" %}</a></li>
               <li><a href="#map" data-toggle="tab">{% trans "Map Filter" %}</a></li>

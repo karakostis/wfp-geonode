@@ -14,7 +14,7 @@
 {% block body_outer %}
 <div class="page-header">
   <a href="{% url "layer_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Layers" %}</a>
-  <h2 class="page-title">{% trans "Create Layers" %}</h2>
+  <h2 class="page-title">{% trans "Create Layer" %}</h2>
 </div>
 <!-- added for create layer functionality -->
 <div class="row">
@@ -22,11 +22,11 @@
         <div class="panel panel-primary">
           <div class="panel-heading">
               <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" id="button-methods" type="button" data-toggle="dropdown" style="width: 100%;">Pick Up Method
+                  <button class="btn btn-primary dropdown-toggle" id="button-methods" type="button" data-toggle="dropdown" style="width: 100%;">{% trans "Pick Up Method To Create a Layer" %}
                   <span class="caret"></span></button>
                       <ul class="dropdown-menu dropdown-menu-methods" style="width: 95%;">
-                        <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span> From existing layer</a></li>
-                        <!-- <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span> Empty layer</a></li> -->
+                        <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Create a layer using an existing one" %}</a></li>
+                        <!-- <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Empty layer" %}</a></li> -->
                       </ul>
               </div>
           </div>
@@ -132,9 +132,9 @@
             element_id = ["_panel_container", "_panel_msg"];
             clear_content(element_id);
             if (selected_val == "excel_layer"){
-                $("#_panel_container").append( '<i> Create layer from: </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">Global Layer</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">Country layer by admin1</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">Country layer by admin2</button>');
+                $("#_panel_container").append( '<i> {% trans "Choose an existing layer:" %} </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">{% trans "Global Layer" %}</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">{% trans "Country layer by admin1" %}</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">{% trans "Country layer by admin2" %}</button>');
 
-                //<button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">By location</button>
+                //<button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">{% trans "By location" %}</button>
 
                 $( "._btn-select").click(function() {
                     // add class "selected" to clicked button
