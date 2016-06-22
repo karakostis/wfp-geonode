@@ -6,7 +6,6 @@
 
 {% block body_class %}layers create{% endblock %}
 
-
 {% block head %}
 
 {{ block.super }}
@@ -17,8 +16,6 @@
   <a href="{% url "layer_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Layers" %}</a>
   <h2 class="page-title">{% trans "Create Layers" %}</h2>
 </div>
-
-
 <!-- added for create layer functionality -->
 <div class="row">
     <div class="col-md-8">
@@ -37,7 +34,6 @@
               <div id="_panel_container"></div>
               </br>
               <div id="_panel_msg"></div>
-
               <div class="input-group" id="_layer" style="display:none;">
                   <div class="input-group-btn" >
                       <div class="btn-group btn-group-sm" style="width:100%">
@@ -55,16 +51,11 @@
                       </div>
                   </div>
                   </br>
-                  <!--
-                  <select multiple="multiple" class="has-popover form-control" id="_all_values" data-container="body" data-content="keyword identifies a location Hold down &quot;Control&quot;, or &quot;Command&quot; on a Mac, to select more than one." data-html="true" data-placement="right" name="regions" data-original-title="" title="">
-                  </select>
-              -->
                   <a href="#" class="btn btn-primary pull-right" id="download_csv">{% trans "Download as CSV" %}</a>
               </div>
           </div>
-        </div>
-
-
+      </div> </br>
+        <h2>{% trans "Upload Layer" %}</h2>
         <form id="file-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           {% if errormsgs %}
@@ -82,24 +73,6 @@
           {% endfor %}
           <button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
         </form>
-
-
-        <!--
-        <form id="file-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-          <i>Layer Title:</i> <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="title">
-          <input class="btn" id="file-input" type="file" name= "csv_load">
-          <button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
-        </form>
-        -->
-
-
-
-        <section>
-          <!-- <a href="#" id="clear-button" class="btn btn-default">{% trans "Clear" %}</a>
-          <a href="#" id="upload-button" class="btn btn-danger">{% trans "Upload files" %}</a> -->
-        </section>
     </div>
     {% if GEONODE_SECURITY_ENABLED %}
     <div class="col-md-4">
@@ -112,10 +85,7 @@
 </div>
 
 {% endblock %}
-
-
 {% block extra_script %}
-
 
 <script data-main="{% static 'geonode/js/upload/main' %}"
   src="{% static 'lib/js/require.js' %}">
@@ -123,28 +93,19 @@
 </script>
 <script type="text/javascript">
 {% autoescape off %}
-
   csrf_token =  "{{ csrf_token }}",
   form_target = "{{ UPLOADER_URL }}",
   geogig_enabled = {{ GEOGIG_ENABLED|lower  }},
   time_enabled = {{ TIME_ENABLED|lower  }},
   userLookup = "{% url "geonode.views.ajax_lookup" %}"
-
 {% endautoescape %}
-
 </script>
 
 <script type="text/javascript">
     $(document).ready(function() {
-
-
         $(document.body).on("click", "#download_csv",function(e) {
-
             selected_country = ($("#button-countries").val())
-            //selected_subareas = $('#_all_values').val();
             selected_btn = $(".selected").attr("id");
-
-            //id = "?country=" + selected_country + "&areas=" + selected_subareas + "&btn=" + selected_btn
             id = "?country=" + selected_country + "&btn=" + selected_btn
             whole_url = "{% url 'download_csv' %}" + id
             $("#download_csv").attr("href", whole_url)
@@ -159,14 +120,10 @@
             });
         });
 
-
         $(document.body).on("click", ".dropdown-menu-countries li a",function(e) {
             $("#button-countries:first-child").text($(this).text());
             $("#button-countries:first-child").val($(this).text());
         });
-
-
-
 
         $(".dropdown-menu-methods li a").click(function(){
             $("#button-methods:first-child").text($(this).text());
@@ -175,42 +132,30 @@
             element_id = ["_panel_container", "_panel_msg"];
             clear_content(element_id);
             if (selected_val == "excel_layer"){
-                $("#_panel_container").append( '<i> Create layer from: </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:25%">Global Layer</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:25%">Country layer by admin1</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:25%">Country layer by admin2</button><button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">By location</button>');
+                $("#_panel_container").append( '<i> Create layer from: </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">Global Layer</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">Country layer by admin1</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">Country layer by admin2</button>');
+
+                //<button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">By location</button>
 
                 $( "._btn-select").click(function() {
-
                     // add class "selected" to clicked button
                     $("button.selected").removeClass("selected");
                     $(this).addClass('selected');
-
                     clicked_btn = $(this).attr("id");
-
                     element_id = ["_panel_msg"];
                     clear_content(element_id);
                     if (clicked_btn == "country"){
-
                         $("#download_csv").clone().appendTo('#_panel_msg');
                         $("#download_csv").css("display", "block");
-
-
                     } else if (clicked_btn == "region"){
-
                         $("#_layer").clone().appendTo('#_panel_msg');
                         $("#_layer").css("display", "block");
-
-
                     } else if (clicked_btn == "province"){
-
                         $("#_layer").clone().appendTo('#_panel_msg');
                         $("#_layer").css("display", "block");
-
                     } else if (clicked_btn == "settlement"){
-
                         $("#_panel_msg").append('</br><i> Downloading excel file with settlements..</i></br>');
                     }
-
                 });
-
             } else if (selected_val == "empty_layer") {
                 $("#_panel_container").append( '<i> Another way to create layer: </i>');
             }
@@ -225,7 +170,6 @@
             }
         }
     }
-
 </script>
 
 {% if GEONODE_SECURITY_ENABLED %}
