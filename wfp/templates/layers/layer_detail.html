@@ -42,50 +42,49 @@
 
     <div class="tab-content">
 
-    {% include "base/resourcebase_info_panel.html" %}
-
+      {% include "base/resourcebase_info_panel.html" %}
       <article id="attributes" class="tab-pane">
         {% if resource.attribute_set.all %}
-            <table class="table table-striped table-bordered table-condensed">
-              <thead>
+          <table class="table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>{% trans "Attribute Name" %}</th>
+                <th>{% trans "Label" %}</th>
+                <th>{% trans "Description" %}</th>
+                {% if wps_enabled %}
+                  <th>{% trans "Range" %}</th>
+                  <th>{% trans "Average" %}</th>
+                  <th>{% trans "Median" %}</th>
+                  <th>{% trans "Standard Deviation" %}</th>
+                {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for attribute in resource.attributes %}
                 <tr>
-                  <th>{% trans "Attribute Name" %}</th>
-                  <th>{% trans "Label" %}</th>
-                  <th>{% trans "Description" %}</th>
+                  <td {% if attribute.attribute_label and attribute.attribute_label != attribute.attribute %}title="{{ attribute.attribute }}"{% endif %}>{{ attribute }}</td>
+                  <td>{{ attribute.attribute_label }}</td>
+                  <td>{{ attribute.description }}</td>
                   {% if wps_enabled %}
-                    <th>{% trans "Range" %}</th>
-                    <th>{% trans "Average" %}</th>
-                    <th>{% trans "Median" %}</th>
-                    <th>{% trans "Standard Deviation" %}</th>
+                    {% if attribute.unique_values == "NA" %}
+                    <td>{{ attribute.unique_values }}</td>
+                    {% else %}
+                    <td>
+                      <select name="unique_values">
+                      {% for value in attribute.unique_values_as_list %}
+                        <option value="{{ value }}">{{ value }}</option>
+                      {% endfor %}
+                      </select>
+                    </td>
+                    {% endif %}
+                    <td>{{ attribute.average|floatformat:"2" }}</td>
+                    <td>{{ attribute.median|floatformat:"2" }}</td>
+                    <td>{{ attribute.stddev|floatformat:"2" }}</td>
                   {% endif %}
                 </tr>
-              </thead>
-              <tbody>
-                {% for attribute in resource.attributes %}
-                  <tr>
-                    <td {% if attribute.attribute_label and attribute.attribute_label != attribute.attribute %}title="{{ attribute.attribute }}"{% endif %}>{{ attribute }}</td>
-                    <td>{{ attribute.attribute_label }}</td>
-                    <td>{{ attribute.description }}</td>
-                    {% if wps_enabled %}
-                      {% if attribute.unique_values == "NA" %}
-                      <td>{{ attribute.unique_values }}</td>
-                      {% else %}
-                      <td>
-                        <select name="unique_values">
-                        {% for value in attribute.unique_values_as_list %}
-                          <option value="{{ value }}">{{ value }}</option>
-                        {% endfor %}
-                        </select>
-                      </td>
-                      {% endif %}
-                      <td>{{ attribute.average|floatformat:"2" }}</td>
-                      <td>{{ attribute.median|floatformat:"2" }}</td>
-                      <td>{{ attribute.stddev|floatformat:"2" }}</td>
-                    {% endif %}
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+              {% endfor %}
+            </tbody>
+          </table>
         {% endif %}
       </article>
 
@@ -123,25 +122,22 @@
         {% num_ratings resource as num_votes %}
         <div class="overall_rating" data-score="{{ layer_rating }}"></div> ({{num_votes}})
       </article>
-
     </div>
-
   </div>
 
   <div class="col-md-4">
-
     <ul class="list-group">
       {% if resource.storeType != "remoteStore" %}
         {% get_obj_perms request.user for resource.get_self_resource as "perms" %}
 
         <li class="list-group-item">
-        {% if links %}
-           <button class="btn btn-primary btn-md btn-block" data-toggle="modal" data-target="#download-layer">{% trans "Download Layer" %}</button>
-        {% else %}
-          {% if request.user.is_authenticated %}
-          <button class="btn btn-primary btn-md btn-block" id="request-download">{% trans "Request Download" %}</button>
+          {% if links %}
+             <button class="btn btn-primary btn-md btn-block" data-toggle="modal" data-target="#download-layer">{% trans "Download Layer" %}</button>
+          {% else %}
+            {% if request.user.is_authenticated %}
+              <button class="btn btn-primary btn-md btn-block" id="request-download">{% trans "Request Download" %}</button>
+            {% endif %}
           {% endif %}
-        {% endif %}
         </li>
       {% endif %}
     <div class="modal fade" id="download-layer" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -153,95 +149,94 @@
           </div>
 
           <div class="modal-body">
-              {% if layer_type == "vector" %}
-                <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
-                  {% trans "Do you want to filter it?" %}
-                </button>
-                </br></br>
-              {% endif %}
-          <ul class="nav nav-tabs" id="tabContent" style="display: none;">
-              <li class="active"><a href="#query_builder" data-toggle="tab">{% trans "Query Builder" %}</a></li>
-              <li><a href="#map" data-toggle="tab">{% trans "Map Filter" %}</a></li>
-          </ul>
-          </br>
+            {% if layer_type == "vector" %}
+              <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
+                {% trans "Do you want to filter it?" %}
+              </button>
+              </br></br>
+            {% endif %}
+            <ul class="nav nav-tabs" id="tabContent" style="display: none;">
+                <li class="active"><a href="#query_builder" data-toggle="tab">{% trans "Query Builder" %}</a></li>
+                <li><a href="#map" data-toggle="tab">{% trans "Map Filter" %}</a></li>
+            </ul>
+            </br>
 
             <div class="tab-content" style="display: none;">  <!--  added now-->
-                <div id="query_builder" class="tab-pane fade in active">
-                    <div class="form-inline" style=" display: inline-table; vertical-align: middle; width: auto;  ">
-                        {% trans "Match" %}
-                        <div class="input-group" style=" display: inline-table; vertical-align: middle; width: auto;  ">
-                            <div class="input-group-btn" id="drop_operator_list">
-                               <div class="btn-group btn-group-xs">
-                                   <div class="dropdown">
-                                       <button class="btn btn-primary btn-xs dropdown-toggle" id="modal-button-and-or" type="button" data-toggle="dropdown" data-target="#" value="AND">
-                                       <span class="caret"></span></button>
-                                        <ul class="dropdown-menu dropdown-menu-and-or" id="and-or" style="height: auto; max-height: 200px; overflow-x: hidden;">
-                                           <li><a href="#" id="AND">all</a></li>
-                                           <li><a href="#" id="OR">any</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+              <div id="query_builder" class="tab-pane fade in active">
+                <div class="form-inline" style=" display: inline-table; vertical-align: middle; width: auto;  ">
+                  {% trans "Match" %}
+                  <div class="input-group" style=" display: inline-table; vertical-align: middle; width: auto;  ">
+                    <div class="input-group-btn" id="drop_operator_list">
+                     <div class="btn-group btn-group-xs">
+                        <div class="dropdown">
+                          <button class="btn btn-primary btn-xs dropdown-toggle" id="modal-button-and-or" type="button" data-toggle="dropdown" data-target="#" value="AND">
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-and-or" id="and-or" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                             <li><a href="#" id="AND">all</a></li>
+                             <li><a href="#" id="OR">any</a></li>
+                            </ul>
                         </div>
-                        {% trans "of the following:" %}
+                      </div>
                     </div>
-                    </br></br>
-                    <div class="input-group" id = "query-filter-tools">
-                        <div class="input-group-btn">
-                            <div class="btn-group btn-group-sm">
-                                <div class="dropdown">
-                                  <button class="btn btn-primary dropdown-toggle" id="modal-button-attributes" type="button" data-toggle="dropdown" data-target="#">{% trans "Attribute" %}
-                                      <span class="caret"></span></button>
-                                      <ul class="dropdown-menu dropdown-menu-attributes" id="attribute_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
-                                          {% if schema %}
-                                              {% for key, values in schema.properties.items %}
-                                                    <li><a href="#" id= {{ key }} data-type= {{ values }} data-schema= 'yes'>{{ key }}</a></li>
-                                              {% endfor %}
-                                          {% else %}
-                                              {% for attribute in resource.attributes %}
-                                                    <li><a href="#" id= {{ attribute }} data-type= 'string' data-schema= 'no'> {{ attribute }} </a></li>
-                                              {% endfor %}
-                                          {% endif %}
-                                      </ul>
-                                </div>
-                            </div>
-                            <div class="btn-group btn-group-sm">
-                                <div class="dropdown">
-                                  <button class="btn btn-primary dropdown-toggle" id="modal-button-operators" type="button" data-toggle="dropdown" data-target="#">{% trans "Operator" %}
-                                      <span class="caret"></span></button>
-                                      <ul class="dropdown-menu dropdown-menu-operators" id="operator_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
-            	                         <li><a href="#" id="=">=</a></li>
-                                         <li><a href="#" id="&lt;&gt;">&lt;&gt;</a></li>
-                                         <li><a href="#" id="&gt;">&gt;</a></li>
-                                         <li><a href="#" id="&lt;">&lt;</a></li>
-                                         <li><a href="#" id="&gt;=">&gt;=</a></li>
-                                         <li><a href="#" id="&lt;=">&lt;=</a></li>
-                                         <li role="separator" class="divider"></li>
-                                         <li><a href="#" id=" LIKE ">LIKE</a></li>
-                                      </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control js-data-array" id="single_value" placeholder="" data-toggle="tooltip" title="">
-                        <div class="input-group-btn" id="button_query">
-                            <a href="#" id="query_part" class="btn btn-primary btn-mg" data-toggle="modal" data-target="#myModal" title=""><span class="glyphicon glyphicon-plus"></span></a>
-                        </div>
-
-                    </div>
-                    </br>
-                    <div class="text_area" style="visibility:hidden;">
-                        <div class="form-group" id="added_rules"></div>
-                        <div>
-                            <p id="whole_query"> </p>
-                        </div>
-                    </div>
+                  </div>
+                  {% trans "of the following:" %}
                 </div>
-                <div id="map" class="tab-pane fade">
-                    <div id="embedded_map_modal">
-                      <div id="preview_map_modal"></div>
+                </br></br>
+                <div class="input-group" id = "query-filter-tools">
+                  <div class="input-group-btn">
+                    <div class="btn-group btn-group-sm">
+                      <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" id="modal-button-attributes" type="button" data-toggle="dropdown" data-target="#">{% trans "Attribute" %}
+                            <span class="caret"></span></button>
+                          <ul class="dropdown-menu dropdown-menu-attributes" id="attribute_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                            {% if schema %}
+                              {% for key, values in schema.properties.items %}
+                                <li><a href="#" id= {{ key }} data-type= {{ values }} data-schema= 'yes'>{{ key }}</a></li>
+                              {% endfor %}
+                            {% else %}
+                              {% for attribute in resource.attributes %}
+                                <li><a href="#" id= {{ attribute }} data-type= 'string' data-schema= 'no'> {{ attribute }} </a></li>
+                              {% endfor %}
+                            {% endif %}
+                          </ul>
+                      </div>
                     </div>
+                    <div class="btn-group btn-group-sm">
+                      <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" id="modal-button-operators" type="button" data-toggle="dropdown" data-target="#">{% trans "Operator" %}
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-operators" id="operator_list" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                         <li><a href="#" id="=">=</a></li>
+                           <li><a href="#" id="&lt;&gt;">&lt;&gt;</a></li>
+                           <li><a href="#" id="&gt;">&gt;</a></li>
+                           <li><a href="#" id="&lt;">&lt;</a></li>
+                           <li><a href="#" id="&gt;=">&gt;=</a></li>
+                           <li><a href="#" id="&lt;=">&lt;=</a></li>
+                           <li role="separator" class="divider"></li>
+                           <li><a href="#" id=" LIKE ">LIKE</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control js-data-array" id="single_value" placeholder="" data-toggle="tooltip" title="">
+                  <div class="input-group-btn" id="button_query">
+                    <a href="#" id="query_part" class="btn btn-primary btn-mg" data-toggle="modal" data-target="#myModal" title=""><span class="glyphicon glyphicon-plus"></span></a>
+                  </div>
                 </div>
-                <hr style="width: 100%; color: #757575; height: 1px;" />
+                </br>
+                <div class="text_area" style="visibility:hidden;">
+                  <div class="form-group" id="added_rules"></div>
+                  <div>
+                      <p id="whole_query"> </p>
+                  </div>
+                </div>
+              </div>
+              <div id="map" class="tab-pane fade">
+                <div id="embedded_map_modal">
+                  <div id="preview_map_modal"></div>
+                </div>
+              </div>
+              <hr style="width: 100%; color: #757575; height: 1px;" />
             </div>
 
             {% if links %}
@@ -252,7 +247,6 @@
               {% endfor %}
             </ul>
             {% endif %}
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
@@ -343,7 +337,7 @@
               {% for link in metadata %}
                 <li><a href="{{ link.url }}">{{ link.name }}</a></li>
               {% endfor %}
-            <ul>
+            </ul>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
@@ -395,25 +389,25 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-    <li class="list-group-item">
-      <h4>{% trans "Styles" %}</h4>
-       <p>{% trans "The following styles are associated with this layer. Choose a style to view it in the preview map." %}</p>
-       <ul class="list-unstyled">
-        {% for style in resource.styles.all %}
-        <li>
-          {% if resource.default_style == style %}
-          <input type="radio" checked name="style" id="{{ style.name }}" value="{{ style.title }}"/>
-          (default style)
-          {% else %}
-          <input type="radio" name="style" id="{{ style.name }}" value="{{ style.title }}"/>
-          {% endif %}
-          <a href="{{ GEOSERVER_BASE_URL }}styles/{{ style.name }}.sld" >{{ style.sld_title }}</a>
-        </li>
-        {% empty %}
-        <li>{% trans "No styles associated with this layer" %}</li>
-        {% endfor %}
-      </ul>
-    </li>
+      <li class="list-group-item">
+        <h4>{% trans "Styles" %}</h4>
+        <p>{% trans "The following styles are associated with this layer. Choose a style to view it in the preview map." %}</p>
+        <ul class="list-unstyled">
+          {% for style in resource.styles.all %}
+            <li>
+              {% if resource.default_style == style %}
+                  <input type="radio" checked name="style" id="{{ style.name }}" value="{{ style.title }}"/>
+                  (default style)
+              {% else %}
+                <input type="radio" name="style" id="{{ style.name }}" value="{{ style.title }}"/>
+              {% endif %}
+              <a href="{{ GEOSERVER_BASE_URL }}styles/{{ style.name }}.sld" >{{ style.sld_title }}</a>
+            </li>
+            {% empty %}
+            <li>{% trans "No styles associated with this layer" %}</li>
+          {% endfor %}
+        </ul>
+      </li>
     {% endif %}
 
     {% if GEONODE_SECURITY_ENABLED %}
@@ -427,15 +421,15 @@
     {% endif %}
 
     {% if resource.storeType == "remoteStore" %}
-    <li class="list-group-item">
-            <h4>{% trans "External service layer" %}</h4>
-            <div>{% trans "Source" %}: <a href="/services/{{resource.service.id}}">{{ resource.service.title }}</a></div>
-            <div>{% trans "Type" %}: {{ resource.service.type }}</div>
-    </li>
+      <li class="list-group-item">
+        <h4>{% trans "External service layer" %}</h4>
+        <div>{% trans "Source" %}: <a href="/services/{{resource.service.id}}">{{ resource.service.title }}</a></div>
+        <div>{% trans "Type" %}: {{ resource.service.type }}</div>
+      </li>
     {% endif %}
 
     {% include "base/_resourcebase_contact_snippet.html" %}
-  </ul>
+    </ul>
 
 
   {% if GEONODE_SECURITY_ENABLED %}
@@ -448,51 +442,50 @@
 
 {% block extra_script %}
 
-    {% if GEOGIG_ENABLED and resource.link_set.geogig %}
-        {% with "_geogig_scripts.html" as geogig_scripts_template %}
-            {% include  geogig_scripts_template %}
-        {% endwith %}
-    {% endif %}
+  {% if GEOGIG_ENABLED and resource.link_set.geogig %}
+      {% with "_geogig_scripts.html" as geogig_scripts_template %}
+          {% include  geogig_scripts_template %}
+      {% endwith %}
+  {% endif %}
 
-    {% if request.user.is_authenticated %}
-        {% user_rating_js request.user resource "layer" %}
-    {% else %}
-      {% overall_rating resource 'layer' as the_layer_rating %}
-    {% endif %}
-    {% include 'rating.html' %}
-    {% include 'request_download.html' %}
+  {% if request.user.is_authenticated %}
+      {% user_rating_js request.user resource "layer" %}
+  {% else %}
+    {% overall_rating resource 'layer' as the_layer_rating %}
+  {% endif %}
+  {% include 'rating.html' %}
+  {% include 'request_download.html' %}
 
     <script type="text/javascript">
-       $("#comment_submit_btn").click(function(event) {
-            $.ajax({
-              type: "POST",
-              url: $("#form_post_comment").attr('action'),
-              data: $("#form_post_comment").serialize(),
-              success: function() {
-                $('#form_post_comment_div').modal('hide');
-                $('#comments_section').load(window.location.pathname + ' #comments_section',
-                		function(){$(this).children().unwrap()})
-              }
-            });
-            return false;
+      $("#comment_submit_btn").click(function(event) {
+        $.ajax({
+          type: "POST",
+          url: $("#form_post_comment").attr('action'),
+          data: $("#form_post_comment").serialize(),
+          success: function() {
+            $('#form_post_comment_div').modal('hide');
+            $('#comments_section').load(window.location.pathname + ' #comments_section',
+            	function(){$(this).children().unwrap()})
+          }
+        });
+        return false;
+      });
+
+      {% if resource.get_legend.link_type == 'json' %}
+        $.getJSON('{{resource.get_legend_url}}', function (data){
+          var legend = data.layers[0].legend;
+          var items = [];
+          $.each(legend, function (key, dvalue){
+              items.push('<li><img src="data:image/png;base64,' + dvalue.imageData + '">'+dvalue.label+'</li>');
           });
 
-    {% if resource.get_legend.link_type == 'json' %}
-    $.getJSON('{{resource.get_legend_url}}', function (data) {
-        var legend = data.layers[0].legend;
-        var items = [];
-        $.each(legend, function (key, dvalue) {
-            items.push('<li><img src="data:image/png;base64,' + dvalue.imageData + '">'+dvalue.label+'</li>');
-        });
-
-        $('<ul/>', {
+          $('<ul/>',{
             'class': 'arcgis-legend',
             html: items.join('')
-        }).appendTo('#legend_placeholder');
-
-    });
-    {% endif %}
-        </script>
+          }).appendTo('#legend_placeholder');
+        });
+      {% endif %}
+    </script>
     <script type="text/javascript">
       $('#set_thumbnail').click(function(){
         createMapThumbnail();
@@ -500,203 +493,193 @@
       });
     </script>
 
-
     <script type="text/javascript">
+      // set default values for the logical operator list
+      $("#modal-button-and-or:first-child").text($("#AND").text());
+      $("#modal-button-attributes:first-child").val($("#AND").text());
+      $("#and-or li:not(.divider)").addClass('selected');
+      // on dropdown change, change the value of dropdown
+      $(".dropdown-menu-attributes li a").click(function(){
+        $("#modal-button-attributes:first-child").text($(this).text());
+        $("#modal-button-attributes:first-child").val($(this).text());
 
-        // set default values for the logical operator list
-        $("#modal-button-and-or:first-child").text($("#AND").text());
-        $("#modal-button-attributes:first-child").val($("#AND").text());
-        $("#and-or li:not(.divider)").addClass('selected');
-        // on dropdown change, change the value of dropdown
-        $(".dropdown-menu-attributes li a").click(function(){
-            $("#modal-button-attributes:first-child").text($(this).text());
-            $("#modal-button-attributes:first-child").val($(this).text());
+        // functionality added for the autocomplete
+        property_name = $("#modal-button-attributes:first-child").text();
 
-            // functionality added for the autocomplete
-            property_name = $("#modal-button-attributes:first-child").text();
+        data_from_django = {{ feature_properties | safe }};
+        selected_data = data_from_django[property_name];
 
-            data_from_django = {{ feature_properties | safe }};
-            selected_data = data_from_django[property_name];
-
-            selected_data_prepare = [];
-            for (i = 0; i < selected_data.length; i++) {
-                jsonString = {
-                    id: i,
-                    text: selected_data[i].toString()
-                };
-                selected_data_val = jsonString;
-                selected_data_prepare.push(selected_data_val);
+        selected_data_prepare = [];
+        for (i = 0; i < selected_data.length; i++) {
+            jsonString = {
+                id: i,
+                text: selected_data[i].toString()
+            };
+            selected_data_val = jsonString;
+            selected_data_prepare.push(selected_data_val);
+        }
+        $(".js-data-array").select2({
+          data: selected_data_prepare,
+          // allow new values by the user
+          createSearchChoice:function(term, data) {
+            if ($(data).filter( function() {
+              return this.text.localeCompare(term)===0;
+            }).length===0) {
+              return {id:term, text:term};
             }
+          },
+        })
+      });
 
+      $(".dropdown-menu-operators li a").click(function(){
+        $("#modal-button-operators:first-child").text($(this).text());
+        $("#modal-button-operators:first-child").val($(this).text());
+      });
 
-            $(".js-data-array").select2({
-              data: selected_data_prepare,
-              // allow new values by the user
-              createSearchChoice:function(term, data) {
-                if ($(data).filter( function() {
-                  return this.text.localeCompare(term)===0;
-                }).length===0) {
-                  return {id:term, text:term};
-                }
-              },
-            })
+      $(".dropdown-menu-and-or li a").click(function(){
+        $("#modal-button-and-or:first-child").text($(this).text());
+        $("#modal-button-and-or:first-child").val($(this).text());
+      });
 
-        });
+      // delete content from modal on close
+      $('#download-layer').on('hidden.bs.modal', function () {
+        $(this).find("input,textarea,select").val('').end();
+        if ($('#modal-button-and-or').is('.disabled')) {
+          $("#modal-button-and-or").removeClass( "disabled" );
+        }
+        $('.user-input-filters').remove();
+      });
 
-        $(".dropdown-menu-operators li a").click(function(){
-            $("#modal-button-operators:first-child").text($(this).text());
-            $("#modal-button-operators:first-child").val($(this).text());
-        });
+      // on first click create an array & save initial URLs
+      $("#button-toggle").one( "click", function() {
+        query=[];
+        kml_url = $("#kml").attr("href");
+        json_url = $("#geojson").attr("href");
+        excel_url = $("#excel").attr("href");
+        csv_url = $("#csv").attr("href");
+        shape_url = $("#zipped-shapefile").attr("href");
+        all_urls = {'kml' : kml_url, 'geojson' : json_url, 'excel' : excel_url, 'csv' : csv_url, 'zipped-shapefile' : shape_url};
+      });
 
-        $(".dropdown-menu-and-or li a").click(function(){
-            $("#modal-button-and-or:first-child").text($(this).text());
-            $("#modal-button-and-or:first-child").val($(this).text());
-        });
+      // add class selected when an element from the list is clicked.
+      $("#operator_list li:not(.divider)").click(function(){
+        // Ensure only the current one is selected
+        $("#operator_list li:not(.divider)").removeClass('selected');
+        $(this).addClass('selected');
+      });
+      $("#attribute_list li:not(.divider)").click(function(){
+        $("#attribute_list li:not(.divider)").removeClass('selected');
+        $(this).addClass('selected');
+      });
+      $("#and-or li:not(.divider)").click(function(){
+        $("#and-or li:not(.divider)").removeClass('selected');
+        $(this).addClass('selected');
+      });
 
-        // delete content from modal on close
-        $('#download-layer').on('hidden.bs.modal', function () {
-            $(this).find("input,textarea,select").val('').end();
-            if ($('#modal-button-and-or').is('.disabled')) {
-                $("#modal-button-and-or").removeClass( "disabled" );
+      $(document.body).on("click", "#button_query",function(e){
+        $(".text_area").css("visibility", "visible");
+        attribute_list = $("#attribute_list li.selected a").attr('id');
+        operator_list = $("#operator_list li.selected a").attr('id');
+        single_value_input = ($("#single_value").val()).trim();
+        logical_operator_dropdown = $("#and-or li.selected a").attr('id');
+        attribute_data_type = $("#attribute_list li.selected a").attr('data-type'); // get the type of variable.
+        attribute_data_schema = $("#attribute_list li.selected a").attr('data-schema');
+
+        single_value_input = ($('#single_value').select2('data').text).trim();
+
+        if(attribute_list == null || operator_list == null || single_value_input == "" ||  logical_operator_dropdown == null){
+          if($("#missing-values").length == 0) {
+            $( "#query-filter-tools" ).after( "<p id='missing-values'> Select all values from menus.</p>" );
+          }
+          $('#missing-values').css({ "color": "#bd362f", "font-style": "italic"  });
+        } else {
+            if($("#missing-values").length !== 0) {
+              $( "p" ).remove( "#missing-values" );
             }
-            $('.user-input-filters').remove();
-        });
-
-        // on first click create an array & save initial URLs
-        $("#button-toggle").one( "click", function() {
-            query=[];
-            kml_url = $("#kml").attr("href");
-            json_url = $("#geojson").attr("href");
-            excel_url = $("#excel").attr("href");
-            csv_url = $("#csv").attr("href");
-            shape_url = $("#zipped-shapefile").attr("href");
-            all_urls = {'kml' : kml_url, 'geojson' : json_url, 'excel' : excel_url, 'csv' : csv_url, 'zipped-shapefile' : shape_url};
-        });
-
-        // add class selected when an element from the list is clicked.
-        $("#operator_list li:not(.divider)").click(function(){
-            // Ensure only the current one is selected
-            $("#operator_list li:not(.divider)").removeClass('selected');
-            $(this).addClass('selected');
-        });
-        $("#attribute_list li:not(.divider)").click(function(){
-            $("#attribute_list li:not(.divider)").removeClass('selected');
-            $(this).addClass('selected');
-        });
-        $("#and-or li:not(.divider)").click(function(){
-            $("#and-or li:not(.divider)").removeClass('selected');
-            $(this).addClass('selected');
-        });
-
-
-        $(document.body).on("click", "#button_query",function(e) {
-            $(".text_area").css("visibility", "visible");
-            attribute_list = $("#attribute_list li.selected a").attr('id');
-            operator_list = $("#operator_list li.selected a").attr('id');
-            single_value_input = ($("#single_value").val()).trim();
-            logical_operator_dropdown = $("#and-or li.selected a").attr('id');
-            attribute_data_type = $("#attribute_list li.selected a").attr('data-type'); // get the type of variable.
-            attribute_data_schema = $("#attribute_list li.selected a").attr('data-schema');
-
-            single_value_input = ($('#single_value').select2('data').text).trim();
-
-            if(attribute_list == null || operator_list == null || single_value_input == "" ||  logical_operator_dropdown == null) {
-                if($("#missing-values").length == 0) {
-                    $( "#query-filter-tools" ).after( "<p id='missing-values'> Select all values from menus.</p>" );
-                }
-                $('#missing-values').css({ "color": "#bd362f", "font-style": "italic"  });
+            // validation that user enters a string for a string attribute or a number for a number attribute
+            if (attribute_data_schema == 'yes' && attribute_data_type == 'string' && !isNaN(single_value_input) ){
+              if($("#wrong-data-type").length !== 0) {
+                $('#wrong-data-type').empty();
+              }
+              $( "#query-filter-tools" ).after( "<p id='wrong-data-type'> You entered a number. Not a string.</p>" );
+              $('#wrong-data-type').css({ "color": "#bd362f", "font-style": "italic"  });
+            } else if (attribute_data_schema == 'yes' && attribute_data_type !== 'string' && isNaN(single_value_input)){
+              if($("#wrong-data-type").length !== 0) {
+                  $('#wrong-data-type').empty();
+              }
+              $( "#query-filter-tools" ).after( "<p id='wrong-data-type'> You entered a string. Not a number.</p>" );
+              $('#wrong-data-type').css({ "color": "#bd362f", "font-style": "italic"  });
 
             } else {
-                if($("#missing-values").length !== 0) {
-                    $( "p" ).remove( "#missing-values" );
+              $( "p" ).remove( "#wrong-data-type" );
+              // check of single_value_input; string or number
+              if (isNaN(single_value_input)){
+                if (operator_list == "=" || operator_list == "<>" || operator_list == ">" || operator_list == "<" || operator_list == ">=" || operator_list == "<=" ){
+                  single_value_input = "'" + single_value_input + "'";
+                } else if (operator_list == " LIKE ") {
+                  single_value_input = "'%25" + single_value_input + "%25'";
                 }
-                // validation that user enters a string for a string attribute or a number for a number attribute
-                if (attribute_data_schema == 'yes' && attribute_data_type == 'string' && !isNaN(single_value_input) ){
-                      if($("#wrong-data-type").length !== 0) {
-                          $('#wrong-data-type').empty();
-                      }
-                      $( "#query-filter-tools" ).after( "<p id='wrong-data-type'> You entered a number. Not a string.</p>" );
-                      $('#wrong-data-type').css({ "color": "#bd362f", "font-style": "italic"  });
+              }
 
-                } else if (attribute_data_schema == 'yes' && attribute_data_type !== 'string' && isNaN(single_value_input)){
-                    if($("#wrong-data-type").length !== 0) {
-                        $('#wrong-data-type').empty();
-                    }
-                    $( "#query-filter-tools" ).after( "<p id='wrong-data-type'> You entered a string. Not a number.</p>" );
-                    $('#wrong-data-type').css({ "color": "#bd362f", "font-style": "italic"  });
+              input = attribute_list + operator_list + single_value_input;
+              input_id = attribute_list + single_value_input;
 
-                } else {
-                    $( "p" ).remove( "#wrong-data-type" );
+              $("#added_rules").append( '<div class="input-group user-input-filters"><div class="input-group-btn" id="erase_query"><a href="#"  class="btn btn-primary btn-mg" data-toggle="modal" data-target="#myModal" title="" ><span class="glyphicon glyphicon-minus"></span></a></div><input type="text" class="form-control" id="' + input_id + '" placeholder="" data-toggle="tooltip" title="" value="' + input + '"readonly></br></div>');
 
-                    // check of single_value_input; string or number
-                    if (isNaN(single_value_input)){
-                        if (operator_list == "=" || operator_list == "<>" || operator_list == ">" || operator_list == "<" || operator_list == ">=" || operator_list == "<=" ){
-                            single_value_input = "'" + single_value_input + "'";
-                        } else if (operator_list == " LIKE ") {
-                            single_value_input = "'%25" + single_value_input + "%25'";
-                        }
-                    }
-
-                    input = attribute_list + operator_list + single_value_input;
-                    input_id = attribute_list + single_value_input;
-
-                    $("#added_rules").append( '<div class="input-group user-input-filters"><div class="input-group-btn" id="erase_query"><a href="#"  class="btn btn-primary btn-mg" data-toggle="modal" data-target="#myModal" title="" ><span class="glyphicon glyphicon-minus"></span></a></div><input type="text" class="form-control" id="' + input_id + '" placeholder="" data-toggle="tooltip" title="" value="' + input + '"readonly></br></div>');
-
-                    // push data to array
-                    if (input != ''){
-                        query.push(input);
-                    }
-                }
+              // push data to array
+              if (input != ''){
+                  query.push(input);
+              }
             }
-        });
+        }
+      });
 
-        $("div").on("click","#erase_query",function(){
-            value_to_be_removed = $(this).siblings('input').val();
-            var index = query.indexOf(value_to_be_removed);
-            query.splice(index, 1);
-            $(this).parent().remove();
-        });
+      $("div").on("click","#erase_query",function(){
+        value_to_be_removed = $(this).siblings('input').val();
+        var index = query.indexOf(value_to_be_removed);
+        query.splice(index, 1);
+        $(this).parent().remove();
+      });
 
-        // on url click append the array values in the existing href
-        $(document.body).on("click", ".urls",function(e) {
+      // on url click append the array values in the existing href
+      $(document.body).on("click", ".urls",function(e){
+        var tab = $('#tabContent .active > a').attr('href')
+        if(tab == '#query_builder'){
+          logical_operator = $("#and-or li.selected a").attr('id');
+          // get the array, join it, add necessary values and add it in the UI
+          if (typeof query !== 'undefined') {
+            joined_query = query.join(" " + logical_operator + " ");
+            cql_filters = joined_query;
+          } else{
+            cql_filters = '';
+          }
+          complete_cql = '&CQL_FILTER=(' + cql_filters + ')';
+          idValue = $(this).attr("id");
+          url_main = all_urls[idValue]
+          if(cql_filters.length >1) {
+            addressValue = url_main + complete_cql
+            $("#"+idValue).attr("href", addressValue)
+          } else{
+            addressValue = url_main
+            $("#"+idValue).attr("href", addressValue)
+          }
+        }
+      });
 
-            var tab = $('#tabContent .active > a').attr('href')
-            if(tab == '#query_builder'){
-                logical_operator = $("#and-or li.selected a").attr('id');
-                // get the array, join it, add necessary values and add it in the UI
-                if (typeof query !== 'undefined') {
-                    joined_query = query.join(" " + logical_operator + " ");
-                    cql_filters = joined_query;
-                } else{
-                    cql_filters = '';
-                }
-                complete_cql = '&CQL_FILTER=(' + cql_filters + ')';
-                idValue = $(this).attr("id");
-                url_main = all_urls[idValue]
-                if(cql_filters.length >1) {
-                    addressValue = url_main + complete_cql
-                    $("#"+idValue).attr("href", addressValue)
-                } else{
-                    addressValue = url_main
-                    $("#"+idValue).attr("href", addressValue)
-                }
-            }
-        });
-
-        $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
-        // change color of toggle button on click
-        $("#button-toggle").click(function() {
-            $(this).toggleClass("clicked");
-            if ($("#button-toggle").hasClass("clicked")) {
-                $("#button-toggle").css({ "background-color": "#3276b1", "border-color": "#3276b1"  });
-                $('#tabContent').show();
-                $('.tab-content').show();
-            } else {
-                $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
-                $('#tabContent').hide();
-                $('.tab-content').hide();
-            }
-        });
+      $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
+      // change color of toggle button on click
+      $("#button-toggle").click(function() {
+        $(this).toggleClass("clicked");
+        if ($("#button-toggle").hasClass("clicked")) {
+          $("#button-toggle").css({ "background-color": "#3276b1", "border-color": "#3276b1"  });
+          $('#tabContent').show();
+          $('.tab-content').show();
+        } else {
+          $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
+          $('#tabContent').hide();
+          $('.tab-content').hide();
+        }
+      });
     </script>
 
     {% if GEONODE_SECURITY_ENABLED %}
