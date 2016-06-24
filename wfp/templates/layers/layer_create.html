@@ -19,61 +19,85 @@
 <!-- added for create layer functionality -->
 <div class="row">
   <div class="col-md-8">
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" style="border:0;">
       <div class="panel-heading">
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" id="button-methods" type="button" data-toggle="dropdown" style="width: 100%;">{% trans "Pick Up Method To Create a Layer" %}
             <span class="caret"></span></button>
               <ul class="dropdown-menu dropdown-menu-methods" style="width: 95%;">
                 <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Create a layer using an existing one" %}</a></li>
-                <!-- <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Empty layer" %}</a></li> -->
+                <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Create an empty layer" %}</a></li>
               </ul>
         </div>
       </div>
       <div class="panel-body">
+
         <div id="_panel_container"></div>
         </br>
         <div id="_panel_msg"></div>
+
         <div class="input-group" id="_layer" style="display:none;">
           <div class="input-group-btn" >
             <div class="btn-group btn-group-sm" style="width:100%">
-                <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" id="button-countries" type="button" name="name1" data-toggle="dropdown" data-target="#" style="width:100%">Country
-                      <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-countries" id="country_list" name="name1" style="height: auto; max-height: 200px; overflow-x: hidden;">
-                    {% if countries %}
-                      {% for cntr in countries %}
-                        <li><a href="#" id= {{ cntr }}>{{ cntr }}</a></li>
-                      {% endfor %}
-                    {% endif %}
-                  </ul>
-                </div>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" id="button-countries" type="button" name="name1" data-toggle="dropdown" data-target="#" style="width:100%">Country
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-countries" id="country_list" name="name1" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                  {% if countries %}
+                    {% for cntr in countries %}
+                      <li><a href="#" id= {{ cntr }}>{{ cntr }}</a></li>
+                    {% endfor %}
+                  {% endif %}
+                </ul>
+              </div>
             </div>
           </div>
           </br>
           <a href="#" class="btn btn-primary pull-right" id="download_csv">{% trans "Download as CSV" %}</a>
         </div>
+
+        <div id="_creat_fromcsv_layer_form" style="display:none">
+          <h2>{% trans "Upload Layer" %}</h2>
+          <form id="file-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+              {% if errormsgs %}
+                {% for value in errormsgs %}
+                  </p>  {{ value }} </p>
+                {% endfor %}
+              {% endif %}
+              {% for error in form.non_field_errors %}
+                {{ error }} </br>
+              {% endfor %}
+              </br>
+              {% for field in form.visible_fields %}
+                {{ field|as_bootstrap }} </br>
+              {% endfor %}
+              <button type="submit" id="upload-button" class="btn btn-danger" name="fromlayerbtn">Upload</button>
+          </form>
+        </div>
+
+        <div id="_empty_layer_form" style="display:none">
+          <form id="empty-layer-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+              {% if errormsgs %}
+                {% for value in errormsgs %}
+                  </p>  {{ value }} </p>
+                {% endfor %}
+              {% endif %}
+              {% for error in form_empty_layer.non_field_errors %}
+                {{ error }} </br>
+              {% endfor %}
+              </br>
+              {% for field in form_empty_layer.visible_fields %}
+                {{ field|as_bootstrap }} </br>
+              {% endfor %}
+              <button type="submit" id="empty-layer-button" class="btn btn-danger" name="emptylayerbtn">Upload</button>
+          </form>
+        </div>
       </div>
     </div>
     </br>
-    <h2>{% trans "Upload Layer" %}</h2>
-    <form id="file-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
-      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        {% if errormsgs %}
-          {% for value in errormsgs %}
-            </p>  {{ value }} </p>
-          {% endfor %}
-        {% endif %}
-        {% for error in form.non_field_errors %}
-          {{ error }} </br>
-        {% endfor %}
-        </br>
-        {% for field in form.visible_fields %}
-                 {{ field|as_bootstrap }} </br>
-        {% endfor %}
-        <button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
-    </form>
   </div>
     {% if GEONODE_SECURITY_ENABLED %}
     <div class="col-md-4">
@@ -103,6 +127,34 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+
+    // If a not successfull POST request is submitted
+    {% if status_msg %}
+
+      //$(".panel-body").css("height", "500px");
+      status_msg_val = {{ status_msg | safe }};
+      if (status_msg_val == "400_excel"){
+        selected_value = "excel_layer"
+        text_input = "Create a layer using an existing one"
+        assign_content(selected_value, text_input)
+
+        //$("#button-methods:first-child").text("excel_layer");
+
+        //selected_value = $("#excel_layer").val();
+        //alert(selected_value);
+      }
+
+      //$("#button-methods:first-child").val("excel_layer");
+      //$("#button-methods:first-child").val("excel_layer");
+      //alert("executed")
+      //selected_val == "excel_layer"
+      //$("#button-methods:first-child").attr("id") = "excel_layer";
+
+
+
+    {% endif %}
+
+
     $(document.body).on("click", "#download_csv",function(e) {
       selected_country = ($("#button-countries").val())
       selected_btn = $(".selected").attr("id");
@@ -125,40 +177,58 @@
       $("#button-countries:first-child").val($(this).text());
     });
 
+
     $(".dropdown-menu-methods li a").click(function(){
       $("#button-methods:first-child").text($(this).text());
       $("#button-methods:first-child").val($(this).text());
+
       selected_val = $(this).attr("id");
-      element_id = ["_panel_container", "_panel_msg"];
-      clear_content(element_id);
-      if (selected_val == "excel_layer"){
-        $("#_panel_container").append( '<i> {% trans "Choose an existing layer:" %} </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">{% trans "Global Layer" %}</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">{% trans "Country layer by admin1" %}</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">{% trans "Country layer by admin2" %}</button>');
-        //<button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">{% trans "By location" %}</button>
-        $( "._btn-select").click(function(){
-          // add class "selected" to clicked button
-          $("button.selected").removeClass("selected");
-          $(this).addClass('selected');
-          clicked_btn = $(this).attr("id");
-          element_id = ["_panel_msg"];
-          clear_content(element_id);
-          if (clicked_btn == "country"){
-            $("#download_csv").clone().appendTo('#_panel_msg');
-            $("#download_csv").css("display", "block");
-          } else if (clicked_btn == "region"){
-            $("#_layer").clone().appendTo('#_panel_msg');
-            $("#_layer").css("display", "block");
-          } else if (clicked_btn == "province"){
-            $("#_layer").clone().appendTo('#_panel_msg');
-            $("#_layer").css("display", "block");
-          } else if (clicked_btn == "settlement"){
-            $("#_panel_msg").append('</br><i> Downloading excel file with settlements..</i></br>');
-          }
-        });
-      } else if (selected_val == "empty_layer"){
-        $("#_panel_container").append( '<i> Another way to create layer: </i>');
-      }
+      assign_content(selected_val)
+
     });
   });
+
+
+  function assign_content(selected_val, text_input){
+
+    $("#button-methods:first-child").text(text_input);
+    $("#button-methods:first-child").val(text_input);
+
+    element_id = ["_panel_container", "_panel_msg"];
+    clear_content(element_id);
+    if (selected_val == "excel_layer"){
+      $("#_panel_container").append( '<i> {% trans "Choose an existing layer:" %} </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">{% trans "Global Layer" %}</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">{% trans "Country layer by admin1" %}</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">{% trans "Country layer by admin2" %}</button>');
+      //<button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">{% trans "By location" %}</button>
+
+      $("#_creat_fromcsv_layer_form").clone().appendTo('#_panel_msg');
+      $("#_creat_fromcsv_layer_form").show();
+      
+      $( "._btn-select").click(function(){
+        // add class "selected" to clicked button
+        $("button.selected").removeClass("selected");
+        $(this).addClass('selected');
+        clicked_btn = $(this).attr("id");
+        element_id = ["_panel_msg"];
+        clear_content(element_id);
+        if (clicked_btn == "country"){
+          $("#download_csv").clone().appendTo('#_panel_msg');
+          $("#download_csv").css("display", "block");
+        } else if (clicked_btn == "region"){
+          $("#_layer").clone().appendTo('#_panel_msg');
+          $("#_layer").css("display", "block");
+        } else if (clicked_btn == "province"){
+          $("#_layer").clone().appendTo('#_panel_msg');
+          $("#_layer").css("display", "block");
+        } else if (clicked_btn == "settlement"){
+          $("#_panel_msg").append('</br><i> Downloading excel file with settlements..</i></br>');
+        }
+      });
+    } else if (selected_val == "empty_layer"){
+      $("#_empty_layer_form").clone().appendTo('#_panel_msg');
+      $("#_empty_layer_form").show();
+    }
+  };
+
 
   function clear_content(element_id){
     for (i = 0; i < element_id.length; i++){
@@ -166,7 +236,7 @@
           $("#" + element_id[i]).empty();
       }
     }
-  }
+  };
 </script>
 
 {% if GEONODE_SECURITY_ENABLED %}
