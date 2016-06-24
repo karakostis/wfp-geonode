@@ -68,11 +68,11 @@
                   </p>  {{ value }} </p>
                 {% endfor %}
               {% endif %}
-              {% for error in form.non_field_errors %}
+              {% for error in form_csv_layer.non_field_errors %}
                 {{ error }} </br>
               {% endfor %}
               </br>
-              {% for field in form.visible_fields %}
+              {% for field in form_csv_layer.visible_fields %}
                 {{ field|as_bootstrap }} </br>
               {% endfor %}
               <button type="submit" id="upload-button" class="btn btn-danger" name="fromlayerbtn">Upload</button>
@@ -133,30 +133,19 @@
 
     // If a not successfull POST request is submitted
     {% if status_msg %}
-
-      //$(".panel-body").css("height", "500px");
       status_msg_val = {{ status_msg | safe }};
-      if (status_msg_val == "400_excel"){
+      if (status_msg_val == "400_csv"){
         selected_value = "excel_layer"
         text_input = "Create a layer using an existing one"
         assign_content(selected_value, text_input)
-
-        //$("#button-methods:first-child").text("excel_layer");
-
-        //selected_value = $("#excel_layer").val();
-        //alert(selected_value);
+      }
+      else if (status_msg_val == "400_empty_layer"){
+        selected_value = "empty_layer"
+        text_input = "Create an empty layer"
+        assign_content(selected_value, text_input)
       }
 
-      //$("#button-methods:first-child").val("excel_layer");
-      //$("#button-methods:first-child").val("excel_layer");
-      //alert("executed")
-      //selected_val == "excel_layer"
-      //$("#button-methods:first-child").attr("id") = "excel_layer";
-
-
-
     {% endif %}
-
 
     $(document.body).on("click", "#download_csv",function(e) {
       selected_country = ($("#button-countries").val())
