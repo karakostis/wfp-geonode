@@ -58,7 +58,9 @@
         </div>
 
         <div id="_creat_fromcsv_layer_form" style="display:none">
-          <h2>{% trans "Upload Layer" %}</h2>
+          </br></br>
+          <hr style="width: 100%; color: #757575; height: 1px;" />
+          <h3>{% trans "Upload Layer" %}</h3>
           <form id="file-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
               {% if errormsgs %}
@@ -78,6 +80,7 @@
         </div>
 
         <div id="_empty_layer_form" style="display:none">
+          <h3>{% trans "Create Empty Layer" %}</h3>
           <form id="empty-layer-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
               {% if errormsgs %}
@@ -202,7 +205,7 @@
 
       $("#_creat_fromcsv_layer_form").clone().appendTo('#_panel_msg');
       $("#_creat_fromcsv_layer_form").show();
-      
+
       $( "._btn-select").click(function(){
         // add class "selected" to clicked button
         $("button.selected").removeClass("selected");
@@ -213,12 +216,18 @@
         if (clicked_btn == "country"){
           $("#download_csv").clone().appendTo('#_panel_msg');
           $("#download_csv").css("display", "block");
+          $("#_creat_fromcsv_layer_form").clone().appendTo('#_panel_msg');
+          $("#_creat_fromcsv_layer_form").show();
         } else if (clicked_btn == "region"){
           $("#_layer").clone().appendTo('#_panel_msg');
           $("#_layer").css("display", "block");
+          $("#_creat_fromcsv_layer_form").clone().appendTo('#_panel_msg');
+          $("#_creat_fromcsv_layer_form").show();
         } else if (clicked_btn == "province"){
           $("#_layer").clone().appendTo('#_panel_msg');
           $("#_layer").css("display", "block");
+          $("#_creat_fromcsv_layer_form").clone().appendTo('#_panel_msg');
+          $("#_creat_fromcsv_layer_form").show();
         } else if (clicked_btn == "settlement"){
           $("#_panel_msg").append('</br><i> Downloading excel file with settlements..</i></br>');
         }
