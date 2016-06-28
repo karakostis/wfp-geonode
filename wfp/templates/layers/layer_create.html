@@ -82,25 +82,29 @@
         <div id="_empty_layer_form" style="display:none">
           <h3>{% trans "Create Empty Layer" %}</h3>
           <form id="empty-layer-uploader" method="post" enctype="multipart/form-data" action="{% url "layer_create" %}">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-              {{ form.errors }}
-              {{ form.non_field_errors }}
-              {% if errormsgs %}
-                {% for value in errormsgs %}
-                  </p>  {{ value }} </p>
+            <div id="form_empty_layer">
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                {% if errormsgs %}
+                  {% for value in errormsgs %}
+                    </p>  {{ value }} </p>
+                  {% endfor %}
+                {% endif %}
+                {% for error in form_empty_layer.non_field_errors %}
+                  {{ error }} </br>
                 {% endfor %}
-              {% endif %}
-              {% for error in form_empty_layer.non_field_errors %}
-                {{ error }} </br>
-              {% endfor %}
-              </br>
-              {% for field in form_empty_layer.visible_fields %}
-                {{ field|as_bootstrap }} </br>
-              {% endfor %}
-              <button type="button" id="add-another">add another</button> </br> </br>
-              <button type="submit" id="empty-layer-button" class="btn btn-danger" name="emptylayerbtn">Upload</button>
+                </br>
+                {% for field in form_empty_layer.visible_fields %}
+                  {{ field|as_bootstrap }} </br>
+                {% endfor %}
+            </div>
+            </br>
+            <button type="button" id="add-another">add another</button> </br> </br>
+            <button type="submit" id="empty-layer-button" class="btn btn-danger" name="emptylayerbtn">Upload</button>
+            </br></br>
+            <input type="text" name="extra_field_count"/>
           </form>
-
         </div>
       </div>
     </div>
@@ -137,29 +141,29 @@
 
 
     /////////////////
-    form_count = 0;
+    
+    form_count = $('input[name*="extra_field_*"]').length;
 
     // get extra form count so we know what index to use for the next item.
     $(document.body).on("click", "#add-another",function(e) {
-      //element = $('<input type="text" /><select name="data_types"><option value="int">integer</option><option value="char">character</option></select>');
-      element = $('<input type="text" />');
-      element.attr('name', 'extra_field_count');
 
-      //element_2 = $('<input type="text" style="display:none;"/> </br>');
-      element_2 = $('<input type="text"/> </br>');
-      element_2.attr('name', 'extra_field_count_2');
-      $("#add-another").before(element);
-      $("#add-another").before(element_2);
+
+
+
+      element = $('<input type="text"/> </br>');
+      element.attr('name', 'extra_field_' + form_count);
+      $("#form_empty_layer").append(element);
       // build element and append it to our forms container
 
       form_count ++;
 
-      //$("[name=extra_field_count]").val(form_count);
-      $("[name=extra_field_count_2]").val(form_count);
 
+      $("[name=extra_field_count]").val(form_count);
       // increment form count so our view knows to populate
       // that many fields for validation
-      })
+
+
+    })
 
 
   /////////////////
