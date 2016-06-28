@@ -141,7 +141,7 @@
 
 
     /////////////////
-    
+
     form_count = $('input[name*="extra_field_*"]').length;
 
     // get extra form count so we know what index to use for the next item.
@@ -261,6 +261,8 @@
     } else if (selected_val == "empty_layer"){
       $("#_empty_layer_form").clone().appendTo('#_panel_msg');
       $("#_empty_layer_form").show();
+      form_count = $('input[name*="extra_field_0"]').length;
+      $("[name=extra_field_count]").val(form_count);
     }
   };
 
