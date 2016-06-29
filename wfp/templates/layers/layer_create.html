@@ -103,7 +103,7 @@
             <button type="button" id="add-another">add another</button> </br> </br>
             <button type="submit" id="empty-layer-button" class="btn btn-danger" name="emptylayerbtn">Upload</button>
             </br></br>
-            <input type="text" name="extra_field_count"/>
+            <input type="text" name="total_input_fields"/>
           </form>
         </div>
       </div>
@@ -158,7 +158,7 @@
       form_count ++;
 
 
-      $("[name=extra_field_count]").val(form_count);
+      $("[name=total_input_fields]").val(form_count);
       // increment form count so our view knows to populate
       // that many fields for validation
 
@@ -261,8 +261,9 @@
     } else if (selected_val == "empty_layer"){
       $("#_empty_layer_form").clone().appendTo('#_panel_msg');
       $("#_empty_layer_form").show();
-      form_count = $('input[name*="extra_field_0"]').length;
-      $("[name=extra_field_count]").val(form_count);
+
+      form_count = $(":input[name^='extra_field_']").length/2 // use of clone duplicates ids
+      $("[name=total_input_fields]").val(form_count);
     }
   };
 
