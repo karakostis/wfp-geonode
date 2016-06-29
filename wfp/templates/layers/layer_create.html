@@ -142,6 +142,7 @@
 
     /////////////////
 
+    // For Create_empty_layer
     form_count = $('input[name*="extra_field_*"]').length;
 
     // get extra form count so we know what index to use for the next item.
@@ -150,9 +151,15 @@
 
 
 
-      element = $('<input type="text"/> </br>');
-      element.attr('name', 'extra_field_' + form_count);
-      $("#form_empty_layer").append(element);
+      new_attribute = $('<input type="text"/>');
+      new_attribute.attr('name', 'extra_field_' + form_count);
+
+      attribute_type = $('<select><option value="Integer">Integer</option><option value="Double">Double</option><option value="Character">Character</option></select> </br>');
+      attribute_type.attr('name', 'field_type_' + form_count);
+
+      //attribute_type = $('<input type="text"/> </br>');
+      $("#form_empty_layer").append(new_attribute);
+      $("#form_empty_layer").append(attribute_type);
       // build element and append it to our forms container
 
       form_count ++;
