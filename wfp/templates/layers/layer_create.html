@@ -92,18 +92,17 @@
                   {% endfor %}
                 {% endif %}
                 {% for error in form_empty_layer.non_field_errors %}
-                  {{ error }} </br>
+                  {{ error }}
                 {% endfor %}
-                </br>
                 {% for field in form_empty_layer.visible_fields %}
-                  {{ field|as_bootstrap }} </br>
+                    {{ field | as_bootstrap }}
                 {% endfor %}
             </div>
             </br>
-            <button type="button" id="add-another">add another</button> </br> </br>
+            <button type="button" id="_add_attribute" class="btn btn-primary"> Add Another Attribute</button> </br></br>
             <button type="submit" id="empty-layer-button" class="btn btn-danger" name="emptylayerbtn">Upload</button>
             </br></br>
-            <input type="text" name="total_input_fields"/>
+            <input type="text" name="total_input_fields" style="display:none;"/>
           </form>
         </div>
       </div>
@@ -139,41 +138,31 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-
-    /////////////////
-
-    // For Create_empty_layer
+    // For Create_empty_layer functionality
     form_count = $('input[name*="extra_field_*"]').length;
 
     // get extra form count so we know what index to use for the next item.
-    $(document.body).on("click", "#add-another",function(e) {
+    $(document.body).on("click", "#_add_attribute",function(e) {
 
-
-
-
-      new_attribute = $('<input type="text"/>');
-      new_attribute.attr('name', 'extra_field_' + form_count);
-
-      attribute_type = $('<select><option value="Integer">Integer</option><option value="Double">Double</option><option value="Character">Character</option></select> </br>');
-      attribute_type.attr('name', 'field_type_' + form_count);
-
-      //attribute_type = $('<input type="text"/> </br>');
-      $("#form_empty_layer").append(new_attribute);
-      $("#form_empty_layer").append(attribute_type);
       // build element and append it to our forms container
 
-      form_count ++;
 
+      new_attribute = $('</br><input type="text" placeholder="Enter a new attribute" style="width:320px"/>');
+      new_attribute.attr('name', 'extra_field_' + form_count);
 
-      $("[name=total_input_fields]").val(form_count);
+      attribute_type = $('<select class="form-control" style="width:320px"><option value="Character">Character</option><option value="Double">Double</option><option value="Integer">Integer</option></select>');
+      attribute_type.attr('name', 'field_type_' + form_count);
+
+      $("#form_empty_layer").append(new_attribute);
+      $("#form_empty_layer").append(attribute_type);
+
       // increment form count so our view knows to populate
       // that many fields for validation
+      form_count ++;
 
-
+      $("[name=total_input_fields]").val(form_count);
     })
 
-
-  /////////////////
 
     // If a not successfull POST request is submitted
     {% if status_msg %}
