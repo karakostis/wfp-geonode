@@ -629,6 +629,14 @@ MAP_BASELAYERS = [{
     "fixed": True,
     "visibility": False,
     "group":"background"
+},{
+    "source": {"ptype": "gxp_olsource"},
+    "type":"OpenLayers.Layer.XYZ",
+    "args":[ "HOT", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png",
+    "http://b.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png",
+    "http://c.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
+    {"transitionEffect": "resize","attribution": "osm_attribution"}],
+    "name":"HOT", "visibility": False, "fixed": True, "group":"background"
 }]
 
 SOCIAL_BUTTONS = True
