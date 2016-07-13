@@ -773,6 +773,15 @@ LEAFLET_CONFIG = {
             'js': 'lib/js/leaflet-areaselect.js',
             'auto-include': True,
         },
+        'Leaflet-WFST': {
+            'js': 'lib/js/Leaflet-WFST.min.js',
+            'auto-include': True,
+        },
+        'leaflet.draw': {
+            'css': 'lib/css/leaflet.draw.css',
+            'js': 'lib/js/leaflet.draw.js',
+            'auto-include': True,
+        },
     },
     'RESET_VIEW': False,
 }
