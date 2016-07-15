@@ -601,6 +601,7 @@ DEFAULT_MAP_CENTER = (0, 0)
 # maximum zoom is between 12 and 15 (for Google Maps, coverage varies by area)
 DEFAULT_MAP_ZOOM = 0
 
+BING_API_KEY = 'AnSsDFo9S5gmFZIU7ZxiZrVNCUcAC1ZUv6LtNO38kI7QemgYDt6F2IU2eFyyHx1Y'
 MAP_BASELAYERS = [{
     "source": {"ptype": "gxp_olsource"},
     "type": "OpenLayers.Layer",
@@ -632,12 +633,24 @@ MAP_BASELAYERS = [{
 },{
     "source": {"ptype": "gxp_olsource"},
     "type":"OpenLayers.Layer.XYZ",
-    "args":[ "HOT", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png",
-    "http://b.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png",
-    "http://c.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
+    "args":[ "Humanitarian Openstreetmap", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
     {"transitionEffect": "resize","attribution": "osm_attribution"}],
-    "name":"HOT", "visibility": False, "fixed": True, "group":"background"
+    "name":"HOT",
+    "visibility": False,
+    "fixed": True,
+    "group":"background"
+},{
+    "source": {
+       "ptype":"gxp_bingsource",
+       "apiKey": BING_API_KEY
+     },
+    "title": "Satellite Bing Map",
+    "group":"background",
+    "name":"Aerial",
+    "visibility": False,
+    "fixed": True
 }]
+
 
 SOCIAL_BUTTONS = True
 
