@@ -602,6 +602,7 @@ DEFAULT_MAP_CENTER = (0, 0)
 DEFAULT_MAP_ZOOM = 0
 
 BING_API_KEY = 'AnSsDFo9S5gmFZIU7ZxiZrVNCUcAC1ZUv6LtNO38kI7QemgYDt6F2IU2eFyyHx1Y'
+MAPBOX_ACCESS_TOKEN = 'pk.eyJ1Ijoid2ZwLW9kZXAiLCJhIjoiVmVxa29hbyJ9._gB2pmIAF4O-nHxPpn6-zg'
 MAP_BASELAYERS = [{
     "source": {"ptype": "gxp_olsource"},
     "type": "OpenLayers.Layer",
@@ -631,15 +632,6 @@ MAP_BASELAYERS = [{
     "visibility": False,
     "group":"background"
 },{
-    "source": {"ptype": "gxp_olsource"},
-    "type":"OpenLayers.Layer.XYZ",
-    "args":[ "Humanitarian Openstreetmap", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
-    {"transitionEffect": "resize","attribution": "osm_attribution"}],
-    "name":"HOT",
-    "visibility": False,
-    "fixed": True,
-    "group":"background"
-},{
     "source": {
        "ptype":"gxp_bingsource",
        "apiKey": BING_API_KEY
@@ -649,6 +641,60 @@ MAP_BASELAYERS = [{
     "name":"Aerial",
     "visibility": False,
     "fixed": True
+},{
+    "source": {"ptype": "gxp_olsource"},
+    "type":"OpenLayers.Layer.XYZ",
+    "args":[ "Humanitarian Openstreetmap", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
+    {"transitionEffect": "resize","attribution": "osm_attribution"}],
+    "name":"HOT",
+    "visibility": False,
+    "fixed": True,
+    "group":"background"
+},{
+    "source": {"ptype": "gxp_olsource"},
+    "type": "OpenLayers.Layer.XYZ",
+    "args": [
+                'Mapbox Dark',
+        ('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/${z}/'
+         '${x}/${y}?access_token=%s') % (MAPBOX_ACCESS_TOKEN),
+        {
+            'transitionEffect': 'resize',
+            'attribution': '© Mapbox © OpenStreetMap'
+        }
+    ],
+    "visibility": False,
+    "fixed": True,
+    "group": "background"
+},{
+    "source": {"ptype": "gxp_olsource"},
+    "type": "OpenLayers.Layer.XYZ",
+    "args": [
+                'Mapbox Satellite',
+        ('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/${z}/'
+         '${x}/${y}?access_token=%s') % (MAPBOX_ACCESS_TOKEN),
+        {
+            'transitionEffect': 'resize',
+            'attribution': '© Mapbox © OpenStreetMap'
+        }
+    ],
+    "visibility": False,
+    "fixed": True,
+    "group": "background"
+},{
+    "source": {"ptype": "gxp_olsource"},
+    "type": "OpenLayers.Layer.XYZ",
+    "args": [
+                'Mapbox Satellite Streets',
+        ('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/${z}/'
+         '${x}/${y}?access_token=%s') % (MAPBOX_ACCESS_TOKEN),
+        {
+            'transitionEffect': 'resize',
+            'attribution': '© Mapbox © OpenStreetMap'
+        }
+    ],
+    "visibility": False,
+    "fixed": True,
+    "group": "background"
 }]
 
 
