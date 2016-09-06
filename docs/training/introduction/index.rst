@@ -4,7 +4,7 @@
 Introduction
 ============
 
-WFPGeoNode is the World Food Programme’s corporate web platform for publishing geospatial data and
+WFPGeoNodeeeee is the World Food Programme’s corporate web platform for publishing geospatial data and
 maps. It brings together mature and stable open-source software under a consistent and easy-to-use
 interface allowing non-specialized WFP employees and cooperating partners to easily access geographic
 information, share data and create interactive maps.
@@ -145,6 +145,3 @@ things in mind.
 * Is the chosen background the most appropriate one? Decide which background indicators are important, and then choose a base layer that best reflects your priorities.
 
 * Are icons visualized at an appropriate scale? Icons that are too large can hamper the visual effect of other important data, and icons that are too small can undermine its importance.
-
-
-
