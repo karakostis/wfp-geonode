@@ -498,37 +498,12 @@
       $("#modal-button-and-or:first-child").text($("#AND").text());
       $("#modal-button-attributes:first-child").val($("#AND").text());
       $("#and-or li:not(.divider)").addClass('selected');
+
       // on dropdown change, change the value of dropdown
       $(".dropdown-menu-attributes li a").click(function(){
         $("#modal-button-attributes:first-child").text($(this).text());
         $("#modal-button-attributes:first-child").val($(this).text());
 
-        // functionality added for the autocomplete
-        property_name = $("#modal-button-attributes:first-child").text();
-
-        data_from_django = {{ feature_properties | safe }};
-        selected_data = data_from_django[property_name];
-
-        selected_data_prepare = [];
-        for (i = 0; i < selected_data.length; i++) {
-            jsonString = {
-                id: i,
-                text: selected_data[i].toString()
-            };
-            selected_data_val = jsonString;
-            selected_data_prepare.push(selected_data_val);
-        }
-        $(".js-data-array").select2({
-          data: selected_data_prepare,
-          // allow new values by the user
-          createSearchChoice:function(term, data) {
-            if ($(data).filter( function() {
-              return this.text.localeCompare(term)===0;
-            }).length===0) {
-              return {id:term, text:term};
-            }
-          },
-        })
       });
 
       $(".dropdown-menu-operators li a").click(function(){
@@ -669,11 +644,61 @@
       $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
       // change color of toggle button on click
       $("#button-toggle").click(function() {
+
+
         $(this).toggleClass("clicked");
         if ($("#button-toggle").hasClass("clicked")) {
+
           $("#button-toggle").css({ "background-color": "#3276b1", "border-color": "#3276b1"  });
           $('#tabContent').show();
           $('.tab-content').show();
+
+          layer_name = {{ layer_name | safe }};
+          filtered_attributes = {{ filtered_attributes | safe }}
+          whole_url = "{% url 'load_layer_data' %}";
+
+          $.ajax({
+            type: "POST",
+            url: whole_url,
+            data: { json_data: JSON.stringify({ layer_name: layer_name, filtered_attributes: filtered_attributes }) },
+            success: function(data) {
+
+              // on dropdown change, change the value of dropdown
+              $(".dropdown-menu-attributes li a").click(function(){
+                $("#modal-button-attributes:first-child").text($(this).text());
+                $("#modal-button-attributes:first-child").val($(this).text());
+
+                // functionality added for the autocomplete
+                property_name = $("#modal-button-attributes:first-child").text();
+                attribute_values = data['feature_properties'];
+                selected_data = attribute_values[$.trim(property_name)];
+
+                selected_data_prepare = [];
+                for (i = 0; i < selected_data.length; i++) {
+                  jsonString = {
+                  id: i,
+                  text: selected_data[i].toString()
+                  };
+                  selected_data_val = jsonString;
+                  selected_data_prepare.push(selected_data_val);
+                }
+
+                $(".js-data-array").select2({
+                  data: selected_data_prepare,
+                  // allow new values by the user
+                  createSearchChoice:function(term, data) {
+                  if ($(data).filter( function() {
+                  return this.text.localeCompare(term)===0;
+                  }).length===0) {
+                  return {id:term, text:term};
+                  }
+                  },
+                })
+
+              });
+            }
+          });
+
         } else {
           $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
           $('#tabContent').hide();
