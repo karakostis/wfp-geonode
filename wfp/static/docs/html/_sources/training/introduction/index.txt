@@ -1,7 +1,7 @@
 .. _training_introduction:
 
 ============
-Introduction
+Introductions
 ============
 
 WFPGeoNode is the World Food Programme’s corporate web platform for publishing geospatial data and
@@ -145,6 +145,3 @@ things in mind.
 * Is the chosen background the most appropriate one? Decide which background indicators are important, and then choose a base layer that best reflects your priorities.
 
 * Are icons visualized at an appropriate scale? Icons that are too large can hamper the visual effect of other important data, and icons that are too small can undermine its importance.
-
-
-
