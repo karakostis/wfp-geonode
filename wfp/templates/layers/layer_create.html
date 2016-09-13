@@ -25,7 +25,7 @@
           <button class="btn btn-primary dropdown-toggle" id="button-methods" type="button" data-toggle="dropdown" style="width: 100%;">{% trans "Pick Up Method To Create a Layer" %}
             <span class="caret"></span></button>
               <ul class="dropdown-menu dropdown-menu-methods" style="width: 95%;">
-                <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Create a layer using an existing one" %}</a></li>
+                <li><a href="#" id="excel_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Create a layer by administrative levels" %}</a></li>
                 <li><a href="#" id="empty_layer"><span class="glyphicon glyphicon-chevron-right"></span>{% trans "Create an empty layer" %}</a></li>
               </ul>
         </div>
@@ -109,14 +109,16 @@
     </div>
     </br>
   </div>
+
+  <div class="col-md-4" style="margin-top: -20px">
     {% if GEONODE_SECURITY_ENABLED %}
-    <div class="col-md-4">
-      <h3>{% trans "Permissions"  %}</h3>
-      <form id="permission_form">
-        {% include "_permissions.html" %}
-      </form>
-    </div>
+    <h3>{% trans "Permissions"  %}</h3>
+    <form id="permission_form">
+      {% include "_permissions.html" %}
+    </form>
     {% endif %}
+  </div>
+
 </div>
 
 {% endblock %}
@@ -222,7 +224,7 @@
     element_id = ["_panel_container", "_panel_msg"];
     clear_content(element_id);
     if (selected_val == "excel_layer"){
-      $("#_panel_container").append( '<i> {% trans "Choose an existing layer:" %} </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">{% trans "Global Layer" %}</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">{% trans "Country layer by admin1" %}</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">{% trans "Country layer by admin2" %}</button>');
+      $("#_panel_container").append( '<i> {% trans "Choose an existing layer:" %} </i></br></br><button type="button" class="btn btn-primary _btn-select" id="country" data-toggle="tooltip" title="a country" style="width:33%">{% trans "Global Layer" %}</button><button type="button" class="btn btn-success _btn-select" id="region" data-toggle="tooltip" title="for regions" style="width:33%">{% trans "Country layer by region" %}</button><button type="button" class="btn btn-warning _btn-select" id="province" data-toggle="tooltip" title="for provinces" style="width:33%">{% trans "Country layer by province" %}</button>');
       //<button type="button" class="btn btn-danger _btn-select" id="settlement" data-toggle="tooltip" title="settlements" style="width:25%">{% trans "By location" %}</button>
 
       $("#_creat_fromcsv_layer_form").clone().appendTo('#_panel_msg');

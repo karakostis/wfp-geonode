@@ -1,7 +1,7 @@
 .. _training_introduction:
 
 ============
-Introductions
+Introduction
 ============
 
 WFPGeoNode is the World Food Programme’s corporate web platform for publishing geospatial data and
