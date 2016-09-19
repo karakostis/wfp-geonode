@@ -662,7 +662,6 @@
             url: whole_url,
             data: { json_data: JSON.stringify({ layer_name: layer_name, filtered_attributes: filtered_attributes }) },
             success: function(data) {
-
               // on dropdown change, change the value of dropdown
               $(".dropdown-menu-attributes li a").click(function(){
                 $("#modal-button-attributes:first-child").text($(this).text());
