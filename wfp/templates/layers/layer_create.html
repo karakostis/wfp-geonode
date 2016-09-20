@@ -270,18 +270,7 @@
   };
 </script>
 
-<script data-main="{% static 'geonode/js/upload/main' %}"
-  src="{% static 'lib/js/require.js' %}">
-</script>
-<script type="text/javascript">
-{% autoescape off %}
-  csrf_token =  "{{ csrf_token }}",
-  form_target = "{{ UPLOADER_URL }}",
-  geogig_enabled = {{ GEOGIG_ENABLED|lower  }},
-  time_enabled = {{ TIME_ENABLED|lower  }},
-  userLookup = "{% url "geonode.views.ajax_lookup" %}"
-{% endautoescape %}
-</script>
+
 
 {% if GEONODE_SECURITY_ENABLED %}
 {% with resource=layer %}
