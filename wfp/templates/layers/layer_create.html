@@ -75,6 +75,9 @@
               {% for field in form_csv_layer.visible_fields %}
                 {{ field|as_bootstrap }} </br>
               {% endfor %}
+              {% for field in form_empty_layer.hidden_fields %}
+                  {{ field | as_bootstrap }}
+              {% endfor %}
               <button type="submit" id="upload-button" class="btn btn-danger" name="fromlayerbtn">Upload</button>
           </form>
         </div>
@@ -95,6 +98,9 @@
                   {{ error }}
                 {% endfor %}
                 {% for field in form_empty_layer.visible_fields %}
+                    {{ field | as_bootstrap }}
+                {% endfor %}
+                {% for field in form_empty_layer.hidden_fields %}
                     {{ field | as_bootstrap }}
                 {% endfor %}
             </div>
@@ -201,12 +207,10 @@
       assign_content(selected_val)
     });
 
-
-    $(document.body).on("submit", "#empty-layer-uploader",function(e) {
+    $(document.body).on("submit", "#empty-layer-uploader, #file-uploader", function(e) {
        perm = permissionsString('#permission_form','layers');
        $('#id_permissions_json').val(JSON.stringify(perm));
     });
-
 
   });
 
