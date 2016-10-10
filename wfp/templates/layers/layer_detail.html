@@ -1,5 +1,6 @@
 {% extends "layers/layer_base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% load dialogos_tags %}
 {% load agon_ratings_tags %}
 {% load bootstrap_tags %}
@@ -18,6 +19,32 @@
 {% endif %}
 {% include "layers/layer_leaflet_modal_map.html" %}
 {{ block.super }}
+
+<style>
+  /* animation for rotating icon */
+  .gear {
+    -webkit-animation: rotation 6s infinite linear;
+  	-moz-animation: rotation 6s infinite linear;
+  	-o-animation: rotation 6s infinite linear;
+  	animation: rotation 6s infinite linear;
+  }
+  @-webkit-keyframes rotation {
+    from {-webkit-transform: rotate(0deg);}
+    to   {-webkit-transform: rotate(359deg);}
+  }
+  @-moz-keyframes rotation {
+    from {-moz-transform: rotate(0deg);}
+    to   {-moz-transform: rotate(359deg);}
+  }
+  @-o-keyframes rotation {
+    from {-o-transform: rotate(0deg);}
+    to   {-o-transform: rotate(359deg);}
+  }
+  @keyframes rotation {
+    from {transform: rotate(0deg);}
+    to   {transform: rotate(359deg);}
+  }
+</style>
 
 {% endblock %}
 
@@ -153,6 +180,8 @@
               <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
                 {% trans "Do you want to filter it?" %}
               </button>
+              <img src="{% static 'lib/css/geonode_icon.png' %}" class="gear pull-right loading_msg" witdth="30" height="30" style="margin-right:10px; display:none"/>
+              <div class="pull-right loading_msg" style="margin-right:10px;margin-top:5px;display:none">{% trans "Loading..." %}</div>
               </br></br>
             {% endif %}
             <ul class="nav nav-tabs" id="tabContent" style="display: none;">
@@ -161,7 +190,7 @@
             </ul>
             </br>
 
-            <div class="tab-content" style="display: none;">  <!--  added now-->
+            <div class="tab-content" style="display:none;">  <!--  added now-->
               <div id="query_builder" class="tab-pane fade in active">
                 <div class="form-inline" style=" display: inline-table; vertical-align: middle; width: auto;  ">
                   {% trans "Match" %}
@@ -305,6 +334,7 @@
                 {% endif %}
                 {% if resource.storeType == 'dataStore' and "change_layer_data" in layer_perms %}
                 <a class="btn btn-danger btn-block btn-xs" href="{% url "layer_edit_data" resource.service_typename %}">{% trans "Edit data" %}</a>
+                <!--<a class="btn btn-default btn-block btn-xs" href="{% url "new_map" %}?layer={{resource.service_typename}}">{% trans "Edit data" %}</a>-->
                 {% endif %}
                 {% if "delete_resourcebase" in perms %}
                 <a class="btn btn-danger btn-block btn-xs" href="{% url "layer_remove" resource.service_typename %}">{% trans "Remove" %}</a>
@@ -644,25 +674,27 @@
       $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
       // change color of toggle button on click
       $("#button-toggle").click(function() {
-
-
         $(this).toggleClass("clicked");
         if ($("#button-toggle").hasClass("clicked")) {
 
           $("#button-toggle").css({ "background-color": "#3276b1", "border-color": "#3276b1"  });
-          $('#tabContent').show();
-          $('.tab-content').show();
+
 
           layer_name = {{ layer_name | safe }};
           filtered_attributes = {{ filtered_attributes | safe }}
+          attribute_description = {{ attribute_description | safe }}
           whole_url = "{% url 'load_layer_data' %}";
-
           $.ajax({
             type: "POST",
             url: whole_url,
             data: { json_data: JSON.stringify({ layer_name: layer_name, filtered_attributes: filtered_attributes }) },
+            beforeSend: function(){
+              $( ".loading_msg" ).show();
+            },
             success: function(data) {
-              console.log(data)
+              $('#tabContent').show();
+              $('.tab-content').show();
+              $( ".loading_msg" ).hide();
               // on dropdown change, change the value of dropdown
               $(".dropdown-menu-attributes li a").click(function(){
                 $("#modal-button-attributes:first-child").text($(this).text());

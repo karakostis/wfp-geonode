@@ -147,7 +147,6 @@ def updateWFPDocument(doc, form):
     for keyword in form.cleaned_data['keywords']:
         doc.keywords.add(keyword)
 
-
 class DocumentUploadView(CreateView):
     model = WFPDocument
     form_class = WFPDocumentForm

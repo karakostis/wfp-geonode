@@ -61,12 +61,14 @@
             {% for region in resource.regions.all %}
               <a href="/wfpdocs/?regions__slug__in={{ region.name }}">{{ region.name }}</a>
             {% endfor %}
+            </br>
           </dd>
           <dt>{% trans "Categories" %}</dt>
           <dd>
             {% for category in resource.categories.all %}
               <a href="/wfpdocs/?categories__name__in={{ category.name }}">{{ category.name }}</a>
             {% endfor %}
+            </br>
           </dd>
           <dt>{% trans "Keywords" %}</dt>
           <dd>

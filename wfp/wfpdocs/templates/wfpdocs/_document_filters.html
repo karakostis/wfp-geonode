@@ -4,7 +4,7 @@
   <ul class="nav closed" id="categories">
     {% verbatim %}
       <li ng-repeat="category in categories" ng-if="category.count > 0">
-        <a data-value="{{ category.name }}" data-filter="categories__name__in" ng-click="multiple_choice_listener($event)" class="{{category.active}}">{{ category.name }} 
+        <a data-value="{{ category.name }}" data-filter="categories__name__in" ng-click="multiple_choice_listener($event)" class="{{category.active}}">{{ category.name }}
           <span class="badge pull-right">{{ category.count }}</span>
         </a>
       </li>
