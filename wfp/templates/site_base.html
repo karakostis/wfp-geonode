@@ -1,4 +1,7 @@
 {% extends "base.html" %}
 {% block extra_head %}
+      {% if GOOGLE_ANALYTICS_ID %}
+        {% include "ga.html" %}
+      {% endif %}
       <link href="{{ STATIC_URL }}geonode/css/wfp.css?v={{ WFPGEONODE_VERSION }}" rel="stylesheet"/>
 {% endblock %}

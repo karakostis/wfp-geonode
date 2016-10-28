@@ -24,6 +24,7 @@ from django.http import HttpResponse
 
 from wfp import get_version
 
+from django.conf import settings
 
 def wfp_geonode(request):
     """ Global values related to WFPGeoNode to pass to templates """
@@ -31,6 +32,17 @@ def wfp_geonode(request):
         WFPGEONODE_VERSION=get_version(),
     )
 
+def google_analytics(request):
+    """
+    Use the variables returned in this function to
+    render your Google Analytics tracking code template.
+    """
+    ga_prop_id = settings.GOOGLE_ANALYTICS_ID
+    if ga_prop_id:
+        return {
+            'GOOGLE_ANALYTICS_ID': ga_prop_id,
+        }
+    return {}
 
 class NonHtmlDebugToolbarMiddleware(object):
     """

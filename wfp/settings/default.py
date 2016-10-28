@@ -403,6 +403,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'geonode.context_processors.resource_urls',
     'geonode.geoserver.context_processors.geoserver_urls',
     'wfp.context_processors.wfp_geonode',
+    # The context processor below is used for google analytics
+    'wfp.context_processors.google_analytics',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -909,3 +911,5 @@ if 'geonode.geoserver' in INSTALLED_APPS:
     MAP_BASELAYERS = [LOCAL_GEOSERVER]
     MAP_BASELAYERS.extend(baselayers)
 POSTGIS_VERSION = ( 2, 0, 6 )
+
+GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', False)
