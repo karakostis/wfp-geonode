@@ -913,3 +913,7 @@ if 'geonode.geoserver' in INSTALLED_APPS:
 POSTGIS_VERSION = ( 2, 0, 6 )
 
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', False)
+
+# parameters for slack
+SLACK_ENABLED = os.environ.get('SLACK_ENABLED', False)
+SLACK_WEBHOOK_URLS = os.environ.get('SLACK_WEBHOOK_URLS', False)
