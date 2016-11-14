@@ -111,8 +111,8 @@ class Employee(models.Model):
         return self.profile.position
 
     def __unicode__(self):
-        return '%s in %s' % (self.profile.get_full_name(), self.office.place)
-
+        if self.office:
+            return '%s in %s' % (self.profile.get_full_name(), self.office.place)
 
 class CustomThumbnail(models.Model):
     """
