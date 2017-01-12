@@ -272,7 +272,7 @@
             <h4>{% trans "Pick your download format:" %}</h4>
             <ul>
               {% for link in links %}
-              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls">{% trans link.name %}</a></li>
+              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls" onclick="">{% trans link.name %}</a></li>
               {% endfor %}
             </ul>
             {% endif %}
@@ -649,6 +649,12 @@
 
       // on url click append the array values in the existing href
       $(document.body).on("click", ".urls",function(e){
+        // check if ga() function is defined and save the even in google analytics
+        if (typeof ga !== 'undefined' && $.isFunction(ga)) {
+          event_cat = $(this).attr("id");
+          layer_down = $(".page-header").text();
+          ga('send', 'event', event_cat, 'Download', layer_down)
+        }
         var tab = $('#tabContent .active > a').attr('href')
         if(tab == '#query_builder'){
           logical_operator = $("#and-or li.selected a").attr('id');
