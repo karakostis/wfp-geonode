@@ -272,7 +272,7 @@
             <h4>{% trans "Pick your download format:" %}</h4>
             <ul>
               {% for link in links %}
-              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls" onclick="">{% trans link.name %}</a></li>
+              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls" username="{{ request.user }}" onclick="">{% trans link.name %}</a></li>
               {% endfor %}
             </ul>
             {% endif %}
@@ -649,11 +649,14 @@
 
       // on url click append the array values in the existing href
       $(document.body).on("click", ".urls",function(e){
+
         // check if ga() function is defined and save the even in google analytics
         if (typeof ga !== 'undefined' && $.isFunction(ga)) {
           event_cat = $(this).attr("id");
           layer_down = $(".page-header").text();
-          ga('send', 'event', event_cat, 'Download', layer_down)
+          by_user = $(this).attr("username");
+          layer_user = layer_down + "_" + by_user
+          ga('send', 'event', event_cat, 'Download', layer_user)
         }
         var tab = $('#tabContent .active > a').attr('href')
         if(tab == '#query_builder'){
@@ -667,13 +670,16 @@
           }
           complete_cql = '&CQL_FILTER=(' + cql_filters + ')';
           idValue = $(this).attr("id");
-          url_main = all_urls[idValue]
-          if(cql_filters.length >1) {
-            addressValue = url_main + complete_cql
-            $("#"+idValue).attr("href", addressValue)
-          } else{
-            addressValue = url_main
-            $("#"+idValue).attr("href", addressValue)
+          if (typeof all_urls !== 'undefined') {
+              url_main = all_urls[idValue]
+
+            if(cql_filters.length >1) {
+              addressValue = url_main + complete_cql
+              $("#"+idValue).attr("href", addressValue)
+            } else{
+              addressValue = url_main
+              $("#"+idValue).attr("href", addressValue)
+            }
           }
         }
       });
