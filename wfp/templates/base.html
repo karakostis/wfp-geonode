@@ -318,6 +318,9 @@
                 $('#search_input').val($(choice[0]).text());
                 $('#search').submit();
             }
+            // track googole analytics track event when selecting from the list
+            event_label = $('#search_input').val();
+            ga_search("Search_dropdown", "Search", event_label);
         });
     </script>
     <script>
@@ -335,6 +338,21 @@
               this.box.insertAfter(this.input).css({top: pos.top + pos.height, left: pos.left});
             }
         };
+    </script>
+    <script>
+  
+    // track with google analytics the search functionality (top-right) when hitting enter or button
+    $(".btn-search").on('click', function (e){
+      event_label = $('#search_input').val();
+      ga_search("Search_button_enter", "Search", event_label);
+    });
+
+    function ga_search(event_cat, event_action, event_label) {
+      if (typeof ga !== 'undefined' && $.isFunction(ga)) {
+        ga('send', 'event', event_cat, event_action, event_label)
+      }
+    }
+
     </script>
     <script type="text/javascript" src="{% url "lang" %}"></script>
 
