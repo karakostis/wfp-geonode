@@ -136,7 +136,7 @@
         </div>
         {% endif %}
         <li class="list-group-item">
-          <a href="{% url "map_view" resource.id %}" class="btn btn-default btn-md btn-block">{% trans "View Map" %}</a>
+          <a href="{% url "map_view" resource.id %}" class="btn btn-default btn-md btn-block" style="color:white;background-color:#A44A36">{% trans "View Map" %}</a>
         </li>
         {% comment %}
         <li class="list-group-item">
@@ -165,7 +165,7 @@
           <h4>{% trans "Documents related to this map" %}</h4>
           <p>{% trans "List of documents related to this map:" %}</p>
           <ul class="list-unstyled">
-            {% for document in documents %} 
+            {% for document in documents %}
             <li><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></li>
             {% endfor %}
           </ul>
@@ -188,9 +188,9 @@
         </li>
 
         {% include "base/_resourcebase_contact_snippet.html" %}
-    
+
       </ul>
-      
+
     </div>
 
   </div>
@@ -271,13 +271,13 @@
       data: $("#form_post_comment").serialize(),
       success: function() {
         $('#form_post_comment_div').modal('hide');
-        $('#comments_section').load(window.location.pathname + ' #comments_section', 
+        $('#comments_section').load(window.location.pathname + ' #comments_section',
         		function(){$(this).children().unwrap()})
       }
     });
     return false;
   });
- 
+
 </script>
 {% include "_permissions_form_js.html" %}
 <script type="text/javascript" src="{{ STATIC_URL}}geonode/js/utils/thumbnail.js"></script>
@@ -287,5 +287,5 @@
     $('#edit-map').modal('toggle');
   });
 </script>
- 
+
 {% endblock %}
