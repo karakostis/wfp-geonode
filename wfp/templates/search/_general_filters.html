@@ -1,15 +1,6 @@
 {% load i18n %}
 {% load base_tags %}
 {% if SEARCH_FILTERS.CATEGORIES_ENABLED %}
-
-<!-- Add scroll bar in general search  -->
-<style>
-  .yourlabs-autocomplete {
-    max-height:250px;
-    overflow:auto;
-  }
-</style>
-
 <nav class="filter">
   <h4><a href="#" class="toggle toggle-nav"><i class="fa fa-chevron-right"></i>{% trans "Categories" %}</a></h4>
   <ul class="nav closed" id="categories">

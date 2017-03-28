@@ -142,10 +142,6 @@ body.groups li#nav_groups a {
 .yourlabs-autocomplete {
   top: 100%;
 }
-.yourlabs-autocomplete {
-    max-height:250px;
-    overflow:auto;
-}
 .input-group .yourlabs-autocomplete {
   top: 30px !important;
 }

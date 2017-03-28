@@ -30,6 +30,12 @@
         }
       </style>
     <![endif]-->
+    <style>
+      .yourlabs-autocomplete {
+        max-height:250px;
+        overflow:auto;
+      }
+    </style>
   </head>
 
   <body class="{% block body_class %}{% endblock %}">
@@ -340,7 +346,7 @@
         };
     </script>
     <script>
-  
+
     // track with google analytics the search functionality (top-right) when hitting enter or button
     $(".btn-search").on('click', function (e){
       event_label = $('#search_input').val();
