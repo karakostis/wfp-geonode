@@ -44,6 +44,9 @@ def google_analytics(request):
         }
     return {}
 
+def google_form(request):
+    return {'GOOGLE_FORM_LINK': settings.GOOGLE_FORM_LINK}
+
 class NonHtmlDebugToolbarMiddleware(object):
     """
     The Django Debug Toolbar usually only works for views that return HTML.

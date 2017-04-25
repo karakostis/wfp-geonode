@@ -403,8 +403,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'geonode.context_processors.resource_urls',
     'geonode.geoserver.context_processors.geoserver_urls',
     'wfp.context_processors.wfp_geonode',
-    # The context processor below is used for google analytics
+    # The context processor below is used for google analytics and the google forms link (when downloading layer)
     'wfp.context_processors.google_analytics',
+    'wfp.context_processors.google_form'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -913,6 +914,7 @@ if 'geonode.geoserver' in INSTALLED_APPS:
 POSTGIS_VERSION = ( 2, 0, 6 )
 
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', False)
+GOOGLE_FORM_LINK = os.environ.get('GOOGLE_FORM_LINK', False) # used for the googleform when anonymous user downloads layers
 
 # parameters for slack
 SLACK_ENABLED = os.environ.get('SLACK_ENABLED', False)

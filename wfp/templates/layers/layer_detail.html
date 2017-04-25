@@ -377,6 +377,25 @@
       </div>
     </div>
 
+    <!-- Modal with the URL of the googleform -->
+    <div class="modal fade" id="googleForm_modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Share with us some info</h4>
+          </div>
+          <div class="modal-body">
+            <p>Your file is downloading. In the meantime please take some time to fill up <a href="{{ GOOGLE_FORM_LINK }}" target="_blank"> this form</a>. Your contribution will help us improve.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {% if resource.get_legend %}
     <li class="list-group-item">
       <h4 class="list-group-item-heading">{%trans "Legend" %}</h4>
@@ -692,6 +711,20 @@
           ga('send', 'event', event_cat, 'Download', layer_user_filter)
         }
 
+        // d:if the user is anonymous appear a modal with a URL to a googleform
+        // d: set a time cookie which will expire after 5 minutes. if the user downloads other layers
+        // and the cookie hasn't expired the modal won't open
+        by_user = $(this).attr("username");
+        if (by_user == "AnonymousUser") {
+          if (document.cookie.indexOf("time_cookie=") == -1) {
+            var now = new Date();
+            var time = now.getTime();
+            var expireTime = time + 3 * 60 * 1000;
+            now.setTime(expireTime);
+            document.cookie = 'time_cookie=ok;expires='+now.toGMTString()+';path=/';
+            $('#googleForm_modal').modal('toggle');
+          }
+        }
       });
 
       $("#button-toggle").css({ "background-color": "#a7a3a3", "border-color": "#a7a3a3" });
