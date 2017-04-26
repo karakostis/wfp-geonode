@@ -65,7 +65,7 @@ DATABASES = {
 }
 
 ADMINS = (
-    ('Paolo Corti', 'paolo.corti@wfp.org'),
+    ('Dimitris Karakostis', 'dimitris.karakostis@wfp.org'),
     ('Francesco Stompanato', 'francesco.stompanato@wfp.org'),
 )
 
@@ -565,7 +565,7 @@ PYCSW = {
             'identification_accessconstraints': 'None',
             'provider_name': 'UN World Food Programme',
             'provider_url': SITEURL,
-            'contact_name': 'Stompanato, Francesco',
+            'contact_name': 'Karakostis, Dimitris',
             'contact_position': 'WFP GeoNode Manager',
             'contact_address': 'Via Viola Cesare Giulio, 68',
             'contact_city': 'Rome',
@@ -574,7 +574,7 @@ PYCSW = {
             'contact_country': 'Italy',
             'contact_phone': '+39-6-65131',
             'contact_fax': '+xx-xxx-xxx-xxxx',
-            'contact_email': 'francesco.stompanato@wfp.org',
+            'contact_email': 'dimitris.karakostis@wfp.org',
             'contact_url': 'http://www.wfp.org/',
             'contact_hours': 'Hours of Service',
             'contact_instructions': 'During hours of service. Off on weekends.',
