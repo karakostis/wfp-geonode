@@ -53,7 +53,11 @@
 
 {% block body_outer %}
 <div class="page-header">
-  <h2 class="page-title">{{ resource.title|default:resource.typename }}</h2>
+  {% if resource.storeType == "remoteStore" %}
+    <h2 class="page-title">{{ resource.title|default:resource.typename }} (remote service)</h2>
+  {% else %}
+    <h2 class="page-title">{{ resource.title|default:resource.typename }}</h2>
+  {% endif %}
 </div>
 
 <div class="row">
@@ -175,7 +179,7 @@
           </div>
 
           <div class="modal-body">
-            {% if layer_type == "vector" %}
+            {% if layer_type == "vector" or layer_type == None and resource.storeType == "remoteStore"  %}
               <button type="button" id = "button-toggle" class="btn btn-primary btn-circle" data-toggle="button" placeholder="" data-toggle="tooltip" title="Click to filter the layer">
                 {% trans "Do you want to filter it?" %}
               </button>
@@ -271,7 +275,7 @@
             <h4>{% trans "Pick your download format:" %}</h4>
             <ul>
               {% for link in links %}
-              <li><a href="{{ link.url }}" id="{{ link.name | slugify }}" class="urls" username="{{ request.user }}" onclick="">{% trans link.name %}</a></li>
+              <li><a href="{{ link.url }}" target="_blank" id="{{ link.name | slugify }}" class="urls" username="{{ request.user }}" onclick="">{% trans link.name %}</a></li>
               {% endfor %}
             </ul>
             {% endif %}
@@ -711,14 +715,14 @@
         }
 
         // d:if the user is anonymous appear a modal with a URL to a googleform
-        // d: set a time cookie which will expire after 5 minutes. if the user downloads other layers
+        // d: set a time cookie which will expire after 1 day. if the user downloads other layers
         // and the cookie hasn't expired the modal won't open
         by_user = $(this).attr("username");
         if (by_user == "AnonymousUser") {
           if (document.cookie.indexOf("time_cookie=") == -1) {
             var now = new Date();
             var time = now.getTime();
-            var expireTime = time + 3 * 60 * 1000;
+            var expireTime = time + 24 * 60 * 60 * 1000;
             now.setTime(expireTime);
             document.cookie = 'time_cookie=ok;expires='+now.toGMTString()+';path=/';
             $('#googleForm_modal').modal('toggle');
