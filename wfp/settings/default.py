@@ -614,8 +614,10 @@ MAP_BASELAYERS = [{
     "fixed": True,
     "group":"background"
 }, {
-    "source": {"ptype": "gxp_osmsource"},
-    "type": "OpenLayers.Layer.OSM",
+    "source": {"ptype": "gxp_olsource"},
+    "type":"OpenLayers.Layer.XYZ",
+    "args":[ "Open Street Map", ["https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"],
+    {"transitionEffect": "resize","attribution": "osm_attribution"}],
     "name": "mapnik",
     "visibility": True,
     "fixed": True,
@@ -814,11 +816,11 @@ LEAFLET_CONFIG = {
          <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, \
          <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
          #('Watercolor',
-         # 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
-         # 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, \
-         # <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; \
-         # <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, \
-         # <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
+         # 'https://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
+         # 'Map tiles by <a href="https://stamen.com">Stamen Design</a>, \
+         # <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; \
+         # <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, \
+         # <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
     ],
     'PLUGINS': {
         'esri-leaflet': {
