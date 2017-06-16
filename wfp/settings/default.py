@@ -647,7 +647,7 @@ MAP_BASELAYERS = [{
 },{
     "source": {"ptype": "gxp_olsource"},
     "type":"OpenLayers.Layer.XYZ",
-    "args":[ "Humanitarian Openstreetmap", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
+    "args":[ "Humanitarian Openstreetmap", ["https://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
     {"transitionEffect": "resize","attribution": "osm_attribution"}],
     "name":"HOT",
     "visibility": False,
@@ -709,7 +709,7 @@ SOCIAL_ORIGINS = [{
     "css_class":"email"
 }, {
     "label":"Facebook",
-    "url":"http://www.facebook.com/sharer.php?u={url}",
+    "url":"https://www.facebook.com/sharer.php?u={url}",
     "css_class":"fb"
 }, {
     "label":"Twitter",
@@ -808,11 +808,11 @@ LEAFLET_CONFIG = {
 
         # Stamen toner lite.
         ('OpenStreetMap',
-         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-         'Map tiles by <a href="http://openstreetmap.org">Stamen Design</a>, \
-         <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; \
-         <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, \
-         <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
+         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+         'Map tiles by <a href="https://openstreetmap.org">Stamen Design</a>, \
+         <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; \
+         <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, \
+         <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
          #('Watercolor',
          # 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
          # 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, \
