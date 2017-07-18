@@ -9,7 +9,7 @@
     if (typeof form === 'string'){
       form = $(form);
     }
-    var data = form.serializeObject();   
+    var data = form.serializeObject();
 
     /*
     * If there's the anonymous user then set it's view permission and pop it
@@ -32,7 +32,7 @@
     * Cycle through permissions to map the form structure perm = ['user1',',user2'] to
     * the geonode user = ['perm1','perm2'], the same for groups
     */
-    
+
     for(var perm in data){
       if(data[perm][0] !== ''){
         var perms_to_assign = [perm];
@@ -128,16 +128,16 @@
                     }
                   }
                 }
-              }          
+              }
             }
-            
+
             // If "anyone" is checked then don't show all the users in the view perms field
-            // if (perms_users.hasOwnProperty('AnonymousUser') 
+            // if (perms_users.hasOwnProperty('AnonymousUser')
             //   && perms_users['AnonymousUser'].indexOf('view_resourcebase') > -1){
             //   users.view_resourcebase=[]
             // };
-            
-            // if (perms_users.hasOwnProperty('AnonymousUser') 
+
+            // if (perms_users.hasOwnProperty('AnonymousUser')
             //   && perms_users['AnonymousUser'].indexOf('download_resourcebase') > -1){
             //   users.download_resourcebase=[]
             // };
@@ -191,7 +191,7 @@
             for (var perm in groups){
               $('#' + perm + '_groups').val(groups[perm].join());
             }
-            
+
             addSelectGroups();
 
           }
@@ -202,7 +202,7 @@
       addSelectGroups();
       {% endif %}
     });
-    
+
     function addSelectUsers(){
       $("input.user-select").select2({
         placeholder: '{% trans "Choose users..." %}',
@@ -268,7 +268,7 @@
         }
       });
     }
-    
+
     function userID(user) {
       return user.username;
     }
@@ -339,8 +339,8 @@
           },
           success: function(data) {
             var not_changed = $.parseJSON(data).not_changed;
-            if (not_changed.length > 0){ 
-              message.find('.message').html('Permissions correctly registered, although the following resources were'+ 
+            if (not_changed.length > 0){
+              message.find('.message').html('Permissions correctly registered, although the following resources were'+
                   ' skipped because you don\'t have the rights to edit their permissions:');
               message.find('.extra_content').html(not_changed.join('</br>'));
               message.addClass('alert-warning').removeClass('alert-success alert-danger hidden');

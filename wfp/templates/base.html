@@ -108,9 +108,9 @@
              <form class="navbar-form" id="search" role="search" action="{% url "search" %}" >
                 <div class="input-group">
                   {% if HAYSTACK_SEARCH %}
-                  <input id="search_input" type="text" placeholder="Search" class="form-control" name="q">
+                  <input id="search_input" type="text" placeholder="Search Layers" class="form-control" name="q">
                   {% else %}
-                  <input id="search_input" type="text" placeholder="Search" class="form-control" name="title__icontains">
+                  <input id="search_input" type="text" placeholder="Search Layers" class="form-control" name="title__icontains">
                   {% endif %}
                   <span class="input-group-btn">
                     <button class="btn btn-primary btn-search" type="submit"><i class="fa fa-search"></i></button>
