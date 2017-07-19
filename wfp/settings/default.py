@@ -617,7 +617,7 @@ MAP_BASELAYERS = [{
 }, {
     "source": {"ptype": "gxp_olsource"},
     "type":"OpenLayers.Layer.XYZ",
-    "args":[ "Open Street Map", ["https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"],
+    "args":[ "Open Street Map", ["http://a.tile.openstreetmap.org/${z}/${x}/${y}.png"],
     {"transitionEffect": "resize","attribution": "osm_attribution"}],
     "name": "mapnik",
     "visibility": True,
@@ -650,7 +650,7 @@ MAP_BASELAYERS = [{
 },{
     "source": {"ptype": "gxp_olsource"},
     "type":"OpenLayers.Layer.XYZ",
-    "args":[ "Humanitarian Openstreetmap", ["https://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
+    "args":[ "Humanitarian Openstreetmap", ["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"],
     {"transitionEffect": "resize","attribution": "osm_attribution"}],
     "name":"HOT",
     "visibility": False,
@@ -661,7 +661,7 @@ MAP_BASELAYERS = [{
     "type": "OpenLayers.Layer.XYZ",
     "args": [
                 'Mapbox Dark',
-        ('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/${z}/'
+        ('http://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/${z}/'
          '${x}/${y}?access_token=%s') % (MAPBOX_ACCESS_TOKEN),
         {
             'transitionEffect': 'resize',
@@ -676,7 +676,7 @@ MAP_BASELAYERS = [{
     "type": "OpenLayers.Layer.XYZ",
     "args": [
                 'Mapbox Satellite',
-        ('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/${z}/'
+        ('http://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/${z}/'
          '${x}/${y}?access_token=%s') % (MAPBOX_ACCESS_TOKEN),
         {
             'transitionEffect': 'resize',
@@ -691,7 +691,7 @@ MAP_BASELAYERS = [{
     "type": "OpenLayers.Layer.XYZ",
     "args": [
                 'Mapbox Satellite Streets',
-        ('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/${z}/'
+        ('http://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/${z}/'
          '${x}/${y}?access_token=%s') % (MAPBOX_ACCESS_TOKEN),
         {
             'transitionEffect': 'resize',
@@ -712,15 +712,15 @@ SOCIAL_ORIGINS = [{
     "css_class":"email"
 }, {
     "label":"Facebook",
-    "url":"https://www.facebook.com/sharer.php?u={url}",
+    "url":"http://www.facebook.com/sharer.php?u={url}",
     "css_class":"fb"
 }, {
     "label":"Twitter",
-    "url":"https://twitter.com/share?url={url}",
+    "url":"http://twitter.com/share?url={url}",
     "css_class":"tw"
 }, {
     "label":"Google +",
-    "url":"https://plus.google.com/share?url={url}",
+    "url":"http://plus.google.com/share?url={url}",
     "css_class":"gp"
 }]
 
@@ -728,7 +728,7 @@ SOCIAL_ORIGINS = [{
 #https://github.com/ckan/ckan/blob/2052628c4a450078d58fb26bd6dc239f3cc68c3e/ckan/logic/action/create.py#L43
 CKAN_ORIGINS = [{
     "label":"Humanitarian Data Exchange (HDX)",
-    "url":"https://data.hdx.rwlabs.org/dataset/new?title={name}&dataset_date={date}&notes={abstract}&caveats={caveats}",
+    "url":"http://data.hdx.rwlabs.org/dataset/new?title={name}&dataset_date={date}&notes={abstract}&caveats={caveats}",
     "css_class":"hdx"
 }]
 #SOCIAL_ORIGINS.extend(CKAN_ORIGINS)
@@ -811,11 +811,11 @@ LEAFLET_CONFIG = {
 
         # Stamen toner lite.
         ('OpenStreetMap',
-         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-         'Map tiles by <a href="https://openstreetmap.org">Stamen Design</a>, \
-         <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; \
-         <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, \
-         <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
+         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+         'Map tiles by <a href="http://openstreetmap.org">Stamen Design</a>, \
+         <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; \
+         <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, \
+         <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'),
          #('Watercolor',
          # 'https://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
          # 'Map tiles by <a href="https://stamen.com">Stamen Design</a>, \
