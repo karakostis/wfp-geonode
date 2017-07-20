@@ -615,10 +615,12 @@ MAP_BASELAYERS = [{
     "fixed": True,
     "group":"background"
 }, {
-    "source": {"ptype": "gxp_olsource"},
-    "type":"OpenLayers.Layer.XYZ",
-    "args":[ "Open Street Map", ["https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"],
-    {"transitionEffect": "resize","attribution": "osm_attribution"}],
+    "source": {"ptype": "gxp_osmsource"},
+    "type": "OpenLayers.Layer.OSM",
+    #"source": {"ptype": "gxp_olsource"},
+    #"type":"OpenLayers.Layer.XYZ",
+    #"args":[ "Open Street Map", ["https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"],
+    #{"transitionEffect": "resize","attribution": "osm_attribution"}],
     "name": "mapnik",
     "visibility": True,
     "fixed": True,
