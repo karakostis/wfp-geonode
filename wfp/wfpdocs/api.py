@@ -204,6 +204,7 @@ class WFPDocumentResource(ModelResource):
         queryset = WFPDocument.objects.all().order_by('-date')
         resource_name = 'staticmaps'
         filtering = {
+            'title': ALL,
             'keywords': ALL_WITH_RELATIONS,
             'categories': ALL_WITH_RELATIONS,
             'regions': ALL_WITH_RELATIONS,
