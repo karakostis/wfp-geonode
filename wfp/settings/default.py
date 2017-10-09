@@ -280,6 +280,13 @@ GEONODE_APPS = (
     'geonode.tasks'
 )
 
+GEONODE_CONTRIB_APPS = (
+    # GeoNode Contrib Apps
+    'geonode.contrib.geosites',
+)
+
+GEONODE_APPS = GEONODE_APPS + GEONODE_CONTRIB_APPS
+
 WFP_APPS = (
     'djsupervisor',
     'djcelery',
@@ -341,6 +348,9 @@ INSTALLED_APPS = (
     'user_messages',
     'polymorphic',
     'guardian',
+
+    #GeoSites
+    'geonode.contrib.geosites',
 
 ) + GEONODE_APPS + WFP_APPS
 
@@ -924,3 +934,6 @@ GOOGLE_FORM_LINK = os.environ.get('GOOGLE_FORM_LINK', False) # used for the goog
 # parameters for slack
 SLACK_ENABLED = os.environ.get('SLACK_ENABLED', False)
 SLACK_WEBHOOK_URLS = os.environ.get('SLACK_WEBHOOK_URLS', False)
+
+#geosites
+SERVE_PATH = "../geo_sites"
