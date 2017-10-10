@@ -934,6 +934,3 @@ GOOGLE_FORM_LINK = os.environ.get('GOOGLE_FORM_LINK', False) # used for the goog
 # parameters for slack
 SLACK_ENABLED = os.environ.get('SLACK_ENABLED', False)
 SLACK_WEBHOOK_URLS = os.environ.get('SLACK_WEBHOOK_URLS', False)
-
-#geosites
-SERVE_PATH = "../geo_sites"

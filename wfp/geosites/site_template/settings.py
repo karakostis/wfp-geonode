@@ -18,11 +18,8 @@ except:
     # if not available, read in GeoSites pre_settings
     execfile(os.path.join(GEOSITES_ROOT, 'pre_settings.py'))
 
-#SITE_ID = $SITE_ID  # flake8: noqa
-SITE_ID = 1
-#SITE_NAME = '$SITE_NAME'
-SITE_NAME = 'test'
-SITE_URL = 'test.geonode.wfp.org'
+SITE_ID = $SITE_ID  # flake8: noqa
+SITE_NAME = '$SITE_NAME'
 # Should be unique for each site
 SECRET_KEY = "fbk3CC3N6jt1AU9mGIcI"
 

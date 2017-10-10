@@ -7,7 +7,7 @@
 import os
 
 # Outside URL
-SITEURL = 'http://$DOMAIN'
+SITEURL = 'https://staging.geonode.wfp.org/test'
 
 
 # databases unique to site if not defined in site settings
