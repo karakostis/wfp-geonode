@@ -37,6 +37,8 @@ urlpatterns = patterns(
     url(r'^get_token/$', views.get_token, name='get-token'),
     # WFP documents views
     (r'^wfpdocs/', include('wfp.wfpdocs.urls')),
+    # WFP edit_data views
+    (r'^edit_data/', include('wfp.edit_data.urls')),
     # gis views
     (r'^gis/', include('wfp.gis.urls')),
     # trainings views

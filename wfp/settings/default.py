@@ -296,6 +296,7 @@ WFP_APPS = (
     'wfp.wfpdocs',
     'wfp.gis',
     'wfp.trainings',
+    'wfp.edit_data',
 )
 
 INSTALLED_APPS = (
