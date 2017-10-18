@@ -164,11 +164,11 @@ def delete_edits(request, template='edit_data/edit_data.html'):
 def save_edits(request, template='edit_data/edit_data.html'):
 
     data_dict = json.loads(request.POST.get('json_data'))
-
     feature_id = data_dict['feature_id']
     layer_name = data_dict['layer_name']
     data = data_dict['data']
     data = data.split(",")
+    data = [x.encode('ascii', 'ignore').decode('ascii') for x in data]
     url = settings.OGC_SERVER['default']['LOCATION'] + 'wfs'
     property_element = ""
     # concatenate all the properties
