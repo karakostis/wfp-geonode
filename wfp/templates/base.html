@@ -19,6 +19,10 @@
       {% endif %}
       <link href="{{ STATIC_URL }}geonode/css/ext-compatibility.css" rel="stylesheet" />
       <style type="text/css">[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}</style>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.js"></script>
       {% block extra_head %}
       {% endblock %}
     {% endblock %}
@@ -145,8 +149,15 @@
               </a>
             </li>
             {% endif %}
+            <!-- map snapshot -->
+            <li style="margin-top:15px">
+              {% if "/view" in request.path %}
+              <button class='btn btn-primary btn-md btn-block' id='screenshot2' > Map Snapshot</button>
+              {% endif %}
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
+
       </div>
     </nav>
     {% endblock header %}
@@ -367,6 +378,21 @@
 
     </script>
     <script type="text/javascript" src="{% url "lang" %}"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#screenshot2").click(function(){
+        html2canvas($("#OpenLayers_Map_15_OpenLayers_ViewPort"), {
+            useCORS: true,
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                // Convert and downloadimg-out as image
+                Canvas2Image.saveAsPNG(canvas);
+            }
+        });
+      });
+      });
+    </script>
 
   </body>
 </html>

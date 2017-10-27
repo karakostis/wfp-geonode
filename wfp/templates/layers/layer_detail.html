@@ -18,6 +18,9 @@
   {% include "layers/layer_leaflet_map.html" %}
 {% endif %}
 {% include "layers/layer_leaflet_modal_map.html" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.js"></script>
 {{ block.super }}
 
 <style>
@@ -161,6 +164,7 @@
       <!--{% if resource.storeType != "remoteStores" %}   to activate the Download button for remoteservices  -->
         {% get_obj_perms request.user for resource.get_self_resource as "perms" %}
         <li class="list-group-item">
+          <button class="btn btn-primary btn-md btn-block" id="screenshot" >{% trans "Take Screenshot" %}</button>
           {% if links %}
              <button class="btn btn-primary btn-md btn-block" data-toggle="modal" data-target="#download-layer">{% trans "Download Layer" %}</button>
           {% else %}
@@ -796,6 +800,22 @@
           $('#tabContent').hide();
           $('.tab-content').hide();
         }
+      });
+
+    </script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#screenshot").click(function(){
+        html2canvas($("#ext-comp-1007"), {
+            useCORS: true,
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                // Convert and downloadimg-out as image
+                Canvas2Image.saveAsPNG(canvas);
+            }
+        });
+      });
       });
     </script>
 

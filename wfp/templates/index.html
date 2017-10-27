@@ -10,7 +10,181 @@
 {% block middle %}
    {{ block.super }}
   {% block hero %}
+<style>
+.grid {
+	position: relative;
+	clear: both;
+	margin: 0 auto;
+	padding: 1em 0 4em;
+	max-width: 1500px;
+	list-style: none;
+	text-align: center;
+}
 
+/* Common style */
+.grid figure {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 10px 1%;
+  /*
+  min-width: 320px;
+	max-width: 480px;
+	max-height: 360px;
+	width: 48%;
+  */
+	height: auto;
+	background: #3085a3;
+	text-align: center;
+	cursor: pointer;
+}
+
+.grid figure img {
+	position: relative;
+	display: block;
+	min-height: 100%;
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+.grid figure figcaption {
+	padding: 2em;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+	pointer-events: none;
+}
+
+.grid figure figcaption,
+.grid figure figcaption > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+.grid figure figcaption > a {
+	z-index: 1000;
+	text-indent: 200%;
+	white-space: nowrap;
+	font-size: 0;
+	opacity: 0;
+}
+
+.grid figure h2 {
+	word-spacing: -0.15em;
+	font-weight: 300;
+}
+
+.grid figure h2 span {
+	font-weight: 800;
+}
+
+.grid figure h2,
+.grid figure p {
+	margin: 0;
+}
+
+.grid figure p {
+	letter-spacing: 1px;
+	font-size: 68.5%;
+}
+
+figure.effect-steve {
+	z-index: auto;
+	overflow: visible;
+	background: #000;
+}
+
+figure.effect-steve:before,
+figure.effect-steve h2:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	content: '';
+	-webkit-transition: opacity 0.35s;
+	transition: opacity 0.35s;
+}
+
+figure.effect-steve:before {
+	box-shadow: 0 3px 30px rgba(0,0,0,0.8);
+	opacity: 0;
+}
+
+figure.effect-steve figcaption {
+	z-index: 1;
+}
+
+figure.effect-steve img {
+	opacity: 1;
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+	-webkit-transform: perspective(1000px) translate3d(0,0,0);
+	transform: perspective(1000px) translate3d(0,0,0);
+}
+
+figure.effect-steve h2,
+figure.effect-steve p {
+	background: #fff;
+	color: #2d434e;
+}
+
+figure.effect-steve h2 {
+	position: relative;
+	margin-top: 2em;
+	padding: 0.25em;
+}
+
+figure.effect-steve h2:before {
+	box-shadow: 0 1px 10px rgba(0,0,0,0.5);
+}
+
+figure.effect-steve p {
+	margin-top: 1em;
+	padding: 0.5em;
+	font-weight: 800;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale3d(0.9,0.9,1);
+	transform: scale3d(0.9,0.9,1);
+}
+
+figure.effect-steve:hover:before {
+	opacity: 1;
+}
+
+figure.effect-steve:hover img {
+	-webkit-transform: perspective(1000px) translate3d(0,0,21px);
+	transform: perspective(1000px) translate3d(0,0,21px);
+}
+
+figure.effect-steve:hover h2:before {
+	opacity: 0;
+}
+
+figure.effect-steve:hover p {
+	opacity: 1;
+	-webkit-transform: scale3d(1,1,1);
+	transform: scale3d(1,1,1);
+}
+
+
+
+</style>
 
   <!-- Carousel
   ================================================== -->
@@ -84,10 +258,9 @@
   {% endwith %}
   <!-- social -->
 
-  <div class="container">
+  <div class="container" style="width: auto;">
     <!-- featured-maps -->
     <section class="featured-maps">
-      <h3>{% trans "Featured Maps" %}</h3>
       {% verbatim %}
       <div class="row">
         <div ng-app="featured">
@@ -99,7 +272,7 @@
                 </a>
                 <div class="map-abstract">
                   <p><a href="/maps/{{ item.id }}/view"><strong>{{ item.owner__username }}</strong>, <em class="timestamp">{{ item.date }}</em></a></p>
-                  <p><a href="/maps/{{ item.id }}/view">{{ item.abstract }}</a></p>
+                  <p><a href="/maps/{{ item.id }}/view">{{ item.abstra  ct }}</a></p>
                 </div>
                 <div class="map-title"><a href="/maps/{{ item.id }}/view" class="map-link">{{ item.title }}</a></div>
                 <div class="views pull-right"><i class="icon-eye-open"></i>{{ item.popular_count }}</div>
@@ -114,26 +287,41 @@
 
     <!-- facets -->
     <div class="row home-facets">
-      <div class="col-md-1">
-      <p><a href="{% url "layer_browse" %}"><i class="fa fa-square-o fa-4x rotate-45"></i></a></p>
+      <div class="grid">
+      <div class="col-md-4">
+
+					<figure class="effect-steve">
+						<img src="{% static 'geonode/img/29.jpg' %}" alt="img29"/>
+						<figcaption>
+							<h2>Lonely <span>Steve</span></h2>
+							<p>Steve was afraid of the Boogieman.</p>
+							<a href="#">View more</a>
+						</figcaption>
+					</figure>
+
       </div>
-      <div class="col-md-3">
-        <h2><a href="{% url "layer_browse" %}">{% trans "Explore Data" %}</a></h2>
-        <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
+
+      <div class="col-md-4">
+        <figure class="effect-steve">
+          <img src="{% static 'geonode/img/29.jpg' %}" alt="img29"/>
+          <figcaption>
+            <h2>Lonely <span>Steve</span></h2>
+            <p>Steve was afraid of the Boogieman.</p>
+            <a href="#">View more</a>
+          </figcaption>
+        </figure>
       </div>
-      <div class="col-md-1">
-      <p><a href="{% url "maps_browse" %}"><i class="fa fa-map-marker fa-4x"></i></a></p>
-      </div>
-      <div class="col-md-3">
-        <h2><a href="{% url "maps_browse" %}">{% trans "Explore Maps" %}</a></h2>
-        <p>{% trans "Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only." %}</p>
-      </div>
-      <div class="col-md-1">
-      <p><a href="{% url "layer_upload" %}"><i class="fa fa-cloud-upload fa-4x"></i></a></p>
-      </div>
-      <div class="col-md-3">
-        <h2><a href="{% url "layer_upload" %}">{% trans "Upload Data" %}</a></h2>
-        <p>{% trans "GeoNode allows registered users for easily upload geospatial data in several formats including shapefile, GeoTiff and KML" %}.</p>
+
+      <div class="col-md-4">
+        <figure class="effect-steve">
+          <img src="{% static 'geonode/img/29.jpg' %}" alt="img29"/>
+          <figcaption>
+            <h2>Lonely <span>Steve</span></h2>
+            <p>Steve was afraid of the Boogieman.</p>
+            <a href="#">View more</a>
+          </figcaption>
+        </figure>
+        </div>
         </div>
     </div><!-- facets -->
   </div>
