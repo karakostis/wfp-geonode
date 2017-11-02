@@ -280,13 +280,6 @@ GEONODE_APPS = (
     'geonode.tasks'
 )
 
-GEONODE_CONTRIB_APPS = (
-    # GeoNode Contrib Apps
-    'geonode.contrib.geosites',
-)
-
-GEONODE_APPS = GEONODE_APPS + GEONODE_CONTRIB_APPS
-
 WFP_APPS = (
     'djsupervisor',
     'djcelery',
@@ -349,9 +342,6 @@ INSTALLED_APPS = (
     'user_messages',
     'polymorphic',
     'guardian',
-
-    #GeoSites
-    'geonode.contrib.geosites',
 
 ) + GEONODE_APPS + WFP_APPS
 
