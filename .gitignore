@@ -22,3 +22,15 @@ wfp/uploaded
 *.old
 gn_migration.cfg
 .DS_Store
+
+wfp/static/lib/js/angular-leaflet-directive.min.js
+wfp/static/lib/js/angular.js
+wfp/static/lib/js/bootstrap.min.js
+wfp/static/lib/js/canvas2image.js
+wfp/static/lib/js/html2canvas.min.js
+wfp/static/lib/js/jquery.dataTables.js
+wfp/static/lib/js/jquery.min.js
+wfp/static/lib/js/jquery.timeago.js
+wfp/static/lib/js/json2.js
+wfp/static/lib/js/select2.js
+wfp/static/lib/js/waypoints.js
