@@ -34,3 +34,8 @@ wfp/static/lib/js/jquery.timeago.js
 wfp/static/lib/js/json2.js
 wfp/static/lib/js/select2.js
 wfp/static/lib/js/waypoints.js
+wfp/static/lib/js/jquery.ajaxQueue.js
+wfp/static/node_modules/*
+wfp/static/package.json
+wfp/static/package-lock.json
+wfp/static/bower_components
