@@ -22,6 +22,7 @@ from owslib.wfs import WebFeatureService
 from geoserver.catalog import Catalog
 from collections import OrderedDict
 import requests
+import re
 import operator
 
 from django.shortcuts import render
