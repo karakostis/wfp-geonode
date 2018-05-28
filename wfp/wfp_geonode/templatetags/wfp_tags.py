@@ -13,6 +13,8 @@ from geonode.groups.models import GroupProfile
 
 from wfp.wfpdocs.models import WFPDocument
 
+from collections import Counter
+
 register = template.Library()
 
 
@@ -52,7 +54,8 @@ def wfp_facets(context):
             layers = layers.filter(id__in=authorized)
 
         counts = layers.values('storeType').annotate(count=Count('storeType'))
-        count_dict = dict([(count['storeType'], count['count']) for count in counts])
+        store_types = [count['storeType']  for count in counts]
+        count_dict = dict(Counter(store_types))
 
         facets = {
             'raster': count_dict.get('coverageStore', 0),
