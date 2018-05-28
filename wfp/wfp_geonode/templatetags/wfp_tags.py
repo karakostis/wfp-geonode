@@ -63,6 +63,7 @@ def wfp_facets(context):
             'remote': count_dict.get('remoteStore', 0),
         }
 
+
         # Break early if only_layers is set.
         if facet_type == 'layers':
             return facets
