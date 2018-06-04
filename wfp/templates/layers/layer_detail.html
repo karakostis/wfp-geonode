@@ -444,7 +444,7 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-      <li class="list-group-item">
+      <li class="list-group-item change_style">
         <h4>{% trans "Styles" %}</h4>
         <p>{% trans "The following styles are associated with this layer. Choose a style to view it in the preview map." %}</p>
         <ul class="list-unstyled">
@@ -800,6 +800,25 @@
       });
 
     </script>
+    <!-- d: This snippet changes the legend when a different style is selected -->
+    <script type="text/javascript">
+
+      $( ".change_style" ).click(function() {
+
+        var $radio = $('input[name=style]:checked');
+        var style_name = $radio.attr('id');
+
+        {% if resource.get_legend.link_type == 'image' %}
+          legend_url = "{{ resource.get_legend.url | safe }}"
+        {% endif %}
+
+        get_legend_url = legend_url + '&STYLE=' + style_name
+        $("#legend_icon").attr("src", get_legend_url);
+
+      });
+    </script>
+
+
 
     {% if GEONODE_SECURITY_ENABLED %}
     {% include "_permissions_form_js.html" %}
