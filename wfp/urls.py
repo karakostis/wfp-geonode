@@ -39,6 +39,8 @@ urlpatterns = patterns(
     (r'^wfpdocs/', include('wfp.wfpdocs.urls')),
     # WFP edit_data views
     (r'^edit_data/', include('wfp.edit_data.urls')),
+    # WFP edit_data views
+    (r'^create_layers/', include('wfp.create_layers.urls')),
     # gis views
     (r'^gis/', include('wfp.gis.urls')),
     # trainings views

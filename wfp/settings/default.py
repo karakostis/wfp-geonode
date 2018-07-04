@@ -290,6 +290,7 @@ WFP_APPS = (
     'wfp.gis',
     'wfp.trainings',
     'wfp.edit_data',
+    'wfp.create_layers',
 )
 
 INSTALLED_APPS = (
