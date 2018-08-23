@@ -178,13 +178,13 @@
             $("#instructions_msg").text("Click the button on the map to add features.");
             map.setView([0,0], 1);
             if (layer_geom == 'Polygon'){
-              draw_values = [false, true, false, false, false]
+              draw_values = [false, true, false, false, false, false]
             } else if (layer_geom == 'Linestring'){
-              draw_values = [false, false, true, false, false]
+              draw_values = [false, false, true, false, false, false]
             } else if (layer_geom == 'Point'){
-              draw_values = [true, false, false, false, false]
+              draw_values = [true, false, false, false, false, false]
             } else if (layer_geom == 'unknown'){
-              draw_values = [true, true, true, false, false]
+              draw_values = [true, true, true, false, false, false]
             }
 
             drawControl = new L.Control.Draw({
@@ -194,7 +194,8 @@
                     polygon : draw_values[1],
                     polyline : draw_values[2],
                     rectangle : draw_values[3],
-                    circle : draw_values[4]
+                    circle : draw_values[4],
+                    circlemarker: draw_values[5]
                 },
                 edit : {
                   featureGroup: drawnItems
