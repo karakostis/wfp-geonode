@@ -1,5 +1,5 @@
 {% load leaflet_tags %}
-
+{% load staticfiles %}
 {% leaflet_js %}
 {% leaflet_js  plugins="leaflet.draw" %}
 {% leaflet_map "preview_add_geom_modal" creatediv=False %}
@@ -134,6 +134,7 @@
       close_added_data.on("click",function(e){
         add_geometry.data("coords", null);
       });
+
     });
 
     window.addEventListener("map:init", function (e) {
@@ -202,7 +203,7 @@
                 }
             });
 
-  		      map.addControl(drawControl);
+  		    map.addControl(drawControl);
 
             // disables the Save and Close btns when user is adding
             $('.leaflet-draw-draw-marker, .leaflet-draw-draw-polyline, .leaflet-draw-draw-polygon').click(function() {
@@ -217,7 +218,6 @@
             var numbers_of_features = 0;
 
             map.on('draw:edited', function (e) {
-
 
               var coords = [];
               var layer = e.layers;
@@ -258,7 +258,7 @@
             });
 
 
-        		map.on('draw:created', function (e) {
+        	map.on('draw:created', function (e) {
               // enables the Save and Close btns when user has added a new feature
               $('._modal_ok').attr("disabled", false);
               $('#_close_added_data').attr("disabled", false);
@@ -307,7 +307,7 @@
                 $("#status_modal_msg").append("<p class='alert alert-warning'>You can add only one feature</p></br>");
                 //add_geometry.data("coords", null);
               }
-        		});
+        	});
 
             map.on('draw:deleted', function (e) {
               add_geometry.data("coords", null);
@@ -448,6 +448,39 @@
             });
           }
         });
+
+        // find point on map
+        var poi;
+        // create custom icon
+        var customIcon = L.icon({
+            iconUrl: '{% static 'lib/css/red_marker.png' %}',
+            iconSize: [40, 25],
+        });
+        $(".search_point").click(function(){
+            var lat = $('#lat').val().replace(/,/g, '.');
+            var lng = $('#long').val().replace(/,/g, '.');
+            if(isNaN(lat) || isNaN(lng)){
+                alert("The input values are not numbers!")
+                if (poi) {
+                    map.removeLayer(poi);
+                };
+             }
+            else {
+                if (poi) {
+                    map.removeLayer(poi);
+                };
+                if ((lat<=90 && lat>= -90) && (lng<=180 && lng>=-180)){
+                    poi = L.marker([lat, lng],{icon: customIcon}).addTo(map);
+                    var zoom = 8;
+                    map.setView([lat, lng], zoom);
+                }
+                else {
+                    alert("This is not a valid Latitude or Longitude value!")
+                }
+            }
+        });
+
+
         $(".modal").on("hide.bs.modal", function(){
           $(".modal-bodydata").html("");
         });
