@@ -451,11 +451,7 @@
 
         // find point on map
         var poi;
-        // create custom icon
-        var customIcon = L.icon({
-            iconUrl: '{% static 'lib/css/red_marker.png' %}',
-            iconSize: [40, 25],
-        });
+
         $(".search_point").click(function(){
             var lat = $('#lat').val().replace(/,/g, '.');
             var lng = $('#long').val().replace(/,/g, '.');
@@ -470,7 +466,16 @@
                     map.removeLayer(poi);
                 };
                 if ((lat<=90 && lat>= -90) && (lng<=180 && lng>=-180)){
-                    poi = L.marker([lat, lng],{icon: customIcon}).addTo(map);
+                  // create custom icon
+                  var pinAnchor = new L.Point(20, 25);
+                  // documentation on how to set the pinanchor: https://stackoverflow.com/questions/17875438/leafletjs-markers-move-on-zoom/32157984#32157984
+                  var customIcon = L.icon({
+                      iconUrl: '{% static 'lib/css/red_marker.png' %}',
+                      iconSize: [40, 25],
+                      iconAnchor: pinAnchor
+                  });
+
+                    poi = L.marker([lat, lng],{icon: customIcon }).addTo(map);
                     var zoom = 8;
                     map.setView([lat, lng], zoom);
                 }
