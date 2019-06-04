@@ -201,7 +201,7 @@ CACHES = {
 # application user (i.e. user to authenticate for OPWeb)
 EXT_APP_USER = wallet.EXT_APP_USER
 EXT_APP_USER_PWD = wallet.EXT_APP_USER_PWD
-EXT_APP_IPS = ( '127.0.0.1', '10.11.40.4', '10.11.40.90', '10.11.40.24' )
+EXT_APP_IPS = ( '127.0.0.1', '10.11.40.4', '10.11.40.90', '10.11.40.24', '10.11.40.109' )
 
 AUTH_USER_MODEL = 'people.Profile'
 
